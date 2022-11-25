@@ -5,7 +5,7 @@
       <div class="hidden sm:block">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
       </div>
-      <div class="text-left mt-10 sm:mt-5 w-full px-6 sm:text-center font-bold">
+      <div class="text-left mt-20 sm:mt-5 w-full px-6 sm:text-center font-bold">
         <div class="text-2xl sm:text-[30]">비밀번호를 잊었다고요?</div>
         <div class="text-lg sm:text-[28]">재설정하도록 도와드릴게요!</div>
       </div>
