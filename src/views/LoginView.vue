@@ -1,19 +1,19 @@
 <template>
-  <div
-    class="min-h-screen flex flex-col justify-between bg-white sm:bg-[#fafafa]"
-  >
+  <div class="sm:bg-[#fafafa]">
     <div
-      class="border-b text-center text-everly-dark_grey flex p-3 sm:invisible cursor-default"
+      class="border-b text-center text-everly-dark_grey flex p-3 sm:invisible cursor-default absolute top-0 w-full bg-white"
     >
       <div class="flex-none pt-1">
         <img src="@/assets/icon/arrow_left.png" alt="" />
       </div>
       <div class="flex-grow">{{ headerTitle }}</div>
     </div>
+
     <div class="w-full max-w-xl m-auto items-center justify-center">
       <router-view> </router-view>
     </div>
-    <div class="p-4 text-center">
+
+    <div class="p-4 text-center absolute bottom-0 w-full">
       <div
         class="invisible sm:visible text-center text-sm text-everly-dark_grey cursor-pointer"
       >
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div
-        class="sm:invisible text-center text-sm text-everly-dark_grey cursor-pointer py-1"
+        class="sm:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1"
       >
         고객센터 문의하기
       </div>
