@@ -8,11 +8,11 @@
       <div class="grid gap-2 place-items-center w-full mt-8 sm:mt-16">
         <input
           placeholder="아이디를 입력하세요"
-          class="h-11 lg:h-15 w-11/12 appearance-none rounded-lg border border-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
+          class="h-11 lg:h-15 w-11/12 rounded-lg border border-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
         />
         <input
           placeholder="비빌번호를 입력하세요"
-          class="h-11 lg:h-15 w-11/12 appearance-none rounded-lg border border-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
+          class="h-11 lg:h-15 w-11/12 rounded-lg border border-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
         />
       </div>
 

@@ -16,7 +16,7 @@
         <div class="flex items-center w-full relactive">
           <input
             placeholder="비밀번호를 입력하세요"
-            class="flex-1 appearance-none rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+            class="flex-1 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
           />
           <img
             src="@/assets/icon/eyes_close.svg"
@@ -27,7 +27,7 @@
         <div class="flex items-center w-full">
           <input
             placeholder="비밀번호를 입력하세요"
-            class="flex-1 appearance-none rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+            class="flex-1 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
           />
           <img
             src="@/assets/icon/eyes_open.svg"

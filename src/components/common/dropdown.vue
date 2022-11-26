@@ -3,9 +3,9 @@
     <button
       v-on:click="show = !show"
       :class="'bg-' + color"
-      class="text-everly-dark_grey py-3 w-20 whitespace-no-wrap rounded-lg transition duration-300 border border-mid_grey text-xs sm:text-sm"
+      class="text-everly-dark_grey py-3 w-14 sm:w-20 whitespace-no-wrap rounded-lg transition duration-300 border border-mid_grey text-xs sm:text-sm"
     >
-      {{ title }} <i class="fas fa-chevron-down ml-2"></i>
+      {{ title }} <i class="fas fa-chevron-down sm:ml-0.5"></i>
     </button>
     <transition :name="animation">
       <div

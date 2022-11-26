@@ -10,33 +10,31 @@
         본인인증
       </div>
 
-      <div class="grid gap-2 place-items-center w-11/12 mt-2">
-        <div class="w-full">
-          <div class="p-1 pr-0 flex items-center">
-            <dropdown animation="fade" color="white" class="pr-2"></dropdown>
+      <div class="grid gap-2 place-items-center mt-2 w-full p-1">
+        <div class="pr-0 flex items-center w-11/12">
+          <div class="flex w-4/5 mr-1">
+            <dropdown animation="fade" color="white" class="pr-1"></dropdown>
             <input
-              type="email"
               placeholder="휴대 전화번호 입력('-'제외)"
-              class="flex-1 appearance-none mr-2 rounded-lg border border-mid_grey bg-white py-3 px-4 sm:px-0 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+              class="rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm w-full"
             />
-            <button
-              class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs sm:text-sm"
-            >
-              인증번호 전송
-            </button>
           </div>
-          <div class="p-1 pr-0 flex items-center">
-            <input
-              type="email"
-              placeholder="인증 번호 6자리를 입력하세요"
-              class="flex-1 appearance-none mr-2 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
-            />
-            <button
-              class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs sm:text-sm"
-            >
-              인증번호 확인
-            </button>
-          </div>
+          <button
+            class="bg-everly-main text-white rounded-lg shadow-md text-xs sm:text-sm py-3 w-1/5"
+          >
+            {{ buttonContent }} 전송
+          </button>
+        </div>
+        <div class="pr-0 flex items-center w-11/12">
+          <input
+            placeholder="인증 번호 6자리를 입력하세요"
+            class="mr-1 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm w-4/5"
+          />
+          <button
+            class="bg-everly-main text-white rounded-lg shadow-md text-xs sm:text-sm py-3 w-1/5"
+          >
+            {{ buttonContent }} 확인
+          </button>
         </div>
       </div>
 
@@ -52,7 +50,18 @@
 </template>
 <script lang="ts" setup>
 import dropdown from "@/components/common/dropdown.vue";
+import { useMediaQuery } from "@vueuse/core";
+import { computed, watch, ref } from "vue";
 // import { userMq } from "vue-mq"; // 반응형 값 변경 시도하다가 포기
+
+let buttonContent = ref("");
+
+let isLargeScreen = computed(() => useMediaQuery("(min-width: 1024px)"));
+
+watch(isLargeScreen.value, () => {
+  if (isLargeScreen.value.value) buttonContent.value = "인증번호";
+  else buttonContent.value = "";
+});
 </script>
 
 <style scoped></style>

@@ -15,9 +15,8 @@
         <div class="w-full">
           <div class="p-1 pr-0 flex items-center">
             <input
-              type="email"
               placeholder="휴대 전화번호 입력('-'제외)"
-              class="flex-1 appearance-none mr-2 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+              class="flex-1 mr-2 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
             />
             <button
               class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs sm:text-sm"
@@ -27,9 +26,8 @@
           </div>
           <div class="p-1 pr-0 flex items-center">
             <input
-              type="email"
               placeholder="인증 번호 6자리를 입력하세요"
-              class="flex-1 appearance-none mr-2 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+              class="flex-1 mr-2 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
             />
             <button
               class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs sm:text-sm"
