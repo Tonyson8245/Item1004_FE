@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useCommon = defineStore("common", {
   state: () => ({
     headerTitle: "",
+    csShowLink: true,
   }),
 
   getters: {
@@ -10,6 +11,9 @@ export const useCommon = defineStore("common", {
   },
   actions: {
     // 액션 동작 예시
+    setcsShowLink(status: boolean) {
+      this.csShowLink = status;
+    },
     setheaderTitle(title: string) {
       this.headerTitle = title;
     },

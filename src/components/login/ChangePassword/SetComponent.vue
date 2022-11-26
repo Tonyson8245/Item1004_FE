@@ -13,25 +13,25 @@
       </div>
 
       <div class="grid gap-3 place-items-center w-11/12 mt-20">
-        <div class="flex items-center w-full relactive">
+        <div class="flex items-center w-full relative">
           <input
-            placeholder="비밀번호를 입력하세요"
+            placeholder="새 비밀번호를 입력하세요"
             class="flex-1 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
           />
           <img
             src="@/assets/icon/eyes_close.svg"
-            class="w-5 h-5 absolute right-10"
+            class="w-5 h-5 absolute right-5"
             alt=""
           />
         </div>
-        <div class="flex items-center w-full">
+        <div class="flex items-center w-full relative">
           <input
-            placeholder="비밀번호를 입력하세요"
+            placeholder="새 비밀번호를 재확인"
             class="flex-1 rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
           />
           <img
             src="@/assets/icon/eyes_open.svg"
-            class="w-5 h-5 absolute right-10"
+            class="w-5 h-5 absolute right-5"
             alt=""
           />
         </div>

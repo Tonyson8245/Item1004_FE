@@ -54,18 +54,22 @@ router.beforeEach((to) => {
   switch (to.path) {
     case "/login":
       commonStore.setheaderTitle("로그인");
+      commonStore.setcsShowLink(true);
       break;
     case "/findid/confirm":
     case "/findid/result":
       commonStore.setheaderTitle("아이디 찾기");
+      commonStore.setcsShowLink(true);
       break;
     case "/changepassword/confirm":
     case "/changepassword/set":
       commonStore.setheaderTitle("비밀번호 재설정");
+      commonStore.setcsShowLink(true);
       break;
     case "/signin/confirm":
     case "/signin/setinfo":
       commonStore.setheaderTitle("회원가입");
+      commonStore.setcsShowLink(false);
       break;
     default:
       commonStore.resetheaderTitle;

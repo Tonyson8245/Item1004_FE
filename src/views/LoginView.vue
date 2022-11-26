@@ -1,7 +1,7 @@
 <template>
   <div class="sm:bg-[#fafafa]">
     <div
-      class="border-b text-center text-everly-dark_grey flex p-3 sm:invisible cursor-default absolute top-0 w-full bg-white"
+      class="border-b text-center text-everly-dark_grey flex p-3 sm:invisible cursor-default w-full bg-white fixed top-0 z-50"
     >
       <div class="flex-none pt-1">
         <img src="@/assets/icon/arrow_left.png" alt="" />
@@ -9,11 +9,9 @@
       <div class="flex-grow">{{ headerTitle }}</div>
     </div>
 
-    <div class="w-full max-w-xl m-auto items-center justify-center">
-      <router-view> </router-view>
-    </div>
-
-    <div class="p-4 text-center absolute bottom-0 w-full">
+    <router-view class="w-full m-auto max-w-lg items-center justify-center">
+    </router-view>
+    <div class="p-4 text-center w-full">
       <div
         class="invisible sm:visible text-center text-sm text-everly-dark_grey cursor-pointer"
       >
@@ -31,6 +29,7 @@
       </div>
       <div
         class="sm:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1"
+        v-if="csLinkShow"
       >
         고객센터 문의하기
       </div>
@@ -43,5 +42,8 @@ import { useCommon } from "@/store/modules/common";
 
 const store = useCommon();
 const headerTitle = ref(store.headerTitle);
+const csLinkShow = ref(store.csShowLink);
+
+// fetch the user information when params change
 </script>
 <style lang="scss"></style>
