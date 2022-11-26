@@ -6,14 +6,15 @@
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
       </div>
       <div class="text-left mt-20 sm:mt-5 w-full px-6 sm:text-center font-bold">
-        <div class="text-2xl sm:text-[30]">비밀번호를 잊었다고요?</div>
-        <div class="text-lg sm:text-[28]">재설정하도록 도와드릴게요!</div>
+        <div class="text-2xl sm:text-[30]">
+          <span class="text-everly-main">item1004</span> 님의
+        </div>
+        <div class="text-lg sm:text-[28]">새로운 비밀번호 만들기</div>
       </div>
 
       <div class="grid gap-3 place-items-center w-11/12 mt-20">
         <div class="flex items-center w-full relactive">
           <input
-            type="email"
             placeholder="비밀번호를 입력하세요"
             class="flex-1 appearance-none rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
           />
@@ -25,7 +26,6 @@
         </div>
         <div class="flex items-center w-full">
           <input
-            type="email"
             placeholder="비밀번호를 입력하세요"
             class="flex-1 appearance-none rounded-lg border border-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
           />

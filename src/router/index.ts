@@ -5,17 +5,19 @@ import findIDcomponent from "@/components/login/findID/ConfirmComponent.vue";
 import findIDResultComponent from "@/components/login/findID/ResultComponent.vue";
 import passwordConfirm from "@/components/login/ChangePassword/ConfirmComponent.vue";
 import passwordSet from "@/components/login/ChangePassword/SetComponent.vue";
+import infoSet from "@/components/signin/SetInfoComponent.vue";
+import signinComfirm from "@/components/signin/ConfirmComponent.vue";
 import { useCommon } from "@/store/modules/common";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/login",
+      path: "/",
       component: LoginView,
       children: [
         {
-          path: "",
+          path: "login",
           component: loginComponent,
         },
         {
@@ -34,24 +36,36 @@ const router = createRouter({
           path: "changePassword/set",
           component: passwordSet,
         },
+        {
+          path: "signin/setinfo",
+          component: infoSet,
+        },
+        {
+          path: "signin/confirm",
+          component: signinComfirm,
+        },
       ],
     },
   ],
 });
 router.beforeEach((to) => {
   const commonStore = useCommon();
-
+  console.log(to.path);
   switch (to.path) {
     case "/login":
       commonStore.setheaderTitle("로그인");
       break;
-    case "/login/findId/confirm":
-    case "/login/findId/result":
+    case "/findid/confirm":
+    case "/findid/result":
       commonStore.setheaderTitle("아이디 찾기");
       break;
-    case "/login/changePassword/confirm":
-    case "/login/changePassword/set":
+    case "/changepassword/confirm":
+    case "/changepassword/set":
       commonStore.setheaderTitle("비밀번호 재설정");
+      break;
+    case "/signin/confirm":
+    case "/signin/setinfo":
+      commonStore.setheaderTitle("회원가입");
       break;
     default:
       commonStore.resetheaderTitle;
