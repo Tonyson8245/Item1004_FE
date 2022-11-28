@@ -11,7 +11,7 @@
 
     <router-view class="w-full m-auto max-w-lg items-center justify-center">
     </router-view>
-    <div class="p-4 text-center w-full">
+    <div class="p-4 text-center w-full fixed bottom-0">
       <div
         class="invisible sm:visible text-center text-sm text-everly-dark_grey cursor-pointer"
       >
@@ -28,7 +28,7 @@
         </div>
       </div>
       <div
-        class="sm:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1"
+        class="sm:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1 w-full"
         v-if="csLinkShow"
       >
         고객센터 문의하기

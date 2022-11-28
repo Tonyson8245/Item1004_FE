@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="cursor-pointer">
     <div
       v-if="showModal"
       class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 justify-center items-center flex"

@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "@/views/LoginView.vue";
-import loginComponent from "@/components/login/loginComponent.vue";
-import findIDcomponent from "@/components/login/findID/ConfirmComponent.vue";
-import findIDResultComponent from "@/components/login/findID/ResultComponent.vue";
-import passwordConfirm from "@/components/login/ChangePassword/ConfirmComponent.vue";
-import passwordSet from "@/components/login/ChangePassword/SetComponent.vue";
-import infoSet from "@/components/signin/SetInfoComponent.vue";
-import signinComfirm from "@/components/signin/ConfirmComponent.vue";
+import loginComponent from "@/components/user/login/loginComponent.vue";
+import findIDcomponent from "@/components/user/findID/ConfirmComponent.vue";
+import findIDResultComponent from "@/components/user/findID/ResultComponent.vue";
+import passwordConfirm from "@/components/user/ChangePassword/ConfirmComponent.vue";
+import passwordSet from "@/components/user/ChangePassword/SetComponent.vue";
+import infoSet from "@/components/user/signin/SetInfoComponent.vue";
+import signinComfirm from "@/components/user/signin/ConfirmComponent.vue";
 import { useCommon } from "@/store/modules/common";
 
 const router = createRouter({
