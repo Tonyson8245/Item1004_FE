@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen flex-grow md:flex">
+    <modalSmall />
     <div class="grid place-items-center w-full md:m-auto">
       <div class="hidden md:block">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
@@ -21,6 +22,7 @@
           </div>
           <button
             class="bg-everly-main text-white rounded-lg shadow-md text-xs md:text-sm py-3 w-1/5"
+            @click="toggleModal('인증번호가 전송되었습니다.')"
           >
             {{ buttonContent }} 전송
           </button>
@@ -41,6 +43,7 @@
       <div class="grid p-1 gap-2 place-items-center w-full mt-4 md:mt-8">
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-mid_grey w-11/12"
+          @click="moveLink('setinfo')"
         >
           가입하기
         </button>
@@ -49,19 +52,43 @@
   </div>
 </template>
 <script lang="ts" setup>
+import modalSmall from "@/components/common/modalSmall.vue";
+import { useModal } from "@/store/modules/ui/modal";
+import type { modalSetting } from "@/interface/ui/modal.interface";
 import dropdown from "@/components/common/dropdown.vue";
 import { useMediaQuery } from "@vueuse/core";
 import { computed, watch, ref } from "vue";
-// import { userMq } from "vue-mq"; // 반응형 값 변경 시도하다가 포기
+import router from "@/router";
 
 let buttonContent = ref("");
-
+let link: string;
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 1024px)"));
 
 watch(isLargeScreen.value, () => {
   if (isLargeScreen.value.value) buttonContent.value = "인증번호";
   else buttonContent.value = "";
 });
+
+const modalStore = useModal(); // 모달 store 가져오기
+const set: modalSetting = {
+  detail_content: "인증 번호가 발송되었습니다",
+  button_content: "확인",
+}; // 모달 내용 작성
+
+const toggleModal = (text: string) => {
+  set.detail_content = text;
+  modalStore.setModalSmall(set); // 모달 내용 저장하기
+  modalStore.controlModalSmall(true); // 모달 상태 변경하여 저장하기
+};
+
+function moveLink(type: string) {
+  switch (type) {
+    case "setinfo":
+      link = "/account/signin/setinfo";
+      break;
+  }
+  router.push(link);
+}
 </script>
 
 <style scoped></style>

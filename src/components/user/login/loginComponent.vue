@@ -106,7 +106,7 @@ let link: string;
 function moveLink(type: string) {
   switch (type) {
     case "main":
-      link = "/";
+      link = "/home";
       break;
     case "changepassword":
       link = "/account/changepassword/confirm";

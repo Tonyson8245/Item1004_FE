@@ -24,9 +24,13 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
       },
     };
   } else {
-    // command === 'build'
     return {
-      // build specific config
+      plugins: [vue()],
+      resolve: {
+        alias: {
+          "@": fileURLToPath(new URL("./src", import.meta.url)),
+        },
+      },
     };
   }
 });

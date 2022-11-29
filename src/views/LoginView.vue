@@ -40,7 +40,6 @@
 import { ref } from "vue";
 import { useCommon } from "@/store/modules/ui/common";
 import router from "@/router";
-router;
 
 const store = useCommon();
 const headerTitle = ref(store.headerTitle);

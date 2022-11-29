@@ -21,7 +21,10 @@
             <button
               class="text-everly-main font-bold bg-everly-light_blue w-full py-2 rounded-lg text-sm md:text-lg"
               type="button"
-              v-on:click="toggleModal()"
+              v-on:click="
+                toggleModal();
+                moveLink();
+              "
             >
               {{ setting.button_content }}
             </button>
@@ -34,6 +37,7 @@
 </template>
 
 <script lang="ts" setup>
+import router from "@/router";
 import { useModal } from "@/store/modules/ui/modal";
 import { computed } from "vue";
 
@@ -41,8 +45,24 @@ const store = useModal(); // 모달 store 가져오기
 const showModal = computed(() => store.showModalSmall); // 모달 상태 가져오기
 const setting = computed(() => store.ModalSmallSetting); // 모달 세팅 가져오기
 
+var link: string;
+
 const toggleModal = () => {
   store.controlModalSmall(!showModal); // 모달 켜고 끼는 것
 };
+
+function moveLink() {
+  var text = setting.value.button_content;
+  console.log(text);
+  if (text == "확인") {
+    return;
+  }
+  switch (text) {
+    case "로그인하기":
+      link = "/account/login";
+      break;
+  }
+  router.push(link);
+}
 </script>
 <style scoped></style>

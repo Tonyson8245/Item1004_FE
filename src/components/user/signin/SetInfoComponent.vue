@@ -1,5 +1,6 @@
 <template>
   <div class="h-screen md:flex">
+    <modalSmall />
     <div
       class="place-items-center md:w-full h-full flex flex-col justify-between md:h-auto"
     >
@@ -21,7 +22,7 @@
             class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
           />
           <img
-            src="@/assets/icon/check_small.svg"
+            src="@/assets/icon/check_small_blue.svg"
             class="w-5 h-5 absolute right-5"
             alt=""
           />
@@ -102,6 +103,7 @@
       <div class="flex-grow"></div>
       <div
         class="flex-none grid gap-2 place-items-center h-24 md:mb-5 w-full md:static"
+        @click="toggleModal()"
       >
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-mid_grey w-11/12"
@@ -116,6 +118,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import contractVue from "./common/contract.vue";
+import modalSmall from "@/components/common/modalSmall.vue";
+import { useModal } from "@/store/modules/ui/modal";
+import type { modalSetting } from "@/interface/ui/modal.interface";
 
 const overlap = ref(false);
 const contractList = [
@@ -136,6 +141,17 @@ const contractList = [
     link: "(선택) 마케팅 이용 동의(보류) 로 이동합니다.",
   },
 ];
+
+const modalStore = useModal(); // 모달 store 가져오기
+const set: modalSetting = {
+  detail_content: "회원가입이\n완료되었습니다",
+  button_content: "로그인하기",
+}; // 모달 내용 작성
+
+const toggleModal = () => {
+  modalStore.setModalSmall(set); // 모달 내용 저장하기
+  modalStore.controlModalSmall(true); // 모달 상태 변경하여 저장하기
+};
 </script>
 
 <style scoped></style>

@@ -7,14 +7,22 @@
         <div
           class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-10"
         >
-          <div class="flex space-x-5 text-xl">
+          <div class="flex space-x-4 text-xl">
             <div class="flex space-x-2">
-              <img src="@/assets/icon/check_small_blue.svg" alt="" />
-              <span class="text-everly-main font-bold">팔래요</span>
+              <img
+                src="@/assets/icon/check_small_blue.svg"
+                class="w-6"
+                alt=""
+              />
+              <span class="text-everly-main font-bold w-13">팔래요</span>
             </div>
             <div class="flex space-x-2">
-              <img src="@/assets/icon/check_small_dark-grey.svg" alt="" />
-              <span class="text-everly-dark_grey w-14">살래요</span>
+              <img
+                src="@/assets/icon/check_small_dark-grey.svg"
+                alt=""
+                class="w-6"
+              />
+              <span class="text-everly-dark_grey w-13">살래요</span>
             </div>
           </div>
           <div class="w-[760px] flex">

@@ -14,6 +14,7 @@
         <div class="grid gap-2 place-items-center w-full">
           <button
             class="h-11 lg:h-15 px-8 py-2 rounded-lg text-sm text-everly-white bg-everly-main w-11/12"
+            @click="moveLink('login')"
           >
             로그인하기
           </button>
@@ -21,6 +22,7 @@
         <div class="grid gap-2 place-items-center w-full mt-2">
           <button
             class="h-11 lg:h-15 px-8 py-2 rounded-lg text-sm bg-everly-light_blue text-everly-main w-11/12"
+            @click="moveLink('changepassword')"
           >
             비밀번호 재설정
           </button>
@@ -30,6 +32,21 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import router from "@/router";
+var link: string;
+
+function moveLink(type: string) {
+  switch (type) {
+    case "login":
+      link = "/account/login";
+      break;
+    case "changepassword":
+      link = "/account/changepassword/confirm";
+      break;
+  }
+  router.push(link);
+}
+</script>
 
 <style scoped></style>
