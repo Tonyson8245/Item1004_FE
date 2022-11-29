@@ -38,7 +38,7 @@
 </template>
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useCommon } from "@/store/modules/common";
+import { useCommon } from "@/store/modules/ui/common";
 
 const store = useCommon();
 const headerTitle = ref(store.headerTitle);

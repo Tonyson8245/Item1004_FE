@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useModal } from "@/store/modules/modal";
+import { useModal } from "@/store/modules/ui/modal";
 import { computed } from "vue";
 
 const store = useModal(); // 모달 store 가져오기

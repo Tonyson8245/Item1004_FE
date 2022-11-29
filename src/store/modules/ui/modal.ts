@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { modalSetting } from "@/store/interface/modal.interface";
+import type { modalSetting } from "@/interface/ui/modal.interface";
 
 export const useModal = defineStore("modal", {
   state: () => ({

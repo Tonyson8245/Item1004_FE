@@ -1,48 +1,45 @@
+import components from "./components";
 import { createRouter, createWebHistory } from "vue-router";
-import LoginView from "@/views/LoginView.vue";
-import loginComponent from "@/components/user/login/loginComponent.vue";
-import findIDcomponent from "@/components/user/findID/ConfirmComponent.vue";
-import findIDResultComponent from "@/components/user/findID/ResultComponent.vue";
-import passwordConfirm from "@/components/user/ChangePassword/ConfirmComponent.vue";
-import passwordSet from "@/components/user/ChangePassword/SetComponent.vue";
-import infoSet from "@/components/user/signin/SetInfoComponent.vue";
-import signinComfirm from "@/components/user/signin/ConfirmComponent.vue";
-import { useCommon } from "@/store/modules/common";
+import { useCommon } from "@/store/modules/ui/common";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      component: LoginView,
+      component: components.MainView,
+    },
+    {
+      path: "/account",
+      component: components.LoginView,
       children: [
         {
           path: "login",
-          component: loginComponent,
+          component: components.loginComponent,
         },
         {
           path: "findID/confirm",
-          component: findIDcomponent,
+          component: components.findIDcomponent,
         },
         {
           path: "findID/result",
-          component: findIDResultComponent,
+          component: components.findIDResultComponent,
         },
         {
           path: "changePassword/confirm",
-          component: passwordConfirm,
+          component: components.passwordConfirm,
         },
         {
           path: "changePassword/set",
-          component: passwordSet,
+          component: components.passwordSet,
         },
         {
           path: "signin/setinfo",
-          component: infoSet,
+          component: components.infoSet,
         },
         {
           path: "signin/confirm",
-          component: signinComfirm,
+          component: components.signinComfirm,
         },
       ],
     },
@@ -52,22 +49,22 @@ router.beforeEach((to) => {
   const commonStore = useCommon();
   console.log(to.path);
   switch (to.path) {
-    case "/login":
+    case "/account/login":
       commonStore.setheaderTitle("로그인");
       commonStore.setcsShowLink(true);
       break;
-    case "/findid/confirm":
-    case "/findid/result":
+    case "/account/findid/confirm":
+    case "/account/findid/result":
       commonStore.setheaderTitle("아이디 찾기");
       commonStore.setcsShowLink(true);
       break;
-    case "/changepassword/confirm":
-    case "/changepassword/set":
+    case "/account/changepassword/confirm":
+    case "/account/changepassword/set":
       commonStore.setheaderTitle("비밀번호 재설정");
       commonStore.setcsShowLink(true);
       break;
-    case "/signin/confirm":
-    case "/signin/setinfo":
+    case "/account/signin/confirm":
+    case "/account/signin/setinfo":
       commonStore.setheaderTitle("회원가입");
       commonStore.setcsShowLink(false);
       break;

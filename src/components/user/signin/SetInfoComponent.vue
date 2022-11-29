@@ -11,7 +11,7 @@
         class="grid gap-2 place-items-center w-full px-2 mt-2 pt-1 flex-none"
       >
         <div
-          class="text-left p-1 mt-16 sm:mt-5 w-11/12 sm:font-bold text-everly-main text-sm sm:text-lg text-center sm:text-left"
+          class="text-left p-1 px-2 mt-16 sm:mt-5 w-full sm:font-bold text-everly-main text-sm sm:text-lg text-left"
         >
           계정정보
         </div>
@@ -56,7 +56,7 @@
       </div>
 
       <div class="grid gap-1 place-items-center mt-1 w-full p-2 flex-none">
-        <div class="text-center sm:text-left sm:mt-2 w-full">
+        <div class="text-left sm:mt-2 w-full px-2">
           <span class="sm:font-bold text-everly-main text-sm sm:text-lg"
             >추천인</span
           >

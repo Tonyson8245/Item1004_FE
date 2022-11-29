@@ -51,8 +51,8 @@
 
 <script setup lang="ts">
 import modalSmall from "@/components/common/modalSmall.vue";
-import { useModal } from "@/store/modules/modal";
-import type { modalSetting } from "@/store/interface/modal.interface";
+import { useModal } from "@/store/modules/ui/modal";
+import type { modalSetting } from "@/interface/ui/modal.interface";
 
 const modalStore = useModal(); // 모달 store 가져오기
 const set: modalSetting = {
