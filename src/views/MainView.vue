@@ -23,7 +23,6 @@
       </div>
       <div class="flex-1 hidden md:block"></div>
     </div>
-
     <!-- 모바일 헤더 -->
     <div
       class="w-full bg-everly-main px-4 py-3 cursor-default fixed top-0 z-50 md:hidden"
@@ -40,8 +39,7 @@
       </div>
     </div>
     <!-- 헤더끝 -->
-
-    <router-view class="w-full m-auto max-w-md items-center justify-center">
+    <router-view class="items-center justify-center mt-12 md:mt-0">
     </router-view>
     <div class="p-4 text-center w-full fixed bottom-0">
       <div

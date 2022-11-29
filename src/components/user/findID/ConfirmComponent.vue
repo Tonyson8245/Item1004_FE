@@ -41,6 +41,7 @@
       <div class="grid p-1 gap-2 place-items-center w-full mt-4 md:mt-8">
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-main w-11/12"
+          @click="moveLink('result')"
         >
           아이디 찾기
         </button>
@@ -49,6 +50,18 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import router from "@/router";
+let link: string;
+
+function moveLink(type: string) {
+  switch (type) {
+    case "result":
+      link = "/account/findid/result";
+      break;
+  }
+  router.push(link);
+}
+</script>
 
 <style scoped></style>

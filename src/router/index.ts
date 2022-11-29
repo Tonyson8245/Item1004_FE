@@ -8,6 +8,16 @@ const router = createRouter({
     {
       path: "/",
       component: components.MainView,
+      children: [
+        {
+          path: "",
+          redirect: "/home",
+        },
+        {
+          path: "home",
+          component: components.Home,
+        },
+      ],
     },
     {
       path: "/account",

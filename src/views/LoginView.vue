@@ -3,7 +3,7 @@
     <div
       class="border-b text-center text-everly-dark_grey flex p-3 md:invisible cursor-default w-full bg-white fixed top-0 z-50"
     >
-      <div class="flex-none pt-1">
+      <div class="flex-none pt-1" @click="backPress()">
         <img src="@/assets/icon/arrow_left.png" alt="" />
       </div>
       <div class="flex-grow">{{ headerTitle }}</div>
@@ -39,10 +39,16 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useCommon } from "@/store/modules/ui/common";
+import router from "@/router";
+router;
 
 const store = useCommon();
 const headerTitle = ref(store.headerTitle);
 const csLinkShow = ref(store.csShowLink);
+
+function backPress() {
+  router.go(-1);
+}
 
 // fetch the user information when params change
 </script>

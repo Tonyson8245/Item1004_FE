@@ -26,19 +26,26 @@
       <div class="grid gap-2 place-items-center w-full mt-4 md:mt-8">
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-lg text-everly-white bg-everly-main w-11/12"
+          @click="moveLink('main')"
         >
           로그인
         </button>
         <div class="grid place-items-center w-full mt-2 px-0 cursor-default">
           <div class="flex divide-x divide-[#707070]">
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm">아이디 찾기</button>
+              <button class="text-sm" @click="moveLink('findid')">
+                아이디 찾기
+              </button>
             </div>
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm">비밀번호 재설정</button>
+              <button class="text-sm" @click="moveLink('changepassword')">
+                비밀번호 재설정
+              </button>
             </div>
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm">회원가입</button>
+              <button class="text-sm" @click="moveLink('signin')">
+                회원가입
+              </button>
             </div>
           </div>
         </div>
@@ -92,6 +99,27 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import router from "@/router";
+let link: string;
+
+function moveLink(type: string) {
+  switch (type) {
+    case "main":
+      link = "/";
+      break;
+    case "changepassword":
+      link = "/account/changepassword/confirm";
+      break;
+    case "findid":
+      link = "/account/findid/confirm";
+      break;
+    case "signin":
+      link = "/account/signin/confirm";
+      break;
+  }
+  router.push(link);
+}
+</script>
 
 <style scoped></style>
