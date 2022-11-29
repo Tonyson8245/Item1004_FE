@@ -5,7 +5,7 @@
         <img src="@/assets/icon/logo_mobile.svg" alt="" />
       </div>
 
-      <div class="grid gap-2 place-items-center w-full mt-8 sm:mt-16">
+      <div class="grid gap-2 place-items-center w-full mt-8 md:mt-16">
         <input
           placeholder="아이디를 입력하세요"
           class="h-11 lg:h-15 w-11/12 rounded-lg border border-everly-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="grid gap-2 place-items-center w-full mt-4 sm:mt-8">
+      <div class="grid gap-2 place-items-center w-full mt-4 md:mt-8">
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-lg text-everly-white bg-everly-main w-11/12"
         >
@@ -43,22 +43,22 @@
           </div>
         </div>
       </div>
-      <div class="w-full mt-5 mb-1 sm:mt-12">
+      <div class="w-full mt-5 mb-1 md:mt-12">
         <div class="inline-flex justify-center items-center w-full">
-          <hr class="sm:invisible w-11/12 h-px bg-everly-mid_grey border-0" />
+          <hr class="md:invisible w-11/12 h-px bg-everly-mid_grey border-0" />
           <span
-            class="invisible sm:visible absolute left-1/2 px-3 text-sm text-everly-dark_grey -translate-x-1/2 bg-white sm:bg-[#fafafa]"
+            class="invisible md:visible absolute left-1/2 px-3 text-sm text-everly-dark_grey -translate-x-1/2 bg-white md:bg-[#fafafa]"
             >SNS 계정으로 간편하게 진행하기</span
           >
           <span
-            class="absolute left-1/2 px-3 text-sm text-everly-dark_grey -translate-x-1/2 sm:invisible bg-white sm:bg-[#fafafa]"
+            class="absolute left-1/2 px-3 text-sm text-everly-dark_grey -translate-x-1/2 md:invisible bg-white md:bg-[#fafafa]"
             >간편하게 진행하기</span
           >
         </div>
       </div>
 
       <div
-        class="grid grid-cols-4 gap-3 w-full px-10 text-center text-xs sm:text-sm sm:px-30"
+        class="grid grid-cols-4 gap-3 w-full px-10 text-center text-xs md:text-sm md:px-30"
       >
         <div>
           <img

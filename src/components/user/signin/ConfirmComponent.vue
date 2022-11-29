@@ -1,11 +1,11 @@
 <template>
-  <div class="h-screen flex-grow sm:flex">
-    <div class="grid place-items-center w-full sm:m-auto">
-      <div class="hidden sm:block">
+  <div class="h-screen flex-grow md:flex">
+    <div class="grid place-items-center w-full md:m-auto">
+      <div class="hidden md:block">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
       </div>
       <div
-        class="text-left p-1 mt-20 sm:mt-5 w-11/12 sm:font-bold text-everly-main text-sm sm:text-lg"
+        class="text-left p-1 mt-20 md:mt-5 w-11/12 md:font-bold text-everly-main text-sm md:text-lg"
       >
         본인인증
       </div>
@@ -16,11 +16,11 @@
             <dropdown animation="fade" color="white" class="pr-1"></dropdown>
             <input
               placeholder="휴대 전화번호 입력('-'제외)"
-              class="rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm w-full"
+              class="rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-full"
             />
           </div>
           <button
-            class="bg-everly-main text-white rounded-lg shadow-md text-xs sm:text-sm py-3 w-1/5"
+            class="bg-everly-main text-white rounded-lg shadow-md text-xs md:text-sm py-3 w-1/5"
           >
             {{ buttonContent }} 전송
           </button>
@@ -28,17 +28,17 @@
         <div class="pr-0 flex items-center w-11/12">
           <input
             placeholder="인증 번호 6자리를 입력하세요"
-            class="mr-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm w-4/5"
+            class="mr-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-4/5"
           />
           <button
-            class="bg-everly-main text-white rounded-lg shadow-md text-xs sm:text-sm py-3 w-1/5"
+            class="bg-everly-main text-white rounded-lg shadow-md text-xs md:text-sm py-3 w-1/5"
           >
             {{ buttonContent }} 확인
           </button>
         </div>
       </div>
 
-      <div class="grid p-1 gap-2 place-items-center w-full mt-4 sm:mt-8">
+      <div class="grid p-1 gap-2 place-items-center w-full mt-4 md:mt-8">
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-mid_grey w-11/12"
         >

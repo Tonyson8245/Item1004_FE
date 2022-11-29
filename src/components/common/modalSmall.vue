@@ -11,7 +11,7 @@
         >
           <div class="relative p-5 flex-auto">
             <p
-              class="text-everly-main font-bold text-base sm:text-lg text-center m-3 sm:m-5"
+              class="text-everly-main font-bold text-base md:text-lg text-center m-3 md:m-5"
             >
               {{ setting.detail_content }}
             </p>
@@ -19,7 +19,7 @@
           <!--footer-->
           <div class="flex items-center justify-center p-5 pt-0">
             <button
-              class="text-everly-main font-bold bg-everly-light_blue w-full py-2 rounded-lg text-sm sm:text-lg"
+              class="text-everly-main font-bold bg-everly-light_blue w-full py-2 rounded-lg text-sm md:text-lg"
               type="button"
               v-on:click="toggleModal()"
             >

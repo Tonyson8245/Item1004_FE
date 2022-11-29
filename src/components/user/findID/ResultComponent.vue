@@ -5,7 +5,7 @@
         <img class="w-10" src="@/assets/icon/check_circle_green.svg" alt="" />
       </div>
       <div
-        class="text-left mt-11 w-full px-6 text-center font-bold text-lg sm:text-[28px]"
+        class="text-left mt-11 w-full px-6 text-center font-bold text-lg md:text-[28px]"
       >
         <div>고객님의 아이디는</div>
         <div><span class="text-everly-main">item1004</span> 입니다</div>

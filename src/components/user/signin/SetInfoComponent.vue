@@ -1,9 +1,9 @@
 <template>
-  <div class="h-screen sm:flex">
+  <div class="h-screen md:flex">
     <div
-      class="place-items-center sm:w-full h-full flex flex-col justify-between sm:h-auto"
+      class="place-items-center md:w-full h-full flex flex-col justify-between md:h-auto"
     >
-      <div class="hidden sm:block">
+      <div class="hidden md:block">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
       </div>
 
@@ -11,14 +11,14 @@
         class="grid gap-2 place-items-center w-full px-2 mt-2 pt-1 flex-none"
       >
         <div
-          class="text-left p-1 px-2 mt-16 sm:mt-5 w-full sm:font-bold text-everly-main text-sm sm:text-lg text-left"
+          class="text-left p-1 px-2 mt-16 md:mt-5 w-full md:font-bold text-everly-main text-sm md:text-lg text-left"
         >
           계정정보
         </div>
         <div class="flex items-center w-full relative">
           <input
             placeholder="아이디"
-            class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+            class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
           />
           <img
             src="@/assets/icon/check_small.svg"
@@ -29,7 +29,7 @@
         <div class="flex items-center w-full relative">
           <input
             placeholder="비밀번호"
-            class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+            class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
           />
           <img
             src="@/assets/icon/eyes_open.svg"
@@ -40,7 +40,7 @@
         <div class="flex items-center w-full relative">
           <input
             placeholder="비밀번호 확인"
-            class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm"
+            class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
           />
           <img
             src="@/assets/icon/eyes_open.svg"
@@ -48,7 +48,7 @@
             alt=""
           />
         </div>
-        <div class="w-full pl-2 text-xs sm:text-sm">
+        <div class="w-full pl-2 text-xs md:text-sm">
           <span class="text-everly-red"
             >*비밀번호 영문,숫자,특수문자 조합으로 8자리 이상입니다.</span
           >
@@ -56,18 +56,18 @@
       </div>
 
       <div class="grid gap-1 place-items-center mt-1 w-full p-2 flex-none">
-        <div class="text-left sm:mt-2 w-full px-2">
-          <span class="sm:font-bold text-everly-main text-sm sm:text-lg"
+        <div class="text-left md:mt-2 w-full px-2">
+          <span class="md:font-bold text-everly-main text-sm md:text-lg"
             >추천인</span
           >
         </div>
         <div class="pr-0 flex items-center w-full">
           <input
             placeholder="추천인 코드 10자리를 입력하세요"
-            class="mr-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs sm:text-sm w-4/5"
+            class="mr-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-4/5"
           />
           <button
-            class="bg-everly-main text-white rounded-lg shadow-md text-xs sm:text-sm py-3 w-1/5"
+            class="bg-everly-main text-white rounded-lg shadow-md text-xs md:text-sm py-3 w-1/5"
           >
             확인
           </button>
@@ -76,7 +76,7 @@
 
       <div class="w-full py-0 p-2 flex-none">
         <div
-          class="text-everly-dark_grey mt-2 sm:mt-5 border-[1px] px-3 py-2 rounded-lg border-everly-mid_grey"
+          class="text-everly-dark_grey mt-2 md:mt-5 border-[1px] px-3 py-2 rounded-lg border-everly-mid_grey"
         >
           <div class="flex items-center w-full">
             <img
@@ -101,7 +101,7 @@
 
       <div class="flex-grow"></div>
       <div
-        class="flex-none grid gap-2 place-items-center h-24 sm:mb-5 w-full sm:static"
+        class="flex-none grid gap-2 place-items-center h-24 md:mb-5 w-full md:static"
       >
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-mid_grey w-11/12"

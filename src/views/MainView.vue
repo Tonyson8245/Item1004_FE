@@ -1,18 +1,18 @@
 <template>
-  <div class="sm:bg-[#fafafa]">
+  <div class="md:bg-[#fafafa]">
     <!-- 헤더 -->
     <div class="cursor-default w-full fixed top-0 z-50">
       <!-- 웹 헤더 -->
-      <div class="px-4 py-4 hidden sm:block bg-[#fafafa] w-full">
+      <div class="px-4 py-4 hidden md:block bg-[#fafafa] w-full">
         <div class="flex">
           <div class="lg:flex-1"></div>
           <div
             class="flex justify-between items-center w-[1180px] lg:flex-shrink"
           >
-            <div class="hidden sm:block">
+            <div class="hidden md:block">
               <img src="@/assets/icon/logo_vertical.svg" alt="" />
             </div>
-            <div class="hidden sm:block">
+            <div class="hidden md:block">
               <div class="flex space-x-4 items-center">
                 <img src="@/assets/icon/chat_mid-grey.svg" alt="" />
                 <img src="@/assets/icon/notify_mid-grey.svg" alt="" />
@@ -24,10 +24,10 @@
         </div>
       </div>
       <!-- 모바일 헤더 -->
-      <div class="w-full bg-everly-main px-4 py-3 sm:hidden">
+      <div class="w-full bg-everly-main px-4 py-3 md:hidden">
         <div class="flex justify-between items-center">
           <div class="text-white font-bold">로그인하기</div>
-          <div class="sm:hidden">
+          <div class="md:hidden">
             <div class="flex space-x-4">
               <img src="@/assets/icon/filter_white.svg" alt="" />
               <img src="@/assets/icon/search_white.svg" alt="" />
@@ -43,7 +43,7 @@
     </router-view>
     <div class="p-4 text-center w-full fixed bottom-0">
       <div
-        class="invisible sm:visible text-center text-sm text-everly-dark_grey cursor-pointer"
+        class="invisible md:visible text-center text-sm text-everly-dark_grey cursor-pointer"
       >
         <div class="flex divide-xs w-full justify-center">
           <div class="text-center px-2 text-everly-dark_grey">
@@ -58,7 +58,7 @@
         </div>
       </div>
       <div
-        class="sm:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1 w-full"
+        class="md:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1 w-full"
       >
         고객센터 문의하기
       </div>
