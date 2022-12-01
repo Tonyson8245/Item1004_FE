@@ -1,10 +1,12 @@
 <template>
-  <div class="flex justify-between items-center px-4 py-1.5 pr-1">
+  <div
+    class="flex justify-between items-center px-4 py-1.5 sm:pr-1 text-xs sm:text-base md:text-sm"
+  >
     <div class="flex items-center">
       <sellbuyBadge :type="props.value?.type" />
       <div>{{ props.value?.text }}</div>
     </div>
-    <div class="pr-14">
+    <div class="pr-2 md:pr-14">
       <img src="@/assets/icon/circle_close.svg" alt="" class="w-5" />
     </div>
   </div>

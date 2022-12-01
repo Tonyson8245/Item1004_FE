@@ -4,7 +4,6 @@ export const useCommon = defineStore("common", {
   state: () => ({
     headerTitle: "",
     csShowLink: true,
-    showSearch: false,
   }),
 
   getters: {
@@ -12,9 +11,7 @@ export const useCommon = defineStore("common", {
   },
   actions: {
     // 액션 동작 예시
-    setshowSearch(status: boolean) {
-      this.showSearch = status;
-    },
+
     setcsShowLink(status: boolean) {
       this.csShowLink = status;
     },

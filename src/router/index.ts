@@ -1,23 +1,15 @@
 import components from "./components";
 import { createRouter, createWebHistory } from "vue-router";
 import { useCommon } from "@/store/modules/ui/common";
+import { useSearchStore } from "@/store/modules/home/searchStore";
+import { storeToRefs } from "pinia";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/home",
       component: components.MainView,
-      children: [
-        {
-          path: "/",
-          redirect: "home",
-        },
-        {
-          path: "home",
-          component: components.Home,
-        },
-      ],
     },
     {
       path: "/account",
@@ -55,9 +47,18 @@ const router = createRouter({
     },
   ],
 });
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
   const commonStore = useCommon();
+  const searchStore = useSearchStore();
+  const { storeShowSearchModal_mobile } = storeToRefs(searchStore);
 
+  // console.log("from : " + from.path);
+  // console.log(
+  //   "storeShowSearchModal_mobile : " + storeShowSearchModal_mobile.value
+  // );
+  // if (from.path == "/" && storeShowSearchModal_mobile.value) {
+  //   router.push("/");
+  // }
   switch (to.path) {
     case "/account/login":
       commonStore.setheaderTitle("로그인");
