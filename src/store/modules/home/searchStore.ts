@@ -5,7 +5,7 @@ export const useSearchStore = defineStore("searchStore", {
   state: () => ({
     storeKeyword: "",
     storeSellBuy: "sell",
-    storeSearchShowMobile: false,
+    storeShowSearchModal_mobile: false,
   }),
 
   getters: {
@@ -18,8 +18,8 @@ export const useSearchStore = defineStore("searchStore", {
     setstoreSellBuy(type: string) {
       this.storeSellBuy = type;
     },
-    setstoreSearchShowMobile(status: boolean) {
-      this.storeSearchShowMobile = status;
+    setstoreShowSearchModal_mobile(status: boolean) {
+      this.storeShowSearchModal_mobile = status;
     },
   },
 });

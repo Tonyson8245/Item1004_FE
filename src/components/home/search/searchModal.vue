@@ -1,12 +1,12 @@
 <template>
   <div class="cursor-pointer bg-white h-screen w-screen fixed z-50">
-    {{ storeSearchShowMobile }}
+    {{ storeShowSearchModal_mobile }}
     <div
-      v-if="storeSearchShowMobile"
+      v-if="storeShowSearchModal_mobile"
       class="overflow-x-hidden overflow-y-auto fixed inset-0 justify-center items-center flex bg-blue-300"
     >
       <div>모바일 검색</div>
-      <button @click="toggleSearchMobile()">닫기</button>
+      <button @click="toggleSearchModal_Mobile()">닫기</button>
     </div>
   </div>
 </template>
@@ -17,10 +17,12 @@ import { storeToRefs } from "pinia";
 
 //모바일 검색창 활성화/비활성화 버튼
 const searchStore = useSearchStore();
-const { storeSearchShowMobile } = storeToRefs(searchStore);
+const { storeShowSearchModal_mobile } = storeToRefs(searchStore);
 
-function toggleSearchMobile() {
-  searchStore.setstoreSearchShowMobile(!storeSearchShowMobile.value);
+function toggleSearchModal_Mobile() {
+  searchStore.setstoreShowSearchModal_mobile(
+    !storeShowSearchModal_mobile.value
+  );
 }
 </script>
 <style scoped></style>

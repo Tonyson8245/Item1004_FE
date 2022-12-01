@@ -1,8 +1,9 @@
 <template>
   <div @click="toggleSearchWeb()">
+    <headerComponent />
     <!-- 모바일 검색 페이지 -->
     <transition name="slide-fade">
-      <searchModal v-if="storeSearchShowMobile" />
+      <searchModal v-if="storeShowSearchModal_mobile" />
     </transition>
     <!-- 웹 헤더  -->
     <div class="flex cursor-default bg-[#fafafa] inline-block top-0 z-50">
@@ -37,7 +38,7 @@
             <img
               src="@/assets/icon/search_white.svg"
               alt=""
-              @click="toggleSearchMobile()"
+              @click="toggleSearchModal_Mobile()"
             />
             <img src="@/assets/icon/notify_white.svg" alt="" />
           </div>
@@ -77,6 +78,7 @@ import { useSearchStore } from "@/store/modules/home/searchStore";
 import { computed, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useMediaQuery } from "@vueuse/core";
+import HeaderComponent from "@/components/home/search/Header/headerComponent.vue";
 
 //검색창 활성화 값 가져오기
 const store = useCommon(); // 모달 store 가져오기
@@ -90,18 +92,22 @@ function toggleSearchWeb() {
   }
 }
 
-//모바일 검색창 활성화/비활성화 버튼
+//모바일 검색 모달 활성화/비활성화 버튼
 const searchStore = useSearchStore();
-const { storeSearchShowMobile } = storeToRefs(searchStore);
-
-function toggleSearchMobile() {
-  searchStore.setstoreSearchShowMobile(!storeSearchShowMobile.value);
+const { storeShowSearchModal_mobile } = storeToRefs(searchStore); // store 값 반응형으로 사용
+//모바일 검색 모달 설정 코드
+function toggleSearchModal_Mobile() {
+  searchStore.setstoreShowSearchModal_mobile(
+    !storeShowSearchModal_mobile.value
+  );
 }
 
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));
 
+//화면 커질 때, 모바일 검색 화면 끄는 것
 watch(isLargeScreen.value, () => {
-  if (isLargeScreen.value.value) toggleSearchMobile();
+  if (isLargeScreen.value.value)
+    searchStore.setstoreShowSearchModal_mobile(false);
 });
 </script>
 <style lang="scss">

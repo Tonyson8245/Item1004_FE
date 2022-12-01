@@ -2,12 +2,12 @@
   <div>
     <div class="dropdown-wrapper w-full border border-everly-main rounded-lg">
       <div class="flex">
-        <sellbuyBadge class="pl-4" :type="internalSellBuy" />
+        <sellbuyBadge class="pl-4" :type="storeSellBuy" />
         <input
           @click="toggleSearch()"
           placeholder="게임명 또는 서버명을 입력해주세요."
           :class="bottomBorder"
-          v-model="internalKeyword"
+          v-model="storeKeyword"
           @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
           class="w-full rounded-l-lg bg-white py-4 pr-4 text-[#6B7280] outline-none text-sm"
         />
@@ -54,22 +54,18 @@
 </template>
 
 <script lang="ts" setup>
-import searchModal from "@/components/home/search/searchModal.vue";
 import { ref, watch, computed } from "vue";
 import { useCommon } from "@/store/modules/ui/common";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import { debounce } from "vue-debounce";
-
 import dummy_searchRecent from "@/dummy/home/searchRecent";
 import recentKeyword from "@/components/home/search/recentKeywordComponent.vue";
 import sellbuyBadge from "@/components/common/sellbuyBadge.vue";
+import { storeToRefs } from "pinia";
 
 //팔래요/살래요 , 검색창 값 가져오기
 const searchStore = useSearchStore(); // 검색 store 가져오기
-const storeKeyword = computed(() => searchStore.storeKeyword); // 검색 값 가져오기
-const storeSellBuy = computed(() => searchStore.storeSellBuy); // 살래요/팔래요 값 가져오기
-let internalKeyword = storeKeyword.value; // 값만 가져와서 별도로 구분
-let internalSellBuy = storeSellBuy.value; // 값만 가져와서 별도로 구분
+const { storeKeyword, storeSellBuy } = storeToRefs(searchStore); // 검색 store의 검색어와 살래요/팔래요 설정 값 가져오기
 
 //검색창 활성화 값 가져오기
 const commonStore = useCommon(); // 모달 store 가져오기
@@ -95,7 +91,6 @@ watch(show, () => {
 function clickKeyword(keyword: string | null) {
   if (keyword == null) searchStore.setstoreKeyword("");
   else {
-    internalKeyword = keyword;
     searchStore.setstoreKeyword(keyword);
   }
 }
@@ -108,7 +103,6 @@ const setKeyword = debounce((keyword: string | null) => {
 
 //살래요 팔래요 변경
 function changeSellBuy(type: string) {
-  internalSellBuy = type;
   if (type == "buy") searchStore.setstoreSellBuy("buy");
   else searchStore.setstoreSellBuy("sell");
 }
