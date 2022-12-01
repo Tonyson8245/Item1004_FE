@@ -22,7 +22,11 @@
                   alt=""
                   class="w-6"
                 />
-                <span class="text-everly-main font-bold w-13">팔래요</span>
+                <span
+                  class="text-everly-main font-bold w-13"
+                  @click="toggleSellBuy('sell')"
+                  >팔래요</span
+                >
               </div>
               <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
                 <img
@@ -30,7 +34,11 @@
                   alt=""
                   class="w-6"
                 />
-                <span class="text-everly-dark-grey w-13">살래요</span>
+                <span
+                  class="text-everly-dark-grey w-13"
+                  @click="toggleSellBuy('buy')"
+                  >살래요</span
+                >
               </div>
 
               <!-- 살래요 활성화 -->
@@ -40,11 +48,19 @@
                   alt=""
                   class="w-6"
                 />
-                <span class="text-everly-dark-grey w-13">팔래요</span>
+                <span
+                  class="text-everly-dark-grey w-13"
+                  @click="toggleSellBuy('sell')"
+                  >팔래요</span
+                >
               </div>
               <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
                 <img src="@/assets/icon/check_web_red.svg" alt="" class="w-6" />
-                <span class="text-everly-red font-bold w-13">살래요</span>
+                <span
+                  class="text-everly-red font-bold w-13"
+                  @click="toggleSellBuy('buy')"
+                  >살래요</span
+                >
               </div>
             </div>
             <search
@@ -62,25 +78,37 @@
       </div>
       <!-- 모바일 팔래요/살래요 -->
       <div class="bg-everly-white px-4 py-4 cursor-default md:hidden mt-12">
-        <div class="flex space-x-5">
+        <div class="flex space-x-5 w-40">
           <!--팔래요 활성화 -->
           <div class="flex space-x-1" v-if="storeSellBuy == 'sell'">
-            <img src="@/assets/icon/check_small_blue.svg" alt="" />
-            <span class="text-everly-main font-bold">팔래요</span>
+            <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
+            <span
+              class="text-everly-main font-bold"
+              @click="toggleSellBuy('sell')"
+              >팔래요</span
+            >
           </div>
           <div class="flex space-x-1" v-if="storeSellBuy == 'sell'">
-            <img src="@/assets/icon/check_small_grey.svg" alt="" />
-            <span class="text-everly-dark_grey w-11">살래요</span>
+            <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
+            <span class="text-everly-dark_grey" @click="toggleSellBuy('buy')"
+              >살래요</span
+            >
           </div>
 
           <!--살래요 활성화 -->
           <div class="flex space-x-1" v-if="storeSellBuy == 'buy'">
-            <img src="@/assets/icon/check_small_grey.svg" alt="" />
-            <span class="text-everly-dark_grey w-11">팔래요</span>
+            <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
+            <span class="text-everly-dark_grey" @click="toggleSellBuy('sell')"
+              >팔래요</span
+            >
           </div>
           <div class="flex space-x-1" v-if="storeSellBuy == 'buy'">
-            <img src="@/assets/icon/check_small_blue.svg" alt="" />
-            <span class="text-everly-red w-11 font-bold">살래요</span>
+            <img src="@/assets/icon/check_mobile_red.svg" alt="" />
+            <span
+              class="text-everly-red font-bold"
+              @click="toggleSellBuy('buy')"
+              >살래요</span
+            >
           </div>
         </div>
       </div>
@@ -102,6 +130,11 @@ const { storeShowSearchModal_mobile } = storeToRefs(searchStore); // store 값 �
 
 //살래요/팔래요 값 가져오기
 const { storeSellBuy } = storeToRefs(searchStore);
+
+function toggleSellBuy(type: string) {
+  if (type == `sell`) searchStore.setstoreSellBuy("sell");
+  else searchStore.setstoreSellBuy("buy");
+}
 </script>
 
 <style scoped>

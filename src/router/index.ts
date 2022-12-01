@@ -12,6 +12,11 @@ const router = createRouter({
       component: components.MainView,
     },
     {
+      path: "/search",
+      component: components.searchModal,
+      meta: { transition: "slide-left" },
+    },
+    {
       path: "/account",
       component: components.LoginView,
       children: [

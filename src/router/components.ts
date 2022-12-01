@@ -6,9 +6,11 @@ import passwordConfirm from "@/components/user/changePassword/ConfirmComponent.v
 import passwordSet from "@/components/user/changePassword/SetComponent.vue";
 import infoSet from "@/components/user/signin/SetInfoComponent.vue";
 import signinComfirm from "@/components/user/signin/ConfirmComponent.vue";
+import searchModal from "@/components/header/search/searchModal.vue";
 import MainView from "@/views/MainView.vue";
 
 export default {
+  searchModal,
   loginComponent,
   LoginView,
   findIDResultComponent,

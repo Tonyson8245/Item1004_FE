@@ -33,7 +33,7 @@
             <img
               src="@/assets/icon/search_white.svg"
               alt=""
-              @click="toggleSearchModal_Mobile()"
+              @click="router.push('/search')"
             />
             <img src="@/assets/icon/notify_white.svg" alt="" />
           </div>
@@ -42,12 +42,12 @@
     </div>
     <!-- 헤더끝 -->
 
-    <!-- 메인 페이지 일때 헤더 -->
     <homeHeader />
   </div>
 </template>
 
 <script setup lang="ts">
+import router from "@/router";
 import homeHeader from "./homeHeader.vue";
 import { useSearchStore } from "../../store/modules/home/searchStore";
 import { computed, watch } from "vue";
@@ -69,9 +69,10 @@ function toggleSearchModal_Mobile() {
 //화면 커질 때, 모바일 검색 화면 끄는 것
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));
 watch(isLargeScreen.value, () => {
-  if (isLargeScreen.value.value)
+  if (isLargeScreen.value.value) {
     searchStore.setstoreShowSearchModal_mobile(false);
-  searchStore.setstoreShowSearch_web(false);
+    searchStore.setstoreShowSearch_web(false);
+  }
 });
 </script>
 <style scoped></style>

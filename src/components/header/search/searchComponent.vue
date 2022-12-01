@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="dropdown-wrapper w-full border border-everly-main rounded-lg">
+    <div
+      class="dropdown-wrapper w-full border border-everly-main rounded-lg overflow-hidden"
+    >
       <div class="flex">
         <sellbuyBadge class="pl-4" :type="storeSellBuy" />
         <input
@@ -23,13 +25,14 @@
           class="dropdown-menu text-everly-dark_grey rounded-lg z-10 w-full shadow-lg text-xs md:text-sm"
           v-if="storeShowSearch_web"
         >
+          <!-- 최근 검색어 -->
           <div class="bg-white" v-if="storeKeyword == ''">
             <div class="flex justify-between p-3 pr-0 pb-1 w-11/12">
               <span>최근검색어</span>
               <span>전체삭제</span>
             </div>
             <ul class="list-none overflow-hidden pb-2">
-              <li v-for="value in storeRecentKeywodList">
+              <li v-for="value in storeRecentKeywords">
                 <div
                   class="flex duration-300 hover:bg-[#e9e9fd] bg-white"
                   @click="
@@ -43,6 +46,22 @@
               </li>
             </ul>
           </div>
+          <!-- 유사 검색어 -->
+          <div class="bg-white py-3 px-5" v-if="storeKeyword != ''">
+            <ul class="list-none overflow-hidden pb-2">
+              <li v-for="value in storeSimilarKeywords">
+                <div
+                  class="flex duration-300 bg-white"
+                  @click="
+                    toggleSearch();
+                    clickKeyword(value);
+                  "
+                >
+                  <similarKeywordComponente class="w-full" :value="value" />
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -52,6 +71,7 @@
 <script lang="ts" setup>
 import recentKeyword from "./recentKeywordComponent.vue";
 import sellbuyBadge from "../../common/sellbuyBadge.vue";
+import similarKeywordComponente from "./similarKeywordComponent.vue";
 
 import { ref, watch } from "vue";
 import { useSearchStore } from "../../../store/modules/home/searchStore";
@@ -63,8 +83,9 @@ const searchStore = useSearchStore(); // 검색 store 가져오기
 const {
   storeKeyword,
   storeSellBuy,
-  storeRecentKeywodList,
+  storeRecentKeywords,
   storeShowSearch_web,
+  storeSimilarKeywords,
 } = storeToRefs(searchStore); // 검색 store의 검색어와 살래요/팔래요, 웹 검색 창 설정 값 가져오기
 
 //검색창 활성화 값 가져오기

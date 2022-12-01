@@ -1,20 +1,18 @@
 <template>
-  <div
-    class="h-screen fixed z-50 bg-white w-screen"
-    v-if="storeShowSearchModal_mobile"
-  >
+  <!-- v-if="storeShowSearchModal_mobile" -->
+  <div class="h-screen fixed z-50 bg-white w-screen">
     <div class="border-b w-full bg-white">
       <div
         class="text-center text-everly-dark_grey flex md:invisible cursor-default w-full px-3 py-3 flex items-center"
       >
-        <div class="flex-none mr-3" @click="toggleSearchModal_Mobile()">
+        <div class="flex-none mr-3" @click="router.push('/home')">
           <img src="@/assets/icon/arrow_left.png" alt="" />
         </div>
         <div class="flex-grow">
           <div
             class="bg-everly-light_blue w-full h-full flex rounded-xl flex items-center"
           >
-            <div class="m-2 mr-3">
+            <div class="m-2 mr-3 w-1/12">
               <div
                 v-if="storeSellBuy == `sell`"
                 class="bg-everly-main text-everly-white rounded-xl text-sm sm:text-base p-1"
@@ -52,7 +50,7 @@
           <span>전체삭제</span>
         </div>
         <ul class="list-none overflow-hidden pb-2">
-          <li v-for="value in storeRecentKeywodList">
+          <li v-for="value in storeRecentKeywords">
             <div
               class="flex duration-300 hover:bg-[#e9e9fd] bg-white"
               @click="
@@ -65,25 +63,43 @@
           </li>
         </ul>
       </div>
+      <!-- 유사 검색어 -->
+      <div class="bg-white py-5 px-7" v-if="storeKeyword != ''">
+        <ul class="list-none overflow-hidden pb-2">
+          <li v-for="value in storeSimilarKeywords">
+            <div
+              class="flex duration-300 bg-white py-1 md:p-0"
+              @click="clickKeyword(value)"
+            >
+              <SimilarKeywordComponent class="w-full" :value="value" />
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import router from "@/router";
+import SimilarKeywordComponent from "./similarKeywordComponent.vue";
 import recentKeyword from "./recentKeywordComponent.vue";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import { storeToRefs } from "pinia";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, computed, watch } from "vue";
 import { debounce } from "vue-debounce";
+import { useMediaQuery } from "@vueuse/core";
 
 //모바일 검색창 활성화/비활성화 버튼
 const searchStore = useSearchStore();
-const { storeShowSearchModal_mobile } = storeToRefs(searchStore);
 
 //팔래요/살래요 , 검색창 값, 최근 검색어 가져오기
-const { storeKeyword, storeSellBuy, storeRecentKeywodList } =
-  storeToRefs(searchStore);
+const {
+  storeKeyword,
+  storeSellBuy,
+  storeRecentKeywords,
+  storeSimilarKeywords,
+} = storeToRefs(searchStore);
 
 //검색창 활성화 값 가져오기
 const listmode = ref("recent");
@@ -110,12 +126,11 @@ function changeSellBuy(type: string) {
   else searchStore.setstoreSellBuy("sell");
 }
 
-//모바일 검색 모달 설정 코드
-function toggleSearchModal_Mobile() {
-  searchStore.setstoreShowSearchModal_mobile(
-    !storeShowSearchModal_mobile.value
-  );
-}
+//화면 커질 때, 모바일 검색 화면 끄는 것
+let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));
+watch(isLargeScreen.value, () => {
+  if (isLargeScreen.value.value) router.push("/home");
+});
 </script>
 <style scoped>
 input:focus {
