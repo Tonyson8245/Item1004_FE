@@ -1,5 +1,5 @@
 import http from "@/api/http";
-import type validServiceTerms from "@/interface/user/serviceTermList.interface";
+import type validServiceTerms from "@/interface/home/serviceTermList.interface";
 
 export function getServiceTerm(): Promise<validServiceTerms> {
   const url = "/service-terms/validities";

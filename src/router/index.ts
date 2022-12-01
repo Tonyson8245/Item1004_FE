@@ -10,9 +10,8 @@ const router = createRouter({
       component: components.MainView,
       children: [
         {
-          path: "",
-          // redirect: "/home",
-          redirect: "/account/login",
+          path: "/",
+          redirect: "home",
         },
         {
           path: "home",
@@ -58,7 +57,7 @@ const router = createRouter({
 });
 router.beforeEach((to) => {
   const commonStore = useCommon();
-  console.log(to.path);
+
   switch (to.path) {
     case "/account/login":
       commonStore.setheaderTitle("로그인");

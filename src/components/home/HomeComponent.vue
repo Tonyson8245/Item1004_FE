@@ -5,38 +5,35 @@
       <div class="flex-1 hidden md:block"></div>
       <div class="flex-none hidden md:block">
         <div
-          class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-10"
+          class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-10 relative"
         >
           <div class="flex space-x-4 text-xl">
-            <div class="flex space-x-2">
-              <img
-                src="@/assets/icon/check_small_blue.svg"
-                class="w-6"
-                alt=""
-              />
+            <!-- 팔래요 활성화 -->
+            <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+              <img src="@/assets/icon/check_web_blue.svg" alt="" class="w-6" />
               <span class="text-everly-main font-bold w-13">팔래요</span>
             </div>
-            <div class="flex space-x-2">
-              <img
-                src="@/assets/icon/check_small_dark-grey.svg"
-                alt=""
-                class="w-6"
-              />
-              <span class="text-everly-dark_grey w-13">살래요</span>
+            <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+              <img src="@/assets/icon/check_web_grey.svg" alt="" class="w-6" />
+              <span class="text-everly-dark-grey w-13">살래요</span>
+            </div>
+
+            <!-- 살래요 활성화 -->
+            <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+              <img src="@/assets/icon/check_web_grey.svg" alt="" class="w-6" />
+              <span class="text-everly-dark-grey w-13">팔래요</span>
+            </div>
+            <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+              <img src="@/assets/icon/check_web_red.svg" alt="" class="w-6" />
+              <span class="text-everly-red font-bold w-13">살래요</span>
             </div>
           </div>
-          <div class="w-[760px] flex">
-            <search />
-            <!-- <input
-              placeholder="게임명 또는 서버명을 입력해주세요."
-              class="flex-1 rounded-l-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
-            /> -->
-            <!-- <div class="">
-              <img src="@/assets/icon/filter_blue.svg" alt="" />
-            </div> -->
-          </div>
+          <search
+            class="w-[760px] absolute top-[37px] right-[205px]"
+            @click.stop=""
+          />
           <button
-            class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border-[1px] py-3"
+            class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border py-3"
           >
             물품등록
           </button>
@@ -45,23 +42,42 @@
       <div class="flex-1 hidden md:block"></div>
     </div>
     <!-- 모바일 팔래요/살래요 -->
-    <div class="bg-everly-white px-4 py-4 cursor-default md:hidden">
+    <div class="bg-everly-white px-4 py-4 cursor-default md:hidden mt-12">
       <div class="flex space-x-5">
-        <div class="flex space-x-1">
+        <!--팔래요 활성화 -->
+        <div class="flex space-x-1" v-if="storeSellBuy == 'sell'">
           <img src="@/assets/icon/check_small_blue.svg" alt="" />
           <span class="text-everly-main font-bold">팔래요</span>
         </div>
-        <div class="flex space-x-1">
-          <img src="@/assets/icon/check_small_dark-grey.svg" alt="" />
+        <div class="flex space-x-1" v-if="storeSellBuy == 'sell'">
+          <img src="@/assets/icon/check_small_grey.svg" alt="" />
           <span class="text-everly-dark_grey w-11">살래요</span>
+        </div>
+
+        <!--살래요 활성화 -->
+        <div class="flex space-x-1" v-if="storeSellBuy == 'buy'">
+          <img src="@/assets/icon/check_small_grey.svg" alt="" />
+          <span class="text-everly-dark_grey w-11">팔래요</span>
+        </div>
+        <div class="flex space-x-1" v-if="storeSellBuy == 'buy'">
+          <img src="@/assets/icon/check_small_blue.svg" alt="" />
+          <span class="text-everly-red w-11 font-bold">살래요</span>
         </div>
       </div>
     </div>
   </div>
+  <div></div>
 </template>
 
 <script setup lang="ts">
-import search from "@/components/common/search.vue";
+import { useSearchStore } from "@/store/modules/home/searchStore";
+import search from "@/components/home/search/searchComponet.vue";
+import { computed } from "vue";
+import { storeToRefs } from "pinia";
+
+//살래요/팔래요 값 가져오기
+const searchStore = useSearchStore();
+const { storeSellBuy } = storeToRefs(searchStore);
 </script>
 
 <style scoped></style>

@@ -77,7 +77,7 @@
 
       <div class="w-full py-0 p-2 flex-none">
         <div
-          class="text-everly-dark_grey mt-2 md:mt-5 border-[1px] px-3 py-2 rounded-lg border-everly-mid_grey"
+          class="text-everly-dark_grey mt-2 md:mt-5 border px-3 py-2 rounded-lg border-everly-mid_grey"
         >
           <div class="flex items-center w-full">
             <img
