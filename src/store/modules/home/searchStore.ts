@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import dummy_searchRecent from "../../../dummy/home/keywordRecent";
-import dummy_keywordSimilar from "../../../dummy/home/keywordSmilar";
+import dummy_searchRecent from "../../../dummy/home/search/keywordRecent";
+import dummy_keywordSimilar from "../../../dummy/home/search/keywordSmilar";
 
 export const useSearchStore = defineStore("searchStore", {
   state: () => ({

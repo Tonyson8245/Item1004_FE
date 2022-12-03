@@ -1,21 +1,46 @@
 <template>
-  <div @click="toggleSearchWeb()">
-    <headerComponent />
+  <div
+    @click="
+      toggleSearchWeb();
+      toggleSearch();
+    "
+  >
+    <headerComponentVue />123123
     <router-view> </router-view>
-    <div class="p-4 text-center w-full fixed bottom-0">
+    <div class="text-center w-full fixed bottom-0">
       <div
-        class="md:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1 w-full"
+        class="md:invisible text-center text-xs sm:text-sm text-everly-dark_grey cursor-pointr w-full h-14 sm:h-16 grid grid-cols-3 gap-4 border-t bg-everly-white"
       >
-        하단 버튼바
+        <div class="flex flex-col justify-center items-center">
+          <img src="@/assets/icon/chat_mobile.svg" class="mt-1" alt="" />
+          <div>채팅</div>
+        </div>
+        <div
+          class="flex flex-col justify-center items-center bg-everly-light_blue"
+          @click="router.push('/home')"
+        >
+          <img src="@/assets/icon/chat_mobile.svg" class="mt-1" alt="" />
+          <div class="text-everly-main">홈</div>
+        </div>
+        <div class="flex flex-col justify-center items-center">
+          <img src="@/assets/icon/mypage_mobile.svg" class="mt-1" alt="" />
+          <div>내 날개</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { useRouter } from "vue-router";
 import { useSearchStore } from "@/store/modules/home/searchStore";
-import { computed } from "vue";
-import headerComponent from "@/components/header/headerComponent.vue";
+import { useFilterStore } from "@/store/modules/home/filterStore";
+import headerComponentVue from "../components/header/headerComponent.vue";
 import { storeToRefs } from "pinia";
+
+//라우터 생성
+const router = useRouter();
+
+const filterStore = useFilterStore();
 
 //검색창 활성화 값 가져오기
 const searchStore = useSearchStore();
@@ -26,6 +51,12 @@ function toggleSearchWeb() {
   if (storeShowSearch_web) {
     searchStore.setstoreShowSearch_web(false);
   }
+}
+
+//웹 필터 검색창 비활성화
+function toggleSearch() {
+  filterStore.setstoreShowGameSimilar(false);
+  filterStore.setstoreShowServerSimilar(false);
 }
 </script>
 <style lang="scss"></style>

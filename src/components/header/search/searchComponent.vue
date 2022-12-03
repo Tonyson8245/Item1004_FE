@@ -1,19 +1,22 @@
 <template>
   <div>
     <div
-      class="dropdown-wrapper w-full border border-everly-main rounded-lg overflow-hidden"
+      class="dropdown-wrapper w-full border border-everly-main rounded-xl overflow-hidden"
     >
-      <div class="flex">
-        <sellbuyBadge class="pl-4" :type="storeSellBuy" />
+      <div class="flex items-center">
+        <sellbuyBadge class="pl-4 py-3" :type="storeSellBuy" />
         <input
           @click="toggleSearch()"
           placeholder="게임명 또는 서버명을 입력해주세요."
           :class="bottomBorder"
           v-model="storeKeyword"
           @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
-          class="w-full rounded-l-lg bg-white py-4 pr-4 text-[#6B7280] outline-none text-sm"
+          class="w-full rounded-l-lg bg-white py-4 px-0 text-[#6B7280] outline-none text-sm"
         />
-        <div class="bg-everly-main rounded-r-lg">
+        <div class="bg-white px-4 py-4" @click="toggleFilter_web()">
+          <img src="@/assets/icon/filter_blue.svg" alt="" />
+        </div>
+        <div class="bg-everly-main rounded-r-lg py-1.5 px-1">
           <img src="@/assets/icon/search_white_large.svg" alt="" />
         </div>
       </div>
@@ -75,11 +78,15 @@ import similarKeywordComponente from "./similarKeywordComponent.vue";
 
 import { ref, watch } from "vue";
 import { useSearchStore } from "../../../store/modules/home/searchStore";
+import { useFilterStore } from "../../../store/modules/home/filterStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
 
 //팔래요/살래요 , 검색창 값, 최근 검색어 가져오기
 const searchStore = useSearchStore(); // 검색 store 가져오기
+//필터 store 가져오기
+const filterStore = useFilterStore();
+
 const {
   storeKeyword,
   storeSellBuy,
@@ -94,6 +101,10 @@ const listmode = ref("recent");
 //검색창 활성화/비활성화
 function toggleSearch() {
   searchStore.setstoreShowSearch_web(!storeShowSearch_web.value);
+  //웹 필터 끄기
+  filterStore.setstoreShowFilter_web(false);
+  filterStore.setstoreShowGameSimilar(false);
+  filterStore.setstoreShowServerSimilar(false);
 }
 
 //검색 시 검색 창 모양 바꿔주는 것
@@ -127,6 +138,16 @@ const setKeyword = debounce((keyword: string | null) => {
 function changeSellBuy(type: string) {
   if (type == "buy") searchStore.setstoreSellBuy("buy");
   else searchStore.setstoreSellBuy("sell");
+}
+
+const { storeShowFilter_web } = storeToRefs(filterStore);
+
+function toggleFilter_web() {
+  if (!storeShowFilter_web.value) filterStore.setstoreTempfilter();
+  else filterStore.cancelstoreFilter();
+
+  filterStore.setstoreShowFilter_web(!storeShowFilter_web.value);
+  searchStore.setstoreShowSearch_web(false);
 }
 </script>
 

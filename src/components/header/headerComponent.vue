@@ -29,12 +29,17 @@
         <div class="text-white font-bold">로그인하기</div>
         <div class="md:hidden">
           <div class="flex space-x-4">
-            <img src="@/assets/icon/filter_white.svg" alt="" />
+            <img
+              src="@/assets/icon/filter_white.svg"
+              alt=""
+              @click="toggleFilter_mobile()"
+            />
             <img
               src="@/assets/icon/search_white.svg"
               alt=""
-              @click="router.push('/search')"
+              @click="moveLink('/search')"
             />
+
             <img src="@/assets/icon/notify_white.svg" alt="" />
           </div>
         </div>
@@ -42,37 +47,50 @@
     </div>
     <!-- 헤더끝 -->
 
-    <homeHeader />
+    <HomeHeader />
   </div>
 </template>
 
 <script setup lang="ts">
-import router from "@/router";
-import homeHeader from "./homeHeader.vue";
+import HomeHeader from "./homeHeader.vue";
 import { useSearchStore } from "../../store/modules/home/searchStore";
+import { useRouter } from "vue-router";
 import { computed, watch } from "vue";
 import { useMediaQuery } from "@vueuse/core";
+import { useFilterStore } from "@/store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 
 //store 가져오기
 const searchStore = useSearchStore();
-
-//모바일 검색 모달 활성화/비활성화 버튼
-const { storeShowSearchModal_mobile } = storeToRefs(searchStore); // store 값 반응형으로 사용
-//모바일 검색 모달 설정 코드
-function toggleSearchModal_Mobile() {
-  searchStore.setstoreShowSearchModal_mobile(
-    !storeShowSearchModal_mobile.value
-  );
-}
+const filterStore = useFilterStore();
+//라우터 만들기
+const router = useRouter();
 
 //화면 커질 때, 모바일 검색 화면 끄는 것
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));
 watch(isLargeScreen.value, () => {
   if (isLargeScreen.value.value) {
-    searchStore.setstoreShowSearchModal_mobile(false);
     searchStore.setstoreShowSearch_web(false);
+    filterStore.setstoreShowFilter_web(false);
+    filterStore.setstoreShowFilter_mobile(false);
   }
 });
+
+//모바일 필터 키키
+const { storeShowFilter_mobile } = storeToRefs(filterStore);
+function toggleFilter_mobile() {
+  if (!storeShowFilter_mobile.value) filterStore.setstoreTempfilter();
+  else filterStore.cancelstoreFilter();
+
+  filterStore.setstoreShowFilter_mobile(!storeShowFilter_mobile.value);
+}
+
+// 페이지 이동
+function moveLink(link: string) {
+  if (link == "/search") {
+    filterStore.setstoreShowFilter_mobile(false);
+    router.push("/search");
+  }
+}
 </script>
 <style scoped></style>

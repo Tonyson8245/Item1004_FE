@@ -1,7 +1,6 @@
 <template>
-  <!-- v-if="storeShowSearchModal_mobile" -->
-  <div class="h-screen fixed z-50 bg-white w-screen">
-    <div class="border-b w-full bg-white">
+  <div class="h-screen fixed z-50 bg-white w-screen fixed">
+    <div class="border-b-2 w-full bg-white">
       <div
         class="text-center text-everly-dark_grey flex md:invisible cursor-default w-full px-3 py-3 flex items-center"
       >
@@ -39,17 +38,63 @@
           </div>
         </div>
       </div>
-      <div>필터 목록</div>
+      <div class="bg-everly-white cursor-default md:hidden z-50">
+        <div class="bg-[#fafafa]" v-if="conditionBadge_mobile">
+          <div class="flex-1 pr-2"></div>
+          <div class="flex-none flex p-3 space-x-3 h-12 px-6">
+            <!-- 게임머니 베찌 -->
+            <div
+              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+              v-if="storeCategoryGamemoney"
+            >
+              <span>게임머니</span>
+            </div>
+            <!-- 아이템 베찌-->
+            <div
+              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+              v-if="storeCategoryItem"
+            >
+              <span>아이템</span>
+            </div>
+            <!-- 캐릭터 베찌-->
+            <div
+              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+              v-if="storeCategoryCharacter"
+            >
+              <span>캐릭터</span>
+            </div>
+            <!-- 기타 베찌-->
+            <div
+              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+              v-if="storeCategoryEtc"
+            >
+              <span>기타</span>
+            </div>
+            <!-- 게임/게임서버 베찌-->
+            <div
+              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+              v-if="storeServerKeyword != ''"
+            >
+              <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span>
+            </div>
+          </div>
+          <div class="flex-1"></div>
+        </div>
+        <div class="text-sm px-6 py-2 text-everly-dark_grey" v-else>
+          필터 설정이 없습니다. 홈화면에서 설정해주세요.
+        </div>
+      </div>
     </div>
 
     <div>
       <!-- 최근 검색어 목록 -->
       <div v-if="storeKeyword == ''">
-        <div class="flex justify-between text-sm py-3 px-4 sm:text-lg">
+        <div
+          class="flex justify-between text-sm py-3 px-6 sm:text-lg font-bold"
+        >
           <span>최근 검색하신 내역이에요</span>
-          <span>전체삭제</span>
         </div>
-        <ul class="list-none overflow-hidden pb-2">
+        <ul class="list-none overflow-hidden pb-2 px-1">
           <li v-for="value in storeRecentKeywords">
             <div
               class="flex duration-300 hover:bg-[#e9e9fd] bg-white"
@@ -81,17 +126,31 @@
 </template>
 
 <script lang="ts" setup>
-import router from "@/router";
+import { useRouter } from "vue-router";
 import SimilarKeywordComponent from "./similarKeywordComponent.vue";
 import recentKeyword from "./recentKeywordComponent.vue";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import { storeToRefs } from "pinia";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { debounce } from "vue-debounce";
 import { useMediaQuery } from "@vueuse/core";
+import { useFilterStore } from "@/store/modules/home/filterStore";
+
+const router = useRouter();
 
 //모바일 검색창 활성화/비활성화 버튼
 const searchStore = useSearchStore();
+
+const filterStore = useFilterStore();
+
+const {
+  storeCategoryCharacter,
+  storeCategoryEtc,
+  storeCategoryGamemoney,
+  storeCategoryItem,
+  storeServerKeyword,
+  storeGameKeyword,
+} = storeToRefs(filterStore);
 
 //팔래요/살래요 , 검색창 값, 최근 검색어 가져오기
 const {
@@ -130,6 +189,34 @@ function changeSellBuy(type: string) {
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));
 watch(isLargeScreen.value, () => {
   if (isLargeScreen.value.value) router.push("/home");
+});
+
+//화면 로드할때 웹화면이면 메인으로 보내버리기
+onMounted(() => {
+  if (isLargeScreen.value.value) router.push("/home");
+});
+
+function closeFilterBadge(type: string) {
+  if (type == "gameServer") {
+    filterStore.setstoreGameKeyword("");
+    filterStore.setstoreShowServerFilter(false);
+    filterStore.setstoreServerKeyword("");
+  } else filterStore.changeCategory(type);
+}
+
+//필터가 있을때만 배찌가 보이는 값
+const conditionBadge_mobile = computed(() => {
+  if (filterStore.storeShowFilter_mobile) return false;
+  else if (
+    !filterStore.storeCategoryGamemoney &&
+    !filterStore.storeCategoryEtc &&
+    !filterStore.storeCategoryItem &&
+    !filterStore.storeCategoryCharacter &&
+    filterStore.storeGameKeyword == "" &&
+    filterStore.storeServerKeyword == ""
+  )
+    return false;
+  else return true;
 });
 </script>
 <style scoped>
