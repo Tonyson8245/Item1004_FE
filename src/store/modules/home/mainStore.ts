@@ -1,13 +1,22 @@
 import { defineStore } from "pinia";
 import dummyCard from "@/dummy/home/card/dummycard";
+import type productCard from "@/interface/home/productCard.interface";
 
 export const useMainStore = defineStore("mainStore", {
   state: () => ({
-    storeProductCard: dummyCard,
+    storeProductCard: [...dummyCard],
+    // storeNewProductCard: [] as productCard[],
   }),
 
   getters: {
     //서버로 부터 가져오는 로직 나중에 axios 붙힐때 연동할 생각할 것
+    // getstoreProductCard() {
+    //   this.storeProductCard.push(dummyCard);
+    // },
   },
-  actions: {},
+  actions: {
+    setstoreProductCard() {
+      this.storeProductCard.push.apply(this.storeProductCard, dummyCard);
+    },
+  },
 });
