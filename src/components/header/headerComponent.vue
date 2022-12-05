@@ -23,7 +23,7 @@
     </div>
     <!-- 모바일 헤더 -->
     <div
-      class="w-full bg-everly-main px-4 py-3 cursor-default fixed top-0 z-10 md:hidden"
+      class="w-full bg-everly-main px-4 py-3 cursor-default top-0 md:hidden z-50 fixed"
     >
       <div class="flex justify-between items-center">
         <div class="text-white font-bold">로그인하기</div>
@@ -59,6 +59,7 @@ import { computed, watch } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import { useFilterStore } from "@/store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
+import { debounce } from "vue-debounce";
 
 //store 가져오기
 const searchStore = useSearchStore();

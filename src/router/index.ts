@@ -12,7 +12,13 @@ const router = createRouter({
     {
       path: "/home",
       component: components.MainView,
-      meta: { transition: "slide-right" },
+      meta: { transition: "slide-right", name: "home" },
+      children: [
+        {
+          path: "",
+          component: components.mainPage,
+        },
+      ],
     },
     {
       path: "/search",

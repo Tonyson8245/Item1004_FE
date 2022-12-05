@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { debounce } from "vue-debounce";
 import dummy_gameSimilar from "../../../dummy/home/filter/gameSimilar";
 import dummy_serverSimilar from "../../../dummy/home/filter/serverSimilar";
 
@@ -6,7 +7,7 @@ export const useFilterStore = defineStore("filterStore", {
   state: () => ({
     //웹,모바일 상태에서 필터창 켜졌는지 여부
     storeShowFilter_mobile: false,
-    storeShowFilter_web: true,
+    storeShowFilter_web: false,
 
     //게임, 게임 서버 검색할 때, 유사리스트 상태값
     storeShowServerSimilar: false,
@@ -20,14 +21,14 @@ export const useFilterStore = defineStore("filterStore", {
     storeServerSimilar: dummy_serverSimilar,
 
     //카테고리 설정
-    storeCategoryGamemoney: true,
-    storeCategoryItem: true,
-    storeCategoryCharacter: true,
-    storeCategoryEtc: true,
+    storeCategoryGamemoney: false,
+    storeCategoryItem: false,
+    storeCategoryCharacter: false,
+    storeCategoryEtc: false,
 
     //게임,게임서버 설정
-    storeGameKeyword: "메이플스토리",
-    storeServerKeyword: "크로아",
+    storeGameKeyword: "",
+    storeServerKeyword: "",
 
     //기존 필터 값ㅅ
     storeTempCategory: [false, false, false, false],
@@ -39,6 +40,7 @@ export const useFilterStore = defineStore("filterStore", {
   },
   actions: {
     setstoreShowFilter_mobile(status: boolean) {
+      //debounce는 0.6초 뒤에 값 적용되게 해주는 함수
       this.storeShowFilter_mobile = status;
     },
     setstoreShowFilter_web(status: boolean) {

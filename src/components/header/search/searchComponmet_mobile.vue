@@ -2,12 +2,12 @@
   <div class="h-screen fixed z-50 bg-white w-screen fixed">
     <div class="border-b-2 w-full bg-white">
       <div
-        class="text-center text-everly-dark_grey flex md:invisible cursor-default w-full px-3 py-3 flex items-center"
+        class="text-center text-everly-dark_grey flex md:invisible cursor-default w-full flex items-center"
       >
-        <div class="flex-none mr-3" @click="router.push('/home')">
+        <div class="flex-none mr-3 pl-3 py-2" @click="router.push('/home')">
           <img src="@/assets/icon/arrow_left.png" alt="" />
         </div>
-        <div class="flex-grow">
+        <div class="flex-grow py-2 pr-3">
           <div
             class="bg-everly-light_blue w-full h-full flex rounded-xl flex items-center"
           >
@@ -15,11 +15,13 @@
               <div
                 v-if="storeSellBuy == `sell`"
                 class="bg-everly-main text-everly-white rounded-xl text-sm sm:text-base p-1"
+                @click="toggleSellBuy('buy')"
               >
                 팜
               </div>
               <div
                 v-if="storeSellBuy == `buy`"
+                @click="toggleSellBuy('sell')"
                 class="bg-everly-red text-everly-white rounded-xl text-sm sm:text-base p-1"
               >
                 삼
@@ -38,54 +40,54 @@
           </div>
         </div>
       </div>
-      <div class="bg-everly-white cursor-default md:hidden z-50">
-        <div class="bg-[#fafafa]" v-if="conditionBadge_mobile">
-          <div class="flex-1 pr-2"></div>
-          <div class="flex-none flex p-3 space-x-3 h-12 px-6">
-            <!-- 게임머니 베찌 -->
-            <div
-              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-              v-if="storeCategoryGamemoney"
-            >
-              <span>게임머니</span>
-            </div>
-            <!-- 아이템 베찌-->
-            <div
-              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-              v-if="storeCategoryItem"
-            >
-              <span>아이템</span>
-            </div>
-            <!-- 캐릭터 베찌-->
-            <div
-              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-              v-if="storeCategoryCharacter"
-            >
-              <span>캐릭터</span>
-            </div>
-            <!-- 기타 베찌-->
-            <div
-              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-              v-if="storeCategoryEtc"
-            >
-              <span>기타</span>
-            </div>
-            <!-- 게임/게임서버 베찌-->
-            <div
-              class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-              v-if="storeServerKeyword != ''"
-            >
-              <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span>
-            </div>
+    </div>
+    <!-- 뱃지 -->
+    <div class="bg-everly-white cursor-default md:hidden z-50 overflow-x-auto">
+      <div class="bg-[#fafafa]" v-if="conditionBadge_mobile">
+        <div class="flex-1 pr-2"></div>
+        <div class="flex-none flex p-3 space-x-3 h-12 px-6">
+          <!-- 게임머니 뱃지 -->
+          <div
+            class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap"
+            v-if="storeCategoryGamemoney"
+          >
+            <span>게임머니</span>
           </div>
-          <div class="flex-1"></div>
+          <!-- 아이템 뱃지-->
+          <div
+            class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap"
+            v-if="storeCategoryItem"
+          >
+            <span>아이템</span>
+          </div>
+          <!-- 캐릭터 뱃지-->
+          <div
+            class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap"
+            v-if="storeCategoryCharacter"
+          >
+            <span>캐릭터</span>
+          </div>
+          <!-- 기타 뱃지-->
+          <div
+            class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap"
+            v-if="storeCategoryEtc"
+          >
+            <span>기타</span>
+          </div>
+          <!-- 게임/게임서버 뱃지-->
+          <div
+            class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap"
+            v-if="storeServerKeyword != ''"
+          >
+            <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span>
+          </div>
         </div>
-        <div class="text-sm px-6 py-2 text-everly-dark_grey" v-else>
-          필터 설정이 없습니다. 홈화면에서 설정해주세요.
-        </div>
+        <div class="flex-1"></div>
+      </div>
+      <div class="text-sm px-6 py-2 text-everly-dark_grey" v-else>
+        필터 설정이 없습니다. 홈화면에서 설정해주세요.
       </div>
     </div>
-
     <div>
       <!-- 최근 검색어 목록 -->
       <div v-if="storeKeyword == ''">
@@ -204,7 +206,7 @@ function closeFilterBadge(type: string) {
   } else filterStore.changeCategory(type);
 }
 
-//필터가 있을때만 배찌가 보이는 값
+//필터가 있을때만 뱃지가 보이는 값
 const conditionBadge_mobile = computed(() => {
   if (filterStore.storeShowFilter_mobile) return false;
   else if (
@@ -218,6 +220,12 @@ const conditionBadge_mobile = computed(() => {
     return false;
   else return true;
 });
+
+// 팜삼 변경
+function toggleSellBuy(type: string) {
+  if (type == `sell`) searchStore.setstoreSellBuy("sell");
+  else searchStore.setstoreSellBuy("buy");
+}
 </script>
 <style scoped>
 input:focus {

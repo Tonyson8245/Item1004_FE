@@ -7,16 +7,11 @@
 </template>
 <script lang="ts" setup></script>
 <style>
-.slide-right-enter-active,
+/* .slide-right-enter-active,
 .slide-right-leave-active {
   transition: all 0.3s ease;
 }
-/* .slide-right-enter-from {
-  right: -100%;
-}
-.slide-right-enter-to {
-  right: 0%;
-} */
+
 .slide-right-leave-from {
   right: 0%;
 }
@@ -24,7 +19,7 @@
   right: 100%;
 }
 /*  */
-.slide-left-enter-active,
+/* .slide-left-enter-active,
 .slide-left-leave-active {
   position: absolute;
   transition: all 0.3s ease;
@@ -33,6 +28,6 @@
   right: 100%;
 }
 .slide-left-enter-to {
-  right: 0%;
-}
+  right: 0px;
+}  */
 </style>
