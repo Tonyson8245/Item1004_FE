@@ -14,17 +14,24 @@
         >
           <ProductCard :card="card" />
         </div>
-
         <VueEternalLoading :load="load">
           <template #loading>
-            <div class="w-full flex justify-center">
-              <spinner v-if="infiniteStatus" />
-            </div> </template
+            <div v-if="storeinfiniteStatus">
+              <div class="flex w-full hidden md:block">
+                <div class="w-[1180px] flex justify-center pl-2 pb-3">
+                  <spinner />
+                </div>
+              </div>
+              <div class="block md:hidden w-full text-center">
+                <div class="inline-block"><spinner /></div>
+              </div>
+            </div>
+            <div v-else></div></template
         ></VueEternalLoading>
       </div>
       <div
         class="w-full justify-center items-center flex p-4 cursor-default"
-        v-if="!infiniteStatus"
+        v-if="!storeinfiniteStatus"
       >
         <div
           class="rounded-lg py-1 md:py-3 px-3 md:px-10 flex text-everly-drak_grey bg-everly-white text-sm md:text-base shadow-none md:shadow-xl border border-black md:border"
@@ -35,8 +42,29 @@
         </div>
       </div>
 
+      <div
+        class="hidden md:block flex fixed bottom-10"
+        v-if="storeinfiniteStatus"
+      >
+        <div class="flex-grow"></div>
+        <div class="flex-none w-[1180px]">
+          <div class="absolute right-0 bottom-0">
+            <img
+              @click="scrollToTop"
+              src="@/assets/icon/button_goup.svg"
+              alt=""
+              class="w-[55px] h-[55px] inline-block"
+            />
+          </div>
+        </div>
+        <div class="flex-grow"></div>
+      </div>
+
       <!--  하단 배너 -->
-      <div class="md:mt-12 mt-2">
+      <div
+        class="md:mt-12 mt-2"
+        v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
+      >
         <div class="grid-cols-3 gap-4 flex-grow w-full hidden md:grid">
           <div
             class="bg-green-100 w-[373px] h-[140px] flex justify-center items-center h-full"
@@ -75,13 +103,17 @@
       <!-- 협력사 -->
 
       <div
-        class="grid grid-cols-1 divide-y py-10 w-screen left-0 absolute hidden md:block"
+        class="grid grid-cols-1 divide-y py-10 w-screen left-0 fixed hidden md:block"
+        v-if="!storeinfiniteStatus"
       >
         <div></div>
         <div></div>
       </div>
 
-      <div class="md:mt-14 bg-white md:pb-4 py-2">
+      <div
+        class="md:mt-14 bg-white md:pb-4 py-2"
+        v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
+      >
         <Carousel :settings="settings" :breakpoints="breakpoints">
           <Slide v-for="slide in 30" :key="slide">
             <div
@@ -96,9 +128,31 @@
           </template>
         </Carousel>
       </div>
-      <FooterMobile class="block md:hidden" />
+
+      <FooterMobile
+        class="block md:hidden"
+        v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
+      />
     </div>
     <div class="flex-grow"></div>
+
+    <!-- 맨위로 모바일-->
+    <div @click="scrollToTop" v-if="storeinfiniteStatus">
+      <div
+        class="block md:hidden fixed bottom-20 w-full right-0 flex justify-center"
+      >
+        <div>
+          <img src="@/assets/icon/button_gotop_mobile.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <div
+      class="block md:hidden bottom-20 w-full flex justify-end right-5 fixed"
+    >
+      <div>
+        <img src="@/assets/icon/button_write_mobile.svg" alt="" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -120,20 +174,18 @@ const filterStore = useFilterStore();
 const { storeShowFilter_mobile } = storeToRefs(filterStore);
 
 const mainStore = useMainStore();
-const { storeProductCard } = storeToRefs(mainStore);
+const { storeProductCard, storeinfiniteStatus } = storeToRefs(mainStore);
 
 const cards = storeProductCard;
 
 // Infinite scroll on off
-let infiniteStatus = false;
 function toggleInfiniteStatus(status: boolean) {
-  console.log(123);
-  infiniteStatus = status;
+  mainStore.setstoreinfiniteStatus(true);
 }
 
 // 무한 스크롤 동작
 function load({ loaded }: LoadAction) {
-  if (infiniteStatus) {
+  if (storeinfiniteStatus.value) {
     console.log("it works?");
     mainStore.setstoreProductCard();
   }
@@ -153,6 +205,11 @@ const breakpoints = {
     snapAlign: "start",
   },
 };
+
+//위로 올라가는 함수
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 </script>
 
 <style scoped></style>

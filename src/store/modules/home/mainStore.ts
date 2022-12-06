@@ -5,6 +5,7 @@ import type productCard from "@/interface/home/productCard.interface";
 export const useMainStore = defineStore("mainStore", {
   state: () => ({
     storeProductCard: [...dummyCard],
+    storeinfiniteStatus: false,
     // storeNewProductCard: [] as productCard[],
   }),
 
@@ -17,6 +18,9 @@ export const useMainStore = defineStore("mainStore", {
   actions: {
     setstoreProductCard() {
       this.storeProductCard.push.apply(this.storeProductCard, dummyCard);
+    },
+    setstoreinfiniteStatus(status: boolean) {
+      this.storeinfiniteStatus = status;
     },
   },
 });

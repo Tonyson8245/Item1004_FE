@@ -2,400 +2,394 @@
   <div class="bg-[#fafafa]">
     <!-- 웹 팔래요/살래요/검색/등록 -->
     <!-- 검색 : 메인 페이지 & 검색 결과 페이지 -->
-    <div>
-      <div class="flex cursor-default inline-block">
-        <div class="flex-1 hidden md:block"></div>
-        <div class="flex-none hidden md:block">
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-10 relative">
-            <div class="flex justify-between items-center">
-              <div class="flex space-x-4 text-xl">
-                <!-- 팔래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
-                  <img
-                    src="@/assets/icon/check_web_blue.svg"
-                    alt=""
-                    class="w-6"
-                  />
-                  <span
-                    class="text-everly-main font-bold w-13"
-                    @click="toggleSellBuy('sell')"
-                    >팔래요</span
-                  >
-                </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
-                  <img
-                    src="@/assets/icon/check_web_grey.svg"
-                    alt=""
-                    class="w-6"
-                  />
-                  <span
-                    class="text-everly-dark-grey w-13"
-                    @click="toggleSellBuy('buy')"
-                    >살래요</span
-                  >
-                </div>
+    <div class="flex cursor-default inline-block">
+      <div class="flex-1 hidden md:block"></div>
+      <div class="flex-none hidden md:block">
+        <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-10 relative">
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-4 text-xl">
+              <!-- 팔래요 활성화 -->
+              <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <img
+                  src="@/assets/icon/check_web_blue.svg"
+                  alt=""
+                  class="w-6"
+                />
+                <span
+                  class="text-everly-main font-bold w-13"
+                  @click="toggleSellBuy('sell')"
+                  >팔래요</span
+                >
+              </div>
+              <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <img
+                  src="@/assets/icon/check_web_grey.svg"
+                  alt=""
+                  class="w-6"
+                />
+                <span
+                  class="text-everly-dark-grey w-13"
+                  @click="toggleSellBuy('buy')"
+                  >살래요</span
+                >
+              </div>
 
-                <!-- 살래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
-                  <img
-                    src="@/assets/icon/check_web_grey.svg"
-                    alt=""
-                    class="w-6"
-                  />
-                  <span
-                    class="text-everly-dark-grey w-13"
-                    @click="toggleSellBuy('sell')"
-                    >팔래요</span
-                  >
-                </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
-                  <img
-                    src="@/assets/icon/check_web_red.svg"
-                    alt=""
-                    class="w-6"
-                  />
-                  <span
-                    class="text-everly-red font-bold w-13"
-                    @click="toggleSellBuy('buy')"
-                    >살래요</span
-                  >
-                </div>
+              <!-- 살래요 활성화 -->
+              <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <img
+                  src="@/assets/icon/check_web_grey.svg"
+                  alt=""
+                  class="w-6"
+                />
+                <span
+                  class="text-everly-dark-grey w-13"
+                  @click="toggleSellBuy('sell')"
+                  >팔래요</span
+                >
               </div>
-              <search
-                class="w-[760px] absolute top-[37px] right-[205px]"
-                @click.stop=""
-              />
-              <button
-                class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border py-3"
-              >
-                물품등록
-              </button>
-            </div>
-            <div class="w-full flex pt-2" v-if="conditionBadge_mobile">
-              <div class="flex-1 pr-2"></div>
-              <div class="flex-none w-[760px] flex p-3 space-x-3 h-12">
-                <!-- 게임머니 베찌 -->
-                <div
-                  class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeCategoryGamemoney"
+              <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <img src="@/assets/icon/check_web_red.svg" alt="" class="w-6" />
+                <span
+                  class="text-everly-red font-bold w-13"
+                  @click="toggleSellBuy('buy')"
+                  >살래요</span
                 >
-                  <span>게임머니</span
-                  ><img
-                    src="@/assets/icon/close_white.svg"
-                    class="w-2"
-                    alt=""
-                    @click="closeFilterBadge(`gamemoney`)"
-                  />
-                </div>
-                <!-- 아이템 베찌-->
-                <div
-                  class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeCategoryItem"
-                >
-                  <span>아이템</span
-                  ><img
-                    src="@/assets/icon/close_white.svg"
-                    class="w-2"
-                    alt=""
-                    @click="closeFilterBadge(`item`)"
-                  />
-                </div>
-                <!-- 캐릭터 베찌-->
-                <div
-                  class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeCategoryCharacter"
-                >
-                  <span>캐릭터</span
-                  ><img
-                    src="@/assets/icon/close_white.svg"
-                    class="w-2"
-                    alt=""
-                    @click="closeFilterBadge(`character`)"
-                  />
-                </div>
-                <!-- 기타 베찌-->
-                <div
-                  class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeCategoryEtc"
-                >
-                  <span>기타</span
-                  ><img
-                    src="@/assets/icon/close_white.svg"
-                    class="w-2"
-                    alt=""
-                    @click="closeFilterBadge(`etc`)"
-                  />
-                </div>
-                <!-- 게임/게임서버 베찌-->
-                <div
-                  class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeServerKeyword != ''"
-                >
-                  <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span
-                  ><img
-                    src="@/assets/icon/close_white.svg"
-                    class="w-2"
-                    alt=""
-                    @click="closeFilterBadge(`gameServer`)"
-                  />
-                </div>
               </div>
-              <div class="flex-1"></div>
             </div>
-            <div v-else class="p-2"></div>
-            <div>
-              <!-- 웹 필터 -->
+            <search
+              class="w-[760px] absolute top-[37px] right-[205px]"
+              @click.stop=""
+            />
+            <button
+              class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border py-3"
+            >
+              물품등록
+            </button>
+          </div>
+          <div class="w-full flex pt-2" v-if="conditionBadge_mobile">
+            <div class="flex-1 pr-2"></div>
+            <div class="flex-none w-[760px] flex p-3 space-x-3 h-12">
+              <!-- 게임머니 베찌 -->
               <div
-                class="flex cursor-default fixed w-full bg-[#fafafa] w-full pt-2 left-0 top-[186px] border-b-2"
-                v-if="storeShowFilter_web"
+                class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+                v-if="storeCategoryGamemoney"
               >
-                <div class="flex-1 hidden md:block"></div>
+                <span>게임머니</span
+                ><img
+                  src="@/assets/icon/close_white.svg"
+                  class="w-2"
+                  alt=""
+                  @click="closeFilterBadge(`gamemoney`)"
+                />
+              </div>
+              <!-- 아이템 베찌-->
+              <div
+                class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+                v-if="storeCategoryItem"
+              >
+                <span>아이템</span
+                ><img
+                  src="@/assets/icon/close_white.svg"
+                  class="w-2"
+                  alt=""
+                  @click="closeFilterBadge(`item`)"
+                />
+              </div>
+              <!-- 캐릭터 베찌-->
+              <div
+                class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+                v-if="storeCategoryCharacter"
+              >
+                <span>캐릭터</span
+                ><img
+                  src="@/assets/icon/close_white.svg"
+                  class="w-2"
+                  alt=""
+                  @click="closeFilterBadge(`character`)"
+                />
+              </div>
+              <!-- 기타 베찌-->
+              <div
+                class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+                v-if="storeCategoryEtc"
+              >
+                <span>기타</span
+                ><img
+                  src="@/assets/icon/close_white.svg"
+                  class="w-2"
+                  alt=""
+                  @click="closeFilterBadge(`etc`)"
+                />
+              </div>
+              <!-- 게임/게임서버 베찌-->
+              <div
+                class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
+                v-if="storeServerKeyword != ''"
+              >
+                <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span
+                ><img
+                  src="@/assets/icon/close_white.svg"
+                  class="w-2"
+                  alt=""
+                  @click="closeFilterBadge(`gameServer`)"
+                />
+              </div>
+            </div>
+            <div class="flex-1"></div>
+          </div>
+          <div v-else class="p-2"></div>
+          <div>
+            <!-- 웹 필터 -->
+            <div
+              class="flex cursor-default fixed w-full bg-[#fafafa] w-full pt-2 left-0 top-[186px] border-b-2"
+              v-if="storeShowFilter_web"
+            >
+              <div class="flex-1 hidden md:block"></div>
+              <div
+                class="flex-none ml-2 w-[760px] border-everly-main border rounded-lg overflow-hidden bg-everly-white mb-12"
+              >
                 <div
-                  class="flex-none ml-2 w-[760px] border-everly-main border rounded-lg overflow-hidden bg-everly-white mb-12"
+                  class="flex justify-between items-center py-2 px-5 text-lg bg-everly-main text-everly-white"
                 >
-                  <div
-                    class="flex justify-between items-center py-2 px-5 text-lg bg-everly-main text-everly-white"
-                  >
-                    <div>필터를 설정해주세요</div>
-                    <div>
-                      <img
-                        src="@/assets/icon/close_white.svg"
-                        alt=""
-                        @click="closeFilter()"
-                      />
+                  <div>필터를 설정해주세요</div>
+                  <div>
+                    <img
+                      src="@/assets/icon/close_white.svg"
+                      alt=""
+                      @click="closeFilter()"
+                    />
+                  </div>
+                </div>
+                <div class="p-1 py-6">
+                  <div class="flex w-full">
+                    <div class="flex-none px-5 py-10">카테고리</div>
+                    <div
+                      class="grid grid-cols-4 gap-4 flex-grow justify-items-center"
+                    >
+                      <!-- 게임머니 -->
+                      <div
+                        class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
+                        v-if="!storeCategoryGamemoney"
+                        @click="toggleCategory(`gamemoney`)"
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/gamemoney.svg"
+                            alt=""
+                            class="inline-block w-12"
+                          />
+                          <div class="flex items-center">
+                            <div
+                              class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
+                            ></div>
+                            <div>게임머니</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
+                        @click="toggleCategory(`gamemoney`)"
+                        v-else
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/gamemoney_active.svg"
+                            alt=""
+                            class="inline-block w-12"
+                          />
+                          <div class="flex items-center">
+                            <img
+                              class="w-2.5 mx-1"
+                              src="@/assets/icon/check_circle_blue.svg"
+                              alt=""
+                            />
+                            <div>게임머니</div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 아이템 -->
+                      <div
+                        class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center"
+                        v-if="!storeCategoryItem"
+                        @click="toggleCategory(`item`)"
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/item.svg"
+                            alt=""
+                            class="inline-block w-12"
+                          />
+                          <div class="flex items-center">
+                            <div
+                              class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
+                            ></div>
+                            <div>아이템</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
+                        @click="toggleCategory(`item`)"
+                        v-else
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/item_active.svg"
+                            alt=""
+                            class="inline-block w-12"
+                          />
+                          <div class="flex items-center">
+                            <img
+                              class="w-2.5 mx-1"
+                              src="@/assets/icon/check_circle_blue.svg"
+                              alt=""
+                            />
+                            <div>아이템</div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 캐릭터 -->
+                      <div
+                        class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center"
+                        v-if="!storeCategoryCharacter"
+                        @click="toggleCategory(`character`)"
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/character.svg"
+                            alt=""
+                            class="inline-block w-12"
+                          />
+                          <div class="flex items-center">
+                            <div
+                              class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
+                            ></div>
+                            <div>캐릭터</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
+                        @click="toggleCategory(`character`)"
+                        v-else
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/character_active.svg"
+                            alt=""
+                            class="inline-block w-12"
+                          />
+                          <div class="flex items-center">
+                            <img
+                              class="w-2.5 mx-1"
+                              src="@/assets/icon/check_circle_blue.svg"
+                              alt=""
+                            />
+                            <div>캐릭터</div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- 기타 -->
+                      <div
+                        class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center"
+                        v-if="!storeCategoryEtc"
+                        @click="toggleCategory(`etc`)"
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/etc.svg"
+                            alt=""
+                            class="inline-block w-12 py-3"
+                          />
+                          <div class="flex items-center">
+                            <div
+                              class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
+                            ></div>
+                            <div>기타</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
+                        @click="toggleCategory(`etc`)"
+                        v-else
+                      >
+                        <div class="text-center">
+                          <img
+                            src="@/assets/icon/etc_active.svg"
+                            alt=""
+                            class="inline-block w-12 py-3"
+                          />
+                          <div class="flex items-center">
+                            <img
+                              class="w-2.5 mx-1"
+                              src="@/assets/icon/check_circle_blue.svg"
+                              alt=""
+                            />
+                            <div>기타</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="p-1 py-6">
-                    <div class="flex w-full">
-                      <div class="flex-none px-5 py-10">카테고리</div>
-                      <div
-                        class="grid grid-cols-4 gap-4 flex-grow justify-items-center"
-                      >
-                        <!-- 게임머니 -->
-                        <div
-                          class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
-                          v-if="!storeCategoryGamemoney"
-                          @click="toggleCategory(`gamemoney`)"
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/gamemoney.svg"
-                              alt=""
-                              class="inline-block w-12"
-                            />
-                            <div class="flex items-center">
-                              <div
-                                class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
-                              ></div>
-                              <div>게임머니</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
-                          @click="toggleCategory(`gamemoney`)"
-                          v-else
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/gamemoney_active.svg"
-                              alt=""
-                              class="inline-block w-12"
-                            />
-                            <div class="flex items-center">
-                              <img
-                                class="w-2.5 mx-1"
-                                src="@/assets/icon/check_circle_blue.svg"
-                                alt=""
-                              />
-                              <div>게임머니</div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- 아이템 -->
-                        <div
-                          class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center"
-                          v-if="!storeCategoryItem"
-                          @click="toggleCategory(`item`)"
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/item.svg"
-                              alt=""
-                              class="inline-block w-12"
-                            />
-                            <div class="flex items-center">
-                              <div
-                                class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
-                              ></div>
-                              <div>아이템</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
-                          @click="toggleCategory(`item`)"
-                          v-else
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/item_active.svg"
-                              alt=""
-                              class="inline-block w-12"
-                            />
-                            <div class="flex items-center">
-                              <img
-                                class="w-2.5 mx-1"
-                                src="@/assets/icon/check_circle_blue.svg"
-                                alt=""
-                              />
-                              <div>아이템</div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- 캐릭터 -->
-                        <div
-                          class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center"
-                          v-if="!storeCategoryCharacter"
-                          @click="toggleCategory(`character`)"
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/character.svg"
-                              alt=""
-                              class="inline-block w-12"
-                            />
-                            <div class="flex items-center">
-                              <div
-                                class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
-                              ></div>
-                              <div>캐릭터</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
-                          @click="toggleCategory(`character`)"
-                          v-else
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/character_active.svg"
-                              alt=""
-                              class="inline-block w-12"
-                            />
-                            <div class="flex items-center">
-                              <img
-                                class="w-2.5 mx-1"
-                                src="@/assets/icon/check_circle_blue.svg"
-                                alt=""
-                              />
-                              <div>캐릭터</div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- 기타 -->
-                        <div
-                          class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center"
-                          v-if="!storeCategoryEtc"
-                          @click="toggleCategory(`etc`)"
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/etc.svg"
-                              alt=""
-                              class="inline-block w-12 py-3"
-                            />
-                            <div class="flex items-center">
-                              <div
-                                class="rounded-full bg-everly-mid_grey w-2.5 h-2.5 mx-1"
-                              ></div>
-                              <div>기타</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
-                          @click="toggleCategory(`etc`)"
-                          v-else
-                        >
-                          <div class="text-center">
-                            <img
-                              src="@/assets/icon/etc_active.svg"
-                              alt=""
-                              class="inline-block w-12 py-3"
-                            />
-                            <div class="flex items-center">
-                              <img
-                                class="w-2.5 mx-1"
-                                src="@/assets/icon/check_circle_blue.svg"
-                                alt=""
-                              />
-                              <div>기타</div>
-                            </div>
-                          </div>
+                  <div>
+                    <div class="flex p-5">
+                      <div class="flex w-1/2">
+                        <div class="flex-none py-2">게임검색</div>
+                        <div class="flex-grow pl-10">
+                          <filterSearch
+                            @click.stop=""
+                            :smiliarlist="storeGameSimilar"
+                            :status="storeShowGameSimilar"
+                            :type="`game`"
+                          />
                         </div>
                       </div>
-                    </div>
-                    <div>
-                      <div class="flex p-5">
-                        <div class="flex w-1/2">
-                          <div class="flex-none py-2">게임검색</div>
-                          <div class="flex-grow pl-10">
-                            <filterSearch
-                              @click.stop=""
-                              :smiliarlist="storeGameSimilar"
-                              :status="storeShowGameSimilar"
-                              :type="`game`"
-                            />
-                          </div>
-                        </div>
 
-                        <div class="flex w-1/2" v-show="storeShowServerFilter">
-                          <div class="flex-none py-2">서버검색</div>
-                          <div class="flex-grow pl-10">
-                            <filterSearch
-                              @click.stop=""
-                              :smiliarlist="storeServerSimilar"
-                              :status="storeShowServerSimilar"
-                              :type="`server`"
-                            />
-                          </div>
+                      <div class="flex w-1/2" v-show="storeShowServerFilter">
+                        <div class="flex-none py-2">서버검색</div>
+                        <div class="flex-grow pl-10">
+                          <filterSearch
+                            @click.stop=""
+                            :smiliarlist="storeServerSimilar"
+                            :status="storeShowServerSimilar"
+                            :type="`server`"
+                          />
                         </div>
                       </div>
                     </div>
-                    <div class="flex w-full justify-end px-5 space-x-3">
-                      <div
-                        class="bg-everly-mid_grey text-everly-white px-4 py-2 rounded-lg flex hover:bg-[#3f52fc] cursor-default"
-                        @click="refresh"
-                      >
-                        <img
-                          src="@/assets/icon/refresh_white.svg"
-                          alt=""
-                          class="pr-2"
-                        />
-                        초기화
-                      </div>
-                      <div
-                        class="bg-everly-main text-everly-white px-4 py-2 rounded-lg flex cursor-default"
-                        @click="setFilter"
-                      >
-                        <img
-                          src="@/assets/icon/check_web_white.svg"
-                          alt=""
-                          class="pr-2"
-                        />필터적용
-                      </div>
+                  </div>
+                  <div class="flex w-full justify-end px-5 space-x-3">
+                    <div
+                      class="bg-everly-mid_grey text-everly-white px-4 py-2 rounded-lg flex hover:bg-[#3f52fc] cursor-default"
+                      @click="refresh"
+                    >
+                      <img
+                        src="@/assets/icon/refresh_white.svg"
+                        alt=""
+                        class="pr-2"
+                      />
+                      초기화
+                    </div>
+                    <div
+                      class="bg-everly-main text-everly-white px-4 py-2 rounded-lg flex cursor-default"
+                      @click="setFilter"
+                    >
+                      <img
+                        src="@/assets/icon/check_web_white.svg"
+                        alt=""
+                        class="pr-2"
+                      />필터적용
                     </div>
                   </div>
                 </div>
-                <div class="flex-1 hidden md:block"></div>
               </div>
+              <div class="flex-1 hidden md:block"></div>
             </div>
           </div>
         </div>
-        <div class="flex-1 hidden md:block"></div>
       </div>
+      <div class="flex-1 hidden md:block"></div>
     </div>
     <!-- 모바일 팔래요/살래요 -->
     <div

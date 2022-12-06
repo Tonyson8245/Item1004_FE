@@ -26,7 +26,7 @@
 
       <div class="flex flex-col justify-center items-center">
         <img src="@/assets/icon/mypage_mobile.svg" class="mt-1" alt="" />
-        <div>내 날개</div>
+        <div>마이페이지</div>
       </div>
     </div>
   </div>

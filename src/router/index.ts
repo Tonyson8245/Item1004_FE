@@ -17,6 +17,12 @@ const router = createRouter({
         {
           path: "",
           component: components.mainPage,
+          meta: { transition: "slide-right", name: "home" },
+        },
+        {
+          path: "write",
+          component: components.writePage,
+          meta: { transition: "slide-right", name: "write" },
         },
       ],
     },

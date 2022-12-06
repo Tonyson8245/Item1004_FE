@@ -6,14 +6,14 @@
         @click="toggleSearch()"
         v-model="storeKeyword"
         @input="(event: Event) => { setKeyword((event.target as HTMLInputElement).value); offServerFilter(); }"
-        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-[320px] md:w-[220px] bg-white"
+        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-[300px] md:w-[220px] bg-white"
       />
       <div class="absolute right-3 top-2 md:right-10 md:top-2">
         <img src="@/assets/icon/circle_search_grey.svg" alt="" class="w-6" />
       </div>
     </div>
     <div
-      class="text-everly-dark_grey rounded-b-xl absolute border border-everly-mid_grey w-[320px] md:w-[220px] bg-white z-50"
+      class="text-everly-dark_grey rounded-b-xl absolute border border-everly-mid_grey w-[300px] md:w-[220px] bg-white z-50"
       v-if="props.status"
     >
       <ul class="list-none overflow-hidden rounded">
