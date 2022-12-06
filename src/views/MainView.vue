@@ -25,10 +25,11 @@ import { storeToRefs } from "pinia";
 import Navbar from "@/components/footer/NavbarMobile.vue";
 import FooterWeb from "@/components/footer/footerWeb.vue";
 import { useMainStore } from "@/store/modules/home/mainStore";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 import { useRoute } from "vue-router";
 
-const filterStore = useFilterStore();
 const mainStore = useMainStore();
+const commonStore = useCommonStore();
 const route = useRoute();
 
 //검색창 활성화 값 가져오기
@@ -45,8 +46,8 @@ function toggleSearchWeb() {
 
 //웹 필터 검색창 비활성화
 function toggleSearch() {
-  filterStore.setstoreShowGameSimilar(false);
-  filterStore.setstoreShowServerSimilar(false);
+  commonStore.setstoreShowGameSimilar(false);
+  commonStore.setstoreShowServerSimilar(false);
 }
 </script>
 <style lang="scss"></style>

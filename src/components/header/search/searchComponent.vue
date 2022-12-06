@@ -79,6 +79,7 @@ import similarKeywordComponente from "./similarKeywordComponent.vue";
 import { ref, watch } from "vue";
 import { useSearchStore } from "../../../store/modules/home/searchStore";
 import { useFilterStore } from "../../../store/modules/home/filterStore";
+import { useCommonStore } from "../../../store/modules/common/commonStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
 
@@ -86,6 +87,7 @@ import { storeToRefs } from "pinia";
 const searchStore = useSearchStore(); // 검색 store 가져오기
 //필터 store 가져오기
 const filterStore = useFilterStore();
+const commonStore = useCommonStore();
 
 const {
   storeKeyword,
@@ -103,8 +105,8 @@ function toggleSearch() {
   searchStore.setstoreShowSearch_web(!storeShowSearch_web.value);
   //웹 필터 끄기
   filterStore.setstoreShowFilter_web(false);
-  filterStore.setstoreShowGameSimilar(false);
-  filterStore.setstoreShowServerSimilar(false);
+  commonStore.setstoreShowGameSimilar(false);
+  commonStore.setstoreShowServerSimilar(false);
 }
 
 //검색 시 검색 창 모양 바꿔주는 것
@@ -143,8 +145,10 @@ function changeSellBuy(type: string) {
 const { storeShowFilter_web } = storeToRefs(filterStore);
 
 function toggleFilter_web() {
-  if (!storeShowFilter_web.value) filterStore.setstoreTempfilter();
-  else filterStore.cancelstoreFilter();
+  if (!storeShowFilter_web.value) {
+    filterStore.setstoreTempfilter();
+    commonStore.setstoreTempfilter();
+  } else filterStore.cancelstoreFilter();
 
   filterStore.setstoreShowFilter_web(!storeShowFilter_web.value);
   searchStore.setstoreShowSearch_web(false);

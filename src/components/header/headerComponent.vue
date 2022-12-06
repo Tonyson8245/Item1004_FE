@@ -64,11 +64,13 @@ import { useRouter, useRoute } from "vue-router";
 import { computed, watch } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import { useFilterStore } from "@/store/modules/home/filterStore";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 import { storeToRefs } from "pinia";
 
 //store 가져오기
 const searchStore = useSearchStore();
 const filterStore = useFilterStore();
+const commonStore = useCommonStore();
 //라우터 만들기
 const router = useRouter();
 const route = useRoute();
@@ -86,8 +88,10 @@ watch(isLargeScreen.value, () => {
 //모바일 필터 키키
 const { storeShowFilter_mobile } = storeToRefs(filterStore);
 function toggleFilter_mobile() {
-  if (!storeShowFilter_mobile.value) filterStore.setstoreTempfilter();
-  else filterStore.cancelstoreFilter();
+  if (!storeShowFilter_mobile.value) {
+    filterStore.setstoreTempfilter();
+    commonStore.setstoreTempfilter();
+  } else filterStore.cancelstoreFilter();
 
   filterStore.setstoreShowFilter_mobile(!storeShowFilter_mobile.value);
 }

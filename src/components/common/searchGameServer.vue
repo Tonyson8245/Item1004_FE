@@ -43,13 +43,13 @@
 
 <script lang="ts" setup>
 import { computed, ref } from "vue";
-import { useFilterStore } from "@/store/modules/home/filterStore";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
 
-const filterStore = useFilterStore();
+const store = useCommonStore();
 
-const { storeGameKeyword, storeServerKeyword } = storeToRefs(filterStore);
+const { storeGameKeyword, storeServerKeyword } = storeToRefs(store);
 
 const props = defineProps({
   smiliarlist: Array,
@@ -73,43 +73,43 @@ const placeholder = computed(() => {
 //현재 type에 따라 검색창 실행
 function toggleSearch() {
   if (props.type == "game") {
-    filterStore.setstoreShowGameSimilar(true);
-    filterStore.setstoreShowServerSimilar(false);
+    store.setstoreShowGameSimilar(true);
+    store.setstoreShowServerSimilar(false);
   } else {
-    filterStore.setstoreShowServerSimilar(true);
-    filterStore.setstoreShowGameSimilar(false);
+    store.setstoreShowServerSimilar(true);
+    store.setstoreShowGameSimilar(false);
   }
 }
 
 //debounce는 0.6초 뒤에 값 적용되게 해주는 함수
 const setKeyword = debounce((keyword: string | null) => {
   if (props.type == "game") {
-    if (keyword == null) filterStore.setstoreGameKeyword("");
-    else filterStore.setstoreGameKeyword(keyword);
+    if (keyword == null) store.setstoreGameKeyword("");
+    else store.setstoreGameKeyword(keyword);
   } else {
-    if (keyword == null) filterStore.setstoreServerKeyword("");
-    else filterStore.setstoreServerKeyword(keyword);
+    if (keyword == null) store.setstoreServerKeyword("");
+    else store.setstoreServerKeyword(keyword);
   }
 }, 600);
 //검색어가 바뀌면 서버 검색 꺼버리기
 function offServerFilter() {
-  if (props.type == "game") filterStore.setstoreShowServerFilter(false);
+  if (props.type == "game") store.setstoreShowServerFilter(false);
 }
 
 // 검색 리스트를 클릭했을 경우
 function clickKeyword(name: string) {
   //type에 따라서 해당 값을 store에 저장
   if (props.type == "game") {
-    filterStore.setstoreGameKeyword(name);
+    store.setstoreGameKeyword(name);
 
     //게임 서버 검색 키기
-    filterStore.setstoreShowServerFilter(true);
+    store.setstoreShowServerFilter(true);
   } else {
-    filterStore.setstoreServerKeyword(name);
+    store.setstoreServerKeyword(name);
   }
   // 리스트 닫기
-  filterStore.setstoreShowServerSimilar(false);
-  filterStore.setstoreShowGameSimilar(false);
+  store.setstoreShowServerSimilar(false);
+  store.setstoreShowGameSimilar(false);
 }
 </script>
 

@@ -449,7 +449,7 @@
             </div>
             <div class="col-span-1 hidden md:block"></div>
             <div class="col-span-9 hidden md:block">
-              <div class="flex">
+              <div class="flex p-5">
                 <div class="flex w-1/2">
                   <div class="flex-none py-2">게임검색</div>
                   <div class="flex-grow pl-10">
@@ -486,7 +486,7 @@
 <script setup lang="ts">
 import { useWriteStore } from "@/store/modules/home/writeStore";
 import { storeToRefs } from "pinia";
-import searchItem from "@/components/header/filtter/searchFilterDropdown.vue";
+import searchItem from "@/components/common/searchGameServer.vue";
 
 const writeStore = useWriteStore();
 const {
