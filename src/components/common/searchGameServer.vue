@@ -1,42 +1,46 @@
 <template>
-  <div class="">
+  <div class="w-full">
     <div class="flex relative">
       <input
         :placeholder="placeholder"
         @click="toggleSearch()"
         v-model="storeKeyword"
         @input="(event: Event) => { setKeyword((event.target as HTMLInputElement).value); offServerFilter(); }"
-        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-[300px] md:w-[220px] bg-white"
+        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[220px] bg-white"
       />
       <div class="absolute right-3 top-2 md:right-10 md:top-2">
         <img src="@/assets/icon/circle_search_grey.svg" alt="" class="w-6" />
       </div>
     </div>
     <div
-      class="text-everly-dark_grey rounded-b-xl absolute border border-everly-mid_grey w-[300px] md:w-[220px] bg-white z-50"
-      v-if="props.status"
+      class="absolute w-full left-0 md:left-auto md:w-[220px] z-30 px-5 md:px-0"
     >
-      <ul class="list-none overflow-hidden rounded">
-        <li
-          v-for="name in props.smiliarlist"
-          class="flex items-center px-3 hover:bg-[#e9e9fd] cursor-default"
-        >
-          <div>
-            <img
-              src="@/assets/icon/arrow_rightup_grey.svg"
-              class="pr-4"
-              alt=""
-            />
-          </div>
-          <div
-            href=""
-            class="flex py-2 duration-300 text-sm"
-            @click="clickKeyword(name as string)"
+      <div
+        class="text-everly-dark_grey rounded-b-xl border border-everly-mid_grey bg-white overflow-hidden"
+        v-if="props.status"
+      >
+        <ul class="list-none rounded">
+          <li
+            v-for="name in props.smiliarlist"
+            class="flex items-center px-3 hover:bg-[#e9e9fd] cursor-default"
           >
-            {{ name }}
-          </div>
-        </li>
-      </ul>
+            <div>
+              <img
+                src="@/assets/icon/arrow_rightup_grey.svg"
+                class="pr-4"
+                alt=""
+              />
+            </div>
+            <div
+              href=""
+              class="flex py-2 duration-300 text-sm"
+              @click="clickKeyword(name as string)"
+            >
+              {{ name }}
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

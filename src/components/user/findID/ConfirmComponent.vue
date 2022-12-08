@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import modalSmall from "@/components/common/modalSmall.vue";
+import modalSmall from "@/components/modal/modalSmall.vue";
 import { useModal } from "@/store/modules/ui/modal";
 import type { modalSetting } from "@/interface/ui/modal.interface";
 import router from "@/router";

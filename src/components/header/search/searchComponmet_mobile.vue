@@ -137,21 +137,22 @@ import { ref, computed, watch, onMounted } from "vue";
 import { debounce } from "vue-debounce";
 import { useMediaQuery } from "@vueuse/core";
 import { useFilterStore } from "@/store/modules/home/filterStore";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 
 const router = useRouter();
-
+const commonStore = useCommonStore();
 //모바일 검색창 활성화/비활성화 버튼
 const searchStore = useSearchStore();
 
 const filterStore = useFilterStore();
+
+const { storeServerKeyword, storeGameKeyword } = storeToRefs(commonStore);
 
 const {
   storeCategoryCharacter,
   storeCategoryEtc,
   storeCategoryGamemoney,
   storeCategoryItem,
-  storeServerKeyword,
-  storeGameKeyword,
 } = storeToRefs(filterStore);
 
 //팔래요/살래요 , 검색창 값, 최근 검색어 가져오기
@@ -200,9 +201,9 @@ onMounted(() => {
 
 function closeFilterBadge(type: string) {
   if (type == "gameServer") {
-    filterStore.setstoreGameKeyword("");
-    filterStore.setstoreShowServerFilter(false);
-    filterStore.setstoreServerKeyword("");
+    commonStore.setstoreGameKeyword("");
+    commonStore.setstoreShowServerFilter(false);
+    commonStore.setstoreServerKeyword("");
   } else filterStore.changeCategory(type);
 }
 
@@ -214,8 +215,8 @@ const conditionBadge_mobile = computed(() => {
     !filterStore.storeCategoryEtc &&
     !filterStore.storeCategoryItem &&
     !filterStore.storeCategoryCharacter &&
-    filterStore.storeGameKeyword == "" &&
-    filterStore.storeServerKeyword == ""
+    commonStore.storeGameKeyword == "" &&
+    commonStore.storeServerKeyword == ""
   )
     return false;
   else return true;

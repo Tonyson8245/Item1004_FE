@@ -67,6 +67,7 @@
               />
               <button
                 class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border py-3"
+                @click="router.push(`/home/write`)"
               >
                 물품등록
               </button>
@@ -679,7 +680,7 @@
         </div>
         <!-- 게임/게임서버 검색 -->
         <div class="flex-none">
-          <div class="flex flex-col justify-center items-center">
+          <div class="flex flex-col px-5">
             <div
               class="text-center text-xs text-evelry_dark-grey py-3 sm:py-5 mt-10 sm:text-sm"
             >
@@ -693,7 +694,7 @@
             />
           </div>
           <div
-            class="flex-none flex flex-col justify-center items-center"
+            class="flex-none flex flex-col px-5"
             v-show="storeShowServerFilter"
           >
             <div
@@ -753,7 +754,9 @@ import { useCommonStore } from "../../store/modules/common/commonStore";
 import { useFilterStore } from "../../store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 //검색 store 가져오기
 const searchStore = useSearchStore();
 

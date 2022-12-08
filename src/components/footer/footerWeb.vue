@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="w-full bg-everly-light_grey flex py-8">
+    <div class="w-full flex bg-everly-light_grey">
       <div class="flex-grow"></div>
-      <div class="flex-none w-[1180px]">
+      <div class="flex-none w-[1180px] bg-everly-light_grey py-8">
         <div class="w-[380px]">
           <div class="text-everly-dark_grey flex font-bold">
             <div class="w-[80px] text-left">이용약관</div>

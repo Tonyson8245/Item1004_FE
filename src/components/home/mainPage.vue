@@ -146,8 +146,10 @@
         </div>
       </div>
     </div>
+    <!-- 모바일 글작성 -->
     <div
       class="block md:hidden bottom-20 w-full flex justify-end right-5 fixed"
+      @click="moveLink('/home/write')"
     >
       <div>
         <img src="@/assets/icon/button_write_mobile.svg" alt="" />
@@ -169,7 +171,9 @@ import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const filterStore = useFilterStore();
 const { storeShowFilter_mobile } = storeToRefs(filterStore);
 
@@ -209,6 +213,10 @@ const breakpoints = {
 //위로 올라가는 함수
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function moveLink(link: string) {
+  router.push(link);
 }
 </script>
 

@@ -1,8 +1,8 @@
 <template>
-  <div class="mt-[48px] md:mt-0">
+  <div class="mt-[48px] md:mt-8">
     <div class="flex">
       <div class="flex-grow"></div>
-      <div class="flex-none w-full md:w-[1180px] space-y-20 md:pb-80 md:p-5">
+      <div class="flex-none w-full md:w-[1180px] pt-16 text-sm md:text-base">
         <!-- 모바일 팔래요 살래요 -->
         <div
           class="bg-everly-white cursor-default md:hidden z-50 border-b w-full fixed top-[49px]"
@@ -42,7 +42,7 @@
           </div>
         </div>
         <!-- 웹 팔래요 살래요 -->
-        <div class="hidden md:block">
+        <div class="hidden md:block md:p-5">
           <div class="grid gap-4 w-full grid-cols-12">
             <div class="col-span-2">거래종류를<br />선택해주세요</div>
             <div class="col-span-1"></div>
@@ -104,12 +104,12 @@
           </div>
         </div>
 
-        <div class="p-5 md:p-0 md:space-y-20 space-y-8">
+        <div class="p-5 md:space-y-20 space-y-8">
           <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1">
             <!-- 모바일 -->
             <div class="col-span-2 block md:hidden">카테고리</div>
             <div class="col-span-9 block md:hidden">
-              <div class="grid grid-cols-4 gap-4">
+              <div class="grid grid-cols-4 md:gap-4 gap-1">
                 <!-- 게임머니 -->
                 <div
                   class="flex justify-center text-everly-dark cursor-default"
@@ -266,9 +266,7 @@
             </div>
             <div class="col-span-1 hidden md:block"></div>
             <div class="col-span-9 hidden md:block">
-              <div
-                class="grid grid-cols-4 gap-4 flex-grow justify-items-center"
-              >
+              <div class="grid grid-cols-4 gap-4 flex-grow justify-items-left">
                 <!-- 게임머니 -->
                 <div
                   class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-default"
@@ -438,21 +436,48 @@
           </div>
 
           <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1">
-            <!-- 모바일 -->
+            <!-- 모바일 게임/서버 검색-->
             <div class="col-span-2 block md:hidden">게임명</div>
-            <div class="col-span-9 block md:hidden">mobile 내용</div>
-            <div class="col-span-2 block md:hidden">서버명</div>
-            <div class="col-span-9 block md:hidden">mobile 내용</div>
-            <!-- 웹 -->
+            <div class="col-span-9 block md:hidden">
+              <div class="flex">
+                <div class="flex-grow">
+                  <searchItem
+                    @click.stop=""
+                    :smiliarlist="storeGameSimilar"
+                    :status="storeShowGameSimilar"
+                    :type="`game`"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-span-2 block md:hidden pt-5"
+              v-show="storeShowServerFilter"
+            >
+              서버명
+            </div>
+            <div class="col-span-9 block md:hidden">
+              <div class="flex" v-show="storeShowServerFilter">
+                <div class="flex-grow">
+                  <searchItem
+                    @click.stop=""
+                    :smiliarlist="storeServerSimilar"
+                    :status="storeShowServerSimilar"
+                    :type="`server`"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- 웹 게임/서버 검색-->
             <div class="col-span-2 hidden md:block">
               게임명 서버명을<br />선택해주세요
             </div>
             <div class="col-span-1 hidden md:block"></div>
             <div class="col-span-9 hidden md:block">
-              <div class="flex p-5">
+              <div class="flex">
                 <div class="flex w-1/2">
                   <div class="flex-none py-2">게임검색</div>
-                  <div class="flex-grow pl-10">
+                  <div class="flex-grow pl-10 pr-20">
                     <searchItem
                       @click.stop=""
                       :smiliarlist="storeGameSimilar"
@@ -464,7 +489,7 @@
 
                 <div class="flex w-1/2" v-show="storeShowServerFilter">
                   <div class="flex-none py-2">서버검색</div>
-                  <div class="flex-grow pl-10">
+                  <div class="flex-grow pl-10 pr-20">
                     <searchItem
                       @click.stop=""
                       :smiliarlist="storeServerSimilar"
@@ -477,6 +502,18 @@
             </div>
           </div>
         </div>
+        <!-- 키워드가 있고 선택하는 것에 따라 내용이 달라짐 -->
+        <div
+          v-if="storeGameKeyword != '' && storeServerKeyword != ''"
+          class="p-5"
+        >
+          <div v-if="storeCategory == 'gamemoney'"><writeGamemoney /></div>
+          <div v-else-if="storeCategory == 'item'"><writeItem /></div>
+          <div v-else-if="storeCategory == 'character'"><WriteCharacter /></div>
+          <div v-else-if="storeCategory == 'etc'"><WriteEtc /></div>
+          <div v-else class="p-28"></div>
+        </div>
+        <div v-else class="p-28"></div>
       </div>
       <div class="flex-grow"></div>
     </div>
@@ -485,26 +522,35 @@
 
 <script setup lang="ts">
 import { useWriteStore } from "@/store/modules/home/writeStore";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 import { storeToRefs } from "pinia";
 import searchItem from "@/components/common/searchGameServer.vue";
+import writeGamemoney from "./components/writeCategory/writeGamemoney.vue";
+import writeItem from "./components/writeCategory/writeItem.vue";
+import WriteCharacter from "./components/writeCategory/writeCharacter.vue";
+import WriteEtc from "./components/writeCategory/writeEtc.vue";
 
 const writeStore = useWriteStore();
+const commonStore = useCommonStore();
+commonStore.refresh();
+const { storeSellBuy } = storeToRefs(writeStore);
 const {
-  storeSellBuy,
-  storeCategory,
   storeGameSimilar,
-  storeServerSimilar,
   storeShowGameSimilar,
-  storeShowServerSimilar,
   storeShowServerFilter,
-} = storeToRefs(writeStore);
+  storeServerSimilar,
+  storeShowServerSimilar,
+  storeCategory,
+  storeGameKeyword,
+  storeServerKeyword,
+} = storeToRefs(commonStore);
 
 function toggleSellBuy(status: string) {
   writeStore.setstoreSellBuy(status);
 }
 
 function setCategory(Category: string) {
-  writeStore.setstoreCategory(Category);
+  commonStore.setstoreCategory(Category);
 }
 </script>
 

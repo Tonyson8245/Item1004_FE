@@ -1,53 +1,66 @@
 <template>
-  <div class="dropdown-wrapper relative">
+  <div class="relative">
     <button
-      v-on:click="show = !show"
-      :class="'bg-' + color"
-      class="text-everly-dark_grey py-3 w-14 md:w-20 whitespace-no-wrap rounded-lg transition duration-300 border border-everly-mid_grey text-xs md:text-sm"
+      @click.stop=""
+      v-on:click="toggleDropdown()"
+      class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left px-5 flex justify-between"
+      :class="props.propsClass"
     >
       {{ title }} <i class="fas fa-chevron-down md:ml-0.5"></i>
     </button>
-    <transition :name="animation">
-      <div
-        :class="'bg-' + color + '-500'"
-        class="dropdown-menu text-everly-dark_grey mt-1 rounded absolute z-10 w-20 shadow-lg max-w-xs border border-everly-mid_grey text-xs md:text-sm"
-        v-if="show"
-      >
-        <ul class="list-none overflow-hidden rounded">
-          <li v-for="a in category">
-            <div
-              href=""
-              class="flex py-2 px-4 duration-300 hover:bg-[#f0f0f0]"
-              @click="
-                title = a;
-                show = !show;
-              "
-              :class="'theme-' + color + ' bg-' + color"
-            >
-              {{ a }}
-            </div>
-          </li>
-        </ul>
-      </div>
-    </transition>
+    <div
+      class="text-everly-dark_grey mt-1 rounded absolute z-10 shadow-lg border border-everly-mid_grey text-xs md:text-sm bg-white"
+      :class="props.propsClass"
+      v-if="show"
+    >
+      <ul class="list-none overflow-hidden rounded" :class="props.propsClass">
+        <li v-for="key in props.propsList">
+          <div
+            href=""
+            class="flex py-2 px-4 hover:bg-[#f0f0f0]"
+            @click="
+              title = key;
+              show = !show;
+            "
+          >
+            {{ key }}
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { ref } from "vue";
+<script lang="ts" setup>
+import { ref, watch, type PropType } from "vue";
+import { useComponentStore } from "@/store/modules/common/componentStore";
+import { storeToRefs } from "pinia";
 
-export default {
-  props: {
-    color: String,
-    animation: String,
-  },
-  setup(props) {
-    let show = ref(false);
-    let title = ref("통신사");
-    let category = ["SKT", "LG", "KT", "알뜰폰"];
-    return { show, category, title };
-  },
-};
+const componentStore = useComponentStore();
+const { closeDropdown } = storeToRefs(componentStore);
+
+const emit = defineEmits(["getValue"]);
+const props = defineProps({
+  propsClass: String,
+  propsWidth: Number,
+  propsList: Object as PropType<string[]>,
+  propsPlaceholder: String,
+});
+
+let show = ref(false);
+let title = ref(props.propsPlaceholder);
+
+watch(closeDropdown, (a, b) => {
+  if (a == false && b == true) {
+    show.value = false;
+  }
+});
+
+async function toggleDropdown() {
+  await componentStore.toogleCloseDropdown(true);
+  await componentStore.toogleCloseDropdown(false);
+  show.value = !show.value;
+}
 </script>
 
 <style scoped></style>

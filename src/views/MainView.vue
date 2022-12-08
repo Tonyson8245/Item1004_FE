@@ -3,9 +3,10 @@
     @click="
       toggleSearchWeb();
       toggleSearch();
+      toogleDropDown();
     "
   >
-    <headerComponentVue class="w-full z-50 top-0 absolute md:sticky" />
+    <headerComponentVue class="w-full z-40 top-0 absolute md:sticky" />
 
     <router-view></router-view>
 
@@ -14,7 +15,10 @@
       class="block md:hidden text-center w-full fixed bottom-0"
       v-if="route.meta.name == `home`"
     />
-    <FooterWeb class="hidden md:block" v-if="!storeinfiniteStatus" />
+    <FooterWeb
+      class="hidden md:block absolute w-full"
+      v-if="!storeinfiniteStatus"
+    />
   </div>
 </template>
 <script lang="ts" setup>
@@ -26,10 +30,12 @@ import Navbar from "@/components/footer/NavbarMobile.vue";
 import FooterWeb from "@/components/footer/footerWeb.vue";
 import { useMainStore } from "@/store/modules/home/mainStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
+import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
 
 const mainStore = useMainStore();
 const commonStore = useCommonStore();
+const componentStore = useComponentStore();
 const route = useRoute();
 
 //검색창 활성화 값 가져오기
@@ -48,6 +54,11 @@ function toggleSearchWeb() {
 function toggleSearch() {
   commonStore.setstoreShowGameSimilar(false);
   commonStore.setstoreShowServerSimilar(false);
+}
+
+async function toogleDropDown() {
+  await componentStore.toogleCloseDropdown(true);
+  await componentStore.toogleCloseDropdown(false);
 }
 </script>
 <style lang="scss"></style>
