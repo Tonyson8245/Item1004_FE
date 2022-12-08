@@ -1,5 +1,5 @@
 <template>
-  <ModalWriteComfirm :showModal="showModal" @select="select($event)" />
+  <modalWriteComfirm :showModal="showModal" @select="select($event)" />
   <div class="">
     <div
       class="grid w-full md:grid-cols-12 grid-cols-1 gap-2 md:gap-y-20 md:pt-10 text-sm md:text-base"

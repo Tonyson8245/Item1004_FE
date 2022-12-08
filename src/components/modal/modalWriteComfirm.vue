@@ -16,13 +16,15 @@
         >
           🤚 잠깐 이 정보가 맞나요?
         </div>
-        <div class="p-5 text-everly-dark_grey md:p-14 md:pb-5 lg:text-xl">
+        <div
+          class="p-5 text-everly-dark_grey md:p-14 md:pb-5 lg:text-base lg:pt-9"
+        >
           <div class="lg:text-center text-left">
             거래 등록 시 회원정보 페이지에 등록된 휴대폰 번호, 이메일 주소를
             정확히 확인 후 이용을 부탁 드립니다.
           </div>
           <div
-            class="flex md:flex-row flex-col text-left py-3 whitespace-nowrap"
+            class="flex md:flex-row flex-col text-left py-3 whitespace-nowrap lg:px-40 lg:py-6"
           >
             <div class="none flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/profile_grey.svg" class="pr-2" alt="" />

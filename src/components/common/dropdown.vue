@@ -21,6 +21,7 @@
             @click="
               title = key;
               show = !show;
+              emit(`getValue`, key);
             "
           >
             {{ key }}

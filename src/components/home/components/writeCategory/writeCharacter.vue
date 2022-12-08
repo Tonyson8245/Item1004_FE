@@ -77,12 +77,14 @@
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-full`"
+          @getValue="role = $event"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-[480px]`"
+          @getValue="role = $event"
         />
       </div>
 
@@ -112,12 +114,14 @@
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-full`"
+          @getValue="accountType = $event"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-[480px]`"
+          @getValue="accountType = $event"
         />
       </div>
       <!-- 결제내역 유무 -->
@@ -131,12 +135,14 @@
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-full`"
+          @getValue="cashed = $event"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
+          @getValue="cashed = $event"
         />
       </div>
       <!-- 이중연동 유무를-->
@@ -150,12 +156,14 @@
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-full`"
+          @getValue="doublesync = $event"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
+          @getValue="doublesync = $event"
         />
       </div>
     </div>
@@ -201,6 +209,10 @@ let price = ref("");
 let title = ref("");
 let description = ref("");
 let level = ref("");
+let role = ref("");
+let cashed = ref("");
+let doublesync = ref("");
+let accountType = ref("");
 
 //등록 확인 모달
 const showModal = ref(false);

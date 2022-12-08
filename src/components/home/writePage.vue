@@ -5,7 +5,7 @@
       <div class="flex-none w-full md:w-[1180px] pt-16 text-sm md:text-base">
         <!-- 모바일 팔래요 살래요 -->
         <div
-          class="bg-everly-white cursor-default md:hidden z-50 border-b w-full fixed top-[49px]"
+          class="bg-everly-white cursor-pointer md:hidden z-50 border-b w-full fixed top-[49px]"
         >
           <div class="flex w-full space-x-4 border-b p-4">
             <!--팔래요 활성화 -->
@@ -47,7 +47,7 @@
             <div class="col-span-2">거래종류를<br />선택해주세요</div>
             <div class="col-span-1"></div>
             <div class="col-span-9">
-              <div class="flex space-x-28 text-xl">
+              <div class="flex space-x-28 text-xl cursor-pointer">
                 <!-- 팔래요 활성화 -->
                 <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
                   <img
@@ -112,7 +112,7 @@
               <div class="grid grid-cols-4 md:gap-4 gap-1">
                 <!-- 게임머니 -->
                 <div
-                  class="flex justify-center text-everly-dark cursor-default"
+                  class="flex justify-center text-everly-dark cursor-pointer"
                   v-if="storeCategory == 'gamemoney'"
                   @click="setCategory(`gamemoney`)"
                 >
@@ -131,7 +131,7 @@
                   </div>
                 </div>
                 <div
-                  class="flex justify-center text-everly-dark_grey cursor-default"
+                  class="flex justify-center text-everly-dark_grey cursor-pointer"
                   @click="setCategory(`gamemoney`)"
                   v-else
                 >
@@ -149,7 +149,7 @@
                 </div>
                 <!-- 아이템 -->
                 <div
-                  class="flex justify-center text-everly-dark cursor-default"
+                  class="flex justify-center text-everly-dark cursor-pointer"
                   @click="setCategory(`item`)"
                   v-if="storeCategory == 'item'"
                 >
@@ -168,7 +168,7 @@
                   </div>
                 </div>
                 <div
-                  class="flex justify-center text-everly-dark_grey cursor-default"
+                  class="flex justify-center text-everly-dark_grey cursor-pointer"
                   @click="setCategory(`item`)"
                   v-else
                 >
@@ -186,7 +186,7 @@
                 </div>
                 <!-- 캐릭터 -->
                 <div
-                  class="flex justify-center text-everly-dark cursor-default"
+                  class="flex justify-center text-everly-dark cursor-pointer"
                   @click="setCategory(`character`)"
                   v-if="storeCategory == 'character'"
                 >
@@ -205,7 +205,7 @@
                   </div>
                 </div>
                 <div
-                  class="flex justify-center text-everly-dark_grey cursor-default"
+                  class="flex justify-center text-everly-dark_grey cursor-pointer"
                   @click="setCategory(`character`)"
                   v-else
                 >
@@ -223,7 +223,7 @@
                 </div>
                 <!-- 기타 -->
                 <div
-                  class="flex justify-center text-everly-dark cursor-default"
+                  class="flex justify-center text-everly-dark cursor-pointer"
                   @click="setCategory(`etc`)"
                   v-if="storeCategory == 'etc'"
                 >
@@ -242,7 +242,7 @@
                   </div>
                 </div>
                 <div
-                  class="flex justify-center text-everly-dark_grey cursor-default"
+                  class="flex justify-center text-everly-dark_grey cursor-pointer"
                   @click="setCategory(`etc`)"
                   v-else
                 >
@@ -269,7 +269,7 @@
               <div class="grid grid-cols-4 gap-4 flex-grow justify-items-left">
                 <!-- 게임머니 -->
                 <div
-                  class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-default"
+                  class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
                   v-if="storeCategory != 'gamemoney'"
                   @click="setCategory(`gamemoney`)"
                 >
@@ -288,7 +288,7 @@
                   </div>
                 </div>
                 <div
-                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-default"
+                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
                   @click="setCategory(`gamemoney`)"
                   v-else
                 >
@@ -329,7 +329,7 @@
                   </div>
                 </div>
                 <div
-                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-default"
+                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
                   @click="setCategory(`item`)"
                   v-else
                 >
@@ -370,7 +370,7 @@
                   </div>
                 </div>
                 <div
-                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-default"
+                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
                   @click="setCategory(`character`)"
                   v-else
                 >
@@ -411,7 +411,7 @@
                   </div>
                 </div>
                 <div
-                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-default"
+                  class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
                   @click="setCategory(`etc`)"
                   v-else
                 >

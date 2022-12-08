@@ -5,7 +5,7 @@
       v-model="content"
       :placeholder="props.propsPlaceholder"
       @input="(event: Event) => {  emit('getModel', (event.target as HTMLInputElement).value); }"
-      class="border rounded-lg focus:border-[#3f52fc] border-everly-mid_grey"
+      class="border rounded-lg focus:border-[#3f52fc] border-everly-mid_grey placeholder:text-sm"
       :class="props.propsClass"
     />
     <img
