@@ -56,13 +56,13 @@
           class="flex gap-3 text-center text-everly-white pt-0 p-2 lg:p-10 lg:pt-0 lg:text-xl"
         >
           <div
-            class="grow rounded-lg py-2 bg-everly-mid_grey cursor-pointer"
+            class="flex-1 rounded-lg py-2 bg-everly-mid_grey cursor-pointer"
             @click="emit('select', `cancel`)"
           >
             취소
           </div>
           <div
-            class="grow rounded-lg py-2 bg-everly-main cursor-pointer"
+            class="flex-1 rounded-lg py-2 bg-everly-main cursor-pointer"
             @click="emit('select', `comfirm`)"
           >
             확인완료

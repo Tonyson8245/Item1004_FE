@@ -6,8 +6,8 @@
       <div class="flex cursor-default inline-block">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-10 relative">
-            <div class="flex justify-between items-center">
+          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9 relative">
+            <div class="flex justify-between items-center h-[3.75em]">
               <div class="flex space-x-4 text-xl">
                 <!-- 팔래요 활성화 -->
                 <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
@@ -66,13 +66,13 @@
                 @click.stop=""
               />
               <button
-                class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border py-3"
-                @click="router.push(`/home/write`)"
+                class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border h-full"
+                @click="router.push(`/write`)"
               >
-                물품등록
+                거래등록
               </button>
             </div>
-            <div class="w-full flex pt-2" v-if="conditionBadge_mobile">
+            <div class="w-full flex pt-0" v-if="conditionBadge_mobile">
               <div class="flex-1 pr-2"></div>
               <div class="flex-none w-[760px] flex p-3 space-x-3 h-12">
                 <!-- 게임머니 베찌 -->
@@ -143,7 +143,7 @@
               </div>
               <div class="flex-1"></div>
             </div>
-            <div v-else class="p-2"></div>
+            <div v-else class="p-4"></div>
             <div>
               <!-- 웹 필터 -->
               <div
@@ -512,7 +512,7 @@
     <!-- 모바일 필터 -->
     <transition name="slide-down" move="out-in">
       <div
-        class="md:hidden absolute fixed w-full bg-everly-white min-h-[700px] h-screen flex flex-col absolute top-0 pt-[105px] z-10"
+        class="md:hidden sticky fixed w-full bg-everly-white min-h-[700px] h-screen flex flex-col pt-[105px] z-10"
         v-if="storeShowFilter_mobile"
       >
         <!-- 카테고리 -->

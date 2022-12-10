@@ -1,11 +1,14 @@
 <template>
-  <router-view v-slot="{ Component }">
-    <transition :name="$route.meta.transition">
-      <component :is="Component" />
-    </transition>
-  </router-view>
+  <div>
+    <router-view v-slot="{ Component }">
+      <transition :name="$route.meta.transition">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
 </template>
 <script lang="ts" setup></script>
+
 <style>
 /* .slide-right-enter-active,
 .slide-right-leave-active {
