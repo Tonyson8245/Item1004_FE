@@ -1,11 +1,5 @@
 <template>
   <div>
-<<<<<<< HEAD
-    <router-view />
-  </div>
-</template>
-<script lang="ts" setup></script>
-=======
     <router-view v-slot="{ Component }">
       <transition :name="$route.meta.transition">
         <component :is="Component" />
@@ -40,4 +34,3 @@
   right: 0px;
 }  */
 </style>
->>>>>>> Main-search

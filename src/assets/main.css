@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-<<<<<<< HEAD
-=======
 @font-face {
   font-family: "test";
   src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
@@ -63,7 +61,6 @@
   }
 }
 
->>>>>>> Main-search
 /* //백그라운드 색깔 */
 .bg-everly-light_blue {
   background-color: #e9e9fd;
@@ -93,11 +90,7 @@
   background-color: #000000;
 }
 .bg-everly-bright_grey {
-<<<<<<< HEAD
-  background-color: red;
-=======
   background-color: #f0f0f0;
->>>>>>> Main-search
 }
 
 /* //폰트 색깔 */

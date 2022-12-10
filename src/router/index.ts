@@ -1,31 +1,11 @@
-<<<<<<< HEAD
-import { createRouter, createWebHistory } from "vue-router";
-import LoginView from "@/views/LoginView.vue";
-import loginComponent from "@/components/login/loginComponent.vue";
-import findIDcomponent from "@/components/login/findIDcomponent.vue";
-import { useCommon } from "@/store/modules/common";
-=======
 import components from "./components";
 import { createRouter, createWebHistory } from "vue-router";
 import { useCommon } from "@/store/modules/ui/common";
->>>>>>> Main-search
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-<<<<<<< HEAD
-      path: "/login",
-      component: LoginView,
-      children: [
-        {
-          path: "",
-          component: loginComponent,
-        },
-        {
-          path: "findID",
-          component: findIDcomponent,
-=======
       path: "/",
       redirect: "/home",
     },
@@ -95,7 +75,6 @@ const router = createRouter({
         {
           path: "signin/confirm",
           component: components.signinComfirm,
->>>>>>> Main-search
         },
       ],
     },
@@ -103,16 +82,6 @@ const router = createRouter({
 });
 router.beforeEach((to) => {
   const commonStore = useCommon();
-<<<<<<< HEAD
-  console.log(to.path);
-  switch (to.path) {
-    case "/login":
-    case "/login/":
-      commonStore.setheaderTitle("로그인");
-      break;
-    case "/login/findId":
-      commonStore.setheaderTitle("아이디 찾기");
-=======
   switch (to.path) {
     case "/account/login":
       commonStore.setheaderTitle("로그인");
@@ -132,15 +101,10 @@ router.beforeEach((to) => {
     case "/account/signin/setinfo":
       commonStore.setheaderTitle("회원가입");
       commonStore.setcsShowLink(false);
->>>>>>> Main-search
       break;
     default:
       commonStore.resetheaderTitle;
       break;
   }
 });
-<<<<<<< HEAD
-
-=======
->>>>>>> Main-search
 export default router;

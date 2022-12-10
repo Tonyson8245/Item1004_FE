@@ -10,12 +10,12 @@
         <div class="text-sm">10</div>
       </div>
       <div
-        class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-light_blue text-everly-dark_grey border"
+        class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-light_blue text-everly-dark_grey border text-sm sm:text-base"
       >
         <div class="text-everly-main">채팅하기(10)</div>
       </div>
       <div
-        class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-main"
+        class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-main text-sm sm:text-base"
       >
         <div class="font-bold text-everly-white" @click="toggleShowbuy(true)">
           구매하기
