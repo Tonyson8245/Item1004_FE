@@ -1,7 +1,6 @@
 <template>
   <div
-    class="text-center w-full fixed bottom-0 sticky z-30 py-2 px-4 bg-everly-white"
-    v-if="!storeShowBuy"
+    class="text-center w-full fixed bottom-0 absolute z-50 py-2 px-4 bg-everly-white"
   >
     <div class="w-full flex space-x-2">
       <div class="w-1/6 flex justify-center items-center">
@@ -17,8 +16,15 @@
       <div
         class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-main text-sm sm:text-base"
       >
-        <div class="font-bold text-everly-white" @click="toggleShowbuy(true)">
+        <div
+          class="font-bold text-everly-white"
+          @click="toggle()"
+          v-if="!storeShowBuy"
+        >
           구매하기
+        </div>
+        <div class="font-bold text-everly-white" @click="toggle()" v-else>
+          바로 구매
         </div>
       </div>
     </div>
@@ -27,14 +33,13 @@
 
 <script setup lang="ts">
 import { usePostStore } from "@/store/modules/home/postStore";
+import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
 
 const postStore = usePostStore();
 const { storeShowBuy } = storeToRefs(postStore);
 
-function toggleShowbuy(status: boolean) {
-  postStore.setstoreShowBuy(status);
-}
+const toggle = useToggle(storeShowBuy);
 </script>
 
 <style scoped></style>

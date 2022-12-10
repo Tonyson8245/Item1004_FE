@@ -1,5 +1,4 @@
 <template>
-  <ModalSmall />
   <div class="" :class="overflowControl">
     <div class="flex">
       <div class="grow"></div>
@@ -14,7 +13,6 @@
           <div class="hidden md:flex gap-5">
             <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border"
-              @click="toggle()"
             >
               <img
                 src="@/assets/icon/pencil_grey.svg"
@@ -25,10 +23,6 @@
             </div>
             <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border"
-              @click="
-                changeModalSetting(`delete`);
-                toggle();
-              "
             >
               <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
               삭제하기
@@ -256,7 +250,7 @@
     <!-- 모바일 결제 - 밑에서 올라오는 페이지 -->
     <transition name="slide-down" move="out-in">
       <div
-        class="flex-1 text-sm sticky md:hidden bg-everly-white bottom-0 z-50 p-3 rounded-t-lg w-full sm:text-base"
+        class="flex-1 text-sm sticky md:hidden bg-everly-white bottom-14 z-50 p-3 rounded-t-lg w-full sm:text-base"
         v-if="showBuy"
       >
         <div class="w-full flex justify-center pb-4 items-center">
@@ -287,7 +281,7 @@
           208,368<span class="pl-2 text-base sm:text-xl font-normal">원</span>
         </div>
 
-        <div class="mt-6 w-full flex space-x-2">
+        <!-- <div class="mt-6 w-full flex space-x-2">
           <div class="w-1/6 flex justify-center items-center">
             <img src="@/assets/icon/like_mid-grey.svg" alt="" class="pr-1" />
             <div class="text-xs hidden">+99</div>
@@ -303,7 +297,7 @@
           >
             <div class="font-bold text-everly-white">바로구매</div>
           </div>
-        </div>
+        </div> -->
       </div>
     </transition>
     <transition name="fade" move="out-in">
@@ -321,15 +315,11 @@ import counter from "@/components/common/counter.vue";
 import { usePostStore } from "@/store/modules/home/postStore";
 import { storeToRefs } from "pinia";
 import { ref, watch, computed } from "vue";
-import ModalSmall from "../modal/modalSmall.vue";
-import { useModal } from "@/store/modules/ui/modal";
 import { useToggle } from "@vueuse/shared";
 
 const postStore = usePostStore();
-const modalStore = useModal();
 
 const { storeShowBuy } = storeToRefs(postStore);
-const { showModalSmall } = storeToRefs(modalStore);
 
 let SellBuy = "sell";
 const qty = ref(1);
@@ -351,15 +341,6 @@ watch(showBuy, () => {
     overflowControl.value = "";
   }
 });
-
-const toggle = useToggle(showModalSmall);
-
-function changeModalSetting(type: string) {
-  if (type == "delete") {
-    modalStore.setModalSmall({ button_content: `a`, detail_content: "2" });
-  } else {
-  }
-}
 </script>
 
 <style scoped>
