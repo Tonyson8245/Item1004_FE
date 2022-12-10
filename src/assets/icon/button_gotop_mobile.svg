@@ -1,0 +1,11 @@
+<svg data-name="맨위로가기 버튼" xmlns="http://www.w3.org/2000/svg" width="117" height="25" viewBox="0 0 117 25">
+    <g data-name="위로가기 버튼창" style="fill:#fff">
+        <path d="M105 24.5H12c-3.072 0-5.96-1.196-8.132-3.368A11.425 11.425 0 0 1 .5 13v-1c0-3.072 1.196-5.96 3.368-8.132A11.425 11.425 0 0 1 12 .5h93c3.072 0 5.96 1.196 8.132 3.368A11.425 11.425 0 0 1 116.5 12v1c0 3.072-1.196 5.96-3.368 8.132A11.425 11.425 0 0 1 105 24.5z" style="stroke:none"/>
+        <path d="M12 1C9.062 1 6.3 2.144 4.222 4.222A10.928 10.928 0 0 0 1 12v1c0 2.938 1.144 5.7 3.222 7.778A10.928 10.928 0 0 0 12 24h93c2.938 0 5.7-1.144 7.778-3.222A10.928 10.928 0 0 0 116 13v-1c0-2.938-1.144-5.7-3.222-7.778A10.928 10.928 0 0 0 105 1H12m0-1h93c6.627 0 12 5.373 12 12v1c0 6.627-5.373 12-12 12H12C5.373 25 0 19.627 0 13v-1C0 5.373 5.373 0 12 0z" style="fill:#c7c7c7;stroke:none"/>
+    </g>
+    <g data-name="위로 접기">
+        <path d="M3.574 0 4 .912.852 7.51 4 14.088 3.574 15 0 7.51z" transform="rotate(90 46.816 55.184)" style="fill:#707070"/>
+        <path data-name="arrow_forward_ios_FILL1_wght300_GRAD0_opsz48" d="M3.574 0 4 .912.852 7.51 4 14.088 3.574 15 0 7.51z" transform="rotate(90 44.816 57.184)" style="fill:#707070"/>
+    </g>
+    <text data-name="맨 위로 가기" transform="translate(15 5)" style="font-size:13px;font-family:Pretendard-Light,Pretendard;font-weight:300;fill:#707070"><tspan x="0" y="12">맨 위로 가기</tspan></text>
+</svg>
