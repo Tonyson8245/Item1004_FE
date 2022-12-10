@@ -3,7 +3,7 @@
     <div
       class="dropdown-wrapper w-full border border-everly-main rounded-xl overflow-hidden"
     >
-      <div class="flex items-center">
+      <div class="flex items-center h-[3.6rem]">
         <sellbuyBadge class="pl-4 py-3" :type="storeSellBuy" />
         <input
           @click="toggleSearch()"
@@ -16,7 +16,7 @@
         <div class="bg-white px-4 py-4" @click="toggleFilter_web()">
           <img src="@/assets/icon/filter_blue.svg" alt="" />
         </div>
-        <div class="bg-everly-main rounded-r-lg py-1.5 px-1">
+        <div class="bg-everly-main rounded-r-lg py-[0.5rem] px-1">
           <img src="@/assets/icon/search_white_large.svg" alt="" />
         </div>
       </div>
@@ -25,7 +25,7 @@
       </div>
       <div class="w-full overflow-hidden">
         <div
-          class="dropdown-menu text-everly-dark_grey rounded-lg z-10 w-full shadow-lg text-xs md:text-sm"
+          class="dropdown-menu text-everly-dark_grey rounded-lg z-40 w-full shadow-lg text-xs md:text-sm"
           v-if="storeShowSearch_web"
         >
           <!-- 최근 검색어 -->

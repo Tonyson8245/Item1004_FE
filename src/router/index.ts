@@ -10,19 +10,32 @@ const router = createRouter({
       redirect: "/home",
     },
     {
-      path: "/home",
+      path: "/",
       component: components.MainView,
       meta: { transition: "slide-right", name: "home" },
       children: [
         {
-          path: "",
+          path: "home",
           component: components.mainPage,
           meta: { transition: "slide-right", name: "home" },
         },
         {
           path: "write",
           component: components.writePage,
-          meta: { transition: "slide-right", name: "write" },
+          meta: {
+            transition: "slide-right",
+            name: "write",
+            title: "거래 등록",
+          },
+        },
+        {
+          path: "post",
+          component: components.postPage,
+          meta: {
+            transition: "slide-right",
+            name: "post",
+            title: "거래 상세 정보",
+          },
         },
       ],
     },

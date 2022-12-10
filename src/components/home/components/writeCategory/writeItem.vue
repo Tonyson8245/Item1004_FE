@@ -92,7 +92,7 @@
           :modelValue="title"
           @getModel="title = $event"
         />
-        <div class="pl-3 md:pl-5 md:text-sm text-xs pt-1">
+        <div class="pl-3 md:pl-5 md:text-sm text-xs pt-1 text-everly-dark_grey">
           *거래제목은 한글,영어 숫자로만 작성이 가능합니다.
         </div>
       </div>
@@ -111,12 +111,12 @@
       <div class="col-span-1 hidden md:block"></div>
       <div class="col-span-9 md:pr-10">
         <div class="flex items-center justify-center">
-          <inputwithClose
-            :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
-            :propsPlaceholder="descriptionPlaceholder"
-            :modelValue="description"
-            @getModel="description = $event"
-          />
+          <textarea
+            id="message"
+            rows="6"
+            class="block p-3 w-full text-sm md:text-base rounded-lg border resize-none md:resize-y border-everly_dark_grey focus:border-[#3f52fc] h-full"
+            :Placeholder="descriptionPlaceholder"
+          ></textarea>
         </div>
       </div>
 

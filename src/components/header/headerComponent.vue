@@ -8,7 +8,11 @@
           class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4"
         >
           <div class="hidden md:block">
-            <img src="@/assets/icon/logo_vertical.svg" alt="" />
+            <img
+              src="@/assets/icon/logo_vertical.svg"
+              alt=""
+              @click="moveLink('/home')"
+            />
           </div>
           <div class="hidden md:block">
             <div class="flex space-x-4 items-center">
@@ -103,7 +107,7 @@ function moveLink(link: string) {
   if (link == "/search") {
     filterStore.setstoreShowFilter_mobile(false);
     router.push("/search");
-  }
+  } else router.push(link);
 }
 </script>
 <style scoped></style>

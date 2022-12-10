@@ -149,7 +149,7 @@
     <!-- 모바일 글작성 -->
     <div
       class="block md:hidden bottom-20 w-full flex justify-end right-5 fixed"
-      @click="moveLink('/home/write')"
+      @click="moveLink('/write')"
     >
       <div>
         <img src="@/assets/icon/button_write_mobile.svg" alt="" />

@@ -16,13 +16,16 @@ export const useCommonStore = defineStore("commonStore", {
     //게임 서버 검색 상태값
     storeShowServerFilter: false,
 
-    //기존 필터 값ㅅ
+    //기존 필터 값
     storeTempKeyword: "",
 
-    storeCategory: `character`,
+    storeCategory: ``,
     //게임,게임서버 설정
-    storeGameKeyword: "메이플",
-    storeServerKeyword: "123132",
+    storeGameKeyword: "",
+    storeServerKeyword: "",
+
+    storeTempGameKeyword: "",
+    storeTempServerKeyword: "",
   }),
 
   getters: {
@@ -40,6 +43,12 @@ export const useCommonStore = defineStore("commonStore", {
     },
     setstoreServerKeyword(keyword: string) {
       this.storeServerKeyword = keyword;
+    },
+    setstoreTempGameKeyword(keyword: string) {
+      this.storeTempGameKeyword = keyword;
+    },
+    setstoreTempServerKeyword(keyword: string) {
+      this.storeTempServerKeyword = keyword;
     },
     setstoreShowServerFilter(status: boolean) {
       this.storeShowServerFilter = status;

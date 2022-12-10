@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative" @click="movePost()">
     <div class="p-3 md:p-5">
       <div>
         <!--카드 헤더 -->
@@ -109,12 +109,20 @@
 
 <script setup lang="ts">
 import type Card from "@/interface/home/productCard.interface";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const props = defineProps({
   card: {
     type: Object as () => Card,
   },
 });
+
+let postId = 1;
+function movePost() {
+  router.push("/post?=" + postId);
+}
 </script>
 
 <style scoped></style>

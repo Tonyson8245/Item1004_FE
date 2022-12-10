@@ -13,7 +13,6 @@ export const useModal = defineStore("modal", {
   actions: {
     // 액션 동작 예시
     controlModalSmall(status: boolean) {
-      console.log("store " + status);
       this.showModalSmall = status;
     },
     setModalSmall(setting: modalSetting) {

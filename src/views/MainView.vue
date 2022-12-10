@@ -6,7 +6,7 @@
       toogleDropDown();
     "
   >
-    <headerComponentVue class="w-full z-40 top-0 absolute md:sticky" />
+    <headerComponentVue class="w-full z-40 top-0 sticky md:sticky" />
 
     <router-view></router-view>
 
@@ -14,6 +14,10 @@
     <Navbar
       class="block md:hidden text-center w-full fixed bottom-0"
       v-if="route.meta.name == `home`"
+    />
+    <Postbar
+      class="block md:hidden text-center w-full fixed bottom-0"
+      v-if="route.meta.name == `post`"
     />
     <FooterWeb
       class="hidden md:block absolute w-full"
@@ -27,12 +31,14 @@ import { useFilterStore } from "@/store/modules/home/filterStore";
 import headerComponentVue from "../components/header/headerComponent.vue";
 import { storeToRefs } from "pinia";
 import Navbar from "@/components/footer/NavbarMobile.vue";
+import Postbar from "@/components/footer/PostbarMobile.vue";
 import FooterWeb from "@/components/footer/footerWeb.vue";
 import { useMainStore } from "@/store/modules/home/mainStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
 
+import { vScrollLock } from "@vueuse/components";
 const mainStore = useMainStore();
 const commonStore = useCommonStore();
 const componentStore = useComponentStore();

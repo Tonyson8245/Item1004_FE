@@ -42,6 +42,7 @@ import { useModal } from "@/store/modules/ui/modal";
 import { computed } from "vue";
 
 const store = useModal(); // 모달 store 가져오기
+
 const showModal = computed(() => store.showModalSmall); // 모달 상태 가져오기
 const setting = computed(() => store.ModalSmallSetting); // 모달 세팅 가져오기
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-[48px] md:mt-8">
+  <div class="mt-1">
     <div class="flex">
       <div class="flex-grow"></div>
       <div class="flex-none w-full md:w-[1180px] pt-16 text-sm md:text-base">
