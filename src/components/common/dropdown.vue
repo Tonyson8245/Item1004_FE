@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div class="relative">
     <div
-      class="relative"
       :class="props.propsClass"
       @click.stop="componentStore.toogleCloseDropdown(false)"
       v-on:click="toggleDropdown()"
@@ -17,7 +16,7 @@
       ></i>
     </div>
     <div
-      class="text-everly-dark_grey mt-1 rounded absolute z-10 shadow-lg border border-everly-mid_grey text-xs md:text-sm bg-white"
+      class="text-everly-dark_grey mt-1 rounded absolute z-10 shadow-lg border border-everly-mid_grey text-xs md:text-sm bg-white cursor-pointer"
       :class="props.propsClass"
       v-if="show"
     >

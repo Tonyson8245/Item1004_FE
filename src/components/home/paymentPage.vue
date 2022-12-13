@@ -27,19 +27,20 @@
         <hr
           class="border-everly-light_grey border-[3px] md:border-everly-mid_grey md:border mt-3 md:mt-7"
         />
-        <div class="px-3">
+
+        <div class="px-3 md:px-0">
           <div class="md:text-xl text-sm font-bold mt-5 md:mt-8">내 정보</div>
-          <div class="text-sm mt-4 md:mt-8 space-y-2 md:space-y-6">
+          <div class="text-sm mt-4 md:mt-8 space-y-4 md:space-y-6">
             <div class="flex">
-              <div class="w-14 md:w-[7rem] md:text-base font-bold">이름</div>
+              <div class="w-14 md:w-[8rem] md:text-base font-bold">이름</div>
               <div class="grow md:text-lg">김철수</div>
             </div>
             <div class="flex">
-              <div class="w-14 md:w-[7rem] md:text-base font-bold">아이디</div>
+              <div class="w-14 md:w-[8rem] md:text-base font-bold">닉네임</div>
               <div class="grow md:text-lg">이런걸아이디라고짓다니말도안돼</div>
             </div>
             <div class="flex">
-              <div class="w-14 md:w-[7rem] md:text-base font-bold">연락처</div>
+              <div class="w-14 md:w-[8rem] md:text-base font-bold">연락처</div>
               <div class="grow md:text-lg flex space-x-4">
                 <div>010-1234-5678</div>
                 <div class="flex space-x-1 items-center">
@@ -53,7 +54,7 @@
               </div>
             </div>
             <div class="flex items-center">
-              <div class="w-14 md:w-[7rem] md:text-base font-bold">
+              <div class="w-14 md:w-[8rem] md:text-base font-bold">
                 구매자<br class="block md:hidden" />
                 캐릭터명
               </div>
@@ -70,17 +71,17 @@
         <hr
           class="border-everly-light_grey border-[3px] md:border-[#707070] md:border my-5 md:my-8"
         />
-        <div class="px-3">
+        <div class="px-3 md:px-0">
           <div class="text-sm md:text-xl font-bold">쿠폰 / 마일리지</div>
           <div
             class="text-sm md:text-base mt-5 md:mt-[1.875rem] space-y-3 md:space-y-8"
           >
             <div class="md:flex items-center">
-              <div class="w-[7rem] font-bold">보유쿠폰</div>
+              <div class="w-[8rem] font-bold">쿠폰</div>
               <div class="mt-[0.625rem] md:mt-0 space-x-2 grow flex">
                 <dropdownVue
                   class="grow"
-                  :propsClass="`w-full pl-2`"
+                  :propsClass="`w-full`"
                   :propsList="['a', 'b', 'c', 'd']"
                   :propsPlaceholder="`사용가능 쿠폰 3장 / 보유쿠폰 3장`"
                 />
@@ -92,8 +93,8 @@
               </div>
             </div>
             <div class="md:flex mt-5 md:mt-8">
-              <div class="w-[7rem] font-bold md:pt-3">보유마일리지</div>
-              <div class="mt-[0.625rem] md:mt-0 grow">
+              <div class="w-[8rem] font-bold md:pt-3">마일리지</div>
+              <div class="grow">
                 <div class="flex">
                   <div class="flex grow justify-between items-center pr-2">
                     <div>보유</div>
@@ -106,7 +107,9 @@
                   </div>
                 </div>
                 <div class="flex mt-4 md:mt-8">
-                  <div class="flex grow items-center space-x-2 mr-2">
+                  <div
+                    class="flex grow items-center space-x-3 md:space-x-6 mr-2"
+                  >
                     <div>사용</div>
                     <input
                       type="text"
