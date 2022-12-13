@@ -19,6 +19,9 @@ export const useMainStore = defineStore("mainStore", {
     setstoreProductCard() {
       this.storeProductCard.push.apply(this.storeProductCard, dummyCard);
     },
+    resetsetstoreProductCard() {
+      this.storeProductCard = [...dummyCard];
+    },
     setstoreinfiniteStatus(status: boolean) {
       this.storeinfiniteStatus = status;
     },

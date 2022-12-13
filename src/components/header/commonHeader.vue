@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex z-40 bg-everly-main absolute">
+  <div class="w-full flex z-10 bg-everly-main absolute">
     <div class="flex-1"></div>
     <div
       class="flex-none md:w-[1180px] bg-everly-main py-3 w-full text-everly-white font-bold text-base md:text-xl px-4"

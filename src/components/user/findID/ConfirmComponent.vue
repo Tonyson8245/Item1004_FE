@@ -1,6 +1,12 @@
 <template>
   <div class="h-screen flex-grow md:flex">
-    <modalSmall />
+    <modalSmall
+      :propsShowModal="showModal"
+      :propsButtonText="`확인`"
+      :propsContentText="contentText"
+      :propsLink="``"
+      @update:propsShowModal="toggle()"
+    />
     <div class="grid place-items-center w-full md:m-auto">
       <div class="hidden md:block">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
@@ -21,7 +27,10 @@
             />
             <button
               class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs md:text-sm"
-              @click="toggleModal('인증번호가 발송되었습니다.')"
+              @click="
+                contentText = `인증번호가 발송되었습니다.`;
+                toggle();
+              "
             >
               인증번호 발송
             </button>
@@ -33,7 +42,10 @@
             />
             <button
               class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs md:text-sm"
-              @click="toggleModal('인증번호가 확인되었습니다.')"
+              @click="
+                contentText = '인증번호가 확인되었습니다.';
+                toggle();
+              "
             >
               인증번호 확인
             </button>
@@ -55,9 +67,9 @@
 
 <script setup lang="ts">
 import modalSmall from "@/components/modal/modalSmall.vue";
-import { useModal } from "@/store/modules/ui/modal";
-import type { modalSetting } from "@/interface/ui/modal.interface";
 import router from "@/router";
+import { ref } from "vue";
+import { useToggle } from "@vueuse/shared";
 let link: string;
 
 function moveLink(type: string) {
@@ -69,17 +81,9 @@ function moveLink(type: string) {
   router.push(link);
 }
 
-const modalStore = useModal(); // 모달 store 가져오기
-const set: modalSetting = {
-  detail_content: "인증 번호가 발송되었습니다",
-  button_content: "확인",
-}; // 모달 내용 작성
-
-const toggleModal = (text: string) => {
-  set.detail_content = text;
-  modalStore.setModalSmall(set); // 모달 내용 저장하기
-  modalStore.controlModalSmall(true); // 모달 상태 변경하여 저장하기
-};
+const showModal = ref(false);
+const toggle = useToggle(showModal);
+const contentText = ``;
 </script>
 
 <style scoped></style>

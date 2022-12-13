@@ -1,6 +1,12 @@
 <template>
   <div class="h-screen flex-grow md:flex">
-    <modalSmall />
+    <modalSmall
+      :propsShowModal="showModal"
+      :propsButtonText="buttonText"
+      :propsContentText="contentText"
+      :propsLink="``"
+      @update:propsShowModal="toggle()"
+    />
     <div class="grid place-items-center w-full md:m-auto">
       <div class="hidden md:block">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
@@ -27,7 +33,10 @@
             />
             <button
               class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs md:text-sm cursor-default"
-              @click="toggleModal('인증번호가 발송되었습니다.')"
+              @click="
+                toggle();
+                setcontentText('인증번호가 발송되었습니다.');
+              "
             >
               인증번호 발송
             </button>
@@ -39,7 +48,10 @@
             />
             <button
               class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs md:text-sm"
-              @click="toggleModal('인증번호가 확인되었습니다.')"
+              @click="
+                toggle();
+                setcontentText('인증번호가 확인되었습니다.');
+              "
             >
               인증번호 확인
             </button>
@@ -60,12 +72,13 @@
 </template>
 
 <script setup lang="ts">
+import { useToggle } from "@vueuse/shared";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 import modalSmall from "@/components/modal/modalSmall.vue";
-import { useModal } from "@/store/modules/ui/modal";
-import type { modalSetting } from "@/interface/ui/modal.interface";
-
-import router from "@/router";
 var link: string;
+
+const router = useRouter();
 
 function moveLink(type: string) {
   switch (type) {
@@ -76,17 +89,15 @@ function moveLink(type: string) {
   router.push(link);
 }
 
-const modalStore = useModal(); // 모달 store 가져오기
-const set: modalSetting = {
-  detail_content: "인증 번호가 발송되었습니다",
-  button_content: "확인",
-}; // 모달 내용 작성
+let contentText = ref("인증 번호가 발송되었습니다");
+let buttonText = ref("확인");
+let showModal = ref(false);
 
-const toggleModal = (text: string) => {
-  set.detail_content = text;
-  modalStore.setModalSmall(set); // 모달 내용 저장하기
-  modalStore.controlModalSmall(true); // 모달 상태 변경하여 저장하기
-};
+const toggle = useToggle(showModal);
+
+function setcontentText(content: string) {
+  contentText.value = content;
+}
 </script>
 
 <style scoped></style>

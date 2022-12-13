@@ -37,6 +37,11 @@ const router = createRouter({
             title: "거래 상세 정보",
           },
         },
+        {
+          path: "/payment",
+          component: components.paymentPageVue,
+          meta: { transition: "", name: "payment", title: "거래/결제" },
+        },
       ],
     },
     {
@@ -78,9 +83,27 @@ const router = createRouter({
         },
       ],
     },
+
+    {
+      path: "/mypage",
+      component: components.MypageViewVue,
+      meta: { transition: "", name: "mypage" },
+    },
+
+    {
+      path: "/:anything(.*)",
+      redirect: (to) => {
+        // the function receives the target route as the argument
+        // we return a redirect path/location here.
+        return { path: "/" };
+      },
+      meta: { transition: "", name: "" },
+    },
   ],
 });
 router.beforeEach((to) => {
+  window.scrollTo({ top: 0, behavior: "auto" });
+
   const commonStore = useCommon();
   switch (to.path) {
     case "/account/login":

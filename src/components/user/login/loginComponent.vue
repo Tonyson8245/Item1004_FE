@@ -13,6 +13,7 @@
         <div class="w-11/12 h-11 lg:h-15 flex items-center relative">
           <input
             placeholder="비빌번호를 입력하세요"
+            type="password"
             class="w-full rounded-lg border border-everly-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
           />
           <img
@@ -100,7 +101,9 @@
 </template>
 
 <script setup lang="ts">
-import router from "@/router";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 let link: string;
 
 function moveLink(type: string) {

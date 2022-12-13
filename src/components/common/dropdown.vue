@@ -1,13 +1,21 @@
 <template>
-  <div class="relative">
-    <button
-      @click.stop=""
-      v-on:click="toggleDropdown()"
-      class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left px-5 flex justify-between"
+  <div>
+    <div
+      class="relative"
       :class="props.propsClass"
+      @click.stop="componentStore.toogleCloseDropdown(false)"
+      v-on:click="toggleDropdown()"
     >
-      {{ title }} <i class="fas fa-chevron-down md:ml-0.5"></i>
-    </button>
+      <button
+        class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left px-5 flex justify-between"
+        :class="props.propsClass"
+      >
+        {{ title }}
+      </button>
+      <i
+        class="fas fa-chevron-down absolute right-3 top-3.5 text-everly-dark_grey"
+      ></i>
+    </div>
     <div
       class="text-everly-dark_grey mt-1 rounded absolute z-10 shadow-lg border border-everly-mid_grey text-xs md:text-sm bg-white"
       :class="props.propsClass"
@@ -43,7 +51,6 @@ const { closeDropdown } = storeToRefs(componentStore);
 const emit = defineEmits(["getValue"]);
 const props = defineProps({
   propsClass: String,
-  propsWidth: Number,
   propsList: Object as PropType<string[]>,
   propsPlaceholder: String,
 });
@@ -58,8 +65,10 @@ watch(closeDropdown, (a, b) => {
 });
 
 async function toggleDropdown() {
-  await componentStore.toogleCloseDropdown(true);
-  await componentStore.toogleCloseDropdown(false);
+  if (!show.value) {
+    await componentStore.toogleCloseDropdown(true);
+    await componentStore.toogleCloseDropdown(false);
+  }
   show.value = !show.value;
 }
 </script>
