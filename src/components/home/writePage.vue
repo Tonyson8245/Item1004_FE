@@ -1,8 +1,10 @@
 <template>
-  <div class="mt-1">
+  <div class="">
     <div class="flex">
       <div class="flex-grow"></div>
-      <div class="flex-none w-full md:w-[1180px] pt-16 text-sm md:text-base">
+      <div
+        class="flex-none w-full md:w-[1180px] pt-16 text-sm md:text-base mt-10 md:mt-1"
+      >
         <!-- 모바일 팔래요 살래요 -->
         <div
           class="bg-everly-white cursor-pointer md:hidden z-50 border-b w-full fixed top-[49px]"
@@ -529,6 +531,7 @@ import writeGamemoney from "./components/writeCategory/writeGamemoney.vue";
 import writeItem from "./components/writeCategory/writeItem.vue";
 import WriteCharacter from "./components/writeCategory/writeCharacter.vue";
 import WriteEtc from "./components/writeCategory/writeEtc.vue";
+import { onUnmounted, onMounted } from "vue";
 
 const writeStore = useWriteStore();
 const commonStore = useCommonStore();
@@ -552,6 +555,16 @@ function toggleSellBuy(status: string) {
 function setCategory(Category: string) {
   commonStore.setstoreCategory(Category);
 }
+
+// 생명주기, 들어가고 나갈때 초기화
+onMounted(() => {
+  commonStore.reset();
+  console.log(`초기화`);
+});
+onUnmounted(() => {
+  commonStore.reset();
+  console.log(`초기화`);
+});
 </script>
 
 <style scoped></style>

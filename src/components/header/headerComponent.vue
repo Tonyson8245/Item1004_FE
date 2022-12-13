@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 웹 메인 헤더  -->
-    <div class="flex cursor-default bg-[#fafafa] inline-block top-0 z-40">
+    <div class="flex cursor-default bg-[#fafafa] inline-block top-0 z-50">
       <div class="flex-1 hidden md:block"></div>
       <div class="flex-none hidden md:block">
         <div
@@ -18,7 +18,11 @@
             <div class="flex space-x-4 items-center">
               <img src="@/assets/icon/chat_mid-grey.svg" alt="" />
               <img src="@/assets/icon/notify_mid-grey.svg" alt="" />
-              <img src="@/assets/icon/profile_mid-grey.svg" alt="" />
+              <img
+                src="@/assets/icon/profile_mid-grey.svg"
+                @click="router.push('/mypage')"
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -27,7 +31,7 @@
     </div>
     <!-- 모바일 메인 헤더 -->
     <div
-      class="w-full bg-everly-main px-4 py-3 cursor-default top-0 md:hidden z-40 fixed"
+      class="w-full bg-everly-main px-4 py-3 cursor-default top-0 md:hidden z-10 fixed"
       v-if="route.meta.name == `home`"
     >
       <div class="flex justify-between items-center">
@@ -51,7 +55,7 @@
       </div>
     </div>
     <!-- 헤더끝 -->
-    <div>
+    <div class="z-10">
       <div v-if="route.meta.name == `home`">
         <HomeHeader />
       </div>

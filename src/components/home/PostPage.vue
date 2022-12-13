@@ -1,6 +1,11 @@
 <template>
-  <ModalSmall />
-  <div class="" :class="overflowControl">
+  <modalDelete
+    :propsShowModal="showModal"
+    :propsType="deleteStatus"
+    @update:propsShowModal="toggleShowModal()"
+    @update:changeStatus="deleteStatus = $event"
+  />
+  <div :class="overflowControl" class="pb-20 md:pb-0 relative">
     <div class="flex">
       <div class="grow"></div>
       <div
@@ -8,13 +13,12 @@
       >
         <!-- 올린 시각 / 웹 - 수정삭제 / 모바일 - 신고 -->
         <div
-          class="flex justify-between items-center md:justify-end gap-8 text-everly-dark_grey"
+          class="flex justify-between items-center md:justify-end gap-8 text-everly-dark_grey text-sm md:text-base"
         >
-          <span class="text-sm md:text-lg">10분전 올림</span>
+          <span class="">10분전 올림</span>
           <div class="hidden md:flex gap-5">
             <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border"
-              @click="toggle()"
+              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
             >
               <img
                 src="@/assets/icon/pencil_grey.svg"
@@ -24,11 +28,8 @@
               수정하기
             </div>
             <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border"
-              @click="
-                changeModalSetting(`delete`);
-                toggle();
-              "
+              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
+              @click="toggleShowModal()"
             >
               <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
               삭제하기
@@ -41,7 +42,7 @@
         <!-- 팔래요/살래요 제목 -->
         <div class="flex my-4 md:my-7 items-center">
           <div
-            class="text-everly-white w-[64px] md:w-[68px] text-center text-sm md:text-lg"
+            class="text-everly-white w-[64px] md:w-[68px] text-center text-sm md:text-base"
           >
             <div
               class="bg-everly-main rounded-md py-1 w-full"
@@ -53,7 +54,7 @@
               살래요
             </div>
           </div>
-          <div class="text-lg md:text-2xl md:px-4 px-2">
+          <div class="text-lg md:text-xl md:px-4 px-2">
             8억 ~ 580억 메이플 메소 판매 합니다.
           </div>
         </div>
@@ -101,9 +102,10 @@
                   <div class="">최소구매수량 &nbsp;&nbsp;&nbsp; 8억매소</div>
                   <div>최대구매수량 &nbsp;&nbsp;&nbsp; 580억메소</div>
                 </div>
-                <div class="font-bold space-x-5 md:block hidden">
-                  <span>8억메소당</span
-                  ><span class="text-lg md:text-xl">26,046 원</span>
+                <div
+                  class="font-bold space-x-5 md:block hidden text-lg md:text-xl"
+                >
+                  <span>8억메소당</span><span class="">26,046 원</span>
                 </div>
               </div>
             </div>
@@ -128,18 +130,21 @@
             <div class="flex justify-between items-center">
               <div class="font-bold">총 결제금액</div>
               <div class="flex space-x-4 items-center">
-                <div class="text-everly-dark_grey">총수량 (8개) / 64억메소</div>
+                <div class="text-everly-dark_grey text-base">
+                  총수량 (8개) / 64억메소
+                </div>
                 <div class="flex text-2xl font-bold items-center">
-                  208,368<span class="pl-2 text-xl font-normal">원</span>
+                  208,368<span class="pl-2 text-base font-normal">원</span>
                 </div>
               </div>
             </div>
             <div
-              class="mt-12 w-full text-center bg-everly-main text-everly-white py-4 rounded-lg"
+              class="mt-12 w-full text-center bg-everly-main text-everly-white py-3 rounded-lg"
+              @click="router.push('/payment')"
             >
               구매하기
             </div>
-            <div class="mt-3 w-full flex space-x-2">
+            <div class="mt-3 w-full flex space-x-2 text-base">
               <div
                 class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border"
               >
@@ -179,7 +184,7 @@
         </div>
 
         <div class="md:mt-[2.848rem] mt-[1.8rem] space-y-4">
-          <div class="hidden md:block text-xl">상세설명</div>
+          <div class="hidden md:block text-lg">상세설명</div>
           <div
             class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem]"
           >
@@ -188,7 +193,7 @@
         </div>
         <!-- 웹 안전 확인 -->
         <div class="mt-[2.848rem] space-y-4 hidden md:block">
-          <div class="text-xl">안전거래를 위한 필수확인!</div>
+          <div class="text-lg">안전거래를 위한 필수확인!</div>
           <div
             class="w-full text-everly-dark_grey text-base border min-h-[8.938rem] bg-everly-light_grey flex flex-col justify-center items-start space-y-4 px-5"
           >
@@ -206,7 +211,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-5 block md:hidden">
+        <div class="my-3 block md:hidden">
           <div
             class="w-full text-everly-dark_grey text-base border bg-everly-light_grey flex flex-col justify-center items-start space-y-2 px-5 py-3 rounded-lg"
           >
@@ -224,29 +229,118 @@
             </div>
           </div>
         </div>
-        <div class="mt-5">
-          <div class="text-base sm:text-xl">판매자정보</div>
-          <div class="md:flex h-32 mt-3">
+        <hr
+          class="border-everly-light_grey md:hidden border-px w-full absolute left-0 md:static my-3 border-[10px]"
+        />
+        <div class="mt-14">
+          <div class="text-lg sm:text-xl hidden md:block">판매자정보</div>
+          <div class="md:flex mt-3">
             <div
-              class="flex-1 border-r border-everly_mid-grey flex bg-blue-100"
+              class="flex-1 md:border-r border-everly_mid-grey flex text-everly-dark_grey space-x-2 md:space-x-3 items-center relative"
             >
-              <img
-                src="@/dummy/home/img/profile_img.png"
-                alt=""
-                class="w-8 h-8"
-              />
-              <div>
+              <div class="rounded-lg overflow-hidden">
+                <img
+                  src="@/dummy/home/img/profile_img.png"
+                  alt=""
+                  class="w-12 md:w-28"
+                />
+              </div>
+              <div class="space-y-1 md:space-y-2">
                 <div class="flex">
                   <div class="flex justify-between items-center">
-                    <span>아이디</span
-                    ><img src="@/assets/icon/check_mobile_blue.svg" alt="" />
+                    <span
+                      class="text-everly-black text-base md:text-xl font-bold"
+                      >이런걸아이디라고짓다니말도안돼</span
+                    ><img
+                      src="@/assets/icon/check_circle_blue.svg"
+                      alt=""
+                      class="px-1 w-5 md:w-6 mt-1"
+                    />
                   </div>
-                  <div>(#A2379F56GH)</div>
                 </div>
-                <div>인증상태</div>
+                <div class="text-sm md:text-base">#A2379F56GH</div>
+                <div
+                  class="text-sm md:text-base flex space-x-1 space-x-2 items-center"
+                >
+                  <div class="hidden md:block">인증상태</div>
+                  <div
+                    class="flex text-[0.625rem] md:text-xs justify-center items-center space-x-1"
+                  >
+                    <div
+                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
+                    >
+                      휴대폰
+                    </div>
+                    <div
+                      class="border-everly-dark_grey border rounded-lg px-3 md:py-1"
+                    >
+                      이메일
+                    </div>
+                    <div
+                      class="border-everly-dark_grey border rounded-lg px-3 md:py-1"
+                    >
+                      계좌번호
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="absolute right-0 hidden md:block right-5 top-4">
+                <div class="rounded-full h-14 w-14 bg-red-100"></div>
               </div>
             </div>
-            <div class="flex-1 bg-red-100">사기조회 / 판매글 구매글</div>
+            <hr
+              class="border-everly-light_grey md:hidden border-px w-full absolute left-0 md:static my-3"
+            />
+            <div class="flex-1 pt-5">
+              <div
+                class="flex text-everly-dark_grey justify-between md:pl-10 md:text-base text-sm"
+              >
+                <div
+                  class="flex w-2/3 items-center justify-center space-x-2 md:space-x-5"
+                >
+                  <img
+                    src="@/assets/icon/post_grey.svg"
+                    alt=""
+                    class="md:w-6 w-4"
+                  />
+                  <div class="flex grow">
+                    <div class="flex-1 flex md:gap-10">
+                      <div>판매글</div>
+                      <div>10개</div>
+                    </div>
+                    <div class="flex-1 flex md:gap-10">
+                      <div>구매글</div>
+                      <div>10개</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex w-1/3 items-center space-x-2 md:space-x-5">
+                  <img
+                    src="@/assets/icon/review_grey.svg"
+                    alt=""
+                    class="md:w-5 w-4"
+                  />
+                  <div class="flex md:gap-10">
+                    <div>받은 리뷰</div>
+                    <div>1개</div>
+                  </div>
+                </div>
+              </div>
+              <div class="p-1 md:pl-10 mt-2">
+                <div
+                  class="w-full flex border-everly-main rounded-lg border text-everly-main md:py-3 py-2 justify-center items-center md:text-base text-sm"
+                >
+                  <div class="flex space-x-3">
+                    <img
+                      src="@/assets/icon/police_blue.svg"
+                      alt=""
+                      class="md:w-6 w-3"
+                    />
+                    <span>사기조회</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -254,9 +348,16 @@
     </div>
 
     <!-- 모바일 결제 - 밑에서 올라오는 페이지 -->
+    <transition name="fade" move="out-in">
+      <div
+        class="bg-black bg-opacity-30 h-screen w-full md:hidden absolute top-0 z-30"
+        v-if="showBuy || storeShowManagePost"
+        @click="toggleShowbuy(false)"
+      ></div>
+    </transition>
     <transition name="slide-down" move="out-in">
       <div
-        class="flex-1 text-sm sticky md:hidden bg-everly-white bottom-0 z-50 p-3 rounded-t-lg w-full sm:text-base"
+        class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 p-3 rounded-t-lg w-full sm:text-base"
         v-if="showBuy"
       >
         <div class="w-full flex justify-center pb-4 items-center">
@@ -286,50 +387,38 @@
         <div class="flex text-2xl font-bold items-center justify-end">
           208,368<span class="pl-2 text-base sm:text-xl font-normal">원</span>
         </div>
-
-        <div class="mt-6 w-full flex space-x-2">
-          <div class="w-1/6 flex justify-center items-center">
-            <img src="@/assets/icon/like_mid-grey.svg" alt="" class="pr-1" />
-            <div class="text-xs hidden">+99</div>
-            <div class="text-sm">10</div>
-          </div>
-          <div
-            class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-light_blue text-everly-dark_grey border"
-          >
-            <div class="text-everly-main">채팅하기(10)</div>
-          </div>
-          <div
-            class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-main"
-          >
-            <div class="font-bold text-everly-white">바로구매</div>
-          </div>
+      </div>
+      <div
+        class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 p-3 rounded-t-lg w-full sm:text-base"
+        v-else-if="storeShowManagePost"
+      >
+        <div>1</div>
+        <div
+          @click="
+            toggleManagePost();
+            toggleShowModal();
+          "
+        >
+          삭제하기
         </div>
       </div>
-    </transition>
-    <transition name="fade" move="out-in">
-      <div
-        class="bg-black bg-opacity-30 h-screen w-full md:hidden absolute top-0 z-40"
-        v-if="showBuy"
-        @click="toggleShowbuy(false)"
-      ></div>
     </transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import counter from "@/components/common/counter.vue";
+import modalDelete from "@/components/modal/modalDelete.vue";
 import { usePostStore } from "@/store/modules/home/postStore";
+import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
 import { ref, watch, computed } from "vue";
-import ModalSmall from "../modal/modalSmall.vue";
-import { useModal } from "@/store/modules/ui/modal";
-import { useToggle } from "@vueuse/shared";
+import { useRouter } from "vue-router";
 
 const postStore = usePostStore();
-const modalStore = useModal();
+const router = useRouter();
 
 const { storeShowBuy } = storeToRefs(postStore);
-const { showModalSmall } = storeToRefs(modalStore);
 
 let SellBuy = "sell";
 const qty = ref(1);
@@ -344,22 +433,22 @@ function toggleShowbuy(status: boolean) {
   postStore.setstoreShowBuy(status);
 }
 
-watch(showBuy, () => {
-  if (showBuy.value) {
+//  글 삭제 관련 로직
+const deleteStatus = ref("delete");
+const showModal = ref(false);
+const toggleShowModal = useToggle(showModal);
+
+const { storeShowManagePost } = storeToRefs(postStore);
+const toggleManagePost = useToggle(storeShowManagePost);
+
+// 구매하기 모바일에서 누를때 동작되는 것
+watch([showBuy, storeShowManagePost], () => {
+  if (showBuy.value || storeShowManagePost.value) {
     overflowControl.value = "h-screen overflow-hidden";
   } else {
     overflowControl.value = "";
   }
 });
-
-const toggle = useToggle(showModalSmall);
-
-function changeModalSetting(type: string) {
-  if (type == "delete") {
-    modalStore.setModalSmall({ button_content: `a`, detail_content: "2" });
-  } else {
-  }
-}
 </script>
 
 <style scoped>

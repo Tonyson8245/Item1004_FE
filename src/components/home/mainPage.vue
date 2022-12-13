@@ -137,21 +137,20 @@
     <div class="flex-grow"></div>
 
     <!-- 맨위로 모바일-->
-    <div @click="scrollToTop" v-if="storeinfiniteStatus">
-      <div
-        class="block md:hidden fixed bottom-20 w-full right-0 flex justify-center"
-      >
-        <div>
-          <img src="@/assets/icon/button_gotop_mobile.svg" alt="" />
-        </div>
-      </div>
-    </div>
+
     <!-- 모바일 글작성 -->
     <div
       class="block md:hidden bottom-20 w-full flex justify-end right-5 fixed"
-      @click="moveLink('/write')"
     >
-      <div>
+      <div
+        class="block md:hidden absolute right-20 top-8"
+        v-if="storeinfiniteStatus"
+      >
+        <div @click="scrollToTop">
+          <div><img src="@/assets/icon/button_gotop_mobile.svg" alt="" /></div>
+        </div>
+      </div>
+      <div @click="moveLink('/write')">
         <img src="@/assets/icon/button_write_mobile.svg" alt="" />
       </div>
     </div>
@@ -172,6 +171,7 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRouter } from "vue-router";
+import { onBeforeUnmount } from "vue";
 
 const router = useRouter();
 const filterStore = useFilterStore();
@@ -218,6 +218,12 @@ function scrollToTop() {
 function moveLink(link: string) {
   router.push(link);
 }
+
+// 페이지 벗어날때 초기화 할경우
+// onBeforeUnmount(() => {
+//   mainStore.resetsetstoreProductCard();
+//   mainStore.setstoreinfiniteStatus(false);
+// });
 </script>
 
 <style scoped></style>

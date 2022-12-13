@@ -69,5 +69,28 @@ export const useCommonStore = defineStore("commonStore", {
     setstoreCategory(Category: string) {
       this.storeCategory = Category;
     },
+
+    reset() {
+      this.storeGameSimilar = dummy_gameSimilar;
+      this.storeServerSimilar = dummy_serverSimilar;
+
+      //게임; 게임 서버 검색할 때, 유사리스트 상태값
+      this.storeShowServerSimilar = false;
+      this.storeShowGameSimilar = false;
+
+      //게임 서버 검색 상태값
+      this.storeShowServerFilter = false;
+
+      //기존 필터 값
+      this.storeTempKeyword = "";
+
+      this.storeCategory = ``;
+      //게임,게임서버 설정
+      this.storeGameKeyword = "";
+      this.storeServerKeyword = "";
+
+      this.storeTempGameKeyword = "";
+      this.storeTempServerKeyword = "";
+    },
   },
 });

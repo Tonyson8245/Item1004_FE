@@ -1,6 +1,12 @@
 <template>
   <div class="h-screen flex-grow md:flex">
-    <modalSmall />
+    <modalSmall
+      :propsShowModal="showModal"
+      :propsButtonText="`로그인하기`"
+      :propsContentText="`비밀번호 재설정이\n완료되었습니다`"
+      :propsLink="``"
+      @update:propsShowModal="toggle()"
+    />
     <div class="grid place-items-center w-full md:m-auto">
       <div class="hidden md:block">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
@@ -39,8 +45,8 @@
 
       <div class="grid gap-2 place-items-center w-full mt-8 md:mt-8">
         <button
-          @click="toggleModal"
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-base text-everly-white bg-everly-main w-11/12"
+          @click="toggle()"
         >
           비밀번호 재설정
         </button>
@@ -51,19 +57,12 @@
 
 <script setup lang="ts">
 import modalSmall from "@/components/modal/modalSmall.vue";
-import { useModal } from "@/store/modules/ui/modal";
-import type { modalSetting } from "@/interface/ui/modal.interface";
+import { useToggle } from "@vueuse/shared";
+import { ref } from "vue";
 
-const modalStore = useModal(); // 모달 store 가져오기
-const set: modalSetting = {
-  detail_content: "비밀번호 재설정이\n완료되었습니다",
-  button_content: "로그인하기",
-}; // 모달 내용 작성
+const showModal = ref(false);
 
-const toggleModal = () => {
-  modalStore.setModalSmall(set); // 모달 내용 저장하기
-  modalStore.controlModalSmall(true); // 모달 상태 변경하여 저장하기
-};
+const toggle = useToggle(showModal);
 </script>
 
 <style scoped></style>

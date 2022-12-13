@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="text-center w-full fixed bottom-0 sticky z-30 py-2 px-4 bg-everly-white"
-    v-if="!storeShowBuy"
-  >
+  <div class="text-center w-full fixed bottom-0 z-40 py-2 px-4 bg-everly-white">
     <div class="w-full flex space-x-2">
       <div class="w-1/6 flex justify-center items-center">
         <img src="@/assets/icon/like_mid-grey.svg" alt="" class="pr-1" />
@@ -17,8 +14,22 @@
       <div
         class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-main text-sm sm:text-base"
       >
-        <div class="font-bold text-everly-white" @click="toggleShowbuy(true)">
+        <div
+          class="font-bold text-everly-white"
+          @click="togglestoreShowManagePost()"
+          v-if="owner"
+        >
+          글 관리
+        </div>
+        <div
+          class="font-bold text-everly-white"
+          @click="toggle()"
+          v-else-if="!storeShowBuy"
+        >
           구매하기
+        </div>
+        <div class="font-bold text-everly-white" v-else @click="toggle()">
+          바로 구매
         </div>
       </div>
     </div>
@@ -27,14 +38,17 @@
 
 <script setup lang="ts">
 import { usePostStore } from "@/store/modules/home/postStore";
+import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
+import { ref } from "vue";
 
 const postStore = usePostStore();
-const { storeShowBuy } = storeToRefs(postStore);
+const { storeShowManagePost, storeShowBuy } = storeToRefs(postStore);
 
-function toggleShowbuy(status: boolean) {
-  postStore.setstoreShowBuy(status);
-}
+const toggle = useToggle(storeShowBuy);
+const owner = ref(false);
+
+const togglestoreShowManagePost = useToggle(storeShowManagePost);
 </script>
 
 <style scoped></style>

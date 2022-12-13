@@ -11,6 +11,7 @@
       />
       <input
         placeholder="비빌번호를 입력하세요"
+        type="password"
         class="h-11 lg:h-15 w-11/12 appearance-none rounded-lg border border-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
       />
     </div>
@@ -18,6 +19,7 @@
     <div class="grid gap-2 place-items-center w-full mt-4 md:mt-8">
       <button
         class="h-11 lg:h-15 px-6 py-2 rounded-lg text-lg text-everly-white bg-everly-main w-11/12 hover:bg-everly-sub_blue"
+        @click="router.push('/')"
       >
         로그인
       </button>
@@ -95,6 +97,10 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+</script>
 
 <style scoped></style>

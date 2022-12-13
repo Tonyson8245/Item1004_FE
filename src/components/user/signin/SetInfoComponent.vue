@@ -1,6 +1,12 @@
 <template>
   <div class="h-screen md:flex">
-    <modalSmall />
+    <modalSmall
+      :propsShowModal="showModal"
+      :propsButtonText="buttonText"
+      :propsContentText="contentText"
+      :propsLink="``"
+      @update:propsShowModal="toggle()"
+    />
     <div
       class="place-items-center md:w-full h-full flex flex-col justify-between md:h-auto"
     >
@@ -103,10 +109,10 @@
       <div class="flex-grow"></div>
       <div
         class="flex-none grid gap-2 place-items-center h-24 md:mb-5 w-full md:static"
-        @click="toggleModal()"
       >
         <button
-          class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-mid_grey w-11/12"
+          class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-mid_grey w-11/12 cursor-pointer"
+          @click="toggle()"
         >
           가입하기
         </button>
@@ -119,8 +125,7 @@
 import { ref } from "vue";
 import contractVue from "./common/contract.vue";
 import modalSmall from "@/components/modal/modalSmall.vue";
-import { useModal } from "@/store/modules/ui/modal";
-import type { modalSetting } from "@/interface/ui/modal.interface";
+import { useToggle } from "@vueuse/shared";
 
 const overlap = ref(false);
 const contractList = [
@@ -142,16 +147,11 @@ const contractList = [
   },
 ];
 
-const modalStore = useModal(); // 모달 store 가져오기
-const set: modalSetting = {
-  detail_content: "회원가입이\n완료되었습니다",
-  button_content: "로그인하기",
-}; // 모달 내용 작성
+const showModal = ref(false);
+const contentText = `인증 번호가 발송되었습니다.`;
+const buttonText = `확인`;
 
-const toggleModal = () => {
-  modalStore.setModalSmall(set); // 모달 내용 저장하기
-  modalStore.controlModalSmall(true); // 모달 상태 변경하여 저장하기
-};
+const toggle = useToggle(showModal);
 </script>
 
 <style scoped></style>

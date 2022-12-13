@@ -6,7 +6,7 @@
       toogleDropDown();
     "
   >
-    <headerComponentVue class="w-full z-40 top-0 sticky md:sticky" />
+    <headerComponentVue class="w-full z-10 top-0 sticky md:sticky" />
 
     <router-view></router-view>
 
@@ -17,7 +17,11 @@
     />
     <Postbar
       class="block md:hidden text-center w-full fixed bottom-0"
-      v-if="route.meta.name == `post`"
+      v-if="route.meta.name == `payment`"
+    />
+    <PaymentbarMobile
+      class="block md:hidden text-center w-full fixed bottom-0"
+      v-if="route.meta.name == `payment`"
     />
     <FooterWeb
       class="hidden md:block absolute w-full"
@@ -33,11 +37,11 @@ import { storeToRefs } from "pinia";
 import Navbar from "@/components/footer/NavbarMobile.vue";
 import Postbar from "@/components/footer/PostbarMobile.vue";
 import FooterWeb from "@/components/footer/footerWeb.vue";
+import PaymentbarMobile from "@/components/footer/PaymentbarMobile.vue";
 import { useMainStore } from "@/store/modules/home/mainStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
-
 import { vScrollLock } from "@vueuse/components";
 const mainStore = useMainStore();
 const commonStore = useCommonStore();

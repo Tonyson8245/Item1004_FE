@@ -445,66 +445,46 @@
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
           v-if="storeCategoryGamemoney"
+          @click="closeFilterBadge(`gamemoney`)"
         >
           <span>게임머니</span
-          ><img
-            src="@/assets/icon/close_white.svg"
-            class="w-2"
-            alt=""
-            @click="closeFilterBadge(`gamemoney`)"
-          />
+          ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
         </div>
         <!-- 아이템 베찌-->
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
           v-if="storeCategoryItem"
+          @click="closeFilterBadge(`item`)"
         >
           <span>아이템</span
-          ><img
-            src="@/assets/icon/close_white.svg"
-            class="w-2"
-            alt=""
-            @click="closeFilterBadge(`item`)"
-          />
+          ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
         </div>
         <!-- 캐릭터 베찌-->
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
           v-if="storeCategoryCharacter"
+          @click="closeFilterBadge(`character`)"
         >
           <span>캐릭터</span
-          ><img
-            src="@/assets/icon/close_white.svg"
-            class="w-2"
-            alt=""
-            @click="closeFilterBadge(`character`)"
-          />
+          ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
         </div>
         <!-- 기타 베찌-->
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
           v-if="storeCategoryEtc"
+          @click="closeFilterBadge(`etc`)"
         >
           <span>기타</span
-          ><img
-            src="@/assets/icon/close_white.svg"
-            class="w-2"
-            alt=""
-            @click="closeFilterBadge(`etc`)"
-          />
+          ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
         </div>
         <!-- 게임/게임서버 베찌-->
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
-          v-if="storeServerKeyword != ''"
+          v-if="storeServerKeyword != '' && storeGameKeyword != ''"
+          @click="closeFilterBadge(`gameServer`)"
         >
           <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span
-          ><img
-            src="@/assets/icon/close_white.svg"
-            class="w-2"
-            alt=""
-            @click="closeFilterBadge(`gameServer`)"
-          />
+          ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
         </div>
       </div>
     </div>

@@ -11,8 +11,13 @@ import searchModal from "@/components/header/search/searchComponmet_mobile.vue";
 import mainPage from "@/components/home/mainPage.vue";
 import writePage from "@/components/home/writePage.vue";
 import postPage from "@/components/home/PostPage.vue";
-
+import MypageViewVue from "@/views/MypageView.vue";
+import PaymentViewVue from "@/views/PaymentView.vue";
+import paymentPageVue from "@/components/home/paymentPage.vue";
 export default {
+  paymentPageVue,
+  MypageViewVue,
+  PaymentViewVue,
   postPage,
   writePage,
   mainPage,

@@ -1,7 +1,7 @@
 <template>
   <div class="md:bg-[#fafafa]">
     <div
-      class="border-b text-center text-everly-dark_grey flex p-3 md:invisible cursor-default w-full bg-white fixed top-0 z-50"
+      class="border-b text-center text-everly-dark_grey flex p-3 md:invisible cursor-default w-full bg-white fixed top-0 z-40"
     >
       <div class="flex-none pt-1" @click="backPress()">
         <img src="@/assets/icon/arrow_left.png" alt="" />
