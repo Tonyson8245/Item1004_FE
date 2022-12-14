@@ -6,9 +6,9 @@
       :propsContentText="`준비 중인 페이지입니다.`"
       :propsLink="`/`"
     />
-
-    <div><img src="@/dummy/pages/mypage.png" alt="" /></div>
   </div>
+
+  <div><img src="@/dummy/pages/mypage.png" alt="" /></div>
 </template>
 
 <script setup lang="ts">
