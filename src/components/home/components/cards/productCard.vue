@@ -6,7 +6,7 @@
         <div class="flex justify-between">
           <div class="flex space-x-2">
             <img
-              src="@/dummy/home/img/profile_img.png"
+              src="@/assets/dummy/home/img/profile_img.png"
               alt=""
               class="w-11 h-11 rounded-lg"
             />
@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import type Card from "@/interface/home/productCard.interface";
+import type Card from "@/domain/home/productCard.interface";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

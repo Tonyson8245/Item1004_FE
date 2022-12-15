@@ -8,7 +8,7 @@
     />
   </div>
 
-  <div><img src="@/dummy/pages/mypage.png" alt="" /></div>
+  <div><img src="@/assete/dummy/pages/mypage.png" alt="" /></div>
 </template>
 
 <script setup lang="ts">

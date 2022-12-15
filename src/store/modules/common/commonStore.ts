@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import dummy_gameSimilar from "../../../dummy/home/filter/gameSimilar";
-import dummy_serverSimilar from "../../../dummy/home/filter/serverSimilar";
+import dummy_gameSimilar from "../../../assets/dummy/home/filter/gameSimilar";
+import dummy_serverSimilar from "../../../assets/dummy/home/filter/serverSimilar";
 
 export const useCommonStore = defineStore("commonStore", {
   state: () => ({

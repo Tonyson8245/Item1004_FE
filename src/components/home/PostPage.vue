@@ -240,7 +240,7 @@
             >
               <div class="rounded-lg overflow-hidden">
                 <img
-                  src="@/dummy/home/img/profile_img.png"
+                  src="@/assets/dummy/home/img/profile_img.png"
                   alt=""
                   class="w-12 md:w-28"
                 />

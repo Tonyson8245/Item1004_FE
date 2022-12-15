@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import type recentKeywordType from "@/interface/home/search/recentKeyword.inteface";
+import type recentKeywordType from "@/domain/home/search/recentKeyword.inteface";
 import type { PropType } from "vue";
 
 const props = defineProps({

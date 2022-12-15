@@ -1,4 +1,4 @@
-import type recentKeyword from "@/interface/home/search/recentKeyword.inteface";
+import type recentKeyword from "@/domain/home/search/recentKeyword.inteface";
 
 export let searchRecent: recentKeyword[] = [
   {

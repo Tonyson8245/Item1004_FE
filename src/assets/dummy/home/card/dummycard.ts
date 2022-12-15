@@ -1,4 +1,4 @@
-import type productCard from "@/interface/home/productCard.interface";
+import type productCard from "@/domain/home/productCard.interface";
 
 export let productCards: productCard[] = [
   {

@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from "pinia";
-import dummy_gameSimilar from "../../../dummy/home/filter/gameSimilar";
-import dummy_serverSimilar from "../../../dummy/home/filter/serverSimilar";
+import dummy_gameSimilar from "../../../assets/dummy/home/filter/gameSimilar";
+import dummy_serverSimilar from "../../../assets/dummy/home/filter/serverSimilar";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 
 export const useWriteStore = defineStore("writeStore", {

@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { getServiceTerm } from "@/api/user/login";
+import { getServiceTerm } from "@/api/user-serive/login";
 
 export const useloginStore = defineStore("loginStore", {
   state: () => ({}),

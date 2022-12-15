@@ -1,4 +1,4 @@
-import type meta from "@/interface/common/meta.interface";
+import type meta from "@/domain/common/meta.interface";
 import type { AxiosInstance } from "axios";
 
 interface term {

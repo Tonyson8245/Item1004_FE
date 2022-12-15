@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "@/store";
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_TEST;
 
