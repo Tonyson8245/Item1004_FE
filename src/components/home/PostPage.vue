@@ -5,7 +5,7 @@
     @update:propsShowModal="toggleShowModal()"
     @update:changeStatus="deleteStatus = $event"
   />
-  <div :class="overflowControl" class="pb-20 md:pb-0 relative">
+  <div :class="overflowControl" class="pb-20 sm:pb-0 relative">
     <div class="flex">
       <div class="grow"></div>
       <div
@@ -234,13 +234,13 @@
         />
         <div class="mt-14">
           <div class="text-lg sm:text-xl hidden md:block">판매자정보</div>
-          <div class="md:flex mt-3">
+          <div class="sm:flex mt-3 relative">
             <div
               class="flex-1 md:border-r border-everly_mid-grey flex text-everly-dark_grey space-x-2 md:space-x-3 items-center relative"
             >
               <div class="rounded-lg overflow-hidden">
                 <img
-                  src="@/dummy/home/img/profile_img.png"
+                  src="@/assets/dummy/home/img/profile_img.png"
                   alt=""
                   class="w-12 md:w-28"
                 />
@@ -284,12 +284,16 @@
                   </div>
                 </div>
               </div>
-              <div class="absolute right-0 hidden md:block right-5 top-4">
-                <div class="rounded-full h-14 w-14 bg-red-100"></div>
+              <div
+                class="absolute right-0.5 top-6.5 sm:right-12 md:right-5 md:top-4"
+              >
+                <div
+                  class="rounded-full h-6 w-6 md:h-14 md:w-14 bg-red-100"
+                ></div>
               </div>
             </div>
             <hr
-              class="border-everly-light_grey md:hidden border-px w-full absolute left-0 md:static my-3"
+              class="border-everly-light_grey sm:hidden border-px w-full absolute left-0 md:static my-3"
             />
             <div class="flex-1 pt-5">
               <div
@@ -392,7 +396,10 @@
         class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 p-3 rounded-t-lg w-full sm:text-base"
         v-else-if="storeShowManagePost"
       >
-        <div>1</div>
+        <div>수정하기</div>
+        <hr
+          class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
+        />
         <div
           @click="
             toggleManagePost();

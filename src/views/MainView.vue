@@ -17,7 +17,7 @@
     />
     <Postbar
       class="block md:hidden text-center w-full fixed bottom-0"
-      v-if="route.meta.name == `payment`"
+      v-if="route.meta.name == `post`"
     />
     <PaymentbarMobile
       class="block md:hidden text-center w-full fixed bottom-0"

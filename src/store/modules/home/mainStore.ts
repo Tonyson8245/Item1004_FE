@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import dummyCard from "@/dummy/home/card/dummycard";
-import type productCard from "@/interface/home/productCard.interface";
+import dummyCard from "@/assets/dummy/home/card/dummycard";
+import type productCard from "@/domain/home/productCard.interface";
 
 export const useMainStore = defineStore("mainStore", {
   state: () => ({
