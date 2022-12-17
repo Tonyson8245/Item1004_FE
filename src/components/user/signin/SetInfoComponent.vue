@@ -28,7 +28,7 @@
             class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
           />
           <img
-            src="@/assets/icon/check_small_blue.svg"
+            src="@/assets/icon/check_circle_blue.svg"
             class="w-5 h-5 absolute right-5"
             alt=""
           />
@@ -122,10 +122,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import contractVue from "./common/contract.vue";
 import modalSmall from "@/components/modal/modalSmall.vue";
 import { useToggle } from "@vueuse/shared";
+import { useauthStore } from "@/store/modules/user/authStore";
 
 const overlap = ref(false);
 const contractList = [
@@ -152,6 +153,12 @@ const contentText = `인증 번호가 발송되었습니다.`;
 const buttonText = `확인`;
 
 const toggle = useToggle(showModal);
+
+/// 페이지 들어갈때, 서버에서 데이터 호출 시작
+const loginStore = useauthStore();
+onMounted(() => {
+  loginStore.getServiceTerms();
+});
 </script>
 
 <style scoped></style>

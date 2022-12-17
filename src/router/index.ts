@@ -1,6 +1,7 @@
 import components from "./components";
 import { createRouter, createWebHistory } from "vue-router";
 import { useCommon } from "@/store/modules/ui/common";
+import type { user } from "@/domain/user/user.interface";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,11 @@ const router = createRouter({
           path: "/payment",
           component: components.paymentPageVue,
           meta: { transition: "", name: "payment", title: "거래/결제" },
+        },
+        {
+          path: "/payment/result",
+          component: components.PaymentResultPage,
+          meta: { transition: "", name: "paymentResult", title: "결제 완료" },
         },
       ],
     },
@@ -101,12 +107,21 @@ const router = createRouter({
     },
   ],
 });
+
 router.beforeEach((to) => {
   window.scrollTo({ top: 0, behavior: "auto" });
+  const localData = localStorage.getItem("user");
+  const userNickname =
+    localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
 
   const commonStore = useCommon();
+  console.log(to.path);
   switch (to.path) {
     case "/account/login":
+      if (userNickname != "로그인하기") {
+        router.go(-1);
+        break;
+      }
       commonStore.setheaderTitle("로그인");
       commonStore.setcsShowLink(true);
       break;

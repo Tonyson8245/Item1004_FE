@@ -20,10 +20,14 @@
       <div class="grid gap-2 place-items-center mt-2 w-full p-1">
         <div class="pr-0 flex items-center w-11/12">
           <div class="flex w-4/5 mr-1">
-            <dropdown animation="fade" color="white" class="pr-1"></dropdown>
+            <dropdown
+              :propsList="['a', 'b', 'c']"
+              :propsPlaceholder="`통신사`"
+              :propsClass="`flex-1`"
+            ></dropdown>
             <input
               placeholder="휴대 전화번호 입력('-'제외)"
-              class="rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-full"
+              class="ml-1 flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-full"
             />
           </div>
           <button
@@ -65,8 +69,9 @@ import modalSmall from "@/components/modal/modalSmall.vue";
 import dropdown from "@/components/common/dropdown.vue";
 import { useMediaQuery, useToggle } from "@vueuse/core";
 import { computed, watch, ref } from "vue";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 let buttonContent = ref("");
 let link: string;
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 1024px)"));

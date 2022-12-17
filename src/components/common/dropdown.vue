@@ -6,7 +6,7 @@
       v-on:click="toggleDropdown()"
     >
       <button
-        class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left px-5 flex justify-between"
+        class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left pl-3 pr-8 flex justify-between"
         :class="props.propsClass"
       >
         {{ title }}

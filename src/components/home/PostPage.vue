@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="text-lg md:text-xl md:px-4 px-2">
-            8억 ~ 580억 메이플 메소 판매 합니다.
+            {{ storePostTitle }}
           </div>
         </div>
         <hr
@@ -105,7 +105,10 @@
                 <div
                   class="font-bold space-x-5 md:block hidden text-lg md:text-xl"
                 >
-                  <span>8억메소당</span><span class="">26,046 원</span>
+                  <span>{{ numberToKorean(storeUnitValue) }} 게임머니당</span
+                  ><span class=""
+                    >{{ storePricePerUnit.toLocaleString() }}원</span
+                  >
                 </div>
               </div>
             </div>
@@ -119,7 +122,7 @@
                 :qty="qty"
                 class="flex-none md:w-32 md:h-9"
               />
-              <div class="flex-1 text-right">64억 메소</div>
+              <div class="flex-1 text-right">{{ TotalQty }}</div>
             </div>
             <div>
               <div class="text-everly-dark_grey text-xs py-3 px-2">
@@ -131,10 +134,11 @@
               <div class="font-bold">총 결제금액</div>
               <div class="flex space-x-4 items-center">
                 <div class="text-everly-dark_grey text-base">
-                  총수량 (8개) / 64억메소
+                  총수량 ({{ qty }}개) / {{ TotalQty }}
                 </div>
                 <div class="flex text-2xl font-bold items-center">
-                  208,368<span class="pl-2 text-base font-normal">원</span>
+                  {{ ProductPrice
+                  }}<span class="pl-2 text-base font-normal">원</span>
                 </div>
               </div>
             </div>
@@ -361,7 +365,7 @@
     </transition>
     <transition name="slide-down" move="out-in">
       <div
-        class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 p-3 rounded-t-lg w-full sm:text-base"
+        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[4em]"
         v-if="showBuy"
       >
         <div class="w-full flex justify-center pb-4 items-center">
@@ -386,10 +390,13 @@
         </div>
         <div class="flex justify-between items-center pb-8">
           <div class="font-bold px-2">총 결제금액</div>
-          <div class="text-everly-dark_grey">총수량 (8개) / 64억메소</div>
+          <div class="text-everly-dark_grey">
+            총수량 ({{ qty }}개) / {{ TotalQty }}
+          </div>
         </div>
         <div class="flex text-2xl font-bold items-center justify-end">
-          208,368<span class="pl-2 text-base sm:text-xl font-normal">원</span>
+          {{ ProductPrice
+          }}<span class="pl-2 text-base sm:text-xl font-normal">원</span>
         </div>
       </div>
       <div
@@ -417,15 +424,24 @@
 import counter from "@/components/common/counter.vue";
 import modalDelete from "@/components/modal/modalDelete.vue";
 import { usePostStore } from "@/store/modules/home/postStore";
+import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
-import { ref, watch, computed } from "vue";
+import { ref, watch, onUnmounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import { numberToKorean } from "@/common";
 
 const postStore = usePostStore();
+const paymentStore = usePaymentStore();
 const router = useRouter();
 
-const { storeShowBuy } = storeToRefs(postStore);
+const {
+  storeShowBuy,
+  storePostTitle,
+  storeUnitValue,
+  storeUnitName,
+  storePricePerUnit,
+} = storeToRefs(postStore);
 
 let SellBuy = "sell";
 const qty = ref(1);
@@ -433,6 +449,7 @@ function updateQty(event: number) {
   qty.value = event;
 }
 
+//모바일 구매하기 보여주는 쪽
 const showBuy = storeShowBuy;
 let overflowControl = ref("");
 
@@ -440,10 +457,31 @@ function toggleShowbuy(status: boolean) {
   postStore.setstoreShowBuy(status);
 }
 
+//전체 갯수
+const TotalQty = computed(() => {
+  return numberToKorean(qty.value * storeUnitValue.value) + ` 게임머니`;
+});
+
+//물품 가격
+const ProductPrice = computed(() => {
+  return (qty.value * storePricePerUnit.value).toLocaleString();
+});
+//구매하기쪽으로 데이터 보내기
+// 생명주기, 들어가고 나갈때 초기화
+onUnmounted(() => {
+  var title = storePostTitle.value;
+  var unit = storeUnitValue.value;
+  var unitName = storeUnitName.value;
+  var pricePerUnit = storePricePerUnit.value;
+  var orderQty = qty.value;
+  paymentStore.setPostData(title, unit, unitName, pricePerUnit, orderQty);
+});
+
 //  글 삭제 관련 로직
 const deleteStatus = ref("delete");
 const showModal = ref(false);
 const toggleShowModal = useToggle(showModal);
+const bottomClass = ref("");
 
 const { storeShowManagePost } = storeToRefs(postStore);
 const toggleManagePost = useToggle(storeShowManagePost);

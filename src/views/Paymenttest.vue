@@ -1,12 +1,4 @@
 <template>
-  <!-- <div>
-    <ModalSmall
-      :propsShowModal="true"
-      :propsButtonText="`메인으로 가기`"
-      :propsContentText="`준비 중인 페이지입니다.`"
-      :propsLink="`/`"
-    />
-  </div> -->
   <div>
     <div class="hidden">
       <form id="tranMgr" name="tranMgr" method="post" onsubmit="">
@@ -52,14 +44,14 @@
           name="ReturnUrl"
           size="100"
           class="input"
-          value="http://everly.co.kr/pay2.php"
+          value="http://everly.co.kr/smartro/smartro-payment-result.php"
         />
         <input
           type="text"
           name="StopUrl"
           size="100"
           class="input"
-          value="http://everly.co.kr/pay2.php"
+          value="http://everly.co.kr/smartro/smartro-payment-result.php"
           placeholder="Mobile 연동 시 필수"
         />
         <input
@@ -143,10 +135,10 @@
       </form>
 
       <!-- PC 연동의 경우에만 아래 승인폼이 필요합니다. (Mobile은 제외) -->
-      <form ref="approvalFormVue" name="approvalForm" method="post">
+      <!-- <form ref="approvalFormVue" name="approvalForm" method="post">
         <input type="text" id="Tid" name="Tid" />
         <input type="text" id="TrAuthKey" name="TrAuthKey" />
-      </form>
+      </form> -->
     </div>
     <button
       type="button"
@@ -189,12 +181,6 @@ function goPay() {
         FormId: "tranMgr", // 폼ID
         Callback: function (res: any) {
           console.log(res);
-          var approvalForm = approvalFormVue as GenericHTMLFormElement;
-
-          // approvalForm.Tid = res.Tid;
-          // approvalForm.TrAuthKey = res.TrAuthKey;
-          // approvalForm.action = "http://everly.co.kr/pay2.php";
-          // approvalForm.submit;
 
           var bodyFormData = new FormData();
           bodyFormData.append("Tid", res.Tid);

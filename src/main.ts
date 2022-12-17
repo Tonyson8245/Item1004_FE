@@ -1,14 +1,22 @@
-import { createApp } from "vue";
+import { createApp, markRaw } from "vue";
 
 import App from "./App.vue";
 import store from "./store/index";
 import "./assets/main.css";
 import vueDebounce from "vue-debounce";
 import router from "./router/index";
-// import LoadScript from "vue-plugin-load-script";
+import type { Router } from "vue-router";
+
+declare module "pinia" {
+  export interface PiniaCustomProperties {
+    router: Router;
+  }
+}
 
 const app = createApp(App);
 
-app.use(store).use(vueDebounce).use(router).mount("#app");
+store.use(({ store }) => {
+  store.router = markRaw(router);
+});
 
-export { router };
+app.use(vueDebounce).use(router).use(store).mount("#app");

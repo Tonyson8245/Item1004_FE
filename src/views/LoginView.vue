@@ -29,7 +29,7 @@
       </div>
       <div
         class="md:invisible text-center text-sm text-everly-dark_grey cursor-pointr py-1 w-full"
-        v-if="csLinkShow"
+        v-if="csShowLink"
       >
         고객센터 문의하기
       </div>
@@ -39,11 +39,12 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { useCommon } from "@/store/modules/ui/common";
-import router from "@/router";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
-const store = useCommon();
-const headerTitle = ref(store.headerTitle);
-const csLinkShow = ref(store.csShowLink);
+const router = useRouter();
+
+const { headerTitle, csShowLink } = storeToRefs(useCommon());
 
 function backPress() {
   router.go(-1);

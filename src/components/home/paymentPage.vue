@@ -1,7 +1,7 @@
 <template>
   <div class="mt-12 my-20 md:my-12 flex">
-    <div class="grow"></div>
-    <div class="w-[73.750rem] mt-5 md:mt-11">
+    <div class="grow hidden md:block"></div>
+    <div class="w-full md:w-[73.750rem] mt-5 md:mt-11">
       <div class="p-3 md:p-0">
         <div class="md:text-xl text-sm font-bold">주문 상품 정보</div>
         <div class="flex space-x-2 mt-3.5 md:mt-7">
@@ -16,19 +16,19 @@
             <div class="md:text-2xl">{{ storePostTitle }}</div>
             <div class="md:flex md:text-xl text-sm font-bold md:justify-start">
               <div class="md:pr-5">
-                {{ storeUnit }} /
-                {{ storePricePerUnit }}
+                {{ numberToKorean(storeUnitValue) }} {{ storeUnitName }} /
+                {{ storePricePerUnit.toLocaleString() }} 원
               </div>
-              <div>{{ storeOrderQty }}개 ({{ storeTotalQty }})</div>
+              <div>{{ storeOrderQty }}개 ({{ TotalQty }})</div>
             </div>
           </div>
         </div>
       </div>
       <hr
-        class="border-everly-light_grey border-[3px] md:border-[#707070] md:border mt-3 md:mt-7 md:w-[42.5rem]"
+        class="border-everly-light_grey border-[3px] md:border-[#707070] md:border mt-3 md:mt-7 w-full md:w-[42.5rem]"
       />
-      <div class="w-[73.750rem] md:flex md:space-x-2">
-        <div class="md:w-[42.5rem]">
+      <div class="w-full md:w-[73.750rem] md:flex md:space-x-2">
+        <div class="w-full md:w-[42.5rem]">
           <div class="px-3 md:px-0">
             <div class="md:text-xl text-sm font-bold mt-5 md:mt-8">내 정보</div>
             <div class="text-sm mt-4 md:mt-8 space-y-4 md:space-y-6">
@@ -150,7 +150,7 @@
             <div class="text-sm md:text-xl font-bold">결제방법</div>
           </div>
           <div
-            class="grid grid-cols-3 md:grid-cols-4 gap-4 text-sm md:text-base mt-5 md:mt-[1.875rem] px-3 md:px-0"
+            class="w-full grid grid-cols-3 sm:grid-cols-6 md:grid-cols-4 gap-4 text-sm md:text-base mt-5 md:mt-[1.875rem] px-3 md:px-0"
           >
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
@@ -241,19 +241,19 @@
               <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">상품금액</div>
                 <div class="font-bold">
-                  {{ storeProductPrice.toLocaleString() }}원
+                  {{ storeProductPrice.toLocaleString() }} 원
                 </div>
               </div>
               <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">쿠폰사용</div>
                 <div class="font-bold">
-                  {{ discountamount(storeDiscountCoupon) }}원
+                  {{ discountamount(storeDiscountCoupon) }} 원
                 </div>
               </div>
               <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">마일리지 사용</div>
                 <div class="font-bold">
-                  {{ discountamount(storeDiscountMileage) }}원
+                  {{ discountamount(storeDiscountMileage) }} 원
                 </div>
               </div>
               <div class="flex justify-between items-center">
@@ -261,7 +261,7 @@
                   최종 결제금액
                 </div>
                 <div class="text-everly-main font-bold text-lg md:text-2xl">
-                  {{ storeFinalPrice.toLocaleString() }}원
+                  {{ storeFinalPrice.toLocaleString() }} 원
                 </div>
               </div>
               <div>
@@ -348,6 +348,7 @@
               </div>
               <div
                 class="w-full rounded-lg text-everly-white bg-everly-mid_grey font-bold py-3 text-center hidden md:block"
+                @click="goPay()"
               >
                 결제하기
               </div>
@@ -356,7 +357,142 @@
         </div>
       </div>
     </div>
-    <div class="grow"></div>
+    <div class="grow hidden md:block"></div>
+
+    <div class="hidden">
+      <form id="tranMgr" name="tranMgr" method="post" onsubmit="">
+        <!-- 각 값들을 가맹점에 맞게 설정해 주세요. -->
+        <input type="text" name="PayMethod" value="CARD" placeholder="" />
+        <input
+          type="text"
+          name="GoodsCnt"
+          maxlength="2"
+          value="1"
+          placeholder="123"
+        />
+        <input
+          type="text"
+          name="GoodsName"
+          maxlength="40"
+          value="상품명"
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="Amt"
+          maxlength="12"
+          value="1000"
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="Moid"
+          maxlength="40"
+          value="123456"
+          placeholder="특수문자 포함 불가"
+        />
+        <input
+          type="text"
+          name="Mid"
+          maxlength="10"
+          value="t_2212121m"
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="ReturnUrl"
+          size="100"
+          class="input"
+          value="http://everly.co.kr/smartro/smartro-payment-result.php"
+        />
+        <input
+          type="text"
+          name="StopUrl"
+          size="100"
+          class="input"
+          value="http://everly.co.kr/smartro/smartro-payment-result.php"
+          placeholder="Mobile 연동 시 필수"
+        />
+        <input
+          type="text"
+          name="BuyerName"
+          maxlength="30"
+          value="강문식"
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="BuyerTel"
+          maxlength="30"
+          value="01023451234"
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="BuyerEmail"
+          maxlength="30"
+          value="kiro@gmail.com"
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="UserIp"
+          maxlength="20"
+          value=""
+          placeholder=""
+        />
+        <input
+          type="text"
+          name="VbankExpDate"
+          maxlength="8"
+          value=""
+          placeholder="가상계좌 이용 시 필수"
+        />
+        <input
+          type="text"
+          name="EncryptData"
+          :value="EncryptData"
+          style="background-color: aqua"
+          placeholder="위/변조방지 HASH 데이터"
+        />
+        <input
+          type="text"
+          name="GoodsCl"
+          value="0"
+          placeholder="가맹점 설정에 따라 0 또는 1, 핸드폰결제 시 필수"
+        />
+        <input
+          type="text"
+          name="EdiDate"
+          maxlength="14"
+          :value="EdiDate"
+          placeholder=""
+          style="background-color: red"
+        />
+        <!-- MID 기본 세팅시 부가세 직접계산으로 설정됩니다. -->
+        <input
+          type="text"
+          name="TaxAmt"
+          maxlength="12"
+          value="910"
+          placeholder="부가세 직접계산 가맹점 필수,숫자만 가능, 문장부호 제외"
+        />
+        <input
+          type="text"
+          name="TaxFreeAmt"
+          maxlength="12"
+          value="0"
+          placeholder="부가세 직접계산 가맹점 필수,숫자만 가능, 문장부호 제외"
+        />
+        <input
+          type="text"
+          name="VatAmt"
+          maxlength="12"
+          value="90"
+          placeholder="부가세 직접계산 가맹점 필수,숫자만 가능, 문장부호 제외"
+        />
+      </form>
+    </div>
   </div>
 </template>
 
@@ -365,13 +501,19 @@ import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { storeToRefs } from "pinia";
 import dropdownVue from "../common/dropdown.vue";
 import commonFunction from "@/common";
-import { watch } from "vue";
+import { watch, onMounted, computed, ref } from "vue";
+import { useRouter } from "vue-router";
+import { numberToKorean } from "@/common";
+import axios from "axios";
+import { useAxios } from "@vueuse/integrations/useAxios";
+import { loadScript } from "vue-plugin-load-script";
 
+const router = useRouter();
 const paymentStore = usePaymentStore();
 const {
   storePostTitle,
-  storeUnitInt,
-  storeUnit,
+  storeUnitValue,
+  storeUnitName,
   storePricePerUnit,
   // 유저 정보
   storeName,
@@ -399,6 +541,23 @@ const {
   storeOrderQty,
   storeTotalQty,
 } = storeToRefs(paymentStore);
+
+onMounted(() => {
+  if (storePostTitle.value == "") router.go(-1);
+  paymentStore.mountstoreProductPrice(
+    storeOrderQty.value * storePricePerUnit.value
+  );
+  paymentStore.mountstoreFinalPrice(
+    storeOrderQty.value * storePricePerUnit.value
+  );
+});
+
+//전체 갯수
+const TotalQty = computed(() => {
+  return (
+    numberToKorean(storeOrderQty.value * storeUnitValue.value) + ` 게임머니`
+  );
+});
 
 //동의 관련 로직
 function toggleStoreTermsAll() {
@@ -454,6 +613,72 @@ const useMileage = () => {
     ? storeProductPrice.toString()
     : storeDiscountMileage.toString();
 };
+
+///결제 관련
+
+const instance = axios.create({});
+
+const EncryptData = ref("");
+const EdiDate = ref("");
+
+loadScript(
+  `https://tpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=20221214`
+);
+
+function goPay() {
+  useAxios(
+    "http://everly.co.kr/smartro/smartro-set-parameter.php?Amt=" +
+      storeFinalPrice.value,
+    instance
+  ).then((res) => {
+    EncryptData.value = res.data.value.result.EncryptData;
+    EdiDate.value = res.data.value.result.EdiDate;
+    setTimeout(() => {
+      // 스마트로페이 초기화
+      //@ts-expect-error
+      smartropay.init({
+        mode: "STG", // STG: 테스트, REAL: 운영
+      });
+
+      // 스마트로페이 결제요청
+      // PC 연동시 아래와 같이 smartropay.payment 함수를 구현합니다.
+      //@ts-expect-error
+      smartropay.payment({
+        FormId: "tranMgr", // 폼ID
+        Callback: function (res: any) {
+          console.log(res);
+
+          var bodyFormData = new FormData();
+          bodyFormData.append("Tid", res.Tid);
+          bodyFormData.append("TrAuthKey", res.TrAuthKey);
+
+          axios({
+            method: "post",
+            url: "http://everly.co.kr/smartro/smartro-payment-result.php",
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+            .then(function (response) {
+              //handle success
+              console.log(response);
+              router.push(`/`);
+            })
+            .catch(function (response) {
+              //handle error
+              console.log(response);
+              router.push(`/`);
+            });
+        },
+      });
+
+      // Mobile 연동시 아래와 같이 smartropay.payment 함수를 구현합니다.
+      //@ts-expect-error
+      smartropay.payment({
+        FormId: "tranMgr", // 폼ID
+      });
+    }, 1000);
+  });
+}
 </script>
 
 <style scoped>
