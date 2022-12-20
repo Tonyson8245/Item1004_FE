@@ -14,7 +14,9 @@ import postPage from "@/components/home/PostPage.vue";
 import MypageViewVue from "@/views/MypageView.vue";
 import PaymentResultPage from "@/components/home/PaymentResultPage.vue";
 import paymentPageVue from "@/components/home/paymentPage.vue";
+import paymetnTest from "@/views/Paymenttest.vue";
 export default {
+  paymetnTest,
   paymentPageVue,
   MypageViewVue,
   PaymentResultPage,

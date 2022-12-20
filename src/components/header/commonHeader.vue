@@ -52,15 +52,15 @@ onMounted(() => {
   if (route.meta.title == "결제 완료") {
     classBgcolor.value = bgColoType(minSize.value.value);
   } else classBgcolor.value = bgColoType(true);
-}),
-  //반응형 배경
-  watch(minSize.value, (minSize) => {
-    console.log(123);
+});
+//반응형 배경
+watch(minSize.value, (minSize) => {
+  console.log(123);
 
-    if (route.meta.title == "결제 완료") {
-      classBgcolor.value = bgColoType(minSize);
-    } else classBgcolor.value = bgColoType(true);
-  });
+  if (route.meta.title == "결제 완료") {
+    classBgcolor.value = bgColoType(minSize);
+  } else classBgcolor.value = bgColoType(true);
+});
 
 function backPress() {
   router.go(-1);

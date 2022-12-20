@@ -139,19 +139,17 @@
     <!-- 맨위로 모바일-->
 
     <!-- 모바일 글작성 -->
-    <div
-      class="block md:hidden bottom-20 w-full flex justify-end right-5 fixed"
-    >
+    <div class="block md:hidden bottom-20 w-full fixed">
+      <div @click="moveLink('/write')" class="flex justify-end">
+        <img src="@/assets/icon/button_write_mobile.svg" alt="" />
+      </div>
       <div
-        class="block md:hidden absolute right-20 top-8"
+        class="block md:hidden flex justify-center absolute w-full top-7"
         v-if="storeinfiniteStatus"
       >
         <div @click="scrollToTop">
           <div><img src="@/assets/icon/button_gotop_mobile.svg" alt="" /></div>
         </div>
-      </div>
-      <div @click="moveLink('/write')">
-        <img src="@/assets/icon/button_write_mobile.svg" alt="" />
       </div>
     </div>
   </div>
@@ -171,7 +169,10 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRouter } from "vue-router";
-import { onBeforeUnmount } from "vue";
+
+// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
+const emit = defineEmits([`goPay`]);
+function goPay() {}
 
 const router = useRouter();
 const filterStore = useFilterStore();

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center w-full fixed bottom-0 sticky">
+  <div class="text-center w-full">
     <div
       class="text-center text-xs sm:text-sm text-everly-dark_grey cursor-pointr w-full h-14 sm:h-16 grid grid-cols-3 border-t bg-everly-white"
     >

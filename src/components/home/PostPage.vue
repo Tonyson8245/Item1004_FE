@@ -99,8 +99,12 @@
               </div>
               <div class="grow md:text-xl">
                 <div class="flex flex-wrap pb-3 gap-x-10">
-                  <div class="">최소구매수량 &nbsp;&nbsp;&nbsp; 8억매소</div>
-                  <div>최대구매수량 &nbsp;&nbsp;&nbsp; 580억메소</div>
+                  <div class="">
+                    최소구매수량 {{ numberToKorean(storeMinValue) }} 게임머니
+                  </div>
+                  <div>
+                    최대구매수량 {{ numberToKorean(storeMaxValue) }} 게임머니
+                  </div>
                 </div>
                 <div
                   class="font-bold space-x-5 md:block hidden text-lg md:text-xl"
@@ -120,6 +124,7 @@
               <counter
                 @getValue="updateQty($event)"
                 :qty="qty"
+                :maxQty="MaxQty"
                 class="flex-none md:w-32 md:h-9"
               />
               <div class="flex-1 text-right">{{ TotalQty }}</div>
@@ -439,8 +444,14 @@ const {
   storeShowBuy,
   storePostTitle,
   storeUnitValue,
+  storeMinValue,
+  storeMaxValue,
   storeUnitName,
   storePricePerUnit,
+
+  storeGameName,
+  storeServerName,
+  storeCategory,
 } = storeToRefs(postStore);
 
 let SellBuy = "sell";
@@ -448,6 +459,10 @@ const qty = ref(1);
 function updateQty(event: number) {
   qty.value = event;
 }
+
+// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
+const emit = defineEmits([`goPay`]);
+function goPay() {}
 
 //모바일 구매하기 보여주는 쪽
 const showBuy = storeShowBuy;
@@ -466,6 +481,12 @@ const TotalQty = computed(() => {
 const ProductPrice = computed(() => {
   return (qty.value * storePricePerUnit.value).toLocaleString();
 });
+
+//최대 구매 갯수
+const MaxQty = computed(() => {
+  return Math.floor(storeMaxValue.value / storeUnitValue.value);
+});
+
 //구매하기쪽으로 데이터 보내기
 // 생명주기, 들어가고 나갈때 초기화
 onUnmounted(() => {
@@ -474,7 +495,21 @@ onUnmounted(() => {
   var unitName = storeUnitName.value;
   var pricePerUnit = storePricePerUnit.value;
   var orderQty = qty.value;
-  paymentStore.setPostData(title, unit, unitName, pricePerUnit, orderQty);
+
+  var GameName = storeGameName.value;
+  var ServerName = storeServerName.value;
+  var Category = storeCategory.value;
+
+  paymentStore.setPostData(
+    title,
+    unit,
+    unitName,
+    pricePerUnit,
+    orderQty,
+    GameName,
+    ServerName,
+    Category
+  );
 });
 
 //  글 삭제 관련 로직

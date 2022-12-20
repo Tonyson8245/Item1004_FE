@@ -5,33 +5,50 @@
       toggleSearch();
       toogleDropDown();
     "
+    class="relative"
   >
     <headerComponentVue class="w-full z-10 top-0 sticky md:sticky" />
 
+    <!-- 결제 테스트시  -->
+    <!-- <router-view v-slot="{ Component }">
+      <component :is="Component" @goPay="goPay()"
+    /></router-view> -->
+
+    <!-- 결제 테스트 안할시  -->
     <router-view></router-view>
 
     <!-- 모바일은 네비바가 홈에만 있고, 웹은 푸터가 항상있다. -->
-    <Navbar
-      class="block md:hidden text-center w-full fixed bottom-0"
-      v-if="route.meta.name == `home`"
-    />
+    <div v-if="route.meta.name == `home` || !storeinfiniteStatus">
+      <Navbar class="block md:hidden text-center w-full fixed bottom-0" />
+      <FooterWeb class="hidden md:block absolute w-full" />
+    </div>
     <Postbar
       class="block md:hidden text-center w-full fixed bottom-0"
-      v-if="route.meta.name == `post`"
+      v-else-if="route.meta.name == `post`"
     />
+    <!-- 결제 테스트 시 사용 -->
+    <!-- <PaymentbarMobile
+      class="block md:hidden text-center w-full fixed bottom-0"
+      v-else-if="route.meta.name == `payment`"
+      @goPay="goPay()"
+    /> -->
+
+    <!-- 결제 테스트 안할시 사용-->
     <PaymentbarMobile
       class="block md:hidden text-center w-full fixed bottom-0"
-      v-if="route.meta.name == `payment`"
+      v-else-if="route.meta.name == `payment`"
     />
-    <FooterWeb
-      class="hidden md:block absolute w-full"
-      v-if="!storeinfiniteStatus"
+    <FooterLogin
+      class="hidden md:block md:pb-20"
+      v-else-if="route.meta.name == `paymentResult`"
     />
+
+    <!-- 스마트로 결제 / 결제 테스트 시 사용-->
+    <!-- <smartroVue ref="childComponentRef" /> -->
   </div>
 </template>
 <script lang="ts" setup>
 import { useSearchStore } from "@/store/modules/home/searchStore";
-import { useFilterStore } from "@/store/modules/home/filterStore";
 import headerComponentVue from "../components/header/headerComponent.vue";
 import { storeToRefs } from "pinia";
 import Navbar from "@/components/footer/NavbarMobile.vue";
@@ -42,7 +59,16 @@ import { useMainStore } from "@/store/modules/home/mainStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
-import { vScrollLock } from "@vueuse/components";
+import FooterLogin from "@/components/footer/footerLogin.vue";
+// import smartroVue from "@/components/payment/smartro.vue";
+import { ref } from "vue";
+
+//결제 시작 버튼 // 결제시 사용
+// const childComponentRef = ref<InstanceType<typeof smartroVue> | null>(null);
+// const goPay = () => {
+//   childComponentRef.value?.open();
+// };
+
 const mainStore = useMainStore();
 const commonStore = useCommonStore();
 const componentStore = useComponentStore();

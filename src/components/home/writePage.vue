@@ -535,7 +535,6 @@ import { onUnmounted, onMounted } from "vue";
 
 const writeStore = useWriteStore();
 const commonStore = useCommonStore();
-commonStore.refresh();
 const { storeSellBuy } = storeToRefs(writeStore);
 const {
   storeGameSimilar,
@@ -547,6 +546,10 @@ const {
   storeGameKeyword,
   storeServerKeyword,
 } = storeToRefs(commonStore);
+
+// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
+const emit = defineEmits([`goPay`]);
+function goPay() {}
 
 function toggleSellBuy(status: string) {
   writeStore.setstoreSellBuy(status);

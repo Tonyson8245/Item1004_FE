@@ -3,7 +3,10 @@
     <div class="wrapper flex h-full">
       <button
         class="bg-everly-light_grey btn btn--minus rounded-l-lg text-everly-dark_grey"
-        @click="emit('getValue', counter)"
+        @click="
+          changeCounter(-1);
+          emit('getValue', counter);
+        "
         type="button"
         name="button"
       >
@@ -35,18 +38,23 @@ import { ref, onMounted } from "vue";
 const emit = defineEmits([`getValue`]);
 const props = defineProps({
   qty: Number,
+  maxQty: Number,
 });
 
 let counter = ref(1);
 function changeCounter(num: number) {
   counter.value += num;
-  !isNaN(counter.value) && counter.value > 0
+
+  !isNaN(counter.value) && counter.value > 1
     ? counter.value
-    : (counter.value = 0);
+    : (counter.value = 1);
+
+  if (props.maxQty != undefined) {
+    !isNaN(counter.value) && counter.value <= props.maxQty
+      ? counter.value
+      : (counter.value = props.maxQty);
+  }
 }
-onMounted(() => {
-  console.log(123);
-});
 </script>
 
 <style scoped>

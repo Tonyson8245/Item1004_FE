@@ -58,7 +58,6 @@ export const useFilterStore = defineStore("filterStore", {
     },
     // 기존 필터 저장해두는 곳
     setstoreTempfilter() {
-      console.log("저장");
       this.storeTempCategory = [
         this.storeCategoryGamemoney,
         this.storeCategoryItem,

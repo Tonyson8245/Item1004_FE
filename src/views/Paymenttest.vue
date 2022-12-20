@@ -155,6 +155,7 @@
 import axios, { type GenericHTMLFormElement } from "axios";
 import { ref } from "vue";
 import { useAxios } from "@vueuse/integrations/useAxios";
+import { loadScript } from "vue-plugin-load-script";
 
 const approvalFormVue: any = ref(null);
 
@@ -164,9 +165,13 @@ const EncryptData = ref("");
 const EdiDate = ref("");
 
 function goPay() {
-  useAxios("http://everly.co.kr/pay.php", instance).then((res) => {
-    EncryptData.value = res.data.value.EncryptData;
-    EdiDate.value = res.data.value.EdiDate;
+  useAxios(
+    "http://everly.co.kr/smartro/smartro-set-parameter.php?Amt=1000",
+    instance
+  ).then((res) => {
+    console.log(res);
+    EncryptData.value = res.data.value.result.EncryptData;
+    EdiDate.value = res.data.value.result.EdiDate;
     setTimeout(() => {
       // 스마트로페이 초기화
       //@ts-expect-error
@@ -179,16 +184,14 @@ function goPay() {
       //@ts-expect-error
       smartropay.payment({
         FormId: "tranMgr", // 폼ID
-        Callback: function (res: any) {
-          console.log(res);
-
+        Callback: function (result: any) {
           var bodyFormData = new FormData();
-          bodyFormData.append("Tid", res.Tid);
-          bodyFormData.append("TrAuthKey", res.TrAuthKey);
+          bodyFormData.append("Tid", result.Tid);
+          bodyFormData.append("TrAuthKey", result.TrAuthKey);
 
           axios({
             method: "post",
-            url: "http://everly.co.kr/pay2.php",
+            url: "http://everly.co.kr/smartro/smartro-payment-result.php",
             data: bodyFormData,
             headers: { "Content-Type": "multipart/form-data" },
           })

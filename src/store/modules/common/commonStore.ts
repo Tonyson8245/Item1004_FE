@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import dummy_gameSimilar from "../../../assets/dummy/home/filter/gameSimilar";
 import dummy_serverSimilar from "../../../assets/dummy/home/filter/serverSimilar";
+import homeApi from "@/api/home-service/index";
 
 export const useCommonStore = defineStore("commonStore", {
   state: () => ({
@@ -46,18 +47,20 @@ export const useCommonStore = defineStore("commonStore", {
     },
     setstoreTempGameKeyword(keyword: string) {
       this.storeTempGameKeyword = keyword;
+      homeApi
+        .getGameName(keyword)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     setstoreTempServerKeyword(keyword: string) {
       this.storeTempServerKeyword = keyword;
     },
     setstoreShowServerFilter(status: boolean) {
       this.storeShowServerFilter = status;
-    },
-
-    refresh() {
-      // this.setstoreGameKeyword("");
-      // this.setstoreServerKeyword("");
-      // this.setstoreShowServerFilter(false);
     },
     // 기존 필터 저장해두는 곳
     setstoreTempfilter() {

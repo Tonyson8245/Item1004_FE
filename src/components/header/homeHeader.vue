@@ -773,7 +773,6 @@ const {
 //초기화
 function refresh() {
   filterStore.refresh();
-  commonStore.refresh();
 }
 
 function toggleCategory(category: string) {
