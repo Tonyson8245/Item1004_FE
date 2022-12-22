@@ -85,7 +85,7 @@
                     src="@/assets/icon/close_white.svg"
                     class="w-2"
                     alt=""
-                    @click="closeFilterBadge(`gamemoney`)"
+                    @click="closeFilterBadge(`gameMoney`)"
                   />
                 </div>
                 <!-- 아이템 베찌-->
@@ -176,7 +176,7 @@
                         <div
                           class="border border-everly-mid_grey w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
                           v-if="!storeCategoryGamemoney"
-                          @click="toggleCategory(`gamemoney`)"
+                          @click="toggleCategory(`gameMoney`)"
                         >
                           <div class="text-center">
                             <img
@@ -194,7 +194,7 @@
                         </div>
                         <div
                           class="border border-everly-main w-[100px] h-[100px] rounded-xl flex items-center justify-center cursor-default"
-                          @click="toggleCategory(`gamemoney`)"
+                          @click="toggleCategory(`gameMoney`)"
                           v-else
                         >
                           <div class="text-center">
@@ -445,7 +445,7 @@
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
           v-if="storeCategoryGamemoney"
-          @click="closeFilterBadge(`gamemoney`)"
+          @click="closeFilterBadge(`gameMoney`)"
         >
           <span>게임머니</span
           ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
@@ -511,7 +511,7 @@
               <div
                 class="flex justify-center text-everly-dark cursor-default"
                 v-if="storeCategoryGamemoney"
-                @click="toggleCategory(`gamemoney`)"
+                @click="toggleCategory(`gameMoney`)"
               >
                 <div
                   class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl border-everly-main"
@@ -529,7 +529,7 @@
               </div>
               <div
                 class="flex justify-center text-everly-dark_grey cursor-default"
-                @click="toggleCategory(`gamemoney`)"
+                @click="toggleCategory(`gameMoney`)"
                 v-else
               >
                 <div class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl">
@@ -773,11 +773,12 @@ const {
 //초기화
 function refresh() {
   filterStore.refresh();
+  commonStore.refreshSearchGameServer();
 }
 
 function toggleCategory(category: string) {
   switch (category) {
-    case "gamemoney":
+    case "gameMoney":
       filterStore.setCategory([
         !storeCategoryGamemoney.value,
         storeCategoryItem.value,
@@ -826,9 +827,7 @@ function setFilter() {
 //필터 뱃지 설정
 function closeFilterBadge(type: string) {
   if (type == "gameServer") {
-    commonStore.setstoreGameKeyword("");
-    commonStore.setstoreShowServerFilter(false);
-    commonStore.setstoreServerKeyword("");
+    commonStore.refreshSearchGameServer();
   } else filterStore.changeCategory(type);
 }
 

@@ -115,8 +115,8 @@
                 <!-- 게임머니 -->
                 <div
                   class="flex justify-center text-everly-dark cursor-pointer"
-                  v-if="storeCategory == 'gamemoney'"
-                  @click="setCategory(`gamemoney`)"
+                  v-if="storeCategory == 'gameMoney'"
+                  @click="setCategory(`gameMoney`)"
                 >
                   <div
                     class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl border-everly-main"
@@ -134,7 +134,7 @@
                 </div>
                 <div
                   class="flex justify-center text-everly-dark_grey cursor-pointer"
-                  @click="setCategory(`gamemoney`)"
+                  @click="setCategory(`gameMoney`)"
                   v-else
                 >
                   <div class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl">
@@ -272,8 +272,8 @@
                 <!-- 게임머니 -->
                 <div
                   class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
-                  v-if="storeCategory != 'gamemoney'"
-                  @click="setCategory(`gamemoney`)"
+                  v-if="storeCategory != 'gameMoney'"
+                  @click="setCategory(`gameMoney`)"
                 >
                   <div class="text-center">
                     <img
@@ -291,7 +291,7 @@
                 </div>
                 <div
                   class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
-                  @click="setCategory(`gamemoney`)"
+                  @click="setCategory(`gameMoney`)"
                   v-else
                 >
                   <div class="text-center">
@@ -509,7 +509,7 @@
           v-if="storeGameKeyword != '' && storeServerKeyword != ''"
           class="p-5"
         >
-          <div v-if="storeCategory == 'gamemoney'"><writeGamemoney /></div>
+          <div v-if="storeCategory == 'gameMoney'"><writeGamemoney /></div>
           <div v-else-if="storeCategory == 'item'"><writeItem /></div>
           <div v-else-if="storeCategory == 'character'"><WriteCharacter /></div>
           <div v-else-if="storeCategory == 'etc'"><WriteEtc /></div>

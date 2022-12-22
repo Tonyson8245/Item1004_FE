@@ -4,7 +4,12 @@
       class="text-center text-xs sm:text-sm text-everly-dark_grey cursor-pointr w-full h-14 sm:h-16 grid grid-cols-3 border-t bg-everly-white"
     >
       <div class="flex flex-col justify-center items-center">
-        <img src="@/assets/icon/chat_mobile.svg" class="mt-1" alt="" />
+        <img
+          src="@/assets/icon/chat_mobile.svg"
+          class="mt-1"
+          alt=""
+          @click="router.push('/chat')"
+        />
         <div>채팅</div>
       </div>
       <div

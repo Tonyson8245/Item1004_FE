@@ -15,7 +15,9 @@ import MypageViewVue from "@/views/MypageView.vue";
 import PaymentResultPage from "@/components/home/PaymentResultPage.vue";
 import paymentPageVue from "@/components/home/paymentPage.vue";
 import paymetnTest from "@/views/Paymenttest.vue";
+import ChatViewVue from "@/views/ChatView.vue";
 export default {
+  ChatViewVue,
   paymetnTest,
   paymentPageVue,
   MypageViewVue,

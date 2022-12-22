@@ -148,8 +148,8 @@ function moveLink(type: string) {
 }
 
 //로그인
-const id = ref("test");
-const password = ref("password123");
+const id = ref("");
+const password = ref("");
 
 function clickLoginButton(id: string, pw: string) {
   console.log(id + pw);

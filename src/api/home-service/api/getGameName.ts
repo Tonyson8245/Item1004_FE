@@ -12,3 +12,5 @@ export default async function getGameName<T>(
     return Promise.reject(err);
   }
 }
+
+//작성중

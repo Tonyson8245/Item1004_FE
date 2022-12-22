@@ -62,14 +62,14 @@
         type="text"
         name="BuyerTel"
         maxlength="30"
-        value="01023451234"
+        value="01026899609"
         placeholder=""
       />
       <input
         type="text"
         name="BuyerEmail"
         maxlength="30"
-        value="kiro@gmail.com"
+        value=""
         placeholder=""
       />
       <input type="text" name="UserIp" maxlength="20" value="" placeholder="" />
@@ -149,7 +149,7 @@
         type="text"
         name="GoodsName"
         maxlength="40"
-        value="상품명"
+        value="게임머니"
         placeholder=""
       />
       <input
@@ -163,7 +163,7 @@
         type="text"
         name="Moid"
         maxlength="40"
-        value="123456"
+        value="483"
         placeholder="특수문자 포함 불가"
       />
       <input

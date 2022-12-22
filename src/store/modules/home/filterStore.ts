@@ -36,7 +36,7 @@ export const useFilterStore = defineStore("filterStore", {
     },
     changeCategory(type: string) {
       switch (type) {
-        case "gamemoney":
+        case "gameMoney":
           this.storeCategoryGamemoney = !this.storeCategoryGamemoney;
           break;
 

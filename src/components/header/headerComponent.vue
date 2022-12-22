@@ -22,7 +22,7 @@
               <img src="@/assets/icon/notify_mid-grey.svg" alt="" />
               <img
                 src="@/assets/icon/profile_mid-grey.svg"
-                @click="router.push('/mypage')"
+                @click="moveLink('/mypage')"
                 alt=""
               />
             </div>
@@ -126,7 +126,13 @@ function moveLink(link: string) {
     router.push("/search");
   } else if (link == "/account/login") {
     if (userNickname == `로그인하기`) router.push(link);
-    else router.push("/mypage");
+  } else if (link == "/mypage") {
+    var userinfo = localStorage.getItem("user");
+    if (userinfo == null) {
+      router.push("/account/login");
+      return;
+    }
+    router.push("/mypage");
   } else router.push(link);
 }
 </script>

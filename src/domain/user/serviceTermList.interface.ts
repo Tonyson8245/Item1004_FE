@@ -1,8 +1,5 @@
 import type meta from "@/domain/common/meta.interface";
 import type { AxiosResponse } from "axios";
-import { useloginStore } from "@/store/modules/user/authStore";
-
-const loginStore = useloginStore();
 
 export interface term {
   idx: number; // 약관 고유 번호

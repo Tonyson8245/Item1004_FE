@@ -1,24 +1,50 @@
 import { defineStore } from "pinia";
+import dummyPost from "@/assets/dummy/home/post/dummypost";
 
 export const usePostStore = defineStore("postStore", {
   state: () => ({
     storeShowBuy: false,
     storeShowManagePost: false,
 
-    storePostTitle: "8억~580억 메이플 메소 판매합니다",
-    storeUnitValue: 800000000, // 물품 단위
-    storeMinValue: 800000000, // 물품 단위
-    storeMaxValue: 58000000000, // 물품 단위
-    storeUnitName: "게임머니당", // 물품 단위
-    storePricePerUnit: 500, // 물품 단위당 가격
+    storePostTitle: "",
+    storeUnitValue: 0, // 물품 단위
+    storeMinValue: 0, // 물품 단위
+    storeMaxValue: 0, // 물품 단위
+    storeUnitName: "", // 물품 단위
+    storePricePerUnit: 0, // 물품 단위당 가격
 
-    storeGameName: "메이플스토리",
-    storeServerName: "엘리니아",
-    storeCategory: "gamemoney",
+    storeGameName: "",
+    storeServerName: "",
+    storeCategory: "",
+
+    storeUserCode: "",
+    storeUserNickname: "",
+    storeUserIdx: 0,
   }),
 
   getters: {},
   actions: {
+    setStorePostData(idx: string) {
+      var idxInt = parseInt(idx);
+      var data = dummyPost[idxInt - 1];
+
+      this.storeShowBuy = data.ShowBuy;
+      this.storeShowManagePost = data.ShowManagePost;
+
+      this.storePostTitle = data.PostTitle;
+      this.storeUnitValue = data.UnitValue;
+      this.storeMinValue = data.MinValue;
+      this.storeMaxValue = data.MaxValue;
+      this.storeUnitName = data.UnitName;
+      this.storePricePerUnit = data.PricePerUnit;
+      this.storeGameName = data.GameName;
+      this.storeServerName = data.ServerName;
+      this.storeCategory = data.Category;
+
+      this.storeUserCode = data.userinfo.code;
+      this.storeUserNickname = data.userinfo.nickname;
+      this.storeUserIdx = data.userinfo.userIdx;
+    },
     setstoreShowBuy(status: boolean) {
       this.storeShowBuy = status;
     },

@@ -9,7 +9,9 @@
       <div
         class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-light_blue text-everly-dark_grey border text-sm sm:text-base cursor-pointer"
       >
-        <div class="text-everly-main">채팅하기(10)</div>
+        <div class="text-everly-main" @click="router.push('/chat')">
+          채팅하기(10)
+        </div>
       </div>
       <div
         class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-main text-sm sm:text-base cursor-pointer"

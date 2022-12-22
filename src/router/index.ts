@@ -89,7 +89,10 @@ const router = createRouter({
         },
       ],
     },
-
+    {
+      path: "/chat",
+      component: components.ChatViewVue,
+    },
     {
       path: "/mypage",
       component: components.MypageViewVue,
