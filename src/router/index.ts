@@ -1,43 +1,151 @@
+import components from "./components";
 import { createRouter, createWebHistory } from "vue-router";
-import LoginView from "@/views/LoginView.vue";
-import loginComponent from "@/components/login/loginComponent.vue";
-import findIDcomponent from "@/components/login/findIDcomponent.vue";
-import { useCommon } from "@/store/modules/common";
+import { useCommon } from "@/store/modules/ui/common";
+import type { user } from "@/domain/user/user.interface";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/login",
-      component: LoginView,
+      path: "/",
+      redirect: "/home",
+    },
+    {
+      path: "/",
+      component: components.MainView,
+      meta: { transition: "slide-right", name: "home" },
       children: [
         {
-          path: "",
-          component: loginComponent,
+          path: "home",
+          component: components.mainPage,
+          meta: { transition: "slide-right", name: "home" },
         },
         {
-          path: "findID",
-          component: findIDcomponent,
+          path: "write",
+          component: components.writePage,
+          meta: {
+            transition: "slide-right",
+            name: "write",
+            title: "거래 등록",
+          },
+        },
+        {
+          path: "post",
+          component: components.postPage,
+          meta: {
+            transition: "slide-right",
+            name: "post",
+            title: "거래 상세 정보",
+          },
+        },
+        {
+          path: "/payment",
+          component: components.paymentPageVue,
+          meta: { transition: "", name: "payment", title: "거래/결제" },
+        },
+        {
+          path: "/payment/result",
+          component: components.PaymentResultPage,
+          meta: { transition: "", name: "paymentResult", title: "결제 완료" },
         },
       ],
     },
+    {
+      path: "/search",
+      component: components.searchModal,
+      meta: { transition: "slide-left" },
+    },
+    {
+      path: "/account",
+      component: components.LoginView,
+      children: [
+        {
+          path: "login",
+          component: components.loginComponent,
+        },
+        {
+          path: "findID/confirm",
+          component: components.findIDcomponent,
+        },
+        {
+          path: "findID/result",
+          component: components.findIDResultComponent,
+        },
+        {
+          path: "changePassword/confirm",
+          component: components.passwordConfirm,
+        },
+        {
+          path: "changePassword/set",
+          component: components.passwordSet,
+        },
+        {
+          path: "signin/setinfo",
+          component: components.infoSet,
+        },
+        {
+          path: "signin/confirm",
+          component: components.signinComfirm,
+        },
+      ],
+    },
+    {
+      path: "/chat",
+      component: components.ChatViewVue,
+    },
+    {
+      path: "/mypage",
+      component: components.MypageViewVue,
+      meta: { transition: "", name: "mypage" },
+    },
+
+    {
+      path: "/:anything(.*)",
+      redirect: (to) => {
+        // the function receives the target route as the argument
+        // we return a redirect path/location here.
+        return { path: "/" };
+      },
+      meta: { transition: "", name: "" },
+    },
   ],
 });
+
 router.beforeEach((to) => {
+  window.scrollTo({ top: 0, behavior: "auto" });
+  const localData = localStorage.getItem("user");
+  const userNickname =
+    localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
+
   const commonStore = useCommon();
   console.log(to.path);
   switch (to.path) {
-    case "/login":
-    case "/login/":
+    case "/account/login":
+      if (userNickname != "로그인하기") {
+        router.go(-1);
+        break;
+      }
       commonStore.setheaderTitle("로그인");
+      commonStore.setcsShowLink(true);
       break;
-    case "/login/findId":
+    case "/account/findid/confirm":
+    case "/account/findid/result":
       commonStore.setheaderTitle("아이디 찾기");
+      commonStore.setcsShowLink(true);
+      break;
+    case "/account/changepassword/confirm":
+    case "/account/changepassword/set":
+      commonStore.setheaderTitle("비밀번호 재설정");
+      commonStore.setcsShowLink(true);
+      break;
+    case "/account/signin/confirm":
+    case "/account/signin/setinfo":
+      commonStore.setheaderTitle("회원가입");
+      commonStore.setcsShowLink(false);
       break;
     default:
       commonStore.resetheaderTitle;
       break;
   }
 });
-
 export default router;

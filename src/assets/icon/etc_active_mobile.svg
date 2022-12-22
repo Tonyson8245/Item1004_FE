@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32.51" height="16.1" viewBox="0 0 32.51 16.1">
+    <path data-name="패스 215" d="M266.417-120.26h20.148a.513.513 0 0 0 .515-.515v-14.069a.513.513 0 0 0-.515-.515h-30.48a.513.513 0 0 0-.515.515h0a.514.514 0 0 0 .437.5 2.629 2.629 0 0 1 2.186 2.587 2.625 2.625 0 0 1-2.186 2.587.514.514 0 0 0-.437.5v.916a.514.514 0 0 0 .437.5 2.629 2.629 0 0 1 2.186 2.587 2.625 2.625 0 0 1-2.186 2.587.514.514 0 0 0-.437.5v.776a.513.513 0 0 0 .515.515h6.568" transform="translate(-255.07 135.86)" style="stroke:#000;stroke-linecap:round;stroke-miterlimit:10;fill:#f9e26a"/>
+    <path data-name="선 17" transform="translate(18.04 2.871)" style="fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10" d="M0 2.082V0"/>
+    <path data-name="선 18" transform="translate(18.04 6.832)" style="fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10" d="M0 7.598V0"/>
+    <path data-name="선 19" transform="translate(6.155 5.585)" style="fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10" d="M8.955 0H0"/>
+    <path data-name="선 20" transform="translate(6.155 10.077)" style="fill:none;stroke:#000;stroke-linecap:round;stroke-miterlimit:10" d="M8.955 0H0"/>
+    <path data-name="패스 218" d="m302.375-124.251-.436.391a.176.176 0 0 0-.055.161l.5 2.664a.2.2 0 0 1-.283.191l-2.6-1.259a.224.224 0 0 0-.18 0l-2.6 1.259a.192.192 0 0 1-.283-.191l.5-2.664a.18.18 0 0 0-.055-.161l-2.1-1.886a.177.177 0 0 1 .109-.306l2.9-.386a.2.2 0 0 0 .147-.1l1.3-2.423a.2.2 0 0 1 .349 0l1.3 2.423a.175.175 0 0 0 .147.1l2.9.386a.177.177 0 0 1 .109.306l-.741.667" transform="translate(-274.365 132.991)" style="fill:#fff;stroke:#000;stroke-linecap:round;stroke-miterlimit:10"/>
+</svg>
