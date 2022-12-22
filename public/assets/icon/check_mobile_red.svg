@@ -1,0 +1,10 @@
+<svg id="체크" xmlns="http://www.w3.org/2000/svg" width="20" height="14.309" viewBox="0 0 20 14.309">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #b20f47;
+      }
+    </style>
+  </defs>
+  <path id="check_FILL1_wght300_GRAD0_opsz48" class="cls-1" d="M15.2,27.159,8.45,20.374l1.029-1.029L15.2,25.069,27.389,12.85l1.061,1.061Z" transform="translate(-8.45 -12.85)"/>
+</svg>

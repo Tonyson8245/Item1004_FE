@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="text-lg md:text-xl md:px-4 px-2">
-            8억 ~ 580억 메이플 메소 판매 합니다.
+            {{ storePostTitle }}
           </div>
         </div>
         <hr
@@ -81,7 +81,7 @@
               >
                 게임명
               </div>
-              <div class="grow md:text-xl">메이플스토리</div>
+              <div class="grow md:text-xl">{{ storeGameName }}</div>
             </div>
             <div class="flex md:pt-[0.5em]">
               <div
@@ -89,7 +89,7 @@
               >
                 서버명
               </div>
-              <div class="grow md:text-xl">엘리시움</div>
+              <div class="grow md:text-xl">{{ storeServerName }}</div>
             </div>
             <div class="flex md:pt-[1.5rem]">
               <div
@@ -99,13 +99,20 @@
               </div>
               <div class="grow md:text-xl">
                 <div class="flex flex-wrap pb-3 gap-x-10">
-                  <div class="">최소구매수량 &nbsp;&nbsp;&nbsp; 8억매소</div>
-                  <div>최대구매수량 &nbsp;&nbsp;&nbsp; 580억메소</div>
+                  <div class="">
+                    최소구매수량 {{ numberToKorean(storeMinValue) }} 게임머니
+                  </div>
+                  <div>
+                    최대구매수량 {{ numberToKorean(storeMaxValue) }} 게임머니
+                  </div>
                 </div>
                 <div
                   class="font-bold space-x-5 md:block hidden text-lg md:text-xl"
                 >
-                  <span>8억메소당</span><span class="">26,046 원</span>
+                  <span>{{ numberToKorean(storeUnitValue) }} 게임머니당</span
+                  ><span class=""
+                    >{{ storePricePerUnit.toLocaleString() }}원</span
+                  >
                 </div>
               </div>
             </div>
@@ -117,9 +124,10 @@
               <counter
                 @getValue="updateQty($event)"
                 :qty="qty"
+                :maxQty="MaxQty"
                 class="flex-none md:w-32 md:h-9"
               />
-              <div class="flex-1 text-right">64억 메소</div>
+              <div class="flex-1 text-right">{{ TotalQty }}</div>
             </div>
             <div>
               <div class="text-everly-dark_grey text-xs py-3 px-2">
@@ -131,10 +139,11 @@
               <div class="font-bold">총 결제금액</div>
               <div class="flex space-x-4 items-center">
                 <div class="text-everly-dark_grey text-base">
-                  총수량 (8개) / 64억메소
+                  총수량 ({{ qty }}개) / {{ TotalQty }}
                 </div>
                 <div class="flex text-2xl font-bold items-center">
-                  208,368<span class="pl-2 text-base font-normal">원</span>
+                  {{ ProductPrice
+                  }}<span class="pl-2 text-base font-normal">원</span>
                 </div>
               </div>
             </div>
@@ -156,7 +165,8 @@
                 <div>찜하기</div>
               </div>
               <div
-                class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border"
+                class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border cursor-pointer"
+                @click="router.push('/chat')"
               >
                 <img
                   src="@/assets/icon/chat_mid-grey.svg"
@@ -188,7 +198,7 @@
           <div
             class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem]"
           >
-            메소 판매 합니다! 구매 후 채팅 주시면 바로 보내드립니다
+            각종 게임 머니 판매 합니다! 구매 후 채팅 주시면 바로 보내드립니다
           </div>
         </div>
         <!-- 웹 안전 확인 -->
@@ -240,9 +250,22 @@
             >
               <div class="rounded-lg overflow-hidden">
                 <img
-                  src="@/assets/dummy/home/img/profile_img.png"
+                  v-if="storeUserIdx % 3 == 0"
+                  src="@/assets/img/profile_red.jpeg"
                   alt=""
-                  class="w-12 md:w-28"
+                  class="w-12 md:w-28 rounded-lg"
+                />
+                <img
+                  v-else-if="storeUserIdx % 3 == 1"
+                  src="@/assets/img/profile_yellow.jpeg"
+                  alt=""
+                  class="w-12 md:w-28 rounded-lg"
+                />
+                <img
+                  v-else
+                  src="@/assets/img/profile_green.jpeg"
+                  alt=""
+                  class="w-12 md:w-28 rounded-lg"
                 />
               </div>
               <div class="space-y-1 md:space-y-2">
@@ -250,7 +273,7 @@
                   <div class="flex justify-between items-center">
                     <span
                       class="text-everly-black text-base md:text-xl font-bold"
-                      >이런걸아이디라고짓다니말도안돼</span
+                      >{{ storeUserNickname }}</span
                     ><img
                       src="@/assets/icon/check_circle_blue.svg"
                       alt=""
@@ -258,7 +281,7 @@
                     />
                   </div>
                 </div>
-                <div class="text-sm md:text-base">#A2379F56GH</div>
+                <div class="text-sm md:text-base">{{ storeUserCode }}</div>
                 <div
                   class="text-sm md:text-base flex space-x-1 space-x-2 items-center"
                 >
@@ -272,12 +295,12 @@
                       휴대폰
                     </div>
                     <div
-                      class="border-everly-dark_grey border rounded-lg px-3 md:py-1"
+                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
                     >
                       이메일
                     </div>
                     <div
-                      class="border-everly-dark_grey border rounded-lg px-3 md:py-1"
+                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
                     >
                       계좌번호
                     </div>
@@ -287,9 +310,26 @@
               <div
                 class="absolute right-0.5 top-6.5 sm:right-12 md:right-5 md:top-4"
               >
-                <div
-                  class="rounded-full h-6 w-6 md:h-14 md:w-14 bg-red-100"
-                ></div>
+                <div class="h-6 w-6 md:h-14 md:w-14">
+                  <img
+                    v-if="storeUserIdx % 3 == 0"
+                    src="@/assets/icon/class_bronze.svg"
+                    alt=""
+                    class="w-full"
+                  />
+                  <img
+                    v-else-if="storeUserIdx % 3 == 1"
+                    src="@/assets/icon/class_silber.svg"
+                    alt=""
+                    class="w-full"
+                  />
+                  <img
+                    v-else
+                    src="@/assets/icon/class_gold.svg"
+                    alt=""
+                    class="w-full"
+                  />
+                </div>
               </div>
             </div>
             <hr
@@ -361,7 +401,7 @@
     </transition>
     <transition name="slide-down" move="out-in">
       <div
-        class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 p-3 rounded-t-lg w-full sm:text-base"
+        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[4em]"
         v-if="showBuy"
       >
         <div class="w-full flex justify-center pb-4 items-center">
@@ -386,10 +426,13 @@
         </div>
         <div class="flex justify-between items-center pb-8">
           <div class="font-bold px-2">총 결제금액</div>
-          <div class="text-everly-dark_grey">총수량 (8개) / 64억메소</div>
+          <div class="text-everly-dark_grey">
+            총수량 ({{ qty }}개) / {{ TotalQty }}
+          </div>
         </div>
         <div class="flex text-2xl font-bold items-center justify-end">
-          208,368<span class="pl-2 text-base sm:text-xl font-normal">원</span>
+          {{ ProductPrice
+          }}<span class="pl-2 text-base sm:text-xl font-normal">원</span>
         </div>
       </div>
       <div
@@ -417,15 +460,34 @@
 import counter from "@/components/common/counter.vue";
 import modalDelete from "@/components/modal/modalDelete.vue";
 import { usePostStore } from "@/store/modules/home/postStore";
+import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
-import { ref, watch, computed } from "vue";
-import { useRouter } from "vue-router";
+import { ref, watch, onUnmounted, computed, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { numberToKorean } from "@/common";
 
 const postStore = usePostStore();
+const paymentStore = usePaymentStore();
 const router = useRouter();
+const route = useRoute();
 
-const { storeShowBuy } = storeToRefs(postStore);
+const {
+  storeShowBuy,
+  storePostTitle,
+  storeUnitValue,
+  storeMinValue,
+  storeMaxValue,
+  storeUnitName,
+  storePricePerUnit,
+
+  storeGameName,
+  storeServerName,
+  storeCategory,
+  storeUserCode,
+  storeUserIdx,
+  storeUserNickname,
+} = storeToRefs(postStore);
 
 let SellBuy = "sell";
 const qty = ref(1);
@@ -433,6 +495,23 @@ function updateQty(event: number) {
   qty.value = event;
 }
 
+//처음 페이지 들어갈때 데이터 가져오기
+onMounted(() => {
+  var idx = route.query.postId;
+  if (idx?.toString() != null) {
+    if (parseInt(idx.toString()) >= 3) {
+      router.push("/");
+      return;
+    }
+    postStore.setStorePostData(idx.toString());
+  } else router.push("/");
+});
+
+// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
+const emit = defineEmits([`goPay`]);
+function goPay() {}
+
+//모바일 구매하기 보여주는 쪽
 const showBuy = storeShowBuy;
 let overflowControl = ref("");
 
@@ -440,10 +519,51 @@ function toggleShowbuy(status: boolean) {
   postStore.setstoreShowBuy(status);
 }
 
+//전체 갯수
+const TotalQty = computed(() => {
+  return numberToKorean(qty.value * storeUnitValue.value) + ` 게임머니`;
+});
+
+//물품 가격
+const ProductPrice = computed(() => {
+  return (qty.value * storePricePerUnit.value).toLocaleString();
+});
+
+//최대 구매 갯수
+const MaxQty = computed(() => {
+  return Math.floor(storeMaxValue.value / storeUnitValue.value);
+});
+
+//구매하기쪽으로 데이터 보내기
+// 생명주기, 들어가고 나갈때 초기화
+onUnmounted(() => {
+  var title = storePostTitle.value;
+  var unit = storeUnitValue.value;
+  var unitName = storeUnitName.value;
+  var pricePerUnit = storePricePerUnit.value;
+  var orderQty = qty.value;
+
+  var GameName = storeGameName.value;
+  var ServerName = storeServerName.value;
+  var Category = storeCategory.value;
+
+  paymentStore.setPostData(
+    title,
+    unit,
+    unitName,
+    pricePerUnit,
+    orderQty,
+    GameName,
+    ServerName,
+    Category
+  );
+});
+
 //  글 삭제 관련 로직
 const deleteStatus = ref("delete");
 const showModal = ref(false);
 const toggleShowModal = useToggle(showModal);
+const bottomClass = ref("");
 
 const { storeShowManagePost } = storeToRefs(postStore);
 const toggleManagePost = useToggle(storeShowManagePost);
@@ -456,6 +576,13 @@ watch([showBuy, storeShowManagePost], () => {
     overflowControl.value = "";
   }
 });
+
+//시연옹
+function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+}
 </script>
 
 <style scoped>

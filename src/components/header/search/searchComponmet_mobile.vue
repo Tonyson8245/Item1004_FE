@@ -201,7 +201,7 @@ onMounted(() => {
 
 function closeFilterBadge(type: string) {
   if (type == "gameServer") {
-    commonStore.setstoreGameKeyword("");
+    commonStore.setstoreGameKeyword("", 0);
     commonStore.setstoreShowServerFilter(false);
     commonStore.setstoreServerKeyword("");
   } else filterStore.changeCategory(type);

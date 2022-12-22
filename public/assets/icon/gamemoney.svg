@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="52.047" height="45.381" viewBox="0 0 52.047 45.381">
+    <g transform="translate(.5 .5)">
+        <rect data-name="사각형 563" width="21.867" height="4.622" rx="1.521" transform="translate(2.94 23.109)" style="stroke-miterlimit:10;stroke:#161615;fill:#b0b0b0"/>
+        <rect data-name="사각형 564" width="21.867" height="4.622" rx="1.521" transform="translate(0 18.487)" style="fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+        <rect data-name="사각형 565" width="21.867" height="4.622" rx="1.521" transform="translate(2.94 13.865)" style="stroke-miterlimit:10;stroke:#161615;fill:#b0b0b0"/>
+        <rect data-name="사각형 566" width="21.867" height="4.622" rx="1.521" transform="translate(5.145 9.244)" style="fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+        <rect data-name="사각형 567" width="21.867" height="4.622" rx="1.521" transform="translate(2.94 4.622)" style="fill:#5d5d5d;stroke-miterlimit:10;stroke:#161615"/>
+        <path data-name="패스 183" d="M122.573 179.656h16.942a1.118 1.118 0 0 1 1.118 1.118v2.386a1.118 1.118 0 0 1-1.118 1.118h-19.631a1.118 1.118 0 0 1-1.118-1.118v-2.386a1.118 1.118 0 0 1 1.118-1.118" transform="translate(-115.091 -179.656)" style="stroke-linecap:round;fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+        <rect data-name="사각형 568" width="21.867" height="4.622" rx="1.521" transform="translate(1.47 27.731)" style="stroke-miterlimit:10;stroke:#161615;fill:#b0b0b0"/>
+        <rect data-name="사각형 569" width="21.867" height="4.622" rx="1.521" transform="translate(2.94 32.353)" style="stroke-miterlimit:10;stroke:#161615;fill:#b0b0b0"/>
+        <rect data-name="사각형 570" width="21.867" height="4.622" rx="1.521" transform="translate(2.205 36.974)" style="fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+        <rect data-name="사각형 571" width="21.867" height="4.622" rx="1.521" transform="translate(26.222 23.109)" style="stroke-miterlimit:10;stroke:#161615;fill:#b0b0b0"/>
+        <path data-name="패스 184" d="M169.492 204.809h4.722a1.118 1.118 0 0 1 1.118 1.118v2.386a1.118 1.118 0 0 1-1.118 1.118h-19.63a1.118 1.118 0 0 1-1.119-1.118v-2.386a1.118 1.118 0 0 1 1.119-1.118h12.542" transform="translate(-124.286 -186.322)" style="stroke-linecap:round;fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+        <rect data-name="사각형 572" width="21.867" height="4.622" rx="1.521" transform="translate(28.188 27.731)" style="fill:#5d5d5d;stroke-miterlimit:10;stroke:#161615"/>
+        <rect data-name="사각형 573" width="21.867" height="4.622" rx="1.521" transform="translate(26.946 32.353)" style="fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+        <path data-name="패스 185" d="M163.884 234.583h-10.2a1.118 1.118 0 0 1-1.118-1.118v-2.386a1.118 1.118 0 0 1 1.118-1.118h19.636a1.118 1.118 0 0 1 1.118 1.118v2.386a1.118 1.118 0 0 1-1.118 1.118h-5.5" transform="translate(-124.049 -192.987)" style="stroke-linecap:round;fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+        <g data-name="그룹 206" transform="translate(15.41 21.844)">
+            <circle data-name="타원 33" cx="11.269" cy="11.269" r="11.269" style="fill:#efefee;stroke-miterlimit:10;stroke:#161615"/>
+            <circle data-name="타원 34" cx="8.816" cy="8.816" r="8.816" transform="translate(3.163 2.453)" style="fill:#b0b0b0"/>
+            <path data-name="패스 186" d="M141.553 221.7a23.7 23.7 0 0 1 .362-7.263 8.8 8.8 0 0 0 2.451 16.136 23.791 23.791 0 0 1-2.813-8.873z" transform="translate(-135.493 -210.718)" style="fill:#5d5d5d"/>
+            <path data-name="패스 187" d="M150.02 213.9a8.514 8.514 0 1 1-6.5.19" transform="translate(-135.729 -210.574)" style="fill:none;stroke-linecap:round;stroke-miterlimit:10;stroke:#161615"/>
+            <g data-name="그룹 205">
+                <path data-name="패스 188" d="M150.938 219.658a2.237 2.237 0 0 0-2.028-.161 1.63 1.63 0 0 0-.942 1.721 2.465 2.465 0 0 0 1.46 1.522 5 5 0 0 1 1.815 1.181 2.071 2.071 0 0 1 .155 2.229 2.2 2.2 0 0 1-1.97 1.085 2.334 2.334 0 0 1-1.912-1.211" transform="translate(-138.119 -212.012)" style="stroke:#000;fill:none;stroke-linecap:round;stroke-miterlimit:10"/>
+                <path data-name="선 27" transform="translate(11.466 5.739)" style="stroke:#000;fill:none;stroke-linecap:round;stroke-miterlimit:10" d="M0 1.58V0"/>
+                <path data-name="선 28" transform="translate(11.466 15.218)" style="stroke:#000;fill:none;stroke-linecap:round;stroke-miterlimit:10" d="M0 1.58V0"/>
+            </g>
+        </g>
+    </g>
+</svg>

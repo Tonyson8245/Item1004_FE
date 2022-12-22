@@ -4,10 +4,15 @@ export const usePaymentStore = defineStore("paymentStore", {
   state: () => ({
     //서버로 부터 업데이되야할 정보
     //포스트 정보
-    storePostTitle: "8억~580억 메이플 메소 판매합니다", // 게시글명
-    storeUnitInt: "8억메소당", // 물품 단위
-    storeUnit: "8억메소당", // 물품 단위
-    storePricePerUnit: "26,046원", // 물품 단위당 가격
+    storePostTitle: "", // 게시글명
+    storeMinValue: 0, // 물품 단위
+    storeUnitName: "", // 물품 단위
+    storePricePerUnit: 0, // 물품 단위당 가격
+
+    storeGameName: "",
+    storeServerName: "",
+    storeCategory: "",
+
     // 유저 정보
     storeName: "김철수", // 유저 이름
     storeNickname: "이걸닉네임이라고짓다니말도안돼", // 유저 닉네임
@@ -21,19 +26,25 @@ export const usePaymentStore = defineStore("paymentStore", {
     storeDiscountMileage: 0, // 사용 마일리지
 
     //여기서는 클라만 있는 정보
-    storePaymentMethod: "", // 결제방법
+    storePaymentMethod: "CARD", // 결제방법
 
-    storeProductPrice: 206303, //상품금액
+    storeProductPrice: 0, //상품금액
     storeDiscountCoupon: 0, //쿠폰 효과
-    storeFinalPrice: 206303, //최종결제금액
+    storeFinalPrice: 0, //최종결제금액
 
     // 동의 내용
     storeTermsAll: false,
     storeTerms: [false, false],
 
     storeTermsforUse: false,
-    storeOrderQty: 8,
-    storeTotalQty: "64억메소",
+    storeOrderQty: 0,
+    storeTotalQty: 6400000000,
+
+    //reslt
+    storeResultTid: "",
+    storeResultAmt: "",
+    storeResultPayMethod: "",
+    storeResultPayDate: "",
   }),
 
   getters: {},
@@ -76,6 +87,40 @@ export const usePaymentStore = defineStore("paymentStore", {
     },
     setstoreFinalPrice(coupon: string, mileage: number) {
       this.storeFinalPrice = this.storeProductPrice - mileage;
+    },
+
+    setPostData(
+      title: string,
+      unit: number,
+      unitName: string,
+      pricePerUnit: number,
+      orderQty: number,
+      GameName: string,
+      ServerName: string,
+      Category: string
+    ) {
+      this.storePostTitle = title;
+      this.storeMinValue = unit;
+      this.storeUnitName = unitName;
+      this.storePricePerUnit = pricePerUnit;
+      this.storeOrderQty = orderQty;
+      this.storeGameName = GameName;
+      this.storeServerName = ServerName;
+      this.storeCategory = Category;
+    },
+
+    mountstoreProductPrice(price: number) {
+      this.storeProductPrice = price;
+    },
+    mountstoreFinalPrice(price: number) {
+      this.storeFinalPrice = price;
+    },
+
+    setResult(Tid: string, Amt: string, PayMethod: string, PayDate: string) {
+      this.storeResultTid = Tid;
+      this.storeResultAmt = Amt;
+      this.storeResultPayMethod = PayMethod;
+      this.storeResultPayDate = PayDate;
     },
   },
 });

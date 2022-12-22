@@ -34,7 +34,7 @@
         v-if="!storeinfiniteStatus"
       >
         <div
-          class="rounded-lg py-1 md:py-3 px-3 md:px-10 flex text-everly-drak_grey bg-everly-white text-sm md:text-base shadow-none md:shadow-xl border border-black md:border"
+          class="rounded-lg py-1 md:py-3 px-3 md:px-10 flex text-everly-drak_grey bg-everly-white text-sm md:text-base shadow-none md:shadow-xl border border-black md:border-none"
           @click="toggleInfiniteStatus(true)"
         >
           <span class="pr-2">전체보기</span
@@ -69,34 +69,40 @@
           <div
             class="bg-green-100 w-[373px] h-[140px] flex justify-center items-center h-full"
           >
-            373*140px 하단 배너
+            <img src="@/assets/img/bottomBanner_web1.jpeg" alt="" />
           </div>
           <div
             class="bg-yellow-100 w-[373px] h-[140px] flex justify-center items-center h-full"
           >
-            373*140px 하단 배너
+            <img src="@/assets/img/bottomBanner_web2.jpg" alt="" />
           </div>
           <div
             class="bg-red-100 w-[373px] h-[140px] flex justify-center items-center h-full"
           >
-            373*140px 하단 배너
+            <img src="@/assets/img/bottomBanner_web3.jpg" alt="" />
           </div>
         </div>
         <div class="grid md:hidden grid-cols-1 gap-0 flex-grow w-full">
-          <div
-            class="bg-green-100 flex justify-center items-center h-full w-full h-[65px]"
-          >
-            w:100% x h 65px
+          <div class="flex justify-center items-center h-full w-full">
+            <img
+              src="@/assets/img/banner_footer_mobile1.jpg"
+              alt=""
+              class="w-full"
+            />
           </div>
-          <div
-            class="bg-yellow-100 flex justify-center items-center h-full w-full h-[65px]"
-          >
-            w:100% x h 65px
+          <div class="flex justify-center items-center h-full w-full">
+            <img
+              src="@/assets/img/banner_footer_mobile2.jpg"
+              alt=""
+              class="w-full"
+            />
           </div>
-          <div
-            class="bg-red-100 flex justify-center items-center h-full w-full h-[65px]"
-          >
-            w:100% x h 65px
+          <div class="flex justify-center items-center h-full w-full">
+            <img
+              src="@/assets/img/banner_footer_mobile3.jpg"
+              alt=""
+              class="w-full"
+            />
           </div>
         </div>
       </div>
@@ -111,15 +117,18 @@
       </div>
 
       <div
-        class="md:mt-14 bg-white md:pb-4 py-2"
+        class="md:mt-14 bg-white md:pb-10 py-2"
         v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
       >
         <Carousel :settings="settings" :breakpoints="breakpoints">
-          <Slide v-for="slide in 30" :key="slide">
+          <Slide v-for="slide in 5" :key="slide">
             <div
-              class="carousel__item bg-everly-light_grey w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center h-full text-everly-mid_grey"
+              class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center h-full text-everly-mid_grey"
             >
-              <div>logo{{ slide }}</div>
+              <div>
+                <img :src="`/assets/img/logo/${slide}.jpg`" alt="" />
+                <!-- <img :src="`src/assets/img/logo/${slide}.jpg`" alt="" /> -->
+              </div>
             </div>
           </Slide>
 
@@ -139,19 +148,17 @@
     <!-- 맨위로 모바일-->
 
     <!-- 모바일 글작성 -->
-    <div
-      class="block md:hidden bottom-20 w-full flex justify-end right-5 fixed"
-    >
+    <div class="block md:hidden bottom-20 w-full fixed">
+      <div @click="moveLink('/write')" class="flex justify-end">
+        <img src="@/assets/icon/button_write_mobile.svg" alt="" />
+      </div>
       <div
-        class="block md:hidden absolute right-20 top-8"
+        class="block md:hidden flex justify-center absolute w-full top-7"
         v-if="storeinfiniteStatus"
       >
         <div @click="scrollToTop">
           <div><img src="@/assets/icon/button_gotop_mobile.svg" alt="" /></div>
         </div>
-      </div>
-      <div @click="moveLink('/write')">
-        <img src="@/assets/icon/button_write_mobile.svg" alt="" />
       </div>
     </div>
   </div>
@@ -171,7 +178,15 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRouter } from "vue-router";
-import { onBeforeUnmount } from "vue";
+
+// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
+const emit = defineEmits([`goPay`]);
+function goPay() {}
+
+//로고
+function getImageUrl(path: any) {
+  return new URL(path).href;
+}
 
 const router = useRouter();
 const filterStore = useFilterStore();
@@ -199,13 +214,13 @@ function load({ loaded }: LoadAction) {
 
 //carousel
 const settings = {
-  itemsToShow: 4,
+  itemsToShow: 3,
   snapAlign: "center",
 };
 const breakpoints = {
   // 700px and up
   768: {
-    itemsToShow: 8,
+    itemsToShow: 5,
     snapAlign: "start",
   },
 };

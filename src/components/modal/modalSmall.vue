@@ -40,8 +40,10 @@
 </template>
 
 <script lang="ts" setup>
-import router from "@/router";
 import { useVModel } from "@vueuse/core";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const props = defineProps<{
   propsShowModal: boolean;

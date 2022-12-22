@@ -7,7 +7,8 @@
       </div>
       <div class="flex-1 flex items-center">
         <div
-          class="rounded-lg text-everly-white bg-everly-mid_grey font-bold py-2 text-center text-sm w-full"
+          class="rounded-lg text-everly-white bg-everly-mid_grey font-bold py-2 text-center text-sm w-full cursor-pointer"
+          @click="goPay()"
         >
           결제하기
         </div>
@@ -29,6 +30,12 @@ const toggle = useToggle(storeShowBuy);
 const owner = ref(false);
 
 const togglestoreShowManagePost = useToggle(storeShowManagePost);
+
+//결제 클릭
+const emit = defineEmits([`goPay`]);
+function goPay() {
+  emit("goPay");
+}
 </script>
 
 <style scoped></style>

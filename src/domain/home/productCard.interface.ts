@@ -11,7 +11,7 @@ interface card {
   minQty: number; //최소 구매수량
   maxQty: number; // 최대 구매수량
   unit: string; // 단위
-  price: string; // 가격
+  price: number; // 가격
   chatQty: number; // 채팅 갯수
   likeQty: number; // 좋아요 건수
 }

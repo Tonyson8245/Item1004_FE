@@ -1,13 +1,15 @@
 import { defineStore } from "pinia";
-import dummy_gameSimilar from "../../../assets/dummy/home/filter/gameSimilar";
 import dummy_serverSimilar from "../../../assets/dummy/home/filter/serverSimilar";
+import homeApi from "@/api/home-service/index";
+import type { GameDto } from "@/domain/home/gameDto";
+import type { GameServerDto } from "@/domain/home/gameServerDto";
 
 export const useCommonStore = defineStore("commonStore", {
   state: () => ({
     //사용하는 변수
     //더비 파일
-    storeGameSimilar: dummy_gameSimilar,
-    storeServerSimilar: dummy_serverSimilar,
+    storeGameSimilar: {} as GameDto[],
+    storeServerSimilar: {} as GameServerDto[],
 
     //게임, 게임 서버 검색할 때, 유사리스트 상태값
     storeShowServerSimilar: false,
@@ -24,6 +26,9 @@ export const useCommonStore = defineStore("commonStore", {
     storeGameKeyword: "",
     storeServerKeyword: "",
 
+    storeGameKeywordIdx: 0,
+    storeServerKeywordIdx: "",
+
     storeTempGameKeyword: "",
     storeTempServerKeyword: "",
   }),
@@ -38,26 +43,69 @@ export const useCommonStore = defineStore("commonStore", {
     setstoreShowServerSimilar(status: boolean) {
       this.storeShowServerSimilar = status;
     },
-    setstoreGameKeyword(keyword: string) {
+    setstoreGameKeyword(keyword: string, idx: number) {
       this.storeGameKeyword = keyword;
+      this.storeGameKeywordIdx = idx;
     },
     setstoreServerKeyword(keyword: string) {
       this.storeServerKeyword = keyword;
     },
+
+    //입력된 게임 검색값으로 리스트를 가져오는 함수
     setstoreTempGameKeyword(keyword: string) {
       this.storeTempGameKeyword = keyword;
+      this.storeShowGameSimilar = true;
+      //값이 있을때만 실행
+
+      if (keyword != null && keyword != "") {
+        homeApi
+          .getGameName(keyword)
+          .then((res) => {
+            this.storeGameSimilar = res as GameDto[];
+          })
+          .catch((err) => {
+            if (err.code == `"extinct_result"`) {
+              //오류시 내용 초기화 조건에 맞는 값이 없는 경우
+              this.resetstoreGameSmilar();
+            } else this.resetstoreGameSmilar();
+          });
+      }
+      // 값이 없을 떄는 실행하지 않음
+      else {
+        this.storeShowGameSimilar = true;
+        this.resetstoreGameSmilar();
+      }
     },
+    //입력된 서버 검색값으로 리스트를 가져오는 함수
     setstoreTempServerKeyword(keyword: string) {
       this.storeTempServerKeyword = keyword;
+      console.log(keyword);
+
+      if (keyword != null && keyword != "") {
+        homeApi
+          .getServerName(this.storeGameKeywordIdx, keyword)
+          .then((res) => {
+            console.log(res);
+
+            this.storeServerSimilar = res as GameServerDto[];
+          })
+          .catch((err) => {
+            console.log(err);
+
+            if (err.code == `"extinct_result"`) {
+              //오류시 내용 초기화 조건에 맞는 값이 없는 경우
+              this.resetstoreServerSmilar();
+            } else this.resetstoreServerSmilar();
+          });
+      }
+      // 값이 없을 떄는 실행하지 않음
+      else {
+        this.storeShowServerSimilar = true;
+        this.resetstoreServerSmilar();
+      }
     },
     setstoreShowServerFilter(status: boolean) {
       this.storeShowServerFilter = status;
-    },
-
-    refresh() {
-      // this.setstoreGameKeyword("");
-      // this.setstoreServerKeyword("");
-      // this.setstoreShowServerFilter(false);
     },
     // 기존 필터 저장해두는 곳
     setstoreTempfilter() {
@@ -71,8 +119,8 @@ export const useCommonStore = defineStore("commonStore", {
     },
 
     reset() {
-      this.storeGameSimilar = dummy_gameSimilar;
-      this.storeServerSimilar = dummy_serverSimilar;
+      this.storeGameSimilar = {} as GameDto[];
+      this.storeServerSimilar = {} as GameServerDto[];
 
       //게임; 게임 서버 검색할 때, 유사리스트 상태값
       this.storeShowServerSimilar = false;
@@ -83,7 +131,6 @@ export const useCommonStore = defineStore("commonStore", {
 
       //기존 필터 값
       this.storeTempKeyword = "";
-
       this.storeCategory = ``;
       //게임,게임서버 설정
       this.storeGameKeyword = "";
@@ -91,6 +138,23 @@ export const useCommonStore = defineStore("commonStore", {
 
       this.storeTempGameKeyword = "";
       this.storeTempServerKeyword = "";
+    },
+
+    resetstoreGameSmilar() {
+      this.storeGameSimilar = {} as GameDto[];
+    },
+    resetstoreServerSmilar() {
+      this.storeServerSimilar = {} as GameDto[];
+    },
+
+    refreshSearchGameServer() {
+      this.resetstoreGameSmilar();
+      this.resetstoreServerSmilar();
+      this.storeTempGameKeyword = "";
+      this.storeTempServerKeyword = "";
+      this.storeGameKeywordIdx = 0;
+      this.storeServerKeyword = "";
+      this.storeGameKeyword = "";
     },
   },
 });

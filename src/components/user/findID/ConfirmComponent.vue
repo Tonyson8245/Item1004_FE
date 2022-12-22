@@ -67,10 +67,14 @@
 
 <script setup lang="ts">
 import modalSmall from "@/components/modal/modalSmall.vue";
-import router from "@/router";
+
 import { ref } from "vue";
 import { useToggle } from "@vueuse/shared";
+
+import { useRouter } from "vue-router";
+
 let link: string;
+const router = useRouter();
 
 function moveLink(type: string) {
   switch (type) {

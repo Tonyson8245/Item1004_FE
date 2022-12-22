@@ -1,7 +1,7 @@
 <template>
   <div class="mt-12 my-20 md:my-12 flex">
-    <div class="grow"></div>
-    <div class="w-[73.750rem] mt-5 md:mt-11">
+    <div class="grow hidden md:block"></div>
+    <div class="w-full md:w-[73.750rem] mt-5 md:mt-11">
       <div class="p-3 md:p-0">
         <div class="md:text-xl text-sm font-bold">주문 상품 정보</div>
         <div class="flex space-x-2 mt-3.5 md:mt-7">
@@ -16,19 +16,19 @@
             <div class="md:text-2xl">{{ storePostTitle }}</div>
             <div class="md:flex md:text-xl text-sm font-bold md:justify-start">
               <div class="md:pr-5">
-                {{ storeUnit }} /
-                {{ storePricePerUnit }}
+                {{ numberToKorean(storeMinValue) }} {{ storeUnitName }} /
+                {{ storePricePerUnit.toLocaleString() }} 원
               </div>
-              <div>{{ storeOrderQty }}개 ({{ storeTotalQty }})</div>
+              <div>{{ storeOrderQty }}개 ({{ TotalQty }})</div>
             </div>
           </div>
         </div>
       </div>
       <hr
-        class="border-everly-light_grey border-[3px] md:border-[#707070] md:border mt-3 md:mt-7 md:w-[42.5rem]"
+        class="border-everly-light_grey border-[3px] md:border-[#707070] md:border mt-3 md:mt-7 w-full md:w-[42.5rem]"
       />
-      <div class="w-[73.750rem] md:flex md:space-x-2">
-        <div class="md:w-[42.5rem]">
+      <div class="w-full md:w-[73.750rem] md:flex md:space-x-2">
+        <div class="w-full md:w-[42.5rem]">
           <div class="px-3 md:px-0">
             <div class="md:text-xl text-sm font-bold mt-5 md:mt-8">내 정보</div>
             <div class="text-sm mt-4 md:mt-8 space-y-4 md:space-y-6">
@@ -150,68 +150,68 @@
             <div class="text-sm md:text-xl font-bold">결제방법</div>
           </div>
           <div
-            class="grid grid-cols-3 md:grid-cols-4 gap-4 text-sm md:text-base mt-5 md:mt-[1.875rem] px-3 md:px-0"
+            class="w-full grid grid-cols-3 sm:grid-cols-6 md:grid-cols-4 gap-4 text-sm md:text-base mt-5 md:mt-[1.875rem] px-3 md:px-0"
           >
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`card`)"
-              @click="clickPaymentMethod(`card`)"
+              :class="setColorPaymentMethod(`CARD`)"
+              @click="clickPaymentMethod(`CARD`)"
             >
-              신용/ 체크카드
+              신용 / 체크카드
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`account`)"
-              @click="clickPaymentMethod(`account`)"
+              :class="setColorPaymentMethod(`BANK`)"
+              @click="clickPaymentMethod(`BANK`)"
             >
               계좌이체
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`virtual`)"
-              @click="clickPaymentMethod(`virtual`)"
+              :class="setColorPaymentMethod(`VBANK`)"
+              @click="clickPaymentMethod(`VBANK`)"
             >
               가상계좌
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`phone`)"
-              @click="clickPaymentMethod(`phone`)"
+              :class="setColorPaymentMethod(`CELLPHONE`)"
+              @click="clickPaymentMethod(`CELLPHONE`)"
             >
               휴대폰결제
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`naver`)"
-              @click="clickPaymentMethod(`naver`)"
+              :class="setColorPaymentMethod(`NAVER`)"
+              @click="clickPaymentMethod(`NAVER`)"
             >
               네이버페이
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`kakao`)"
-              @click="clickPaymentMethod(`kakao`)"
+              :class="setColorPaymentMethod(`KAKAO`)"
+              @click="clickPaymentMethod(`KAKAO`)"
             >
               카카오페이
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`payco`)"
-              @click="clickPaymentMethod(`payco`)"
+              :class="setColorPaymentMethod(`PAYCO`)"
+              @click="clickPaymentMethod(`PAYCO`)"
             >
               페이코페이
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`lpay`)"
-              @click="clickPaymentMethod(`lpay`)"
+              :class="setColorPaymentMethod(`LPAY`)"
+              @click="clickPaymentMethod(`LPAY`)"
             >
               엘페이
             </div>
             <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
-              :class="setColorPaymentMethod(`pinpay`)"
-              @click="clickPaymentMethod(`pinpay`)"
+              :class="setColorPaymentMethod(`PINPAY`)"
+              @click="clickPaymentMethod(`PINPAY`)"
             >
               핀페이
             </div>
@@ -241,19 +241,19 @@
               <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">상품금액</div>
                 <div class="font-bold">
-                  {{ storeProductPrice.toLocaleString() }}원
+                  {{ storeProductPrice.toLocaleString() }} 원
                 </div>
               </div>
               <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">쿠폰사용</div>
                 <div class="font-bold">
-                  {{ discountamount(storeDiscountCoupon) }}원
+                  {{ discountamount(storeDiscountCoupon) }} 원
                 </div>
               </div>
               <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">마일리지 사용</div>
                 <div class="font-bold">
-                  {{ discountamount(storeDiscountMileage) }}원
+                  {{ discountamount(storeDiscountMileage) }} 원
                 </div>
               </div>
               <div class="flex justify-between items-center">
@@ -261,7 +261,7 @@
                   최종 결제금액
                 </div>
                 <div class="text-everly-main font-bold text-lg md:text-2xl">
-                  {{ storeFinalPrice.toLocaleString() }}원
+                  {{ storeFinalPrice.toLocaleString() }} 원
                 </div>
               </div>
               <div>
@@ -347,7 +347,8 @@
                 </div>
               </div>
               <div
-                class="w-full rounded-lg text-everly-white bg-everly-mid_grey font-bold py-3 text-center hidden md:block"
+                class="w-full rounded-lg text-everly-white bg-everly-mid_grey font-bold py-3 text-center hidden md:block cursor-pointer"
+                @click="goPay()"
               >
                 결제하기
               </div>
@@ -356,7 +357,7 @@
         </div>
       </div>
     </div>
-    <div class="grow"></div>
+    <div class="grow hidden md:block"></div>
   </div>
 </template>
 
@@ -365,13 +366,25 @@ import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { storeToRefs } from "pinia";
 import dropdownVue from "../common/dropdown.vue";
 import commonFunction from "@/common";
-import { watch } from "vue";
+import { watch, onMounted, computed, ref, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
+import { numberToKorean } from "@/common";
+import { useMediaQuery } from "@vueuse/core";
+import type smartroVue from "../payment/smartro.vue";
 
+//결제 클릭
+const emit = defineEmits([`goPay`]);
+function goPay() {
+  emit("goPay");
+}
+
+// 라우팅
+const router = useRouter();
 const paymentStore = usePaymentStore();
 const {
   storePostTitle,
-  storeUnitInt,
-  storeUnit,
+  storeMinValue,
+  storeUnitName,
   storePricePerUnit,
   // 유저 정보
   storeName,
@@ -387,7 +400,6 @@ const {
 
   //여기서는 클라만 있는 정보
   storePaymentMethod,
-
   storeProductPrice,
   storeDiscountCoupon,
   storeFinalPrice,
@@ -399,6 +411,27 @@ const {
   storeOrderQty,
   storeTotalQty,
 } = storeToRefs(paymentStore);
+
+const minSize = computed(() => {
+  return useMediaQuery("(min-width: 768px)");
+});
+
+onMounted(() => {
+  if (storePostTitle.value == "") router.go(-1);
+  paymentStore.mountstoreProductPrice(
+    storeOrderQty.value * storePricePerUnit.value
+  );
+  paymentStore.mountstoreFinalPrice(
+    storeOrderQty.value * storePricePerUnit.value
+  );
+});
+
+//전체 갯수
+const TotalQty = computed(() => {
+  return (
+    numberToKorean(storeOrderQty.value * storeMinValue.value) + ` 게임머니`
+  );
+});
 
 //동의 관련 로직
 function toggleStoreTermsAll() {
