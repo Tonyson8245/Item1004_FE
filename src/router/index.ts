@@ -48,6 +48,33 @@ const router = createRouter({
           component: components.PaymentResultPage,
           meta: { transition: "", name: "paymentResult", title: "결제 완료" },
         },
+        {
+          path: "/mypage",
+          component: components.MypagePage,
+          meta: { transition: "", name: "mypage", title: "마이페이지" },
+          children: [
+            {
+              path: "",
+              component: components.main,
+              meta: { transition: "slide-right" },
+            },
+            {
+              path: "main",
+              component: components.main,
+              meta: { transition: "slide-right" },
+            },
+            {
+              path: "mileage",
+              component: components.mileageOverview,
+              meta: { transition: "slide-right", title: "마일리지" },
+            },
+            {
+              path: "mileage/overview",
+              component: components.mileageOverview,
+              meta: { transition: "slide-right", title: "마일리지" },
+            },
+          ],
+        },
       ],
     },
     {
@@ -92,11 +119,6 @@ const router = createRouter({
     {
       path: "/chat",
       component: components.ChatViewVue,
-    },
-    {
-      path: "/mypage",
-      component: components.MypageViewVue,
-      meta: { transition: "", name: "mypage" },
     },
 
     {

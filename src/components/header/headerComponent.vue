@@ -7,7 +7,7 @@
       <div class="flex-1 hidden md:block"></div>
       <div class="flex-none hidden md:block">
         <div
-          class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4"
+          class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4 md:px-0"
         >
           <div class="hidden md:block">
             <img

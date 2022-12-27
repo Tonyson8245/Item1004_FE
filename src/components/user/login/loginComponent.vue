@@ -35,7 +35,7 @@
               v-else
               src="@/assets/icon/eyes_open.svg"
               alt=""
-              class="pt-[0.1em]"
+              class="pt-[0.1rem]"
             />
           </div>
         </div>

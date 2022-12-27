@@ -13,35 +13,59 @@
         <div>채팅</div>
       </div>
       <div
-        class="flex flex-col justify-center items-center bg-everly-light_blue"
+        class="flex flex-col justify-center items-center"
+        :class="homeBackground"
         @click="router.push('/home')"
-        v-if="route.meta.name == `home`"
       >
-        <img src="@/assets/icon/home_blue_mobile.svg" class="mt-1" alt="" />
-        <div class="text-everly-main">홈</div>
+        <img :src="`/src/assets/icon/${homeIcon}.svg`" class="mt-1" alt="" />
+        <div :class="homeClass">홈</div>
       </div>
       <div
         class="flex flex-col justify-center items-center"
-        @click="router.push('/home')"
-        v-else
+        :class="mypageBackground"
+        @click="router.push('/mypage')"
       >
-        <img src="@/assets/icon/home_grey_mobile.svg" class="mt-1" alt="" />
-        <div class="text-everly-main">홈</div>
-      </div>
-
-      <div class="flex flex-col justify-center items-center">
-        <img src="@/assets/icon/mypage_mobile.svg" class="mt-1" alt="" />
-        <div>마이페이지</div>
+        <img :src="`/src/assets/icon/${mypageIcon}.svg`" class="mt-1" alt="" />
+        <div :class="mypageClass">홈</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 //라우터 생성
 const router = useRouter();
 const route = useRoute();
+
+//홈버튼 색 변경
+const homeClass = computed(() => {
+  if (route.meta.name == "home") return "text-everly-main";
+  else return "text-everly-black";
+});
+const homeIcon = computed(() => {
+  if (route.meta.name == "home") return "home_blue_mobile";
+  else return "home_grey_mobile";
+});
+const homeBackground = computed(() => {
+  if (route.meta.name == "home") return "bg-everly-light_blue";
+  else return "bg-everly-white";
+});
+
+//마이페이지버튼 색 변경
+const mypageClass = computed(() => {
+  if (route.meta.name == "mypage") return "text-everly-main";
+  else return "text-everly-black";
+});
+const mypageIcon = computed(() => {
+  if (route.meta.name == "mypage") return "mypage_blue";
+  else return "mypage_grey";
+});
+const mypageBackground = computed(() => {
+  if (route.meta.name == "mypage") return "bg-everly-light_blue";
+  else return "bg-everly-white";
+});
 </script>
 
 <style scoped></style>

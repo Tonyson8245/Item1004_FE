@@ -6,7 +6,7 @@
   >
     <div class="flex-1"></div>
     <div
-      class="flex-none md:w-[1180px] py-3 w-full font-bold text-base md:text-xl px-4"
+      class="flex-none md:w-[1180px] py-3 w-full font-bold text-base md:text-xl px-4 md:px-0"
       :class="classBgcolor"
     >
       <div class="flex">
@@ -18,7 +18,7 @@
           />
           <img src="@/assets/icon/back_white_mobile.svg" alt="" v-else />
         </div>
-        <div>{{ route.meta.title }}</div>
+        <div>{{ title }}</div>
       </div>
     </div>
     <div class="flex-1"></div>
@@ -65,6 +65,15 @@ watch(minSize.value, (minSize) => {
 function backPress() {
   router.go(-1);
 }
+
+//마이페이지의 경우, 웹은 "마이페이지" 고정 / 모바일은 상태에 따라 바뀜
+const title = computed(() => {
+  let meta = route.meta.title;
+  if (meta == "마일리지" || meta == "판매/구매내역" || meta == "회원정보") {
+    if (minSize.value.value) return "마이페이지";
+    else return meta;
+  } else return meta;
+});
 </script>
 
 <style scoped></style>

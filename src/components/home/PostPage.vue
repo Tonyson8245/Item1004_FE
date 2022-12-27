@@ -7,7 +7,7 @@
   />
   <div :class="overflowControl" class="pb-20 sm:pb-0 relative">
     <div class="flex">
-      <div class="grow"></div>
+      <div class="flex-1"></div>
       <div
         class="mt-14 flex-none md:w-[1180px] w-full md:py-10 pt-2 px-4 md:px-0"
       >
@@ -67,7 +67,7 @@
           <div
             class="flex-1 md:flex-none md:w-[38.34375rem] md:border-r-[1px] md:border-[#c7c7c7] text-base md:text-lg space-y-2 md:space-y-9"
           >
-            <div class="flex md:pt-[0.5em]">
+            <div class="flex md:pt-[0.5rem]">
               <div
                 class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
               >
@@ -75,7 +75,7 @@
               </div>
               <div class="grow md:text-xl">게임머니</div>
             </div>
-            <div class="flex md:pt-[0.5em]">
+            <div class="flex md:pt-[0.5rem]">
               <div
                 class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
               >
@@ -83,7 +83,7 @@
               </div>
               <div class="grow md:text-xl">{{ storeGameName }}</div>
             </div>
-            <div class="flex md:pt-[0.5em]">
+            <div class="flex md:pt-[0.5rem]">
               <div
                 class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
               >
@@ -388,7 +388,7 @@
           </div>
         </div>
       </div>
-      <div class="grow"></div>
+      <div class="flex-1"></div>
     </div>
 
     <!-- 모바일 결제 - 밑에서 올라오는 페이지 -->
@@ -401,7 +401,7 @@
     </transition>
     <transition name="slide-down" move="out-in">
       <div
-        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[4em]"
+        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[4rem]"
         v-if="showBuy"
       >
         <div class="w-full flex justify-center pb-4 items-center">
@@ -414,7 +414,7 @@
           <counter
             @getValue="updateQty($event)"
             :qty="qty"
-            class="grow max-w-[6.875em]"
+            class="grow max-w-[6.875rem]"
           />
           <div class="text-everly-dark_grey w-1/2 text-right">
             * 최소구매수량 X 수량

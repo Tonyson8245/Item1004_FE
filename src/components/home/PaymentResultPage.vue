@@ -7,13 +7,13 @@
             <div class="flex">
               <div class="grow"></div>
               <div
-                class="w-full md:w-[30.625em] flex flex-col items-center py-10"
+                class="w-full md:w-[30.625rem] flex flex-col items-center py-10"
               >
                 <div>
                   <img
                     src="@/assets/icon/check_circle_green_full.svg"
                     alt=""
-                    class="w-[1.875em] md:w-[2.813em]"
+                    class="w-[1.875rem] md:w-[2.813rem]"
                   />
                 </div>
                 <div class="text-base md:text-3xl font-bold mt-5 md:mt-7">
@@ -28,11 +28,11 @@
             <div class="flex">
               <div class="grow bg-everly-light_grey"></div>
               <div
-                class="w-full md:w-[30.625em] p-5 md:px-0 md:py-13 p-5 md:px-0 md:py-14 bg-everly-light_grey"
+                class="w-full md:w-[30.625rem] p-5 md:px-0 md:py-13 p-5 md:px-0 md:py-14 bg-everly-light_grey"
               >
                 <div class="md:text-xl text-sm space-y-3 md:space-y-8">
                   <div class="flex">
-                    <div class="font-bold w-14 md:w-[6.9em]">거래물품</div>
+                    <div class="font-bold w-14 md:w-[6.9rem]">거래물품</div>
                     <div class="grow text-right md:text-left space-y-2">
                       <div>{{ storePostTitle }}</div>
                       <div class="md:text-base">
@@ -43,7 +43,7 @@
                   </div>
 
                   <div class="flex">
-                    <div class="font-bold w-14 md:w-[6.9em]">결제금액</div>
+                    <div class="font-bold w-14 md:w-[6.9rem]">결제금액</div>
                     <div class="grow text-right md:text-left space-y-2">
                       <div>{{ storeProductPrice.toLocaleString() }} 원</div>
                       <div class="md:text-base">{{ productInfo }}</div>
@@ -51,7 +51,7 @@
                   </div>
 
                   <div class="flex">
-                    <div class="font-bold w-14 md:w-[6.9em]">할인금액</div>
+                    <div class="font-bold w-14 md:w-[6.9rem]">할인금액</div>
                     <div class="grow text-right md:text-left">
                       <div
                         class="flex justify-end md:justify-between space-x-3"
@@ -78,7 +78,7 @@
 
                   <div class="flex">
                     <div
-                      class="font-bold w-14 md:w-[6.9em] text-right md:text-left"
+                      class="font-bold w-14 md:w-[6.9rem] text-right md:text-left"
                     >
                       최종결제<br class="md:hidden" />금액
                     </div>
@@ -100,9 +100,9 @@
             <hr class="border border-everly-mid_grey hidden md:block" />
             <div class="flex">
               <div class="grow"></div>
-              <div class="w-full md:w-[30.625em] md:text-xl text-sm">
+              <div class="w-full md:w-[30.625rem] md:text-xl text-sm">
                 <div
-                  class="p-5 pb-0 md:px-[4.25em] md:py-[2.215em] space-y-2 md:space-y-4"
+                  class="p-5 pb-0 md:px-[4.25rem] md:py-[2.215rem] space-y-2 md:space-y-4"
                 >
                   <div class="flex md:space-x-11">
                     <div class="font-bold">결제번호</div>
@@ -141,7 +141,7 @@
       <div>
         <div class="flex py-8 md:py-16">
           <div class="grow"></div>
-          <div class="w-full md:w-[30.625em] p-4 md:p-0">
+          <div class="w-full md:w-[30.625rem] p-4 md:p-0">
             <div
               class="bg-everly-main text-white text-base md:text-lg text-center p-3 rounded-lg cursor-pointer"
               @click="router.push('/')"

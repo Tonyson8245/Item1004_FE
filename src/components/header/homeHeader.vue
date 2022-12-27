@@ -7,7 +7,7 @@
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
           <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9 relative">
-            <div class="flex justify-between items-center h-[3.75em]">
+            <div class="flex justify-between items-center h-[3.7rem]">
               <div class="flex space-x-4 text-xl">
                 <!-- 팔래요 활성화 -->
                 <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">

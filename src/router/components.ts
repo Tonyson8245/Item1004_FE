@@ -16,7 +16,14 @@ import PaymentResultPage from "@/components/home/PaymentResultPage.vue";
 import paymentPageVue from "@/components/home/paymentPage.vue";
 import paymetnTest from "@/views/Paymenttest.vue";
 import ChatViewVue from "@/views/ChatView.vue";
+import MypagePage from "@/components/mypage/mypagePage.vue";
+import main from "@/components/mypage/detail/main.vue";
+import mileageOverview from "@/components/mypage/detail/mileageOverview.vue";
+
 export default {
+  mileageOverview,
+  main,
+  MypagePage,
   ChatViewVue,
   paymetnTest,
   paymentPageVue,
