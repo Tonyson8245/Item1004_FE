@@ -24,6 +24,7 @@
             :type="passwordType"
             class="w-full rounded-lg border border-everly-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
             v-model="password"
+            @keyup.enter="clickLoginButton(id, password)"
           />
           <div @click="togglepasswordType" class="w-5 h-5 absolute right-5">
             <img

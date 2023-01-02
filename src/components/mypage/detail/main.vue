@@ -78,19 +78,23 @@
         <div
           class="text-right font-bold md:text-2xl border-r pr-2 md:border-0 md:pr-0"
         >
-          <div class="justify-end hidden md:flex">
-            <div
-              class="flex w-[8rem] justify-center rounded-full"
-              :class="levelTitleColor"
-            >
-              <div class="md:pr-3">
-                {{ levelTitle }}
-              </div>
-              <img :src="`/src/assets/icon/${levelBadge}.svg`" alt="" />
+          <div class="justify-end hidden sm:flex">
+            <div class="flex w-[8rem] justify-center rounded-full">
+              <!-- <img
+                :src="`/src/assets/icon/${levelBadge}withTitle.svg`"
+                class="sm:h-[2rem] md:h-auto"
+                alt=""
+              /> -->
+              <img
+                :src="`/assets/icon/${levelBadge}withTitle.svg`"
+                class="sm:h-[2rem] md:h-auto"
+                alt=""
+              />
             </div>
           </div>
-          <div class="md:hidden">
-            <img :src="`/src/assets/icon/${levelBadge}.svg`" alt="" />
+          <div class="sm:hidden">
+            <!-- <img :src="`/src/assets/icon/${levelBadge}.svg`" alt="" /> -->
+            <img :src="`/assets/icon/${levelBadge}.svg`" alt="" />
           </div>
         </div>
       </div>
@@ -361,43 +365,8 @@ const verifiedPhone = computed(() => {
 });
 
 //등급별 엠블럼
-const level: string = "platinum";
-const levelTitle = computed(() => {
-  switch (level) {
-    case "rookie":
-      return "루키";
-    case "bronze":
-      return "브론즈";
-    case "silver":
-      return "실버";
-    case "gold":
-      return "골드";
-    case "platinum":
-      return "플래티넘";
-    case "diamond":
-      return "다이아몬드";
-    default:
-      return "";
-  }
-});
-const levelTitleColor = computed(() => {
-  switch (level) {
-    case "rookie":
-      return "bg-gray-200";
-    case "bronze":
-      return "bg-yellow-600";
-    case "silver":
-      return "bg-gray-200";
-    case "gold":
-      return "bg-yellow-100";
-    case "platinum":
-      return "bg-red-500";
-    case "diamond":
-      return "bg-indigo-200";
-    default:
-      return "";
-  }
-});
+const level: string = "rookie";
+
 const levelBadge = computed(() => {
   switch (level) {
     case "rookie":

@@ -126,8 +126,8 @@
               class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center h-full text-everly-mid_grey"
             >
               <div>
+                <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
                 <img :src="`/assets/img/logo/${slide}.jpg`" alt="" />
-                <!-- <img :src="`src/assets/img/logo/${slide}.jpg`" alt="" /> -->
               </div>
             </div>
           </Slide>

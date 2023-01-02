@@ -365,7 +365,7 @@
                     class="md:w-5 w-4"
                   />
                   <div class="flex md:gap-10">
-                    <div>받은 리뷰</div>
+                    <div>친절 평가</div>
                     <div>1개</div>
                   </div>
                 </div>

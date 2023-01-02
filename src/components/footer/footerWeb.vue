@@ -15,21 +15,18 @@
           </div>
         </div>
         <div class="flex space-x-3 mt-4 text-everly-dark_grey text-sm">
-          <span>상호명 : (주)아이템1004</span>
-          <span
-            >사업장소재지 : 서울특별시 마포구 만리재로 14, 르네상스타워 21층
-            2101호</span
-          >
-          <span>사업자등록번호 : 111-00-00000</span>
-          <span>통신판매업신고 : 2022-서울마포-00000</span>
+          <span>상호명 : (주) 지엠소프트</span>
+          <span>사업장소재지 : 경기도 구리시 건원대로 3층386호(인창동)</span>
+          <span>사업자등록번호 : 284-81—02740</span>
+          <!-- <span>통신판매업신고 : 2022-서울마포-00000</span> -->
         </div>
         <div class="flex space-x-3 mt-1 text-everly-dark_grey text-sm">
           <span>전화번호 : 02-704-2694</span>
-          <span>대표 : 정성수</span>
-          <span
+          <span>대표 : 신동우</span>
+          <!-- <span
             >아이템1004는 통신판매중개자이며 통신판매의 당사자가 아닙니다.
             따라서 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</span
-          >
+          > -->
         </div>
       </div>
       <div class="flex-grow"></div>

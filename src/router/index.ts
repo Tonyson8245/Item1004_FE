@@ -120,7 +120,14 @@ const router = createRouter({
       path: "/chat",
       component: components.ChatViewVue,
     },
-
+    {
+      path: "/redirect",
+      component: components.redirect,
+    },
+    {
+      path: "/logout",
+      component: components.logout,
+    },
     {
       path: "/:anything(.*)",
       redirect: (to) => {
@@ -133,14 +140,13 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
   window.scrollTo({ top: 0, behavior: "auto" });
   const localData = localStorage.getItem("user");
   const userNickname =
     localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
 
   const commonStore = useCommon();
-  console.log(to.path);
   switch (to.path) {
     case "/account/login":
       if (userNickname != "로그인하기") {

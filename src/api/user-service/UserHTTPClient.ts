@@ -12,10 +12,10 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const {
-      config,
-      response: { status },
-    } = error;
+    // const {
+    //   config,
+    //   response: { status },
+    // } = error;
 
     return Promise.reject(error);
   }

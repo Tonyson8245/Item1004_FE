@@ -17,7 +17,8 @@
         :class="homeBackground"
         @click="router.push('/home')"
       >
-        <img :src="`/src/assets/icon/${homeIcon}.svg`" class="mt-1" alt="" />
+        <!-- <img :src="`/src/assets/icon/${homeIcon}.svg`" class="mt-1" alt="" /> -->
+        <img :src="`/assets/icon/${homeIcon}.svg`" class="mt-1" alt="" />
         <div :class="homeClass">홈</div>
       </div>
       <div
@@ -25,8 +26,9 @@
         :class="mypageBackground"
         @click="router.push('/mypage')"
       >
-        <img :src="`/src/assets/icon/${mypageIcon}.svg`" class="mt-1" alt="" />
-        <div :class="mypageClass">홈</div>
+        <!-- <img :src="`/src/assets/icon/${mypageIcon}.svg`" class="mt-1" alt="" /> -->
+        <img :src="`/assets/icon/${mypageIcon}.svg`" class="mt-1" alt="" />
+        <div :class="mypageClass">마이페이지</div>
       </div>
     </div>
   </div>

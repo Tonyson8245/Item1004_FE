@@ -43,10 +43,12 @@
             </div>
             <div>회원정보 수정</div>
             <div>쿠폰내역</div>
+            <div class="pt-5" @click="logout()">로그아웃</div>
           </div>
         </div>
         <div class="w-full md:py-16 md:w-[61.88rem] md:bg-[#fafafa]">
           <router-view></router-view>
+          <div class="pb-16 text-center" @click="logout()">로그아웃</div>
         </div>
       </div>
       <div class="flex-grow md:bg-[#fafafa]"></div>
@@ -54,6 +56,18 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useLocalStorage } from "@vueuse/core";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+function logout() {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+
+  router.push("/logout");
+}
+</script>
 
 <style scoped></style>

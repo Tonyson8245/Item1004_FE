@@ -2257,7 +2257,7 @@ vue-property-decorator@^7.0.0:
   dependencies:
     vue-class-component "^6.2.0"
 
-vue-router@^4.1.5:
+vue-router@^4.1.6:
   version "4.1.6"
   resolved "https://registry.npmjs.org/vue-router/-/vue-router-4.1.6.tgz"
   integrity sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==

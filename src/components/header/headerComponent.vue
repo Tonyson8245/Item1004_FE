@@ -39,7 +39,10 @@
       <div class="flex justify-between items-center">
         <div
           class="text-white font-bold truncate"
-          @click="moveLink('/account/login')"
+          @click="
+            if (userNickname != '') moveLink('/mypage');
+            else moveLink('/account/login');
+          "
         >
           {{ userNickname }}
         </div>
@@ -97,6 +100,8 @@ const commonStore = useCommonStore();
 //라우터 만들기
 const router = useRouter();
 const route = useRoute();
+
+//닉네임 끄기
 
 //화면 커질 때, 모바일 검색 화면 끄는 것
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));

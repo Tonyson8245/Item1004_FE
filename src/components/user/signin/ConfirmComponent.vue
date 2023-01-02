@@ -12,64 +12,45 @@
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
       </div>
       <div
-        class="text-left p-1 mt-20 md:mt-5 w-11/12 md:font-bold text-everly-main text-sm md:text-lg"
+        class="text-left p-1 mt-20 md:mt-5 w-11/12 font-bold text-everly-main md:text-lg"
       >
         본인인증
       </div>
-
-      <div class="grid gap-2 place-items-center mt-2 w-full p-1">
-        <div class="pr-0 flex items-center w-11/12">
-          <div class="flex w-4/5 mr-1">
-            <dropdown
-              :propsList="['a', 'b', 'c']"
-              :propsPlaceholder="`통신사`"
-              :propsClass="`flex-1`"
-            ></dropdown>
-            <input
-              placeholder="휴대 전화번호 입력('-'제외)"
-              class="ml-1 flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-full"
-            />
-          </div>
-          <button
-            class="bg-everly-main text-white rounded-lg shadow-md text-xs md:text-sm py-3 w-1/5"
-            @click="
-              contentText = '인증번호가 전송되었습니다.';
-              toggle();
-            "
-          >
-            {{ buttonContent }} 전송
-          </button>
-        </div>
-        <div class="pr-0 flex items-center w-11/12">
-          <input
-            placeholder="인증 번호 6자리를 입력하세요"
-            class="mr-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-4/5"
-          />
-          <button
-            class="bg-everly-main text-white rounded-lg shadow-md text-xs md:text-sm py-3 w-1/5"
-          >
-            {{ buttonContent }} 확인
-          </button>
-        </div>
+      <div class="text-sm px-5 md:px-6">
+        본인인증 시 제공되는 정보는 해당 인증기관에서 직접 수집하며, 인증 이외의
+        용도로 이용 또는 저장하지 않습니다.
       </div>
 
       <div class="grid p-1 gap-2 place-items-center w-full mt-4 md:mt-8">
         <button
-          class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-mid_grey w-11/12"
-          @click="moveLink('setinfo')"
+          class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white bg-everly-main w-11/12"
+          @click="getNiceEncData()"
         >
-          가입하기
+          본인인증하기
         </button>
       </div>
+
+      <!-- 본인인증 서비스 팝업을 호출하기 위해서는 다음과 같은 form이 필요합니다. -->
+      <form name="form_chk" method="post" class="hidden" target="_blank">
+        <input type="hidden" name="m" value="checkplusService" />
+        <!-- 필수 데이타로, 누락하시면 안됩니다. -->
+        <input type="hidden" name="EncodeData" :value="encData" />
+        <!-- 위에서 업체정보를 암호화 한 데이타입니다. -->
+
+        <a @click="fnPopup()" class="cursor-pointer">
+          CheckPlus 안심본인인증 Click</a
+        >
+      </form>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import modalSmall from "@/components/modal/modalSmall.vue";
-import dropdown from "@/components/common/dropdown.vue";
+import { useauthStore } from "@/store/modules/user/authStore";
 import { useMediaQuery, useToggle } from "@vueuse/core";
 import { computed, watch, ref } from "vue";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
 let buttonContent = ref("");
@@ -95,6 +76,41 @@ const contentText = `인증 번호가 발송되었습니다.`;
 const buttonText = `확인`;
 
 const toggle = useToggle(showModal);
+
+//나이스 본인인증
+const authStore = useauthStore();
+const { storeredirect } = storeToRefs(authStore);
+const encData = ref("");
+function getNiceEncData() {
+  authStore.getNiceEncData("register").then((res) => {
+    if (res?.encryptionData) {
+      encData.value = res?.encryptionData;
+      setTimeout(() => {
+        fnPopup();
+      }, 100);
+    } else console.log("올바르지 않은 암호화 값 입력");
+  });
+}
+
+watch(storeredirect, () => {
+  if (storeredirect.value) router.push("/account/signin/setinfo");
+});
+
+function fnPopup() {
+  //@ts-ignore
+  window.open(
+    "",
+    "popupChk",
+    "width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no"
+  );
+  //@ts-ignore
+  document.form_chk.action =
+    "https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb";
+  //@ts-ignore
+  document.form_chk.target = "popupChk";
+  //@ts-ignore
+  document.form_chk.submit();
+}
 </script>
 
 <style scoped></style>

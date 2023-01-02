@@ -19,8 +19,12 @@ import ChatViewVue from "@/views/ChatView.vue";
 import MypagePage from "@/components/mypage/mypagePage.vue";
 import main from "@/components/mypage/detail/main.vue";
 import mileageOverview from "@/components/mypage/detail/mileageOverview.vue";
+import redirect from "@/components/user/signin/redirect.vue";
+import logout from "@/components/user/logout.vue";
 
 export default {
+  logout,
+  redirect,
   mileageOverview,
   main,
   MypagePage,
