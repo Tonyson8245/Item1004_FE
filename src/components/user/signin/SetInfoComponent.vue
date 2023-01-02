@@ -19,10 +19,10 @@
           <input
             placeholder="아이디"
             class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
-            v-model="auserId"
+            v-model="userId"
             @click="duplicationCheckShowtoogle(false)"
             @blur="
-              checkUserid(auserId);
+              checkUserid(userId);
               duplicationCheckShowtoogle(true);
             "
             @input="(event: Event) => {
@@ -30,14 +30,18 @@
             }"
           />
           <img
-            v-if="auserId != '' && duplicationCheckShow"
+            v-if="
+              userId != '' &&
+              storesameUserIdisExist != '' &&
+              duplicationCheckShow
+            "
             :src="`/assets/icon/${duplicationCheckImg}.svg`"
             class="w-5 h-5 absolute right-5"
             alt=""
           />
         </div>
         <div class="w-full pl-2 text-xs md:text-sm">
-          <span v-if="storesameUserIdisExist" class="text-everly-red"
+          <span v-if="storesameUserIdisExist == `Exist`" class="text-everly-red"
             >* 이미 존재하는 아이디입니다.</span
           >
           <span :class="regexUserIdClass" class="text-everly-dark_grey" v-else
@@ -65,7 +69,7 @@
             placeholder="비밀번호 확인"
             :type="typepasswordCheckInput"
             class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm pr-10"
-            @blur="(event: Event) => {
+            @input="(event: Event) => {
   checkPassword((event.target as HTMLInputElement).value);
             }"
           />
@@ -77,8 +81,10 @@
           />
         </div>
         <div class="w-full pl-2 text-xs md:text-sm">
-          <span class="text-everly-red" v-if="!checkPasswordShow"
-            >* 비밀번호가 일치하지 않습니다..</span
+          <span
+            class="text-everly-red"
+            v-if="!checkPasswordShow && passwordCheck != ''"
+            >* 비밀번호가 일치하지 않습니다.</span
           >
           <span :class="regexPasswordClass" class="text-everly-dark_grey" v-else
             >*비밀번호 영문,숫자,특수문자 조합으로 8자리 이상입니다.</span
@@ -97,6 +103,7 @@
             placeholder="추천인 유저 코드"
             class="mr-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-4/5"
             v-model="recommendidx"
+            @input="resetPublicidx()"
           />
           <button
             class="bg-everly-main text-white rounded-lg shadow-md text-xs md:text-sm py-3 w-1/5"
@@ -106,14 +113,12 @@
           </button>
         </div>
         <div class="w-full pl-2 text-xs md:text-sm">
-          <span
-            class="text-everly-red"
-            v-if="storepublicidxisExist == 'noExist'"
+          <span class="text-everly-red" v-if="storeuserCodeisExist == 'noExist'"
             >* 올바르지 않은 코드입니다.</span
           >
           <span
             class="text-everly-dark_grey"
-            v-else-if="storepublicidxisExist == 'Exist'"
+            v-else-if="storeuserCodeisExist == 'Exist'"
             >* 유저 코드가 확인되었습니다.</span
           >
           <span class="text-everly-dark_grey" v-else
@@ -157,8 +162,8 @@
       >
         <button
           class="h-11 lg:h-15 px-6 py-2 rounded-lg text-sm text-everly-white w-11/12 cursor-pointer bg-everly-main"
-          v-if="signInShow"
-          @click="signIn"
+          v-if="signUpShow"
+          @click="signUp"
         >
           가입하기
         </button>
@@ -186,7 +191,7 @@ import router from "@/router";
 
 const authStore = useauthStore();
 const route = useRoute();
-const { storesameUserIdisExist, storepublicidxisExist, storevalidServiceTerm } =
+const { storesameUserIdisExist, storeuserCodeisExist, storevalidServiceTerm } =
   storeToRefs(authStore);
 
 //약관
@@ -202,7 +207,7 @@ const notmandatoryArray = ref([] as number[]);
 const agreeAll = ref(false);
 
 const agreeAllCheckImg = computed(() => {
-  if (agreeAll.value) return "check_circle_blue";
+  if (agreeAll.value) return "check_circle_blue_full";
   else return "check_circle";
 });
 
@@ -272,24 +277,24 @@ function clickagreeAll() {
 }
 
 //아이디
-const auserId = ref("");
+const userId = ref("");
 const tempuserId = ref("");
 //아이디 정규식 상태에 따른 폰트색
 const regexUserIdClass = ref("");
 //아이디 중복 확인
-const checkUserid = (auserId: string) => {
-  if (auserId.length > 0) authStore.checkUserid(auserId);
-  tempuserId.value = auserId;
+const checkUserid = (id: string) => {
+  if (id.length > 0) authStore.checkUserid(id);
 };
 //아이디 정규식에 따른 폰트색 변경
 const checkRegexUserId = (id: string) => {
   authStore.resetstoresameUserIdisExist();
   if (isId(id)) {
     regexUserIdClass.value = "text-everly-dark_grey";
+    tempuserId.value = userId.value;
   } else {
     regexUserIdClass.value = "text-everly-red";
   }
-  auserId.value = id;
+  userId.value = id;
 };
 // 아이디 중복 체크
 const duplicationCheckShow = ref(false);
@@ -297,8 +302,10 @@ const duplicationCheckShowtoogle = (show: boolean) => {
   duplicationCheckShow.value = show;
 };
 const duplicationCheckImg = computed(() => {
-  if (!storesameUserIdisExist.value) return "check_circle_green_full";
-  else return "warning_red";
+  if (storesameUserIdisExist.value == `noExist`) {
+    tempuserId.value = userId.value;
+    return "check_circle_green_full";
+  } else return "warning_red";
 });
 
 //비밀번호
@@ -312,6 +319,13 @@ const checkRegexPassword = (str: string) => {
   } else {
     regexPasswordClass.value = "text-everly-red";
   }
+  //비밀번호 확인 공백이 아니고, 둘값이 다들때 오류를 띄움
+  console.log(
+    (password.value != passwordCheck.value) + " " + (passwordCheck.value != "")
+  );
+
+  if (password.value != passwordCheck.value) checkPasswordShow.value = true;
+  else checkPasswordShow.value = false;
   password.value = str;
 };
 const checkPassword = (str: string) => {
@@ -325,7 +339,6 @@ const typepasswordInput = ref("password");
 const typepasswordCheckInput = ref("password");
 const passwordInputImg = ref("eyes_close");
 const passwordCheckInputImg = ref("eyes_close");
-
 function changeType(content: string) {
   if (content == "password") {
     if (typepasswordInput.value == "password") {
@@ -345,64 +358,43 @@ function changeType(content: string) {
     }
   }
 }
+
 //추천인 확인
 const recommendidx = ref("");
-function checkPublicidx(publicidx: string) {
-  if (publicidx.length > 0) authStore.checkPublicidx(publicidx);
-  else authStore.resetstorepublicidxisExist();
+function resetPublicidx() {
+  authStore.resetstoreuserCodeisExist();
 }
-//회원가입
-const signInShow = ref(false);
-function signIn() {
-  let idduplicationCheck = !storesameUserIdisExist.value;
-  let idregexCheck = isId(auserId.value);
-  let passwordregexCheck = isPassword(password.value);
-  let passwordDoubleCheck = password.value == passwordCheck.value;
-  let recommend = recommendidx.value;
-  let recommendCheck = storepublicidxisExist.value == "Exist";
-  let termAllIdxs = mandatoryArray.value.concat(...notmandatoryArray.value);
-  let mandatoryCheck = mandatoryArray.value.length == mandatoryTotalQty.value;
-  let authId = route.query.authId as string;
-  authStore
-    .signIn(tempuserId.value, password.value, termAllIdxs, recommend, authId)
-    .then((res) => {
-      if (res) router.push("/account/login");
-      else router.push("/account/confirm");
-    });
+function checkPublicidx(userCode: string) {
+  if (userCode.length > 0) authStore.checkPublicidx(userCode);
 }
 
+//가입하기 버튼 관측
+const signUpShow = ref(false);
 watch(
   [
     storesameUserIdisExist,
-    auserId,
+    userId,
     password,
     passwordCheck,
     recommendidx,
-    storepublicidxisExist,
+    storeuserCodeisExist,
     mandatoryArray,
   ],
   () => {
-    let idduplicationCheck = storesameUserIdisExist.value;
-    let idregexCheck = isId(auserId.value);
+    let idduplicationCheck = storesameUserIdisExist.value == "noExist";
+    let idregexCheck = isId(userId.value);
     let passwordregexCheck = isPassword(password.value);
     let passwordDoubleCheck = password.value == passwordCheck.value;
     let recommend = recommendidx.value;
-    let recommendCheck = storepublicidxisExist.value != "noExist";
+    let recommendCheck =
+      (storeuserCodeisExist.value == "Exist" && recommend != "") ||
+      (storeuserCodeisExist.value == "" && recommend == "");
     let termAllIdxs = mandatoryArray.value.concat(...notmandatoryArray.value);
     let mandatoryCheck = mandatoryArray.value.length == mandatoryTotalQty.value;
 
-    console.log(`idduplicationCheck  ` + idduplicationCheck);
-    // console.log(`idregexCheck  ` + idregexCheck);
-    // console.log(`passwordregexCheck  ` + passwordregexCheck);
-    // console.log(`passwordDoubleCheck  ` + passwordDoubleCheck);
-    // console.log(`recommend  ` + recommend);
-    // console.log(`recommendCheck  ` + recommendCheck);
-    // console.log(`termAllIdxs  ` + termAllIdxs);
-    // console.log(`mandatoryCheck  ` + mandatoryCheck);
-
     if (
-      !idduplicationCheck &&
-      tempuserId.value == auserId.value &&
+      idduplicationCheck &&
+      tempuserId.value == userId.value &&
       idregexCheck &&
       passwordregexCheck &&
       passwordDoubleCheck &&
@@ -410,11 +402,31 @@ watch(
       recommendCheck
     ) {
       console.log(`가능`);
-      signInShow.value = true;
-    } else signInShow.value = false;
+      signUpShow.value = true;
+    } else signUpShow.value = false;
   },
   { deep: true }
 );
+
+//가입하기 버튼 동작
+function signUp() {
+  // let idduplicationCheck = (storesameUserIdisExist.value==`noExist`);
+  // let idregexCheck = isId(userId.value);
+  // let passwordregexCheck = isPassword(password.value);
+  // let passwordDoubleCheck = password.value == passwordCheck.value;
+  // let recommend = recommendidx.value;
+  // let recommendCheck = storeuserCodeisExist.value == "Exist";
+  // let termAllIdxs = mandatoryArray.value.concat(...notmandatoryArray.value);
+  // let mandatoryCheck = mandatoryArray.value.length == mandatoryTotalQty.value;
+  // let authId = route.query.authId as string;
+  // authStore
+  //   .signUp(tempuserId.value, password.value, termAllIdxs, recommend, authId)
+  //   .then((res) => {
+  //     if (res) router.push("/account/login");
+  //     else router.push("/account/confirm");
+  //   });
+  console.log("회원가입 실행");
+}
 
 //authId 유효성 체크
 onMounted(() => {

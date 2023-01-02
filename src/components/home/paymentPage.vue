@@ -116,9 +116,9 @@
                   </div>
                   <div class="flex mt-4 md:mt-8">
                     <div
-                      class="flex grow items-center space-x-2 md:space-x-10 md:mr-2 relative"
+                      class="flex grow items-center space-x-2 md:space-x-10 mr-2 relative"
                     >
-                      <div>사용</div>
+                      <div class="whitespace-nowrap">사용</div>
                       <input
                         type="text"
                         placeholder="0"
@@ -127,7 +127,7 @@
                         "
                         @input="(event: Event) => { setMileage((event.target as HTMLInputElement).value) }"
                         @keyup="(event: Event) => { commonFunction.inputNumberFormatWithLimit(event.target as HTMLInputElement,storeTotalMileage,storeProductPrice); }"
-                        class="border-everly-mid_grey rounded-lg border p-2 pr-5 md:pr-6 text-sm md:text-base text-right md:grow"
+                        class="border-everly-mid_grey rounded-lg border p-2 pr-8 md:pr-6 text-sm md:text-base text-right md:grow w-full"
                       />
                       <div class="absolute right-4 md:right-2">원</div>
                     </div>

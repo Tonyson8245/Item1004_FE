@@ -26,14 +26,14 @@ export async function checkUserid<T>(id: string) {
 }
 
 export async function checkPublicidx<T>(index: string) {
-  const url = "/users/public-idxs/" + index;
+  const url = "/users/codes/" + index;
   try {
     const { status, data }: AxiosResponse<T> = await http.head(url);
     return status < 500 ? data : undefined;
   } catch (err) {}
 }
 
-export async function signIn<T>(
+export async function signUp<T>(
   id: string,
   pw: string,
   terms: number[],

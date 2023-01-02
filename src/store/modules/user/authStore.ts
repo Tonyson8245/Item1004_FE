@@ -10,8 +10,8 @@ export const useauthStore = defineStore("authStore", {
     storeloginshowModal: false,
 
     storevalidServiceTerm: [] as term[],
-    storesameUserIdisExist: false,
-    storepublicidxisExist: "",
+    storesameUserIdisExist: "",
+    storeuserCodeisExist: "",
 
     storeredirect: false,
   }),
@@ -67,11 +67,11 @@ export const useauthStore = defineStore("authStore", {
       userApi
         .checkUserid(id)
         .then((res) => {
-          if (res == undefined) this.storesameUserIdisExist = false;
-          else this.storesameUserIdisExist = true;
+          if (res == undefined) this.storesameUserIdisExist = "noExist";
+          else this.storesameUserIdisExist = "Exist";
         })
         .catch((err) => {
-          this.storesameUserIdisExist = false;
+          this.storesameUserIdisExist = "";
         });
     },
     //실패 할경우 화면에서 뒤로 보냄
@@ -89,23 +89,23 @@ export const useauthStore = defineStore("authStore", {
     },
     //중복 체크 초기화
     resetstoresameUserIdisExist() {
-      this.storesameUserIdisExist = false;
+      this.storesameUserIdisExist = ``;
     },
     checkPublicidx(idx: string) {
       userApi
         .checkPublicidx(idx)
         .then((res) => {
-          if (res == undefined) this.storepublicidxisExist = "noExist";
-          else this.storepublicidxisExist = "Exist";
+          if (res == undefined) this.storeuserCodeisExist = "noExist";
+          else this.storeuserCodeisExist = "Exist";
         })
         .catch((err) => {
-          this.storepublicidxisExist = "noExist";
+          this.storeuserCodeisExist = "noExist";
         });
     },
-    resetstorepublicidxisExist() {
-      this.storepublicidxisExist = "";
+    resetstoreuserCodeisExist() {
+      this.storeuserCodeisExist = ``;
     },
-    async signIn(
+    async signUp(
       id: string,
       pw: string,
       terms: number[],
@@ -114,7 +114,7 @@ export const useauthStore = defineStore("authStore", {
     ) {
       let result = false;
       await userApi
-        .signIn(id, pw, terms, recommender, authId)
+        .signUp(id, pw, terms, recommender, authId)
         .then((res) => {
           // useLocalStorage("accessToken", res.accessToken);
           // useLocalStorage("refreshToken", res.refreshToken);

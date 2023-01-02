@@ -40,7 +40,7 @@ watch(
       props.arr.indexOf(term.idx) != -1 ||
       props.noarr.indexOf(term.idx) != -1
     ) {
-      checkImg.value = `check_circle_blue`;
+      checkImg.value = `check_circle_blue_full`;
     } else {
       checkImg.value = `check_circle`;
     }
