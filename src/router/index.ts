@@ -1,10 +1,10 @@
 import components from "./components";
 import { createRouter, createWebHistory } from "vue-router";
-import { useCommon } from "@/store/modules/ui/common";
-import type { user } from "@/domain/user/user.interface";
+import { useCommon } from "../store/modules/ui/common";
+import type { user } from "../domain/user/user.interface";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
     {
       path: "/",
@@ -18,7 +18,7 @@ const router = createRouter({
         {
           path: "home",
           component: components.mainPage,
-          meta: { transition: "slide-right", name: "home" },
+          meta: { transition: "slide-right", name: "home", navbar: true },
         },
         {
           path: "write",
@@ -27,6 +27,7 @@ const router = createRouter({
             transition: "slide-right",
             name: "write",
             title: "거래 등록",
+            navbar: false,
           },
         },
         {
@@ -36,17 +37,28 @@ const router = createRouter({
             transition: "slide-right",
             name: "post",
             title: "거래 상세 정보",
+            navbar: false,
           },
         },
         {
           path: "/payment",
           component: components.paymentPageVue,
-          meta: { transition: "", name: "payment", title: "거래/결제" },
+          meta: {
+            transition: "",
+            name: "payment",
+            title: "거래/결제",
+            navbar: false,
+          },
         },
         {
           path: "/payment/result",
           component: components.PaymentResultPage,
-          meta: { transition: "", name: "paymentResult", title: "결제 완료" },
+          meta: {
+            transition: "",
+            name: "paymentResult",
+            title: "결제 완료",
+            navbar: false,
+          },
         },
         {
           path: "/mypage",
@@ -56,22 +68,28 @@ const router = createRouter({
             {
               path: "",
               component: components.main,
-              meta: { transition: "slide-right" },
+              meta: { navbar: true },
             },
             {
               path: "main",
               component: components.main,
-              meta: { transition: "slide-right" },
+              meta: { navbar: true },
             },
             {
               path: "mileage",
               component: components.mileageOverview,
-              meta: { transition: "slide-right", title: "마일리지" },
+              meta: {
+                title: "마일리지",
+                navbar: false,
+              },
             },
             {
               path: "mileage/overview",
               component: components.mileageOverview,
-              meta: { transition: "slide-right", title: "마일리지" },
+              meta: {
+                title: "마일리지",
+                navbar: false,
+              },
             },
           ],
         },

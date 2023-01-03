@@ -38,19 +38,19 @@
             <div class="pr-6 hidden md:block">인증상태</div>
             <div class="space-x-2">
               <span
-                class="rounded border px-2 sm:px-3 md:px-3 text-xs py-0.5 md:py-1 bg-everly-white"
+                class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
                 :class="verifiedPhone"
               >
                 휴대폰
               </span>
               <span
-                class="rounded border px-2 sm:px-3 md:px-3 text-xs py-0.5 md:py-1 bg-everly-white"
+                class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
                 :class="verifiedEmail"
               >
                 이메일
               </span>
               <span
-                class="rounded border px-2 sm:px-3 md:px-3 text-xs py-0.5 md:py-1 bg-everly-white"
+                class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
                 :class="verifiedAccount"
               >
                 출금계좌
@@ -222,16 +222,16 @@
     <div class="border-t flex justify-between px-5 py-3 md:py-5">
       <div class="flex">
         <img src="@/assets/icon/like_main_web.svg" alt="" class="w-4 md:w-5" />
-        <div class="px-3 text-sm md:text-xl font-bold">찜한 목록</div>
-        <div class="text-sm md:text-xl">{{ likeQty }}개</div>
+        <div class="px-2 text-sm md:text-lg font-bold">찜한 목록</div>
+        <div class="text-sm md:text-lg">{{ likeQty }}개</div>
       </div>
       <img src="@/assets/icon/arrow_right.svg" alt="" />
     </div>
     <!-- 받은 리뷰 -->
     <div class="border-t flex justify-between px-5 py-3 md:py-5">
       <div class="flex">
-        <img src="@/assets/icon/review_grey.svg" alt="" class="w-4 md:w-5" />
-        <div class="px-3 text-sm md:text-xl font-bold">받은 리뷰</div>
+        <img src="@/assets/icon/review_black.svg" alt="" class="w-4 md:w-5" />
+        <div class="px-2 text-sm md:text-lg font-bold">친절평가</div>
       </div>
       <div>
         <img src="@/assets/icon/arrow_right.svg" alt="" class="md:hidden" />
@@ -315,7 +315,7 @@
     <div class="border-t flex justify-between px-5 py-3 md:py-5">
       <div class="flex">
         <img src="@/assets/icon/review_grey.svg" alt="" class="w-4 md:w-5" />
-        <div class="px-3 flex text-sm md:text-xl space-x-3">
+        <div class="px-2 flex text-sm md:text-lg space-x-3">
           <div class="font-bold">받은 거래 후기</div>
           <div>6개</div>
         </div>
@@ -332,7 +332,7 @@
 </template>
 
 <script setup lang="ts">
-import feedback from "../components/feedback.vue";
+import feedback from "../components/review.vue";
 import { useClipboard } from "@vueuse/core";
 import { computed } from "vue";
 

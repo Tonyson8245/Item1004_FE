@@ -9,11 +9,12 @@
         <div
           class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4 md:px-0"
         >
-          <div class="hidden md:block">
+          <div class="hidden md:flex space-x-6">
             <img
-              src="@/assets/icon/logo_vertical.svg"
+              src="@/assets/icon/logo.gif"
               alt=""
               @click="moveLink('/home')"
+              class="w-[11rem] h-[3.3rem]"
             />
           </div>
           <div class="hidden md:block">

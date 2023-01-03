@@ -169,11 +169,14 @@
       </div>
     </div>
     <hr class="border-everly-light_grey hidden md:block" />
+
+    <clarification class="hidden md:block" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+import clarification from "../components/clarification.vue";
 
 //프로필 쪽
 const nickName = computed(() => {

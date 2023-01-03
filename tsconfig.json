@@ -1,7 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   // "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/types/index.d.ts"],
-  "include": ["env.d.ts", "src/**/*.vue", "src/types/index.d.ts"],
+  "include": ["env.d.ts", "src/**/*.vue", "src/@types/*"],
   "compilerOptions": {
     "strictPropertyInitialization": false,
     "baseUrl": ".",
@@ -10,7 +10,9 @@
     },
     "target": "ES6",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "types": ["vite/client"],
+    "typeRoots": ["./@types", "./node_modules/@types"]
   },
 
   "references": [

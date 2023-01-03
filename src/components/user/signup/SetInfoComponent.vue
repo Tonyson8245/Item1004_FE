@@ -190,6 +190,7 @@ import { useauthStore } from "@/store/modules/user/authStore";
 
 const authStore = useauthStore();
 const route = useRoute();
+const router = useRouter();
 const { storesameUserIdisExist, storeuserCodeisExist, storevalidServiceTerm } =
   storeToRefs(authStore);
 
@@ -414,22 +415,22 @@ watch(
 
 //가입하기 버튼 동작
 function signUp() {
-  // let idduplicationCheck = (storesameUserIdisExist.value==`noExist`);
-  // let idregexCheck = isId(userId.value);
-  // let passwordregexCheck = isPassword(password.value);
-  // let passwordDoubleCheck = password.value == passwordCheck.value;
-  // let recommend = recommendidx.value;
-  // let recommendCheck = storeuserCodeisExist.value == "Exist";
-  // let termAllIdxs = mandatoryArray.value.concat(...notmandatoryArray.value);
-  // let mandatoryCheck = mandatoryArray.value.length == mandatoryTotalQty.value;
-  // let authId = route.query.authId as string;
-  // authStore
-  //   .signUp(tempuserId.value, password.value, termAllIdxs, recommend, authId)
-  //   .then((res) => {
-  //     if (res) router.push("/account/login");
-  //     else router.push("/account/confirm");
-  //   });
-  console.log("회원가입 실행");
+  let idduplicationCheck = storesameUserIdisExist.value == `noExist`;
+  let idregexCheck = isId(userId.value);
+  let passwordregexCheck = isPassword(password.value);
+  let passwordDoubleCheck = password.value == passwordCheck.value;
+  let recommend = recommendidx.value;
+  let recommendCheck = storeuserCodeisExist.value == "Exist";
+  let termAllIdxs = mandatoryArray.value.concat(...notmandatoryArray.value);
+  let mandatoryCheck = mandatoryArray.value.length == mandatoryTotalQty.value;
+  let authId = route.query.authId as string;
+  authStore
+    .signUp(tempuserId.value, password.value, termAllIdxs, recommend, authId)
+    .then((res) => {
+      if (res) router.push("/account/login");
+      else router.push("/account/confirm");
+    });
+  // console.log("회원가입 실행");
 }
 
 //authId 유효성 체크

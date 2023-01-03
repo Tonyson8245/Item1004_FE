@@ -9,16 +9,24 @@
       class="flex-none md:w-[1180px] py-3 w-full font-bold text-base md:text-xl px-4 md:px-0"
       :class="classBgcolor"
     >
-      <div class="flex">
-        <div class="flex-none pt-1 pr-3 md:hidden" @click="backPress()">
-          <img
-            src="@/assets/icon/arrow_left.png"
-            alt=""
-            v-if="route.meta.title == `결제 완료`"
-          />
-          <img src="@/assets/icon/back_white_mobile.svg" alt="" v-else />
+      <div class="flex justify-between">
+        <div class="flex justify-between space-x-2 items-center">
+          <div class="flex-none pr-2 md:hidden" @click="backPress()">
+            <img
+              src="@/assets/icon/arrow_left.png"
+              alt=""
+              v-if="route.meta.title == `결제 완료`"
+            />
+            <img src="@/assets/icon/back_white_mobile.svg" alt="" v-else />
+          </div>
+          <div>{{ title }}</div>
         </div>
-        <div>{{ title }}</div>
+        <img
+          src="@/assets/icon/contruction_white.svg"
+          alt=""
+          v-if="route.meta.title == `마일리지`"
+          @click="router.push('./mileage/constuction')"
+        />
       </div>
     </div>
     <div class="flex-1"></div>

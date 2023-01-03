@@ -36,7 +36,10 @@
       class="hidden md:block md:pb-20"
       v-else-if="route.meta.name == `paymentResult`"
     />
-    <Navbar class="block md:hidden text-center w-full fixed bottom-0" v-else />
+    <Navbar
+      class="block md:hidden text-center w-full fixed bottom-0"
+      v-else-if="route.meta.navbar"
+    />
 
     <FooterWeb
       class="hidden md:block absolute w-full"
