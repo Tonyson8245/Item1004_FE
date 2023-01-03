@@ -107,12 +107,12 @@ const router = createRouter({
           component: components.passwordSet,
         },
         {
-          path: "signin/setinfo",
+          path: "signUp/setinfo",
           component: components.infoSet,
         },
         {
-          path: "signin/confirm",
-          component: components.signinComfirm,
+          path: "signUp/confirm",
+          component: components.signUpComfirm,
         },
       ],
     },
@@ -166,8 +166,8 @@ router.beforeEach((to, from) => {
       commonStore.setheaderTitle("비밀번호 재설정");
       commonStore.setcsShowLink(true);
       break;
-    case "/account/signin/confirm":
-    case "/account/signin/setinfo":
+    case "/account/signUp/confirm":
+    case "/account/signUp/setinfo":
       commonStore.setheaderTitle("회원가입");
       commonStore.setcsShowLink(false);
       break;

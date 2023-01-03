@@ -1,6 +1,7 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/types/index.d.ts"],
+  // "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/types/index.d.ts"],
+  "include": ["env.d.ts", "src/**/*.vue", "src/types/index.d.ts"],
   "compilerOptions": {
     "strictPropertyInitialization": false,
     "baseUrl": ".",

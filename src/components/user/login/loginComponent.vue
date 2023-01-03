@@ -62,7 +62,7 @@
               </button>
             </div>
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm" @click="moveLink('signin')">
+              <button class="text-sm" @click="moveLink('signUp')">
                 회원가입
               </button>
             </div>
@@ -141,8 +141,8 @@ function moveLink(type: string) {
     case "findid":
       link = "/account/findid/confirm";
       break;
-    case "signin":
-      link = "/account/signin/confirm";
+    case "signUp":
+      link = "/account/signUp/confirm";
       break;
   }
   router.push(link);

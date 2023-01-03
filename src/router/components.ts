@@ -5,8 +5,8 @@ import findIDcomponent from "@/components/user/findID/ConfirmComponent.vue";
 import findIDResultComponent from "@/components/user/findID/ResultComponent.vue";
 import passwordConfirm from "@/components/user/changePassword/ConfirmComponent.vue";
 import passwordSet from "@/components/user/changePassword/SetComponent.vue";
-import infoSet from "@/components/user/signin/SetInfoComponent.vue";
-import signinComfirm from "@/components/user/signin/ConfirmComponent.vue";
+import infoSet from "@/components/user/signUp/SetInfoComponent.vue";
+import signUpComfirm from "@/components/user/signUp/ConfirmComponent.vue";
 import searchModal from "@/components/header/search/searchComponmet_mobile.vue";
 import mainPage from "@/components/home/mainPage.vue";
 import writePage from "@/components/home/writePage.vue";
@@ -19,7 +19,7 @@ import ChatViewVue from "@/views/ChatView.vue";
 import MypagePage from "@/components/mypage/mypagePage.vue";
 import main from "@/components/mypage/detail/main.vue";
 import mileageOverview from "@/components/mypage/detail/mileageOverview.vue";
-import redirect from "@/components/user/signin/redirect.vue";
+import redirect from "@/components/user/signUp/redirect.vue";
 import logout from "@/components/user/logout.vue";
 
 export default {
@@ -44,6 +44,6 @@ export default {
   passwordConfirm,
   passwordSet,
   infoSet,
-  signinComfirm,
+  signUpComfirm,
   MainView,
 };

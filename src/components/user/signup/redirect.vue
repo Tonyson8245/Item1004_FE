@@ -11,9 +11,9 @@ let authId = route.query.authId;
 let mode = route.query.mode;
 
 // let url =
-//   `http://localhost:5173/account/signin/setinfo?authId=` + authId;
+//   `http://localhost:5173/account/signUp/setinfo?authId=` + authId;
 let url =
-  `http://www.test.item1004.co.kr/account/signin/setinfo?authId=` + authId;
+  `http://www.test.item1004.co.kr/account/signUp/setinfo?authId=` + authId;
 window.opener.location.replace(url); //부모창 reload
 window.close(); //현재 팝업창 Close
 </script>

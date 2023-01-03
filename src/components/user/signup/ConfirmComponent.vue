@@ -65,7 +65,7 @@ watch(isLargeScreen.value, () => {
 function moveLink(type: string) {
   switch (type) {
     case "setinfo":
-      link = "/account/signin/setinfo";
+      link = "/account/signUp/setinfo";
       break;
   }
   router.push(link);
@@ -93,7 +93,7 @@ function getNiceEncData() {
 }
 
 watch(storeredirect, () => {
-  if (storeredirect.value) router.push("/account/signin/setinfo");
+  if (storeredirect.value) router.push("/account/signUp/setinfo");
 });
 
 function fnPopup() {

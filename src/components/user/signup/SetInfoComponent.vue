@@ -56,6 +56,7 @@
             @input="(event: Event) => {
   checkRegexPassword((event.target as HTMLInputElement).value);
             }"
+            autoComplete="off"
           />
           <img
             :src="`/assets/icon/${passwordInputImg}.svg`"
@@ -72,6 +73,7 @@
             @input="(event: Event) => {
   checkPassword((event.target as HTMLInputElement).value);
             }"
+            autoComplete="off"
           />
           <img
             :src="`/assets/icon/${passwordCheckInputImg}.svg`"
@@ -150,7 +152,7 @@
               :data="contract"
               :arr="mandatoryArray"
               :noarr="notmandatoryArray"
-              @check="pushtomandatoryArray($event)"
+              @check="pushtoTermsArray($event)"
             />
           </div>
         </div>
@@ -181,13 +183,10 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from "vue";
 import contractVue from "./common/contract.vue";
-import modalSmall from "@/components/modal/modalSmall.vue";
-import { useToggle } from "@vueuse/shared";
-import { useauthStore } from "@/store/modules/user/authStore";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { isNumber, IsNumber, isString } from "class-validator";
-import router from "@/router";
+import { useauthStore } from "@/store/modules/user/authStore";
 
 const authStore = useauthStore();
 const route = useRoute();
@@ -221,15 +220,16 @@ watch(storevalidServiceTerm, () => {
   ).length;
 });
 //각 약관에서 체크 활성화/비활성화
-function pushtomandatoryArray(event: Event) {
+function pushtoTermsArray(event: Event) {
   let type = event.type;
   //  @ts-ignore
   let idx = event.idx;
 
   //필수,선택에 따라서 다른 배열 방에 약관 idx를 넣음
   if (type) {
-    if (mandatoryArray.value.indexOf(idx) == -1) mandatoryArray.value.push(idx);
-    else {
+    if (mandatoryArray.value.indexOf(idx) == -1) {
+      mandatoryArray.value.push(idx);
+    } else {
       const id = mandatoryArray.value.indexOf(idx);
       if (id > -1) mandatoryArray.value.splice(id, 1);
     }
@@ -248,6 +248,8 @@ function pushtomandatoryArray(event: Event) {
   )
     agreeAll.value = true;
   else agreeAll.value = false;
+
+  console.log(mandatoryArray.value);
 }
 //전체 동의
 function clickagreeAll() {
@@ -264,6 +266,10 @@ function clickagreeAll() {
 
   console.log(`클릭`);
 
+  //초기화
+  mandatoryArray.value.splice(0, mandatoryArray.value.length);
+  notmandatoryArray.value.splice(0, notmandatoryArray.value.length);
+
   //전체실행
   if (!agreeAll.value) {
     agreeAll.value = true;
@@ -271,8 +277,6 @@ function clickagreeAll() {
     notmandatoryArray.value.push(...notmanidxArr);
   } else {
     agreeAll.value = false;
-    mandatoryArray.value.splice(0, mandatoryArray.value.length);
-    notmandatoryArray.value.splice(0, notmandatoryArray.value.length);
   }
 }
 

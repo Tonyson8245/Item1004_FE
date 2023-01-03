@@ -89,7 +89,7 @@
           <span>{{ props.card?.game }} > {{ props.card?.server }}</span>
         </div>
         <div
-          class="text-xl font-bold overflow-ellipsis overflow-hidden whitespace-nowrap"
+          class="text-base sm:text-xl font-bold overflow-ellipsis overflow-hidden whitespace-nowrap"
         >
           {{ props.card?.title }}
         </div>
@@ -105,15 +105,15 @@
         </div>
         <div class="flex justify-between mt-3 md:mt-0">
           <div class="flex justify-start items-center mt-1 space-x-1 font-bold">
-            <span class="text-base pr-2"
+            <span class="text-xs sm:text-sm pr-2"
               >{{ minQty }} {{ props.card?.unit }}당</span
             >
-            <span class="text-xl"
+            <span class="text-sm sm:text-base"
               >{{ props.card?.price.toLocaleString() }}원</span
             >
           </div>
           <div class="flex ustify-start items-center mt-1 space-x-1 text-xs">
-            <img src="@/assets/icon/chat_mid-grey.svg" class="w-4 h-4" alt="" />
+            <img src="@/assets/icon/chat_black.svg" class="w-4 h-4" alt="" />
             <span class="pr-2">{{ props.card?.chatQty }}</span>
             <img src="@/assets/icon/like_main_web.svg" class="w-4 h-4" alt="" />
             <span>{{ props.card?.likeQty }}</span>

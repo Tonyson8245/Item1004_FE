@@ -84,7 +84,7 @@ watch(isLargeScreen.value, () => {
 function moveLink(type: string) {
   switch (type) {
     case "setinfo":
-      link = "/account/signin/setinfo";
+      link = "/account/signUp/setinfo";
       break;
   }
   router.push(link);
