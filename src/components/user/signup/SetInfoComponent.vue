@@ -45,7 +45,7 @@
             >* 이미 존재하는 아이디입니다.</span
           >
           <span :class="regexUserIdClass" class="text-everly-dark_grey" v-else
-            >* 영문, 숫자만 사용 가능합니다(3 ~ 15자)</span
+            >* 영문, 숫자만 사용 가능합니다(5 ~ 15자)</span
           >
         </div>
         <div class="flex items-center w-full relative">
@@ -186,7 +186,7 @@ import contractVue from "./common/contract.vue";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { isNumber, IsNumber, isString } from "class-validator";
-import { useauthStore } from "@/store/modules/user/authStore";
+import { useauthStore } from "@/store/modules/auth/authStore";
 
 const authStore = useauthStore();
 const route = useRoute();
@@ -415,14 +415,8 @@ watch(
 
 //가입하기 버튼 동작
 function signUp() {
-  let idduplicationCheck = storesameUserIdisExist.value == `noExist`;
-  let idregexCheck = isId(userId.value);
-  let passwordregexCheck = isPassword(password.value);
-  let passwordDoubleCheck = password.value == passwordCheck.value;
   let recommend = recommendidx.value;
-  let recommendCheck = storeuserCodeisExist.value == "Exist";
   let termAllIdxs = mandatoryArray.value.concat(...notmandatoryArray.value);
-  let mandatoryCheck = mandatoryArray.value.length == mandatoryTotalQty.value;
   let authId = route.query.authId as string;
   authStore
     .signUp(tempuserId.value, password.value, termAllIdxs, recommend, authId)
@@ -457,7 +451,7 @@ onMounted(() => {
 
 //정규식
 function isId(asValue: string) {
-  var regExp = /^[a-z]+[a-z0-9]{3,15}$/g;
+  var regExp = /^[a-z]+[a-z0-9]{5,15}$/g;
   return regExp.test(asValue);
 }
 function isPassword(asValue: string) {

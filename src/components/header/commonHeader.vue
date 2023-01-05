@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full flex z-10 absolute border-b border-everly-light_blue md:border-none"
+    class="w-full flex z-10 absolute border-everly-light_blue md:border-none"
     :class="classBgcolor"
     v-if="!(route.meta.title == `결제 완료` && minSize.value)"
   >
@@ -25,7 +25,8 @@
           src="@/assets/icon/contruction_white.svg"
           alt=""
           v-if="route.meta.title == `마일리지`"
-          @click="router.push('./mileage/constuction')"
+          class="w-6"
+          @click="router.push('./guide')"
         />
       </div>
     </div>
@@ -63,8 +64,6 @@ onMounted(() => {
 });
 //반응형 배경
 watch(minSize.value, (minSize) => {
-  console.log(123);
-
   if (route.meta.title == "결제 완료") {
     classBgcolor.value = bgColoType(minSize);
   } else classBgcolor.value = bgColoType(true);

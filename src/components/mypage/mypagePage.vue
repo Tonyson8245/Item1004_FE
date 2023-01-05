@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-[3.2rem]">
+  <div class="pt-[3rem]">
     <div class="flex">
       <div class="flex-grow"></div>
       <div class="flex-grow-0 w-full md:w-[73.750rem] flex">

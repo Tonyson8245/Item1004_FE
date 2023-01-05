@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import * as userApi from "@/api/user-service/index";
 import * as authApi from "@/api/auth-service/index";
 import type { term } from "@/domain/user/serviceTermList.interface";
-import { useLocalStorage, useToggle } from "@vueuse/core";
-import type { niceEncrypotionDto } from "@/domain/auth/niceEncrypotionDto";
+import { useLocalStorage } from "@vueuse/core";
+import type * as authDto from "@/domain/auth/index";
 
 export const useauthStore = defineStore("authStore", {
   state: () => ({
@@ -14,6 +14,13 @@ export const useauthStore = defineStore("authStore", {
     storeuserCodeisExist: "",
 
     storeredirect: false,
+
+    storeSocialIDisExist: "",
+    storeCreateSMSshowModal: false,
+    storeauthId: "95ae04a4-3e81-4539-9196-a5e456376206", //인증번호확인을 위한 authId
+    storeCheckSMSisSuccess: false,
+
+    storeuserID: "",
   }),
 
   getters: {},
@@ -52,7 +59,7 @@ export const useauthStore = defineStore("authStore", {
     //나이스 암호화 데이터 가져오는 방법
     async getNiceEncData<T>(
       mode: string
-    ): Promise<niceEncrypotionDto | undefined> {
+    ): Promise<authDto.niceEncrypotionDto | undefined> {
       let result;
       await authApi
         .getNiceEncDataAPI(mode)
@@ -123,6 +130,67 @@ export const useauthStore = defineStore("authStore", {
         })
         .catch((err) => {
           alert("오류가 발생했습니다.");
+          result = false;
+        });
+      return result;
+    },
+
+    //sms
+    creatSMSCode(mode: string, body: authDto.CreateSmsCodeBodyDto) {
+      authApi
+        .creatSMSCode(mode, body)
+        .then((res) => {
+          this.storeCreateSMSshowModal = true;
+          this.storeauthId = res as string; // authId를 바로 받음
+        })
+        .catch((err) => {
+          //소셜아이디가 있는 경우
+          if (err.meta.code == "extinct_local_reg") {
+            // TODO 소셜아이디 붙일 때 추가하기
+          }
+        });
+    },
+    async checkSMSCode(data: authDto.checkSMSBodyDto) {
+      //authId는 여기서 넣어준다.
+      data.authid = this.storeauthId;
+      var result;
+      await authApi
+        .chcekSms(data)
+        .then((res) => {
+          //성공했을때
+          this.storeCheckSMSisSuccess = true;
+          result = true;
+        })
+        .catch((err) => {
+          this.storeCheckSMSisSuccess = false;
+          result = false;
+        });
+      console.log(result);
+
+      return result;
+    },
+    setstoreCreateSMSshowModal(mode: boolean) {
+      this.storeCreateSMSshowModal = mode;
+    },
+    setstoreauthId(id: string) {
+      this.storeauthId = id;
+    },
+
+    //아이디 찾기
+    async getUserId(authId: string) {
+      var result;
+      await userApi
+        .getUserId(authId)
+        .then((res) => {
+          this.storeuserID = res.result;
+          this.storeauthId = ""; //초기화
+          result = true;
+        })
+        .catch((err) => {
+          console.log(err);
+
+          this.storeauthId = ""; //초기화
+          this.storeuserID = ""; //초기화
           result = false;
         });
       return result;

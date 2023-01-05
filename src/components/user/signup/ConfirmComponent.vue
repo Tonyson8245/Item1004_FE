@@ -46,7 +46,7 @@
 </template>
 <script lang="ts" setup>
 import modalSmall from "@/components/modal/modalSmall.vue";
-import { useauthStore } from "@/store/modules/user/authStore";
+import { useauthStore } from "@/store/modules/auth/authStore";
 import { useMediaQuery, useToggle } from "@vueuse/core";
 import { computed, watch, ref } from "vue";
 import { useRouter } from "vue-router";

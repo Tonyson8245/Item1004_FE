@@ -1,6 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
-const baseurl_test = import.meta.env.VITE_BASE_URL_AUTH_TEST;
+const baseurl_test = import.meta.env.VITE_BASE_URL_PAYMENT_TEST;
 
 const instance = axios.create({
   baseURL: baseurl_test, // baseUrl 설정
@@ -9,17 +9,16 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   (response) => {
-    console.log(`http success`);
     //성공 시에는 result 값만 돌려보넴
     return response.data.result;
   },
   async (error) => {
     const {
       config,
-      response: { meta, result },
+      response: { status },
     } = error;
-    //실패 할 경우 meta와 result값을 돌려보냄
-    return Promise.reject(error.response.data);
+    //실패 할 경우 meta값을 돌려보냄
+    return Promise.reject(error.response.data.meta);
   }
 );
 

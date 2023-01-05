@@ -1,6 +1,6 @@
 import http from "@/api/auth-service/authHTTPClient";
-import type { checkAuthidDto } from "@/domain/auth/CheckAuthIdDto";
-import type { niceEncrypotionDto } from "@/domain/auth/niceEncrypotionDto";
+import type { checkAuthidDto } from "@/domain/auth/DTO/CheckAuthIdDto";
+import type { niceEncrypotionDto } from "@/domain/auth/DTO/niceEncrypotionDto";
 import axios from "axios";
 
 const niceInstance = axios.create({

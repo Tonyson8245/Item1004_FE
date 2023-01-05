@@ -91,6 +91,22 @@ const router = createRouter({
                 navbar: false,
               },
             },
+            {
+              path: "mileage/guide",
+              component: components.guide,
+              meta: {
+                title: "아이템천사 마일리지 안내",
+                navbar: false,
+              },
+            },
+            {
+              path: "user/info",
+              component: components.userinfo,
+              meta: {
+                title: "회원정보수정",
+                navbar: false,
+              },
+            },
           ],
         },
       ],
@@ -164,6 +180,15 @@ router.beforeEach((to, from) => {
   const userNickname =
     localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
 
+  //마이페이지 접근시, 로그인이 안되있다면 이전 페이지로
+  if (to.matched[1] != undefined) {
+    if (to.matched[1].path == "/mypage")
+      if (localData == null) {
+        router.push("/account/login");
+        return;
+      }
+  }
+
   const commonStore = useCommon();
   switch (to.path) {
     case "/account/login":
@@ -184,8 +209,8 @@ router.beforeEach((to, from) => {
       commonStore.setheaderTitle("비밀번호 재설정");
       commonStore.setcsShowLink(true);
       break;
-    case "/account/signUp/confirm":
-    case "/account/signUp/setinfo":
+    case "/account/signup/confirm":
+    case "/account/signup/setInfo":
       commonStore.setheaderTitle("회원가입");
       commonStore.setcsShowLink(false);
       break;

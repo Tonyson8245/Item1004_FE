@@ -2,7 +2,7 @@
   <div>
     <!-- 웹 메인 헤더  -->
     <div
-      class="flex cursor-default bg-[#fafafa] inline-block top-0 z-50 border-b"
+      class="flex cursor-default bg-[#fafafa] inline-block top-0 z-50 border-b hidden md:block"
     >
       <div class="flex-1 hidden md:block"></div>
       <div class="flex-none hidden md:block">
@@ -70,9 +70,7 @@
       <div v-if="route.meta.name == `home`">
         <HomeHeader />
       </div>
-      <div v-else>
-        <CommonHeader />
-      </div>
+      <div v-else><CommonHeader /></div>
     </div>
   </div>
 </template>

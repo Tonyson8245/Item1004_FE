@@ -1,5 +1,5 @@
 import http from "@/api/user-service/UserHTTPClient";
-import type { CreateTokenResponseDto } from "@/domain/auth/CreateTokenResponseDto";
+import type { CreateTokenResponseDto } from "@/domain/auth/DTO/CreateTokenResponseDto";
 import type validServiceTerms from "@/domain/user/serviceTermList.interface";
 import type { AxiosResponse } from "axios";
 

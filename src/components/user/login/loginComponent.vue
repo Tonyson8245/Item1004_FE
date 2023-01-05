@@ -123,7 +123,7 @@ import modalSmall from "@/components/modal/modalSmall.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { useauthStore } from "@/store/modules/user/authStore";
+import { useauthStore } from "@/store/modules/auth/authStore";
 
 const router = useRouter();
 const authStore = useauthStore();

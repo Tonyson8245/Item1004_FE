@@ -2272,6 +2272,11 @@ vue-template-compiler@^2.7.14:
     de-indent "^1.0.2"
     he "^1.2.0"
 
+vue-timer-hook@^1.0.37:
+  version "1.0.37"
+  resolved "https://registry.npmjs.org/vue-timer-hook/-/vue-timer-hook-1.0.37.tgz"
+  integrity sha512-3nGezld2uvBUmV77wP/81sC3VSEs6qpUYa0qN6O0KjMhG1u3mPzJjn7UztHC25SAL72OAdz6WKN7hD8TzMq8gA==
+
 vue-tsc@^1.0.8:
   version "1.0.12"
   resolved "https://registry.npmjs.org/vue-tsc/-/vue-tsc-1.0.12.tgz"

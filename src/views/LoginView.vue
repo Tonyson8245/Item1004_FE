@@ -11,7 +11,7 @@
 
     <router-view class="w-full m-auto max-w-lg items-center justify-center">
     </router-view>
-    <FooterLoginVue class="p-4 text-center w-full fixed bottom-0" />
+    <FooterLoginVue class="p-4 text-center w-full bottom-0" />
   </div>
 </template>
 <script lang="ts" setup>
