@@ -54,7 +54,7 @@
               </div>
             </div>
             <button
-              class="bg-everly-main text-white rounded-lg shadow-md p-3 text-xs md:text-sm"
+              class="bg-everly-mid_grey text-white rounded-lg shadow-md p-3 text-xs md:text-sm"
               :class="checkButtonClass"
               @click="checkCode()"
             >
@@ -91,7 +91,7 @@ const codeNumber = ref("");
 const authStore = useauthStore();
 const lastTime = ref(3);
 const timerShow = ref(false);
-const checkButtonClass = ref("cursor-not-allowed bg-everly-dark_grey");
+const checkButtonClass = ref("cursor-not-allowed bg-everly-mid_grey");
 
 const { storeCreateSMSshowModal, storeCheckSMSisSuccess } =
   storeToRefs(authStore);
@@ -171,7 +171,7 @@ onMounted(() => {
 watch([timerShow, codeNumber], () => {
   if (timerShow.value && isChecknumber(codeNumber.value))
     checkButtonClass.value = `cursor-pointer bg-everly-main`;
-  else checkButtonClass.value = `cursor-not-allowed bg-everly-dark_grey`;
+  else checkButtonClass.value = `cursor-not-allowed bg-everly-mid_grey`;
 });
 
 // 채우기

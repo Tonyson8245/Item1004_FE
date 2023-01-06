@@ -148,9 +148,13 @@
     <!-- 맨위로 모바일-->
 
     <!-- 모바일 글작성 -->
-    <div class="block md:hidden bottom-20 w-full fixed">
-      <div @click="moveLink('/write')" class="flex justify-end">
-        <img src="@/assets/icon/button_write_mobile.svg" alt="" />
+    <div class="block md:hidden bottom-20 w-full fixed z-20">
+      <div class="flex justify-end">
+        <img
+          src="@/assets/icon/button_write_mobile.svg"
+          alt=""
+          @click="moveLink('/write')"
+        />
       </div>
       <div
         class="block md:hidden flex justify-center absolute w-full top-7"

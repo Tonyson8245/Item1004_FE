@@ -22,9 +22,11 @@ import mileageOverview from "@/components/mypage/detail/mileageOverview.vue";
 import redirect from "@/components/user/signUp/redirect.vue";
 import logout from "@/components/user/logout.vue";
 import guide from "@/components/mypage/detail/mileageGuide.vue";
-import userinfo from "@/components/mypage/detail/userinfo.vue";
+import userinfo from "@/components/mypage/detail/userInfo.vue";
+import mileageCharge from "@/components/mypage/detail/mileageCharge.vue";
 
 export default {
+  mileageCharge,
   userinfo,
   guide,
   logout,

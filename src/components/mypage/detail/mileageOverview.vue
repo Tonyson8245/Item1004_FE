@@ -20,6 +20,7 @@
           <div class="flex-grow">
             <div
               class="bg-everly-main py-1.5 md:py-3 text-center rounded-lg flex justify-center text-sm md:text-lg"
+              @click="router.push('/mypage/mileage/charge')"
             >
               충전하기
               <img src="@/assets/icon/deposit_white.svg" alt="" class="pl-2" />
@@ -150,6 +151,9 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import guide from "../components/guide.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 //프로필 쪽
 const nickName = computed(() => {

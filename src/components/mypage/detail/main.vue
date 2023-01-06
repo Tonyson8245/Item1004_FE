@@ -1,7 +1,9 @@
 <template>
   <div class="w-full pb-16">
     <!-- 프로필 -->
-    <div class="flex px-5 pt-6 md:pt-0 bg-everly-wbg_grey md:bg-transparent">
+    <div
+      class="flex px-5 pt-6 md:pt-0 bg-everly-wbg_grey md:bg-transparent md:pl-8"
+    >
       <div class="pr-5">
         <img
           src="@/assets/img/profile_green.jpeg"
@@ -36,25 +38,33 @@
         <div>
           <div class="flex items-center">
             <div class="pr-6 hidden md:block">인증상태</div>
-            <div class="space-x-2">
-              <span
-                class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
-                :class="verifiedPhone"
-              >
-                휴대폰
-              </span>
-              <span
-                class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
-                :class="verifiedEmail"
-              >
-                이메일
-              </span>
-              <span
-                class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
-                :class="verifiedAccount"
-              >
-                출금계좌
-              </span>
+            <div class="flex space-x-2">
+              <div class="space-x-1 md:space-x-2">
+                <span
+                  class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
+                  :class="verifiedPhone"
+                >
+                  휴대폰
+                </span>
+                <span
+                  class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
+                  :class="verifiedEmail"
+                >
+                  이메일
+                </span>
+                <span
+                  class="rounded border px-2 sm:px-2 md:px-2 text-xs py-0.5 md:py-1 bg-everly-white"
+                  :class="verifiedAccount"
+                >
+                  출금계좌
+                </span>
+              </div>
+              <img
+                src="@/assets/icon/pencilwithline_grey.svg"
+                alt=""
+                class="w-4 md:hidden"
+                @click="router.push(`./mypage/user/info`)"
+              />
             </div>
           </div>
         </div>
@@ -65,7 +75,7 @@
       class="flex flex-wrap-reverse md:py-5 bg-everly-wbg_grey md:bg-transparent"
     >
       <div
-        class="flex-1 flex items-center justify-between md:block md:border-r py-3 md:py-0 md:px-5 md:space-y-2"
+        class="flex-1 flex items-center justify-between md:block md:border-r py-3 md:py-0 md:px-5 md:space-y-2 md:pl-8"
       >
         <div class="text-sm md:text-lg md:font-bold pl-5 md:pl-0 flex">
           거래등급
@@ -80,11 +90,6 @@
         >
           <div class="justify-end hidden sm:flex">
             <div class="flex w-[8rem] justify-center rounded-full">
-              <!-- <img
-                :src="`/src/assets/icon/${levelBadge}withTitle.svg`"
-                class="sm:h-[2rem] md:h-auto"
-                alt=""
-              /> -->
               <img
                 :src="`/assets/icon/${levelBadge}withTitle.svg`"
                 class="sm:h-[2rem] md:h-auto"
@@ -93,7 +98,6 @@
             </div>
           </div>
           <div class="sm:hidden">
-            <!-- <img :src="`/src/assets/icon/${levelBadge}.svg`" alt="" /> -->
             <img :src="`/assets/icon/${levelBadge}.svg`" alt="" />
           </div>
         </div>
@@ -141,12 +145,15 @@
             src="@/assets/icon/arrow_right.svg"
             alt=""
             class="md:hidden block ml-3 w-1.5"
+            @click="router.push('/mypage/mileage/overview')"
           />
         </div>
       </div>
     </div>
     <!-- 판매 / 구매 -->
-    <div class="sm:mt-2 sm:flex p-5 space-y-4 sm:space-y-0 sm:space-x-10">
+    <div
+      class="sm:mt-2 sm:flex p-5 space-y-4 sm:space-y-0 sm:space-x-10 md:pl-8"
+    >
       <div class="sm:flex-1">
         <div class="hidden md:flex text-lg font-bold py-3">
           <img
@@ -219,7 +226,7 @@
       </div>
     </div>
     <!-- 찜한 목록 -->
-    <div class="border-t flex justify-between px-5 py-3 md:py-5">
+    <div class="border-t flex justify-between px-5 py-3 md:py-5 md:pl-8">
       <div class="flex">
         <img src="@/assets/icon/like_main_web.svg" alt="" class="w-4 md:w-5" />
         <div class="px-2 text-sm md:text-lg font-bold">찜한 목록</div>
@@ -228,7 +235,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" />
     </div>
     <!-- 받은 리뷰 -->
-    <div class="border-t flex justify-between px-5 py-3 md:py-5">
+    <div class="border-t flex justify-between px-5 py-3 md:py-5 md:pl-8">
       <div class="flex">
         <img src="@/assets/icon/review_black.svg" alt="" class="w-4 md:w-5" />
         <div class="px-2 text-sm md:text-lg font-bold">친절평가</div>
@@ -241,7 +248,7 @@
       </div>
     </div>
     <!-- 받은 리뷰 리스트 -->
-    <div class="px-5 md:flex pb-7">
+    <div class="px-5 md:flex pb-7 md:pl-8">
       <div class="flex-grow">
         <div class="md:w-[18.75rem] space-y-3 md:space-y-4">
           <div class="hidden md:flex">
@@ -312,7 +319,7 @@
       </div>
     </div>
     <!-- 받은 거래 후기 -->
-    <div class="border-t flex justify-between px-5 py-3 md:py-5">
+    <div class="border-t flex justify-between px-5 py-3 md:py-5 md:pl-8">
       <div class="flex">
         <img src="@/assets/icon/review_grey.svg" alt="" class="w-4 md:w-5" />
         <div class="px-2 flex text-sm md:text-lg space-x-3">
@@ -323,7 +330,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" />
     </div>
     <!-- 받은 거래후기 리스트 -->
-    <div class="px-5 sm:grid sm:grid-cols-2">
+    <div class="px-5 sm:grid sm:grid-cols-2 md:pl-8">
       <div v-for="key in 6" key="key" class="py-2">
         <feedback />
       </div>
@@ -337,10 +344,12 @@ import { useClipboard } from "@vueuse/core";
 import { computed } from "vue";
 
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 //클립보드 복사
-const source = ref("Hello");
-const { copy } = useClipboard({ source });
+const { copy } = useClipboard({});
 
 ///인증 관련 UI control
 var stroretotalVerified = false;

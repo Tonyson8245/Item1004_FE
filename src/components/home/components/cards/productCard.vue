@@ -1,6 +1,20 @@
 <template>
   <div class="relative cursor-default" @click="movePost()">
-    <div class="p-3 md:p-5">
+    <div
+      class="absolute w-full h-full bg-white rounded-lg opacity-50 border"
+      style="z-index: 1"
+    ></div>
+    <div
+      class="absolute w-full h-full backdrop-blur-[1.3px] rounded-lg border flex items-center justify-center"
+      style="z-index: 2"
+    >
+      <div
+        class="rounded-full border bg-white text-everly-mid_grey w-20 h-20 flex items-center justify-center font-bold border-2 md:text-lg"
+      >
+        판매<br />완료
+      </div>
+    </div>
+    <div class="p-3 md:p-5 relative">
       <div>
         <!--카드 헤더 -->
         <div class="flex justify-between">

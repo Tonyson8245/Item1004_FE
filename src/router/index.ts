@@ -91,11 +91,20 @@ const router = createRouter({
                 navbar: false,
               },
             },
+
             {
               path: "mileage/guide",
               component: components.guide,
               meta: {
                 title: "아이템천사 마일리지 안내",
+                navbar: false,
+              },
+            },
+            {
+              path: "mileage/charge",
+              component: components.mileageCharge,
+              meta: {
+                title: "마일리지 충전",
                 navbar: false,
               },
             },

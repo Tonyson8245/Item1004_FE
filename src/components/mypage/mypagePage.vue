@@ -7,7 +7,10 @@
           class="hidden md:block w-[11.875rem] text-everly-dark_grey space-y-10 cursor-default py-16"
         >
           <div class="space-y-2">
-            <div class="text-everly-main font-bold text-xl flex">
+            <div
+              class="text-everly-main font-bold text-xl flex cursor-pointer"
+              @click="router.push(`/mypage`)"
+            >
               <img src="@/assets/icon/mypage_blue.svg" alt="" class="pr-2" />
               내 프로필
             </div>
@@ -17,8 +20,18 @@
               <img src="@/assets/icon/pig_blue.svg" alt="" class="pr-2" />
               마일리지
             </div>
-            <div>마일리지 현황</div>
-            <div>마일리지 충전</div>
+            <div
+              @click="router.push('/mypage/mileage/overview')"
+              class="cursor-pointer"
+            >
+              마일리지 현황
+            </div>
+            <div
+              @click="router.push('/mypage/mileage/charge')"
+              class="cursor-pointer"
+            >
+              마일리지 충전
+            </div>
             <div>마일리지 인출</div>
           </div>
           <div class="space-y-2">
@@ -41,7 +54,12 @@
                 class="pr-2"
               />회원정보
             </div>
-            <div>회원정보 수정</div>
+            <div
+              @click="router.push('/mypage/user/info')"
+              class="cursor-pointer"
+            >
+              회원정보 수정
+            </div>
             <div>쿠폰내역</div>
             <div @click="logout()">로그아웃</div>
           </div>
