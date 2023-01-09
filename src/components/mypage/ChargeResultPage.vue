@@ -14,7 +14,7 @@
             />
           </div>
           <div class="text-base md:text-3xl font-bold mt-5 md:mt-7">
-            안전하게 결제완료
+            마일리지 {{ route.meta.title }}
           </div>
         </div>
       </div>
@@ -32,50 +32,40 @@
         >
           <div class="md:text-xl text-sm space-y-3 md:space-y-8">
             <div class="flex">
-              <div class="font-bold w-14 md:w-[6.9rem]">거래물품</div>
+              <div class="font-bold w-14 md:w-[10.5rem]">충전금액</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>{{ storePostTitle }}</div>
-                <div class="md:text-base">
-                  {{ storeGameName }} > {{ storeServerName }} >
-                  {{ storeCategory }}
-                </div>
+                <div>{{ chargeAmount.toLocaleString() }} 원</div>
               </div>
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[6.9rem]">결제금액</div>
+              <div class="font-bold w-14 md:w-[10.5rem]">충전마일리지</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>{{ storeProductPrice.toLocaleString() }} 원</div>
-                <div class="md:text-base">{{ productInfo }}</div>
+                <div>{{ chargeMileagAmount.toLocaleString() }} 원</div>
               </div>
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[6.9rem]">할인금액</div>
+              <div class="font-bold w-14 md:w-[10.5rem]">결제번호</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
-                  <div class="md:text-base text-everly-dark_grey">(쿠폰)</div>
-                  <div>- {{ storeDiscountCoupon.toLocaleString() }}원</div>
-                </div>
-                <div class="flex justify-end md:justify-between space-x-3">
-                  <div class="md:text-base text-everly-dark_grey">
-                    (마일리지)
-                  </div>
-                  <div>- {{ storeDiscountMileage.toLocaleString() }}원</div>
+                  <div>{{ paymentId }}</div>
                 </div>
               </div>
             </div>
-
             <div class="flex">
-              <div class="font-bold w-13 md:w-[6.9rem] text-right md:text-left">
-                최종결제<br class="md:hidden" />금액
-              </div>
-              <div class="grow text-right md:justify-end md:flex md:items-end">
-                <div class="text-base font-bold md:text-xl">
-                  {{ parseInt(storeResultAmt).toLocaleString() }} 원
+              <div class="font-bold w-14 md:w-[10.5rem]">결제상태</div>
+              <div class="grow text-right md:text-left">
+                <div class="flex justify-end md:justify-between space-x-3">
+                  <div>{{ paymentStatus }}</div>
                 </div>
-                <div class="text-everly-dark_grey text-xs md:text-sm">
-                  (수수료 포함)
+              </div>
+            </div>
+            <div class="flex">
+              <div class="font-bold w-14 md:w-[10.5rem]">결제방법</div>
+              <div class="grow text-right md:text-left">
+                <div class="flex justify-end md:justify-between space-x-3">
+                  <div>{{ paymentMethod }}</div>
                 </div>
               </div>
             </div>
@@ -94,31 +84,24 @@
         <div
           class="w-full md:w-[30.625rem] md:text-xl text-sm flex-col justify-start flex"
         >
-          <div class="p-5 pb-0 md:px-0 md:py-[2.215rem] space-y-2 md:space-y-4">
-            <div class="flex md:space-x-11">
-              <div class="font-bold">결제번호</div>
+          <div class="p-5 pb-0 md:px-0 md:py-[2.215rem] space-y-2 md:space-y-8">
+            <div class="flex">
+              <div class="font-bold md:w-[10.5rem]">충전 후 마일리지</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ storeResultTid }}
+                {{ mileagefterCharge.toLocaleString() }} 원
               </div>
             </div>
-            <div class="flex md:space-x-11">
-              <div class="font-bold">결제일시</div>
+            <div class="flex">
+              <div class="font-bold md:w-[10.5rem]">출금가능 마일리지</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ storeResultPayDate }}
-              </div>
-            </div>
-
-            <div class="flex md:space-x-11">
-              <div class="font-bold">결제방법</div>
-              <div class="col-span-3 grow text-right md:text-left">
-                {{ storeResultPayMethod }}
+                {{ milageWithdrawlable.toLocaleString() }} 원
               </div>
             </div>
 
-            <div class="flex md:space-x-11">
-              <div class="font-bold">거래상태</div>
+            <div class="flex">
+              <div class="font-bold md:w-[10.5rem]">구매전용 마일리지</div>
               <div class="col-span-3 grow text-right md:text-left">
-                결제완료
+                {{ mileageOnlyforBuy.toLocaleString() }} 원
               </div>
             </div>
           </div>
@@ -150,11 +133,12 @@
 
 <script setup lang="ts">
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { numberToKorean } from "@/common";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 const router = useRouter();
+const route = useRoute();
 const paymentStore = usePaymentStore();
 
 const {
@@ -197,6 +181,15 @@ const productInfo = computed(() => {
     ")"
   );
 });
+
+const chargeAmount = ref(50000);
+const chargeMileagAmount = ref(47250);
+const paymentId = ref("A1234-67890");
+const paymentStatus = ref("결제완료");
+const paymentMethod = ref("신용카드");
+const mileagefterCharge = ref(10250);
+const milageWithdrawlable = ref(47250);
+const mileageOnlyforBuy = ref(53000);
 </script>
 
 <style scoped></style>

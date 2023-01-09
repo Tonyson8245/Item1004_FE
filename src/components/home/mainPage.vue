@@ -1,4 +1,5 @@
 <template>
+  <!-- <Test /> -->
   <BannerWeb class="hidden md:block" />
   <BannerMobile class="block md:hidden" />
   <div class="flex w-full z-0">
@@ -182,6 +183,7 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRouter } from "vue-router";
+import Test from "../common/ChargeModal.vue";
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);

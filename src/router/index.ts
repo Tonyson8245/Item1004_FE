@@ -11,6 +11,17 @@ const router = createRouter({
       redirect: "/home",
     },
     {
+      path: "/paytus",
+      component: components.paytus,
+      meta: {
+        transition: "",
+        name: "",
+        title: "거래/결제",
+        navbar: false,
+      },
+    },
+    // 홈
+    {
       path: "/",
       component: components.MainView,
       meta: { transition: "slide-right", name: "home" },
@@ -40,6 +51,7 @@ const router = createRouter({
             navbar: false,
           },
         },
+
         {
           path: "/payment",
           component: components.paymentPageVue,
@@ -57,6 +69,15 @@ const router = createRouter({
             transition: "",
             name: "paymentResult",
             title: "결제 완료",
+            navbar: false,
+          },
+        },
+        {
+          path: "/mypage/mileage/charge/result",
+          component: components.mileageChargeResult,
+          meta: {
+            name: "chargeResult",
+            title: "충전 완료",
             navbar: false,
           },
         },
@@ -120,11 +141,13 @@ const router = createRouter({
         },
       ],
     },
+    // 검색결과
     {
       path: "/search",
       component: components.searchModal,
       meta: { transition: "slide-left" },
     },
+    //로그인
     {
       path: "/account",
       component: components.LoginView,
@@ -173,7 +196,7 @@ const router = createRouter({
     },
     {
       path: "/:anything(.*)",
-      redirect: (to) => {
+      redirect: () => {
         // the function receives the target route as the argument
         // we return a redirect path/location here.
         return { path: "/" };
@@ -183,7 +206,7 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach((to) => {
   window.scrollTo({ top: 0, behavior: "auto" });
   const localData = localStorage.getItem("user");
   const userNickname =

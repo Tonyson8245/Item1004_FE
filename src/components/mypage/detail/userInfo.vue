@@ -182,7 +182,7 @@ import { useClipboard } from "@vueuse/core";
 const { copy } = useClipboard({});
 
 const storeverifiedEmail = ref(false);
-const storeverifiedBankAccount = ref(false);
+const storeverifiedBankAccount = ref(true);
 
 const contentEmail = computed(() => {
   if (!storeverifiedEmail.value) return `이메일 인증을 해주세요.`;

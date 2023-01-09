@@ -2,7 +2,7 @@
   <div
     class="w-full flex z-10 absolute border-everly-light_blue md:border-none"
     :class="classBgcolor"
-    v-if="!(route.meta.title == `결제 완료` && minSize.value)"
+    v-if="!(whiteHeader && minSize.value)"
   >
     <div class="flex-1"></div>
     <div
@@ -12,11 +12,7 @@
       <div class="flex justify-between">
         <div class="flex justify-between space-x-2 items-center">
           <div class="flex-none pr-2 md:hidden" @click="backPress()">
-            <img
-              src="@/assets/icon/arrow_left.png"
-              alt=""
-              v-if="route.meta.title == `결제 완료`"
-            />
+            <img src="@/assets/icon/arrow_left.png" alt="" v-if="whiteHeader" />
             <img src="@/assets/icon/back_white_mobile.svg" alt="" v-else />
           </div>
           <div>{{ title }}</div>
@@ -53,18 +49,18 @@ const classBgcolor = ref(``);
 const bgColoType = (type: boolean) => {
   return type
     ? `bg-everly-main text-everly-white`
-    : `bg-everly-white text-everly-black`;
+    : `bg-everly-white text-everly-black border-b`;
 };
 
 onMounted(() => {
   //초기 색상 잡아주기
-  if (route.meta.title == "결제 완료") {
+  if (whiteHeader) {
     classBgcolor.value = bgColoType(minSize.value.value);
   } else classBgcolor.value = bgColoType(true);
 });
 //반응형 배경
 watch(minSize.value, (minSize) => {
-  if (route.meta.title == "결제 완료") {
+  if (whiteHeader) {
     classBgcolor.value = bgColoType(minSize);
   } else classBgcolor.value = bgColoType(true);
 });
@@ -76,10 +72,28 @@ function backPress() {
 //마이페이지의 경우, 웹은 "마이페이지" 고정 / 모바일은 상태에 따라 바뀜
 const title = computed(() => {
   let meta = route.meta.title;
-  if (meta == "마일리지" || meta == "판매/구매내역" || meta == "회원정보") {
+  if (headermyPageTheme) {
     if (minSize.value.value) return "마이페이지";
     else return meta;
   } else return meta;
+});
+
+//마이페이지 전용 헤더 타입
+const headermyPageTheme = computed(() => {
+  let title = route.meta.title;
+  if (title == "마일리지" || title == "판매/구매내역" || title == "회원정보")
+    return false;
+  else false;
+});
+
+//하얀 헤더만들기
+const whiteHeader = computed(() => {
+  let title = route.meta.title;
+  let name = route.meta.name;
+  console.log(name);
+
+  if (title == `결제 완료` || name == "chargeResult") return true;
+  else false;
 });
 </script>
 

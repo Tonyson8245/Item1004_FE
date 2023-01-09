@@ -1,146 +1,352 @@
 <template>
-  <div class="py-5 px-5 md:py-0 md:px-0 md:pl-8">
-    <div class="hidden md:block pb-4 font-bold text-xl">마일리지 충전</div>
-    <div class="md:flex">
-      <div class="flex text-sm md:text-base items-center pr-1 md:pr-2">
-        <span class="font-bold text-base md:text-xl pr-1 md:pr-2">띠용떄용</span
-        >님의 사용가능한 마일리지는
+  <Modal v-if="showModal" @update:props-show-modal="setModal($event)" />
+  <div>
+    <div class="py-5 px-5 md:py-0 md:px-0 md:pl-8">
+      <div class="hidden md:block pb-4 font-bold text-xl">마일리지 충전</div>
+      <div class="md:flex">
+        <div class="flex text-sm md:text-base items-center pr-1 md:pr-2">
+          <span class="font-bold text-base md:text-xl pr-1 md:pr-2"
+            >띠용떄용</span
+          >님의 사용가능한 마일리지는
+        </div>
+        <div class="flex text-sm md:text-base items-center">
+          <span class="font-bold text-base md:text-xl pr-1 md:pr-2">20,000</span
+          >원 입니다.
+        </div>
       </div>
-      <div class="flex text-sm md:text-base items-center">
-        <span class="font-bold text-base md:text-xl pr-1 md:pr-2">20,000</span
-        >원 입니다.
-      </div>
-    </div>
-    <div>
-      <div>1 충전 수단 선택</div>
-      <div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-5">
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/creditcardwithblue_black.svg"
-              alt=""
-              class="w-12 pb-1"
-            />신용카드
-          </div>
+      <div>
+        <div class="text-sm md:text-base font-bold py-3 md:pt-8 md:pb-5">
+          <span class="bg-everly-light_blue px-1 rounded font-normal mr-1"
+            >1</span
+          >
+          충전 수단 선택
         </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/virtualAccontwithblue_black.svg"
-              alt=""
-              class="w-12 pb-1"
-            />가상계좌
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/realtimeaccountwithblue_black.svg"
-              alt=""
-              class="w-12 pb-1"
-            />신용카드
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/phone_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />실시간 계좌이체
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/cellphone_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />휴대폰
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/culture_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />문화상품권
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/naver_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />네이버페이
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/kakaopay_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />카카오페이
-          </div>
-        </div>
-
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/payco_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />페이코페이
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/pinpay_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />핀페이
-          </div>
-        </div>
-        <div
-          class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center"
-        >
-          <div class="p-2 md:p-4 align-center">
-            <img
-              src="@/assets/icon/tmoney_grey.svg"
-              alt=""
-              class="w-12 pb-1"
-            />티머니
+        <!-- 결제 수단들 -->
+        <div>
+          <div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-5">
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`신용카드`"
+              :active="true"
+              :img-url="`/assets/icon/creditcardwithblue_black.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`가상계좌`"
+              :active="true"
+              :img-url="`/assets/icon/virtualAccontwithblue_black.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`계좌이체`"
+              :active="true"
+              :img-url="`/assets/icon/accountRealtimewithblue_black.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`휴대폰`"
+              :active="false"
+              :img-url="`/assets/icon/cellphone_grey.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`문화상품권`"
+              :active="false"
+              :img-url="`/assets/icon/culture_grey.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`네이버페이`"
+              :active="false"
+              :img-url="`/assets/icon/naver_grey.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`카카오페이`"
+              :active="false"
+              :img-url="`/assets/icon/kakaopay_grey.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`페이코페이`"
+              :active="false"
+              :img-url="`/assets/icon/payco_grey.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`엘페이`"
+              :active="false"
+              :img-url="`/assets/icon/lpay_grey.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`핀페이`"
+              :active="false"
+              :img-url="`/assets/icon/pinpay_grey.svg`"
+            />
+            <PaymentMethodVue
+              @get-value="setpaymentMethod($event)"
+              :paymentMethod="paymentMethod"
+              :title="`티머니`"
+              :active="false"
+              :img-url="`/assets/icon/tmoney_grey.svg`"
+            />
           </div>
         </div>
       </div>
     </div>
+    <div v-if="paymentMethod != ''">
+      <hr
+        class="border-everly-mid_grey md:border-[#707070] my-4 md:my-8 md:ml-8"
+      />
+      <div class="px-5 md:px-0 md:pl-8 text-sm md:text-base">
+        <div class="py-3">신용카드 충전</div>
+        <div class="space-y-2">
+          <div class="flex">
+            <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
+              마일리지 종류
+            </div>
+            <div class="flex-1">구매전용 마일리지(출금불가)</div>
+          </div>
+          <div class="flex">
+            <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
+              충전 수수료
+            </div>
+            <div class="flex-1">5%</div>
+          </div>
+          <div class="flex">
+            <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
+              충전 한도
+            </div>
+            <div
+              class="px-4 md:hidden text-xs border-everly-mid_grey border flex items-center"
+              @click="setModal(true)"
+            >
+              자세히보기
+            </div>
+            <div class="flex-1 hidden md:block">
+              각 PG사에 따라 한도금액이 다르게 적용됩니다. 한도정책은 카드사
+              사정에 따라 언제든지 변경될 수 있습니다
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="border-everly-mid_grey my-4 md:my-8 md:ml-8" />
+      <div>
+        <div class="px-5 md:py-0 md:px-0 md:pl-8">
+          <div>
+            <div class="text-sm md:text-base font-bold py-3 md:pb-5">
+              <span class="bg-everly-light_blue px-1 rounded font-normal mr-1"
+                >2</span
+              >
+              충전 금액 선택
+            </div>
+            <div
+              class="grid grid-cols-3 md:flex gap-2 text-sm md:text-base text-everly-dark_grey"
+            >
+              <div
+                v-for="(item, index) in amountlist"
+                :key="index"
+                class="md:mr-4"
+                @click="getamountInput('')"
+              >
+                <label>
+                  <input
+                    class="radioinput"
+                    type="radio"
+                    name="radio"
+                    :id="item.toString()"
+                    v-model="amount"
+                    :value="item.toString()"
+                  />
+                  <span /> </label
+                >{{ item.toLocaleString() }}
+              </div>
+            </div>
+            <div class="pt-2 text-sm md:text-base flex items-center">
+              <label class="align-middle">
+                <input
+                  class="radioinput"
+                  type="radio"
+                  name="radio"
+                  :id="`직접입력`"
+                  v-model="amount"
+                  :value="`직접입력`"
+                />
+                <span />
+              </label>
+              <div class="relative">
+                <input
+                  type="text"
+                  placeholder="직접입력하기"
+                  v-model="amountInput"
+                  @input="(event:Event) =>{getamountInput((event.target as HTMLInputElement).value)}"
+                  class="text-right pr-8 py-1 border rounded-lg text-sm md:text-base md:w-[28.125rem]"
+                  :disabled="amount != `직접입력`"
+                />
+                <div
+                  class="absolute right-3 top-[0.3rem]"
+                  v-if="amount == `직접입력`"
+                >
+                  원
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="border-everly-mid_grey my-4 md:my-8 md:ml-8 hidden md:block" />
+      <div class="px-5 pt-4 md:pt-0 md:px-0 md:pl-8 md:flex md:justify-center">
+        <div
+          class="bg-white text-sm md:text-base md:w-[28.813rem] md:border rounded-lg py-3 md:p-3 relative"
+        >
+          충전 예정 마일리지
+          <div
+            class="absolute top-[0.7rem] md:top-[0.8rem] right-5 text-everly-main"
+          >
+            {{ finalamount.toLocaleString() }} 원
+          </div>
+        </div>
+      </div>
+      <div class="p-5 md:w-full md:px-0 md:pl-8 md:pt-20">
+        <div
+          class="md:px-72 md:flex-row-reverse md:flex gap-2 font-bold text-sm md:text-base"
+        >
+          <div
+            class="flex-1 rounded-lg border text-center py-2 md:py-3 text-everly-white"
+            :class="chargeButtonClass"
+          >
+            충전하기
+          </div>
+          <div
+            class="mt-3 md:mt-0 flex-1 rounded-lg border text-center py-2 md:py-3 text-everly-main bg-everly-light_blue"
+          >
+            취소
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-else class="h-80"></div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, watch } from "vue";
+import PaymentMethodVue from "../components/paymentMethod.vue";
+import Modal from "../components/chargeLimitInfoModal.vue";
+import InputwithClose from "@/components/common/inputwithClose.vue";
 
-<style scoped></style>
+const paymentMethod = ref("");
+
+function setpaymentMethod(string: string) {
+  if (string != "") paymentMethod.value = string;
+}
+
+const showModal = ref(false);
+function setModal(value: boolean) {
+  showModal.value = value;
+}
+//가격 리스트
+const amountlist = [
+  10000, 30000, 50000, 100000, 150000, 200000, 250000, 300000, 350000,
+];
+
+// 가격 정보
+const amount = ref("");
+//직접입력
+const amountInput = ref("");
+function getamountInput(input: string) {
+  if (amount.value == "직접입력") amountInput.value = input;
+  else amountInput.value = "";
+}
+
+// 최종가겨
+const finalamount = ref(0);
+watch([amount, amountInput], () => {
+  if (amountInput.value != "") finalamount.value = parseInt(amountInput.value);
+  else finalamount.value = parseInt(amount.value);
+});
+
+// 충전하기 번튼 활서오하
+const chargeButtonClass = ref("bg-everly-mid_grey");
+watch(finalamount, () => {
+  if (finalamount.value > 0) chargeButtonClass.value = `bg-everly-main`;
+  else chargeButtonClass.value = `bg-everly-mid_grey`;
+});
+</script>
+
+<style scoped>
+input::placeholder {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.radioinput {
+  display: none;
+}
+
+label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+label span {
+  position: relative;
+  line-height: 22px;
+}
+
+label span:before,
+label span:after {
+  content: "";
+}
+
+label span:before {
+  border: 1px solid #c7c7c7;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 5px;
+  margin-bottom: 2.5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+label span:after {
+  background-image: url(@/assets/icon/checked_blue.svg);
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0px;
+  background-size: cover;
+  opacity: 0;
+  vertical-align: middle;
+}
+@media (max-width: 768px) {
+  label span:before {
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+  }
+}
+@media (max-width: 768px) {
+  label span:after {
+    top: 2px;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+  }
+}
+
+label input:checked + span:after {
+  opacity: 1;
+}
+</style>

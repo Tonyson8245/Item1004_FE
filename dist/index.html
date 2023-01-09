@@ -26,12 +26,25 @@
     <!-- 운영 전환 시 "https://mpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=현재일자" 로 변경 -->
     <!-- <script src="https://tmpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=20221219"></script> -->
 
+    <script src="https://api2.dangunpay.co.kr/js/pgAsistant.js"></script>
+
     <title>Item1004</title>
-    <script type="module" crossorigin src="/assets/index.34b0e2c3.js"></script>
-    <link rel="stylesheet" href="/assets/index.825dbe86.css">
+    <script type="module" crossorigin src="/assets/index.88e0af48.js"></script>
+    <link rel="stylesheet" href="/assets/index.6e6d06a7.css">
   </head>
   <body>
     <div id="app"></div>
     
   </body>
 </html>
+<script>
+  // 결제창 return 함수(pay_result_submit 이름 변경 불가능)
+  function pay_result_submit() {
+    //@ts-ignore
+    payResultSubmit();
+  }
+  // 결제창 종료 함수(pay_result_close 이름 변경 불가능)
+  function pay_result_close() {
+    alert("결제를 취소하였습니다.");
+  }
+</script>

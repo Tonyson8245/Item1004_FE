@@ -2,10 +2,10 @@
   <div>
     <!-- 웹 메인 헤더  -->
     <div
-      class="flex cursor-default bg-[#fafafa] inline-block top-0 z-50 border-b hidden md:flex"
+      class="flex cursor-default bg-[#fafafa] inline-block top-0 z-50 hidden md:flex"
     >
-      <div class="flex-1 hidden md:block"></div>
-      <div class="flex-none hidden md:block">
+      <div class="flex-1 hidden md:block border-b"></div>
+      <div class="flex-none hidden md:block border-b">
         <div
           class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4 md:px-0"
         >
@@ -30,7 +30,7 @@
           </div>
         </div>
       </div>
-      <div class="flex-1 hidden md:block"></div>
+      <div class="flex-1 hidden md:block border-b"></div>
     </div>
     <!-- 모바일 메인 헤더 -->
     <div

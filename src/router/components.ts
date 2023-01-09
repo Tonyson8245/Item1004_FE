@@ -24,8 +24,11 @@ import logout from "@/components/user/logout.vue";
 import guide from "@/components/mypage/detail/mileageGuide.vue";
 import userinfo from "@/components/mypage/detail/userInfo.vue";
 import mileageCharge from "@/components/mypage/detail/mileageCharge.vue";
-
+import mileageChargeResult from "@/components/mypage/ChargeResultPage.vue";
+import paytus from "@/components/payment/paytus.vue";
 export default {
+  paytus,
+  mileageChargeResult,
   mileageCharge,
   userinfo,
   guide,
