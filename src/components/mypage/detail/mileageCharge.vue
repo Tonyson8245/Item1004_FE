@@ -23,7 +23,7 @@
         </div>
         <!-- 결제 수단들 -->
         <div>
-          <div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-5">
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-3 md:gap-5">
             <PaymentMethodVue
               @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
@@ -220,16 +220,16 @@
       </div>
       <div class="p-5 md:w-full md:px-0 md:pl-8 md:pt-20">
         <div
-          class="md:px-72 md:flex-row-reverse md:flex gap-2 font-bold text-sm md:text-base"
+          class="md:px-72 sm:flex-row-reverse sm:flex gap-2 font-bold text-sm sm:text-base"
         >
           <div
-            class="flex-1 rounded-lg border text-center py-2 md:py-3 text-everly-white"
+            class="flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-white"
             :class="chargeButtonClass"
           >
             충전하기
           </div>
           <div
-            class="mt-3 md:mt-0 flex-1 rounded-lg border text-center py-2 md:py-3 text-everly-main bg-everly-light_blue"
+            class="mt-3 sm:mt-0 flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-main bg-everly-light_blue"
           >
             취소
           </div>
