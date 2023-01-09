@@ -152,7 +152,7 @@
               충전 금액 선택
             </div>
             <div
-              class="grid grid-cols-3 md:flex gap-2 text-sm md:text-base text-everly-dark_grey"
+              class="grid grid-cols-3 sm:grid-cols-6 md:flex gap-2 text-sm md:text-base text-everly-dark_grey"
             >
               <div
                 v-for="(item, index) in amountlist"
@@ -180,8 +180,8 @@
                   type="radio"
                   name="radio"
                   :id="`직접입력`"
-                  v-model="amount"
                   :value="`직접입력`"
+                  v-model="amount"
                 />
                 <span />
               </label>
@@ -244,7 +244,6 @@
 import { ref, watch } from "vue";
 import PaymentMethodVue from "../components/paymentMethod.vue";
 import Modal from "../components/chargeLimitInfoModal.vue";
-import InputwithClose from "@/components/common/inputwithClose.vue";
 
 const paymentMethod = ref("");
 
@@ -262,22 +261,27 @@ const amountlist = [
 ];
 
 // 가격 정보
-const amount = ref("");
+const amount = ref("0");
 //직접입력
 const amountInput = ref("");
 function getamountInput(input: string) {
-  if (amount.value == "직접입력") amountInput.value = input;
-  else amountInput.value = "";
+  if (amount.value == "직접입력") {
+    if (input != "") {
+      amountInput.value = input;
+    }
+  } else amountInput.value = "";
 }
 
-// 최종가겨
+// 최종가격
 const finalamount = ref(0);
 watch([amount, amountInput], () => {
-  if (amountInput.value != "") finalamount.value = parseInt(amountInput.value);
-  else finalamount.value = parseInt(amount.value);
+  if (amount.value == "직접입력") {
+    if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
+    else finalamount.value = parseInt(amountInput.value);
+  } else finalamount.value = parseInt(amount.value);
 });
 
-// 충전하기 번튼 활서오하
+// 충전하기 번튼 활성하
 const chargeButtonClass = ref("bg-everly-mid_grey");
 watch(finalamount, () => {
   if (finalamount.value > 0) chargeButtonClass.value = `bg-everly-main`;
@@ -326,6 +330,7 @@ label span:after {
   height: 20px;
   position: absolute;
   left: 0px;
+  bottom: 0px;
   background-size: cover;
   opacity: 0;
   vertical-align: middle;

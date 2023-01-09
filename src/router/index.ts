@@ -126,6 +126,7 @@ const router = createRouter({
               component: components.mileageCharge,
               meta: {
                 title: "마일리지 충전",
+                name: `charge`,
                 navbar: false,
               },
             },

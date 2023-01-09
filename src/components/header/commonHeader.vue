@@ -92,7 +92,8 @@ const whiteHeader = computed(() => {
   let name = route.meta.name;
   console.log(name);
 
-  if (title == `결제 완료` || name == "chargeResult") return true;
+  if (title == `결제 완료` || name == "chargeResult" || name == "charge")
+    return true;
   else false;
 });
 </script>

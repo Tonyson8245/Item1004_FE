@@ -103,14 +103,15 @@
 <script setup lang="ts">
 import { usepaymentStore } from "@/store/modules/payment/paymentStore";
 import * as contractcheckDto from "@/domain/payment/contractCheckDto.interface";
+import * as paytus from "./paytusModule";
 import { onMounted, ref } from "vue";
 import axios from "axios";
 import { UUID } from "uuid-generator-ts";
-const uuid = new UUID();
+const uuid = ref(new UUID());
 const paymentStore = usepaymentStore();
 
 ///결제 정보
-const storeordNm = uuid.getDashFreeUUID();
+const storeordNm = uuid.value.getDashFreeUUID();
 const storesellerIdx = 1;
 const storebuyerIdx = 2;
 const storefee = 10;
@@ -125,11 +126,15 @@ const merchantId = ref("");
 
 onMounted(() => {
   //하기값은 실제 결제되는 금액임 (수수료를 제외한 결제금액, 방식, 수수료)
-  startPayment(`card`);
+  // startPayment(`card`);
+  paytus.createform();
 });
 
 //0. 어떤 PG 사로 결제를 진행할지 등 결제 사전 정보를 가져온다.
 function startPayment(paymentMethod: string) {
+  uuid.value = new UUID();
+  console.log(uuid.value);
+
   var payload = new contractcheckDto.contractCheckBodyDto(
     storeprice,
     paymentMethod
@@ -225,7 +230,7 @@ async function goPayment(url: string) {
 function doPaySubmit() {
   // 결제창 호출 함수
   //@ts-ignore
-  SendPay(document.payInit);
+  SendPay(document.payInit1);
 }
 </script>
 
