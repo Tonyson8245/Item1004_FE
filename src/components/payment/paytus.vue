@@ -12,82 +12,7 @@
       <p class="square_tit mt0" style="text-align: left">
         <strong>결제정보</strong>
       </p>
-      <form name="payInit" method="post" :action="actionUrl">
-        <table class="tbl_sty02">
-          <tr>
-            <td>결제수단</td>
-            <td><input type="text" name="payMethod" value="card" /></td>
-          </tr>
-          <tr>
-            <td>결제방법선택</td>
-            <td><input type="text" name="mid" :value="merchantId" /></td>
-          </tr>
-          <tr>
-            <td>상품명</td>
-            <td><input type="text" name="goodsNm" value="PGTEST" /></td>
-          </tr>
-          <tr>
-            <td>주문번호</td>
-            <td><input type="text" name="ordNo" value="123123" /></td>
-          </tr>
-          <tr>
-            <td>결제금액</td>
-            <td>
-              <input
-                type="text"
-                name="goodsAmt"
-                :value="storeproductPrice + storefee - storepoint"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td>구매자명</td>
-            <td><input type="text" name="ordNm" value="PGTEST" /></td>
-          </tr>
-          <tr>
-            <td>구매자연락처</td>
-            <td><input type="text" name="ordTel" value="01000000000" /></td>
-          </tr>
-          <tr>
-            <td>구매자이메일</td>
-            <td><input type="text" name="ordEmail" value="123123@sd.vom" /></td>
-          </tr>
-          <tr>
-            <td>returnUrl</td>
-            <td><input type="text" name="returnUrl" :value="actionUrl" /></td>
-          </tr>
-          <tr>
-            <td>notiUrl</td>
-            <td><input type="text" name="notiUrl" value="" /></td>
-          </tr>
-        </table>
-        <!-- 옵션 -->
-        <input type="hidden" name="userIp" value="127.0.0.1" />
-        <input type="hidden" name="trxCd" value="0" />
 
-        <input type="hidden" name="mbsUsrId" value="user1234" />
-        <input
-          type="hidden"
-          name="mbsReserved"
-          value="MallReserved"
-        /><!-- 상점 예약필드 -->
-
-        <!-- <input type="hidden" name="goodsSplAmt" value="0"> -->
-        <!-- <input type="hidden" name="goodsVat" value="0"> -->
-        <!-- <input type="hidden" name="goodsSvsAmt" value="0"> -->
-
-        <input type="hidden" name="charSet" value="UTF-8" />
-        <input type="hidden" name="appMode" value="1" />
-        <!-- <input type="hidden" name="period" value="별도 제공기간없음"> -->
-
-        <!-- 변경 불가능 -->
-        <input
-          type="hidden"
-          name="ediDate"
-          :value="ediDate"
-        /><!-- 전문 생성일시 -->
-        <input type="hidden" name="encData" :value="encData" /><!-- 해쉬값 -->
-      </form>
       <a
         href="#;"
         id="payBtn"
@@ -103,9 +28,9 @@
 <script setup lang="ts">
 import { usepaymentStore } from "@/store/modules/payment/paymentStore";
 import * as contractcheckDto from "@/domain/payment/contractCheckDto.interface";
-import * as paytus from "./paytusModule";
 import { onMounted, ref } from "vue";
 import axios from "axios";
+import * as paytus from "./paytusModuletest";
 import { UUID } from "uuid-generator-ts";
 const uuid = ref(new UUID());
 const paymentStore = usepaymentStore();
@@ -127,7 +52,6 @@ const merchantId = ref("");
 onMounted(() => {
   //하기값은 실제 결제되는 금액임 (수수료를 제외한 결제금액, 방식, 수수료)
   // startPayment(`card`);
-  paytus.createform();
 });
 
 //0. 어떤 PG 사로 결제를 진행할지 등 결제 사전 정보를 가져온다.
@@ -137,7 +61,8 @@ function startPayment(paymentMethod: string) {
 
   var payload = new contractcheckDto.contractCheckBodyDto(
     storeprice,
-    paymentMethod
+    paymentMethod,
+    "card"
   );
   paymentStore
     .getContractCheck(payload) // 결제 내용 확인
@@ -229,8 +154,10 @@ async function goPayment(url: string) {
 //페이투스 제공 함수
 function doPaySubmit() {
   // 결제창 호출 함수
-  //@ts-ignore
-  SendPay(document.payInit1);
+  // @ts-ignore
+  // SendPay(document.payInit);
+
+  paytus.startPayment("card");
 }
 </script>
 

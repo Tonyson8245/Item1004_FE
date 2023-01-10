@@ -225,6 +225,7 @@
           <div
             class="flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-white"
             :class="chargeButtonClass"
+            @click="charge()"
           >
             충전하기
           </div>
@@ -244,8 +245,9 @@
 import { ref, watch } from "vue";
 import PaymentMethodVue from "../components/paymentMethod.vue";
 import Modal from "../components/chargeLimitInfoModal.vue";
+import { payment } from "@/api/payment-module";
 
-const paymentMethod = ref("");
+const paymentMethod = ref("card");
 
 function setpaymentMethod(string: string) {
   if (string != "") paymentMethod.value = string;
@@ -287,6 +289,15 @@ watch(finalamount, () => {
   if (finalamount.value > 0) chargeButtonClass.value = `bg-everly-main`;
   else chargeButtonClass.value = `bg-everly-mid_grey`;
 });
+
+//충전(결제)
+function charge() {
+  //payment(type: string, payMethod: string, buyerIdx: number, fee: number, productPrice: number, totalPrice: number, point?: number, sellerIdx?: number, postIdx?: number)
+
+  // payment("chargePoint", "card", 1, 10, 100, 110);
+  // payment("contract", "card", 1, 10, 100, 110, 10, 1, 2);
+  payment("onlyPoint", "card", 1, 10, 100, 110, 110, 1, 2);
+}
 </script>
 
 <style scoped>

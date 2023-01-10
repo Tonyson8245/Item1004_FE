@@ -32,21 +32,21 @@
         >
           <div class="md:text-xl text-sm space-y-3 md:space-y-8">
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">충전금액</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">충전금액</div>
               <div class="grow text-right md:text-left space-y-2">
                 <div>{{ chargeAmount.toLocaleString() }} 원</div>
               </div>
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">충전마일리지</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">충전마일리지</div>
               <div class="grow text-right md:text-left space-y-2">
                 <div>{{ chargeMileagAmount.toLocaleString() }} 원</div>
               </div>
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">결제번호</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">결제번호</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div>{{ paymentId }}</div>
@@ -54,7 +54,7 @@
               </div>
             </div>
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">결제상태</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">결제상태</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div>{{ paymentStatus }}</div>
@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">결제방법</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">결제방법</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div>{{ paymentMethod }}</div>
@@ -185,7 +185,7 @@ const productInfo = computed(() => {
 const chargeAmount = ref(50000);
 const chargeMileagAmount = ref(47250);
 const paymentId = ref("A1234-67890");
-const paymentStatus = ref("결제완료");
+const paymentStatus = ref("충전완료");
 const paymentMethod = ref("신용카드");
 const mileagefterCharge = ref(10250);
 const milageWithdrawlable = ref(47250);
