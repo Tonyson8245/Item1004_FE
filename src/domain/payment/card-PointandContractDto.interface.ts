@@ -14,14 +14,14 @@ class payload {
   @IsNumber()
   totalPrice: number;
   @IsNumber()
-  postIdx: number;
+  postIdx?: number;
 
   constructor(
     buyerIdx: number,
     fee: number,
     productPrice: number,
     totalPrice: number,
-    postIdx: number
+    postIdx?: number
   ) {
     this.buyerIdx = buyerIdx;
     this.fee = fee;

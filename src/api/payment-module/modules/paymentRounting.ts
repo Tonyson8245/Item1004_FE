@@ -1,5 +1,6 @@
 import * as contractCheckDto from "@/domain/payment/contractCheckDto.interface";
 import { usepaymentStore } from "@/store/modules/payment/paymentStore";
+import axios from "axios";
 
 //어떤 결제사(PG)으로 어떻게(충전,결제) 작동될지 결정한는 모듈
 async function checkRouting<contractCheckResponseDto>(

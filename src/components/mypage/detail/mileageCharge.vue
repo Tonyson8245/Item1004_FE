@@ -246,6 +246,8 @@ import { ref, watch } from "vue";
 import PaymentMethodVue from "../components/paymentMethod.vue";
 import Modal from "../components/chargeLimitInfoModal.vue";
 import { payment } from "@/api/payment-module";
+import { useRouter } from "vue-router";
+const router = useRouter();
 
 const paymentMethod = ref("card");
 
@@ -291,12 +293,13 @@ watch(finalamount, () => {
 });
 
 //충전(결제)
-function charge() {
-  //payment(type: string, payMethod: string, buyerIdx: number, fee: number, productPrice: number, totalPrice: number, point?: number, sellerIdx?: number, postIdx?: number)
+// const fee = ref(0.1);
+// const
 
-  // payment("chargePoint", "card", 1, 10, 100, 110);
-  // payment("contract", "card", 1, 10, 100, 110, 10, 1, 2);
-  payment("onlyPoint", "card", 1, 10, 100, 110, 110, 1, 2);
+function charge() {
+  // payment(router, "contract", "card", 1, 10, 100, 110, 0, 1, 2); // 충전 (신용카드)
+  // payment(router,"chargePoint", "card", 1, 10, 100, 110); // 충전 (신용카드)
+  payment(router, "onlyPoint", "card", 1, 10, 100, 110, 110, 1, 2); // 마일리지만 사용
 }
 </script>
 

@@ -2,7 +2,7 @@
   <div
     class="w-full flex z-10 absolute border-everly-light_blue md:border-none"
     :class="classBgcolor"
-    v-if="!(whiteHeader && minSize.value)"
+    v-if="!(whiteHeader && minSize.value) || whiteHeader"
   >
     <div class="flex-1"></div>
     <div
@@ -72,7 +72,8 @@ function backPress() {
 //마이페이지의 경우, 웹은 "마이페이지" 고정 / 모바일은 상태에 따라 바뀜
 const title = computed(() => {
   let meta = route.meta.title;
-  if (headermyPageTheme) {
+
+  if (headermyPageTheme.value) {
     if (minSize.value.value) return "마이페이지";
     else return meta;
   } else return meta;
@@ -81,8 +82,14 @@ const title = computed(() => {
 //마이페이지 전용 헤더 타입
 const headermyPageTheme = computed(() => {
   let title = route.meta.title;
-  if (title == "마일리지" || title == "판매/구매내역" || title == "회원정보")
-    return false;
+
+  if (
+    title == "마일리지" ||
+    title == "판매/구매내역" ||
+    title == "회원정보" ||
+    title == "마일리지 충전"
+  )
+    return true;
   else false;
 });
 
@@ -90,7 +97,6 @@ const headermyPageTheme = computed(() => {
 const whiteHeader = computed(() => {
   let title = route.meta.title;
   let name = route.meta.name;
-  console.log(name);
 
   if (title == `결제 완료` || name == "chargeResult" || name == "charge")
     return true;

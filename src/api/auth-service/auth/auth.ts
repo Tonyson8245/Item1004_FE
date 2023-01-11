@@ -1,5 +1,5 @@
 import http from "@/api/auth-service/authHTTPClient";
-import type { CreateTokenResponseDto } from "@/domain/auth/CreateTokenResponseDto";
+import type { CreateTokenResponseDto } from "@/domain/auth/DTO/CreateTokenResponseDto";
 
 export async function getToken<T>(
   id: string,
