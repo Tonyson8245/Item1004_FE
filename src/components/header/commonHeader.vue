@@ -2,7 +2,7 @@
   <div
     class="w-full flex z-10 absolute border-everly-light_blue md:border-none"
     :class="classBgcolor"
-    v-if="!(whiteHeader && minSize.value) || whiteHeader"
+    v-if="!(whiteHeader && minSize.value)"
   >
     <div class="flex-1"></div>
     <div
@@ -46,23 +46,45 @@ const minSize = computed(() => {
 // 들어가는 클래스
 const classBgcolor = ref(``);
 //색상 정보
-const bgColoType = (type: boolean) => {
-  return type
+const bgColoType = (type: string) => {
+  return type == "blue"
     ? `bg-everly-main text-everly-white`
     : `bg-everly-white text-everly-black border-b`;
 };
 
 onMounted(() => {
   //초기 색상 잡아주기
-  if (whiteHeader) {
-    classBgcolor.value = bgColoType(minSize.value.value);
-  } else classBgcolor.value = bgColoType(true);
+  //모바일
+  if (!minSize.value.value) {
+    //마이페이지의 경우
+    if (whiteHeader.value) classBgcolor.value = bgColoType("white");
+    //그외의 페이지의 경우
+    else classBgcolor.value = bgColoType("blue");
+  }
+  //웹
+  else {
+    //무조건 파랑색
+    classBgcolor.value = bgColoType("blue");
+  }
+
+  // if (whiteHeader) {
+  //   classBgcolor.value = bgColoType(minSize.value.value);
+  // } else classBgcolor.value = bgColoType(false);
 });
+
 //반응형 배경
 watch(minSize.value, (minSize) => {
-  if (whiteHeader) {
-    classBgcolor.value = bgColoType(minSize);
-  } else classBgcolor.value = bgColoType(true);
+  if (!minSize) {
+    //마이페이지의 경우
+    if (whiteHeader.value) classBgcolor.value = bgColoType("white");
+    //그외의 페이지의 경우
+    else classBgcolor.value = bgColoType("blue");
+  }
+  //웹
+  else {
+    //무조건 파랑색
+    classBgcolor.value = bgColoType("blue");
+  }
 });
 
 function backPress() {
@@ -82,7 +104,6 @@ const title = computed(() => {
 //마이페이지 전용 헤더 타입
 const headermyPageTheme = computed(() => {
   let title = route.meta.title;
-
   if (
     title == "마일리지" ||
     title == "판매/구매내역" ||
@@ -90,7 +111,7 @@ const headermyPageTheme = computed(() => {
     title == "마일리지 충전"
   )
     return true;
-  else false;
+  else return false;
 });
 
 //하얀 헤더만들기
@@ -98,9 +119,8 @@ const whiteHeader = computed(() => {
   let title = route.meta.title;
   let name = route.meta.name;
 
-  if (title == `결제 완료` || name == "chargeResult" || name == "charge")
-    return true;
-  else false;
+  if (title == `결제 완료` || name == "chargeResult") return true;
+  else return false;
 });
 </script>
 

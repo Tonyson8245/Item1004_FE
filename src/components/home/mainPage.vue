@@ -149,7 +149,7 @@
     <!-- 맨위로 모바일-->
 
     <!-- 모바일 글작성 -->
-    <div class="block md:hidden bottom-20 w-full fixed z-20">
+    <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
       <div class="flex justify-end">
         <img
           src="@/assets/icon/button_write_mobile.svg"

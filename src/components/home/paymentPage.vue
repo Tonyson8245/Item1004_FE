@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-12 my-20 md:my-12 flex">
+  <div class="md:mb-12 flex">
     <div class="grow hidden md:block"></div>
     <div class="w-full md:w-[73.750rem] mt-5 md:mt-11">
       <div class="p-3 md:p-0">

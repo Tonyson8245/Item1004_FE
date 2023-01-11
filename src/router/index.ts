@@ -156,30 +156,37 @@ const router = createRouter({
         {
           path: "login",
           component: components.loginComponent,
+          meta: { title: "로그인" },
         },
         {
           path: "findID/confirm",
           component: components.findIDcomponent,
+          meta: { title: "아이디 찾기" },
         },
         {
           path: "findID/result",
           component: components.findIDResultComponent,
+          meta: { title: "아이디 찾기" },
         },
         {
           path: "changePassword/confirm",
           component: components.passwordConfirm,
+          meta: { title: "비밀번호 재설정" },
         },
         {
           path: "changePassword/set",
           component: components.passwordSet,
+          meta: { title: "비밀번호 재설정" },
         },
         {
           path: "signUp/setinfo",
           component: components.infoSet,
+          meta: { title: "회원가입" },
         },
         {
           path: "signUp/confirm",
           component: components.signUpComfirm,
+          meta: { title: "본인인증" },
         },
       ],
     },
@@ -242,8 +249,11 @@ router.beforeEach((to) => {
       commonStore.setheaderTitle("비밀번호 재설정");
       commonStore.setcsShowLink(true);
       break;
-    case "/account/signup/confirm":
-    case "/account/signup/setInfo":
+    case "/account/signUp/confirm":
+      commonStore.setheaderTitle("본인인증");
+      commonStore.setcsShowLink(false);
+      break;
+    case "/account/signUp/setinfo":
       commonStore.setheaderTitle("회원가입");
       commonStore.setcsShowLink(false);
       break;

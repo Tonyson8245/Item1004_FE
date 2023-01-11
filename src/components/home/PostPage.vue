@@ -401,7 +401,7 @@
     </transition>
     <transition name="slide-down" move="out-in">
       <div
-        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[4rem]"
+        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[3.9rem]"
         v-if="showBuy"
       >
         <div class="w-full flex justify-center pb-4 items-center">
@@ -603,7 +603,7 @@ function getRandomInt(min: number, max: number) {
 }
 
 .slide-down-leave-active {
-  transition: all 0.3s ease-in;
+  transition: all 0s ease-in;
 }
 
 .slide-down-enter-from,
