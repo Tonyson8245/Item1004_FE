@@ -17,8 +17,8 @@ module.exports = {
         black: "#000000",
         bright_grey: "#f0f0f0",
         wbg_grey: "#fafafa",
-        red: "#d5152c"
-       
+        red: "#d5152c",
+        buy: "b20f47"
       }
 
     }
