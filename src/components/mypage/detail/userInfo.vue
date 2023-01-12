@@ -1,4 +1,9 @@
 <template>
+  <ModalMypage
+    :propsShowModal="showModal"
+    :propsType="'123'"
+    @update:propsShowModal="setShowModal(false)"
+  />
   <div class="py-5 md:py-0 md:pl-8">
     <div class="hidden md:block text-xl font-bold pb-8">
       <div class="pb-8">회원 정보수정</div>
@@ -163,6 +168,7 @@
         </div>
         <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
+          @click="setShowModal(true)"
         >
           {{ buttonContent(storeverifiedBankAccount) }}
         </div>
@@ -180,14 +186,15 @@
 
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { useClipboard } from "@vueuse/core";
+import { useClipboard, useToggle } from "@vueuse/core";
 import { useauthStore } from "@/store/modules/auth/authStore";
 import { useRouter } from "vue-router";
+import ModalMypage from "@/components/mypage/components/modalMypage.vue";
 
 const { copy } = useClipboard({});
 
 const storeverifiedEmail = ref(false);
-const storeverifiedBankAccount = ref(true);
+const storeverifiedBankAccount = ref(false);
 
 const contentEmail = computed(() => {
   if (!storeverifiedEmail.value) return `이메일 인증을 해주세요.`;
@@ -211,6 +218,12 @@ function logout() {
   localStorage.removeItem("user");
   authstore.deleteToken();
   router.push("/logout");
+}
+
+//모달 관리
+const showModal = ref(false);
+function setShowModal(status: boolean) {
+  showModal.value = status;
 }
 </script>
 

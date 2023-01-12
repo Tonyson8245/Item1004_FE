@@ -4,3 +4,4 @@ export * from "./DTO/SmsDto";
 export * from "./DTO/TokenDto";
 export * from "./DTO/TokenSetResponseDto";
 export * from "./DTO/niceEncrypotionDto";
+export * from "./DTO/PutBankAccountDto";
