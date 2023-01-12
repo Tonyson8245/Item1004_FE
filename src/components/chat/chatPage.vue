@@ -24,7 +24,7 @@
                     </div>
                                      
                     <!-- 채널 목록 카드 -->
-                    <channels/>
+                    <channels></channels>
                     
 
                 </div>                
