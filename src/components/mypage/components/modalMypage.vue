@@ -7,7 +7,7 @@
       <div class="relative w-auto my-6 mx-auto max-w-sm">
         <!--content-->
         <div
-          class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
+          class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none sm:w-[22.5rem] md:[27.5rem]"
         >
           123132
         </div>
