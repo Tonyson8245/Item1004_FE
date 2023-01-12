@@ -19,7 +19,11 @@
           </div>
           <div class="hidden md:block">
             <div class="flex space-x-4 items-center">
-              <img src="@/assets/icon/chat_mid-grey.svg" alt="" />
+              <img 
+                src="@/assets/icon/chat_mid-grey.svg" 
+                alt=""
+                @click="moveLink('/chat')"
+              />
               <img src="@/assets/icon/notify_mid-grey.svg" alt="" />
               <img
                 src="@/assets/icon/profile_mid-grey.svg"
