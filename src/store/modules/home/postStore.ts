@@ -7,6 +7,7 @@ export const usePostStore = defineStore("postStore", {
     storeShowManagePost: false,
 
     storePostTitle: "",
+    storePostIdx: 0,
     storeUnitValue: 0, // 물품 단위
     storeMinValue: 0, // 물품 단위
     storeMaxValue: 0, // 물품 단위
@@ -28,6 +29,7 @@ export const usePostStore = defineStore("postStore", {
       var idxInt = parseInt(idx);
       var data = dummyPost[idxInt - 1];
 
+      this.storePostIdx = data.postidx;
       this.storeShowBuy = data.ShowBuy;
       this.storeShowManagePost = data.ShowManagePost;
 

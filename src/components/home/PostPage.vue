@@ -149,7 +149,7 @@
             </div>
             <div
               class="mt-12 w-full text-center bg-everly-main text-everly-white py-3 rounded-lg"
-              @click="router.push('/payment')"
+              @click="goPaymentPage()"
             >
               구매하기
             </div>
@@ -473,6 +473,7 @@ const router = useRouter();
 const route = useRoute();
 
 const {
+  storePostIdx,
   storeShowBuy,
   storePostTitle,
   storeUnitValue,
@@ -499,10 +500,6 @@ function updateQty(event: number) {
 onMounted(() => {
   var idx = route.query.postId;
   if (idx?.toString() != null) {
-    if (parseInt(idx.toString()) >= 3) {
-      router.push("/");
-      return;
-    }
     postStore.setStorePostData(idx.toString());
   } else router.push("/");
 });
@@ -534,31 +531,6 @@ const MaxQty = computed(() => {
   return Math.floor(storeMaxValue.value / storeUnitValue.value);
 });
 
-//구매하기쪽으로 데이터 보내기
-// 생명주기, 들어가고 나갈때 초기화
-onUnmounted(() => {
-  var title = storePostTitle.value;
-  var unit = storeUnitValue.value;
-  var unitName = storeUnitName.value;
-  var pricePerUnit = storePricePerUnit.value;
-  var orderQty = qty.value;
-
-  var GameName = storeGameName.value;
-  var ServerName = storeServerName.value;
-  var Category = storeCategory.value;
-
-  paymentStore.setPostData(
-    title,
-    unit,
-    unitName,
-    pricePerUnit,
-    orderQty,
-    GameName,
-    ServerName,
-    Category
-  );
-});
-
 //  글 삭제 관련 로직
 const deleteStatus = ref("delete");
 const showModal = ref(false);
@@ -582,6 +554,33 @@ function getRandomInt(min: number, max: number) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+}
+
+//payment page로 보내기
+function goPaymentPage() {
+  var idx = storePostIdx.value;
+  var title = storePostTitle.value;
+  var unit = storeUnitValue.value;
+  var unitName = storeUnitName.value;
+  var pricePerUnit = storePricePerUnit.value;
+  var orderQty = qty.value;
+
+  var GameName = storeGameName.value;
+  var ServerName = storeServerName.value;
+  var Category = storeCategory.value;
+
+  paymentStore.setPostData(
+    idx,
+    title,
+    unit,
+    unitName,
+    pricePerUnit,
+    orderQty,
+    GameName,
+    ServerName,
+    Category
+  );
+  router.push("/payment");
 }
 </script>
 

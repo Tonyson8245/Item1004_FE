@@ -1,6 +1,7 @@
 import axios from "axios";
 import type * as cardDto from "@/domain/payment/card-PointandContractDto.interface";
 import { UUID } from "uuid-generator-ts";
+import * as getFormData from "./getFormData";
 //ip 얻기
 async function getIp() {
   var result;
@@ -121,26 +122,47 @@ function createform() {
 }
 //input 내용 넣기
 async function setform(
-  ordNm: string,
+  ordNo: string,
   actionUrl: string,
   merchantId: string,
   payPrice: string,
   ediDate: string,
   encData: string
 ) {
+  //서버로 보낼 폼 만드는 곳
   var form = (<any>(
     document.getElementsByName("payInitTest").item(0)
   )) as HTMLFormElement;
-
   form.setAttribute("action", actionUrl);
 
+  //추가로 넣을 데이터
   var ip = "";
-
+  var name = "";
+  var phonenum = "";
+  var postTitle = "";
   //아이피 가져오기
   await getIp().then((res) => {
     //@ts-ignore
     if (res != undefined) ip = res.ip;
   });
+
+  //유저 정보 가져오기
+  await getFormData
+    .getuseinfo()
+    .then((res) => {
+      if (res?.result != null) {
+        name = res?.result.name;
+        phonenum = res?.result.phone;
+      }
+    })
+    .catch((err) => {
+      console.log("유저 정보를 불러오지 못했습니다.");
+      return;
+    });
+
+  console.log(name);
+
+  postTitle = getFormData.getPostdata().postTitle;
 
   var inputPaymethod = <any>document.getElementsByName("payMethod").item(0); //결제 수단
   var inputMid = <any>document.getElementsByName("mid").item(0); //결제 방법 선택
@@ -163,16 +185,14 @@ async function setform(
 
   //set
 
-  console.log(ordNm);
-
   inputPaymethod.setAttribute("value", "card");
   inputMid.setAttribute("value", merchantId);
-  inputGoodsNm.setAttribute("value", "PGTEST");
-  inputOrdNo.setAttribute("value", ordNm);
+  inputGoodsNm.setAttribute("value", postTitle);
+  inputOrdNo.setAttribute("value", ordNo);
   inputGoodsAmt.setAttribute("value", payPrice);
-  inputOrdNm.setAttribute("value", "PGTEST");
-  inputOrdTel.setAttribute("value", "01000000000");
-  inputOrdEmail.setAttribute("value", "123123@sd.vom");
+  inputOrdNm.setAttribute("value", name);
+  inputOrdTel.setAttribute("value", phonenum);
+  inputOrdEmail.setAttribute("value", "");
   inputReturnUrl.setAttribute(
     "value",
     "https://www.item1004.co.kr/mypage/mileage/charge/result"

@@ -169,7 +169,10 @@
       </div>
     </div>
     <hr class="border-everly-light_grey my-4 md:my-8" />
-    <div class="px-5 pt-1 block md:hidden text-everly-dark_grey font-bold">
+    <div
+      class="px-5 pt-1 block md:hidden text-everly-dark_grey font-bold"
+      @click="logout()"
+    >
       로그아웃
     </div>
   </div>
@@ -178,6 +181,8 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { useClipboard } from "@vueuse/core";
+import { useauthStore } from "@/store/modules/auth/authStore";
+import { useRouter } from "vue-router";
 
 const { copy } = useClipboard({});
 
@@ -197,6 +202,16 @@ const buttonContent = (status: boolean) => {
   if (status) return `수정`;
   else return `등록`;
 };
+
+const router = useRouter();
+const authstore = useauthStore();
+function logout() {
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("user");
+  authstore.deleteToken();
+  router.push("/logout");
+}
 </script>
 
 <style scoped></style>

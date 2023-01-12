@@ -214,7 +214,7 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
   window.scrollTo({ top: 0, behavior: "auto" });
   const localData = localStorage.getItem("user");
   const userNickname =

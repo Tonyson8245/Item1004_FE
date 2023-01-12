@@ -1,5 +1,5 @@
 <template>
-  <div class="md:mb-12 flex">
+  <div class="mb-20 md:my-12 flex">
     <div class="grow hidden md:block"></div>
     <div class="w-full md:w-[73.750rem] mt-5 md:mt-11">
       <div class="p-3 md:p-0">
@@ -80,11 +80,14 @@
             class="border-everly-light_grey border-[3px] md:border-[#c7c7c7] md:border my-5 md:my-8"
           />
           <div class="px-3 md:px-0">
-            <div class="text-sm md:text-xl font-bold">쿠폰 / 마일리지</div>
+            <!-- TODO 쿠폰 들어갈때 추가하기 -->
+            <!-- <div class="text-sm md:text-xl font-bold">쿠폰 / 마일리지</div> -->
+            <div class="text-sm md:text-xl font-bold">마일리지 사용</div>
             <div
               class="text-sm md:text-base mt-5 md:mt-[1.875rem] space-y-3 md:space-y-8"
             >
-              <div class="md:flex items-center">
+              <!-- TODO 쿠폰 들어갈때 추가하기 -->
+              <!-- <div class="md:flex items-center">
                 <div class="w-[8rem] font-bold">쿠폰</div>
                 <div class="mt-[0.625rem] md:mt-0 space-x-2 grow flex">
                   <dropdownVue
@@ -99,9 +102,10 @@
                     <div>쿠폰등록</div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="md:flex mt-5 md:mt-8">
-                <div class="w-[8rem] font-bold md:pt-3">마일리지</div>
+                <!-- TODO 쿠폰 들어갈 때 추가하기 -->
+                <!-- <div class="w-[8rem] font-bold md:pt-3">마일리지</div> -->
                 <div class="grow">
                   <div class="flex">
                     <div class="flex grow justify-between items-center pr-4">
@@ -244,24 +248,28 @@
                   {{ storeProductPrice.toLocaleString() }} 원
                 </div>
               </div>
-              <div class="flex justify-between items-center">
+              <!-- TODO 쿠폰 들어갈떄 추가 -->
+              <!-- <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">쿠폰사용</div>
                 <div class="font-bold">
                   {{ discountamount(storeDiscountCoupon) }} 원
                 </div>
-              </div>
+              </div> -->
               <div class="flex justify-between items-center">
                 <div class="w-[7.5rem]">마일리지 사용</div>
                 <div class="font-bold">
                   {{ discountamount(storeDiscountMileage) }} 원
                 </div>
               </div>
-              <div class="flex justify-between items-center">
+              <div class="flex justify-between items-top">
                 <div class="w-[7.5rem] text-base md:text-xl font-bold">
                   최종 결제금액
                 </div>
-                <div class="text-everly-main font-bold text-lg md:text-2xl">
-                  {{ storeFinalPrice.toLocaleString() }} 원
+                <div class="text-right">
+                  <div class="text-everly-main font-bold text-lg md:text-2xl">
+                    {{ storeFinalPrice.toLocaleString() }} 원
+                  </div>
+                  <div class="text-sm text-everly-dark_grey">(수수료 포함)</div>
                 </div>
               </div>
               <div>
@@ -271,22 +279,8 @@
               <div class="space-y-2 md:space-y-1">
                 <div
                   class="flex text-xs md:text-base cursor-pointer"
-                  @click="toggleStoreTermsAll()"
-                  v-if="storeTermsAll"
-                >
-                  <img
-                    src="@/assets/icon/check_circle_blue.svg"
-                    alt=""
-                    class="w-3 md:w-4 mr-2"
-                  />
-                  <div>
-                    주문 내용을 확인했으며, 아래 내용에 모두 동의합니다.
-                  </div>
-                </div>
-                <div
-                  class="flex text-xs md:text-base cursor-pointer"
-                  @click="toggleStoreTermsAll()"
-                  v-else
+                  @click="toggleStoreTerms()"
+                  v-if="!storeTerms"
                 >
                   <img
                     src="@/assets/icon/check_circle.svg"
@@ -298,6 +292,20 @@
                   </div>
                 </div>
                 <div
+                  class="flex text-xs md:text-base cursor-pointer"
+                  @click="toggleStoreTerms()"
+                  v-else
+                >
+                  <img
+                    src="@/assets/icon/check_circle_blue_full.svg"
+                    alt=""
+                    class="w-3 md:w-4 mr-2"
+                  />
+                  <div>
+                    주문 내용을 확인했으며, 아래 내용에 모두 동의합니다.
+                  </div>
+                </div>
+                <!-- <div
                   class="flex text-xs md:text-sm cursor-pointer"
                   @click="toggleterms(`use`)"
                   v-if="storeTerms[0]"
@@ -344,11 +352,12 @@
                     class="w-3 md:w-4 mr-2"
                   />
                   <div>(필수) 개인정보 제 3자 제공 동의</div>
-                </div>
+                </div> -->
               </div>
               <div
-                class="w-full rounded-lg text-everly-white bg-everly-mid_grey font-bold py-3 text-center hidden md:block cursor-pointer"
-                @click="goPay()"
+                class="w-full rounded-lg text-everly-white bg-everly-mid_grey font-bold py-3 text-center hidden md:block"
+                @click="goPayment()"
+                :class="paymentButtonClass"
               >
                 결제하기
               </div>
@@ -364,24 +373,65 @@
 <script setup lang="ts">
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { storeToRefs } from "pinia";
-import dropdownVue from "../common/dropdown.vue";
 import commonFunction from "@/common";
 import { watch, onMounted, computed, ref, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
-import { useMediaQuery } from "@vueuse/core";
-import type smartroVue from "../payment/smartro.vue";
+import { payment } from "@/api/payment-module";
+import type { user } from "@/domain/user/user.interface";
 
 //결제 클릭
-const emit = defineEmits([`goPay`]);
-function goPay() {
-  emit("goPay");
+// 스마트로 방식
+// const emit = defineEmits([`goPay`]);
+// function goPay() {
+//   emit("goPay");
+// }
+// 신규 결제 모듈
+function goPayment() {
+  //포인트로만 결제 할 떄,
+  if (!storeTerms.value) return;
+
+  const localData = localStorage.getItem("user");
+  if (localData != null) {
+    const userIdx = (JSON.parse(localData) as user).idx;
+    // TODO 쿠폰 들어 갈때 수정 필요
+    if (storeDiscountMileage.value == storeProductPrice.value) {
+      payment(
+        router,
+        "onlyPoint", // 포인트로만 결제
+        "point", // 결제방식
+        1, // buyerIdx
+        storefeePrice.value, // fee
+        storeProductPrice.value, // productPrice
+        storeProductPrice.value, // totalPrice
+        storeProductPrice.value, // point
+        2, // sellerIdx
+        storePostIdx.value // postIdx
+      );
+    }
+    //포인트 + 일반 결제일 경우
+    else {
+      payment(
+        router,
+        "contract", // 결제
+        "card", // 결제 방식
+        1, // buyerIdx
+        storefeePrice.value, // fee
+        storeProductPrice.value, // productPrice
+        storeFinalPrice.value, // totalPrice
+        storeDiscountMileage.value, // point
+        2, // sellerIdx
+        storePostIdx.value // postIdx
+      );
+    }
+  } else console.log("유저정보가 없습니다.");
 }
 
 // 라우팅
 const router = useRouter();
 const paymentStore = usePaymentStore();
 const {
+  storePostIdx,
   storePostTitle,
   storeMinValue,
   storeUnitName,
@@ -393,37 +443,41 @@ const {
   storeCharaterName,
 
   // 쿠폰/마일리지
-  storeCouponList,
-  storeCouponEffect,
   storeTotalMileage,
   storeDiscountMileage,
 
   //여기서는 클라만 있는 정보
   storePaymentMethod,
   storeProductPrice,
-  storeDiscountCoupon,
   storeFinalPrice,
-  // 동의 내용
-  storeTermsAll,
-  storeTerms,
 
-  storeTermsforUse,
+  // 동의 내용
+  storeTerms,
   storeOrderQty,
-  storeTotalQty,
+
+  //수수료
+  storefeePercent,
+  storefeePrice,
 } = storeToRefs(paymentStore);
 
-const minSize = computed(() => {
-  return useMediaQuery("(min-width: 768px)");
-});
-
+//페이지 들어올때 계산 먼저함
 onMounted(() => {
-  if (storePostTitle.value == "") router.go(-1);
+  var router = useRouter();
+  console.log(storePostTitle.value.length);
+
+  if (storePostTitle.value.length < 1) router.go(-1);
+  paymentStore.setstoreTerms(false);
+  //제품 가격 계산
   paymentStore.mountstoreProductPrice(
     storeOrderQty.value * storePricePerUnit.value
   );
+  //최종 값 계산
   paymentStore.mountstoreFinalPrice(
     storeOrderQty.value * storePricePerUnit.value
   );
+});
+onUnmounted(() => {
+  paymentStore.resetpaymentStore(); // 페이지 벗어나면서 초기화
 });
 
 //전체 갯수
@@ -434,12 +488,8 @@ const TotalQty = computed(() => {
 });
 
 //동의 관련 로직
-function toggleStoreTermsAll() {
-  paymentStore.setstoreTermsAll(!storeTermsAll.value);
-}
-
-function toggleterms(type: string) {
-  paymentStore.setstoreTerms(type);
+function toggleStoreTerms() {
+  paymentStore.setstoreTerms(!storeTerms.value);
 }
 
 //결제 방법 고른것
@@ -454,13 +504,18 @@ const setColorPaymentMethod = (type: string) => {
   else return "";
 };
 
+// TODO 쿠폰 들어갈때 주석 해제
 // 결제 상세 로직
-watch(
-  [storeDiscountMileage, storeCouponEffect],
-  ([newDiscountMileage, newCoupon], [prevA, prevB]) => {
-    paymentStore.setstoreFinalPrice(newCoupon, newDiscountMileage);
-  }
-);
+// watch(
+//   [storeDiscountMileage, storeCouponEffect],
+//   ([newDiscountMileage, newCoupon], [prevA, prevB]) => {
+//     paymentStore.setstoreFinalPrice(newCoupon, newDiscountMileage);
+//   }
+// );
+//결제 상세 로직
+watch(storeDiscountMileage, (newDiscountMileage) => {
+  paymentStore.setstoreFinalPrice("0", newDiscountMileage);
+});
 
 //캐릭터 이름 설정
 function setCharacter(name: string) {
@@ -481,12 +536,13 @@ const discountamount = (amount: number) => {
   return (word += amount.toLocaleString());
 };
 
-//마일리지 사용 최대량
-const useMileage = () => {
-  return storeDiscountMileage > storeProductPrice
-    ? storeProductPrice.toString()
-    : storeDiscountMileage.toString();
-};
+//결제하기 버튼
+const paymentButtonClass = ref("cursor-not-allowed bg-everly-mid_grey");
+watch(storeTerms, () => {
+  if (!storeTerms.value)
+    paymentButtonClass.value = "cursor-not-allowed bg-everly-mid_grey";
+  else paymentButtonClass.value = "cursor-pointer bg-everly-main";
+});
 </script>
 
 <style scoped>

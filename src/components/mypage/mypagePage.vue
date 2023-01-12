@@ -74,14 +74,16 @@
 </template>
 
 <script setup lang="ts">
+import { useauthStore } from "@/store/modules/auth/authStore";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const authstore = useauthStore();
 function logout() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("user");
-
+  authstore.deleteToken();
   router.push("/logout");
 }
 </script>

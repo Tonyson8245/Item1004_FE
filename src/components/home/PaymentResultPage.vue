@@ -153,7 +153,7 @@ import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { numberToKorean } from "@/common";
-import { computed } from "vue";
+import { computed, onUnmounted } from "vue";
 const router = useRouter();
 const paymentStore = usePaymentStore();
 
@@ -196,6 +196,10 @@ const productInfo = computed(() => {
     storeUnitName.value +
     ")"
   );
+});
+
+onUnmounted(() => {
+  paymentStore.resetpaymentStore(); // 페이지 벗어나면서 초기화
 });
 </script>
 

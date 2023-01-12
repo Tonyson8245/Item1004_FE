@@ -90,6 +90,7 @@ async function payment(
         .then((res) => {
           //결제 완료 페이지로 보내기
           // TODO 결제 완료 페이지 보내기 구현 필요
+          alert("포인트로만 결제 성공");
         })
         .catch((err) => {
           console.log(err);

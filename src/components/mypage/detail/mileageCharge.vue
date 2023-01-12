@@ -247,9 +247,13 @@ import PaymentMethodVue from "../components/paymentMethod.vue";
 import Modal from "../components/chargeLimitInfoModal.vue";
 import { payment } from "@/api/payment-module";
 import { useRouter } from "vue-router";
+import { usePaymentStore } from "@/store/modules/home/paymentStore";
+import { storeToRefs } from "pinia";
+import type { user } from "@/domain/user/user.interface";
 const router = useRouter();
 
 const paymentMethod = ref("card");
+const paymentStore = usePaymentStore();
 
 function setpaymentMethod(string: string) {
   if (string != "") paymentMethod.value = string;
@@ -281,8 +285,8 @@ const finalamount = ref(0);
 watch([amount, amountInput], () => {
   if (amount.value == "직접입력") {
     if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
-    else finalamount.value = parseInt(amountInput.value);
-  } else finalamount.value = parseInt(amount.value);
+    else finalamount.value = parseInt(amountInput.value) * 0.95;
+  } else finalamount.value = parseInt(amount.value) * 0.95;
 });
 
 // 충전하기 번튼 활성하
@@ -290,16 +294,36 @@ const chargeButtonClass = ref("bg-everly-mid_grey");
 watch(finalamount, () => {
   if (finalamount.value > 0) chargeButtonClass.value = `bg-everly-main`;
   else chargeButtonClass.value = `bg-everly-mid_grey`;
+
+  paymentStore.chargestoreProductPrice(finalamount.value);
+  paymentStore.chargestoreFinalPrice(finalamount.value);
+  paymentStore.setPostTitle("마일리지충전");
 });
 
 //충전(결제)
 // const fee = ref(0.1);
 // const
+const { storefeePrice, storeFinalPrice, storeProductPrice } =
+  storeToRefs(paymentStore);
 
 function charge() {
-  // payment(router, "contract", "card", 1, 10, 100, 110, 0, 1, 2); // 충전 (신용카드)
-  // payment(router,"chargePoint", "card", 1, 10, 100, 110); // 충전 (신용카드)
-  payment(router, "onlyPoint", "card", 1, 10, 100, 110, 110, 1, 2); // 마일리지만 사용
+  //유저 정보 가져오기
+  const localData = localStorage.getItem("user");
+  if (localData != null) {
+    const userIdx = (JSON.parse(localData) as user).idx;
+
+    // payment(router, "contract", "card", 1, 10, 100, 110, 0, 1, 2); // 거래 (신용카드)
+    payment(
+      router,
+      "chargePoint",
+      "card",
+      userIdx,
+      storefeePrice.value,
+      storeProductPrice.value,
+      storeFinalPrice.value
+    ); // 충전 (신용카드)
+    // payment(router, "onlyPoint", "card", 1, 10, 100, 110, 110, 1, 2); // 마일리지만 사용
+  } else console.log("유저 정보가 없습니다.");
 }
 </script>
 
