@@ -1,6 +1,6 @@
 <template>
   <div class="relative cursor-default" @click="movePost()">
-    <div
+    <!-- <div
       class="absolute w-full h-full bg-white rounded-lg opacity-50 border"
       style="z-index: 1"
     ></div>
@@ -13,7 +13,7 @@
       >
         판매<br />완료
       </div>
-    </div>
+    </div> -->
     <div class="p-3 md:p-5 relative">
       <div>
         <!--카드 헤더 -->

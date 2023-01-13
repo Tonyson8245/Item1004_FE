@@ -19,8 +19,8 @@
           </div>
           <div class="hidden md:block">
             <div class="flex space-x-4 items-center">
-              <img 
-                src="@/assets/icon/chat_mid-grey.svg" 
+              <img
+                src="@/assets/icon/chat_mid-grey.svg"
                 alt=""
                 @click="moveLink('/chat')"
               />

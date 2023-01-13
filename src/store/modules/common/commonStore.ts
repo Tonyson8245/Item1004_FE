@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import dummy_serverSimilar from "../../../assets/dummy/home/filter/serverSimilar";
-import homeApi from "@/api/home-service/index";
+import * as homeApi from "@/api/home-service/index";
 import type { GameDto } from "@/domain/home/gameDto";
 import type { GameServerDto } from "@/domain/home/gameServerDto";
 

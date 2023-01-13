@@ -18,6 +18,16 @@ export const useFilterStore = defineStore("filterStore", {
 
   getters: {
     //서버로 부터 가져오는 로직 나중에 axios 붙힐때 연동할 생각할 것
+    getCategorys: (state) => {
+      var result = "";
+      if (state.storeCategoryCharacter) result += "character,";
+      if (state.storeCategoryGamemoney) result += "gameMoney,";
+      if (state.storeCategoryItem) result += "item,";
+      if (state.storeCategoryEtc) result += "etc,";
+      result = result.slice(0, -1);
+
+      return result;
+    },
   },
   actions: {
     setstoreShowFilter_mobile(status: boolean) {

@@ -10,7 +10,7 @@
         v-show="!storeShowFilter_mobile"
       >
         <div
-          v-for="card in cards"
+          v-for="card in storeProductCard"
           class="border rounded-xl shadow-md md:shadow-none bg-white"
         >
           <ProductCard :card="card" />
@@ -183,7 +183,10 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRouter } from "vue-router";
-import Test from "../common/ChargeModal.vue";
+import { onMounted } from "vue";
+import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
+import { useSearchStore } from "@/store/modules/home/searchStore";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
@@ -195,13 +198,27 @@ function getImageUrl(path: any) {
 }
 
 const router = useRouter();
+
+//////조회 관련
 const filterStore = useFilterStore();
-const { storeShowFilter_mobile } = storeToRefs(filterStore);
-
+const { storeShowFilter_mobile } = storeToRefs(filterStore); //  웹 필터 켜짐 여부
 const mainStore = useMainStore();
-const { storeProductCard, storeinfiniteStatus } = storeToRefs(mainStore);
+const {
+  storeProductCard,
+  storeinfiniteStatus,
+  storeNextPage,
+  storehasnextPage,
+} = storeToRefs(mainStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
+const searchStore = useSearchStore();
+const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
+const commonStore = useCommonStore();
+const { storeGameKeywordIdx, storeServerKeywordIdx } = storeToRefs(commonStore);
 
-const cards = storeProductCard;
+//처음 페이지 로드 될때 동작
+onMounted(() => {
+  var payload = new getProductCardBodyDto(1, 6, "buy");
+  mainStore.setstoreProductCard(payload);
+});
 
 // Infinite scroll on off
 function toggleInfiniteStatus(status: boolean) {
@@ -211,13 +228,32 @@ function toggleInfiniteStatus(status: boolean) {
 // 무한 스크롤 동작
 function load({ loaded }: LoadAction) {
   if (storeinfiniteStatus.value) {
-    console.log("it works?");
-    mainStore.setstoreProductCard();
+    // mainStore.setstoreProductCard();
+    //다음 페이지가 있을때
+    if (storehasnextPage) {
+      var page = storeNextPage.value;
+      var sellbuy = storeSellBuy.value;
+      var categorys = filterStore.getCategorys;
+      var gameIdx = storeGameKeywordIdx.value;
+      var serverIdx = storeServerKeywordIdx.value;
+      console.log(categorys);
+
+      // var payload = new getProductCardBodyDto(
+      //   page,
+      //   12,
+      //   sellbuy,
+      //   categorys,
+      //   gameIdx,
+      //   serverIdx
+      // );
+      // mainStore.setstoreProductCard(payload);
+    }
   }
 
   loaded();
 }
 
+//////배너
 //carousel
 const settings = {
   itemsToShow: 3,
