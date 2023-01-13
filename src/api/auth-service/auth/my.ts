@@ -9,8 +9,10 @@ export async function putBankAccount<T>(
   const url = "/my/account";
   var token = "";
   var accessTokenData = localStorage.getItem("accessToken");
+
   if (accessTokenData != null) {
     token = (JSON.parse(accessTokenData) as TokenDto).token;
+  } else {
     return Promise.reject("token error");
   }
 
@@ -19,7 +21,7 @@ export async function putBankAccount<T>(
       url,
       {
         bankName: payload.bankName,
-        putBankAccount: payload.bankAccount,
+        bankAccount: payload.bankAccount,
       },
       {
         headers: {

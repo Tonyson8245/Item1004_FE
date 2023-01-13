@@ -138,6 +138,14 @@ const router = createRouter({
                 navbar: false,
               },
             },
+            {
+              path: "user/info/putBankAccount",
+              component: components.putBankAccount,
+              meta: {
+                title: "회원정보수정",
+                navbar: false,
+              },
+            },
           ],
         },
       ],

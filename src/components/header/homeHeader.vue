@@ -778,6 +778,8 @@ function refresh() {
 }
 
 function toggleCategory(category: string) {
+  console.log(category);
+
   switch (category) {
     case "gameMoney":
       filterStore.setCategory([

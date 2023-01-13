@@ -168,7 +168,7 @@
         </div>
         <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
-          @click="setShowModal(true)"
+          @click="clickButton('putBankAccount', true)"
         >
           {{ buttonContent(storeverifiedBankAccount) }}
         </div>
@@ -185,8 +185,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useClipboard, useToggle } from "@vueuse/core";
+import { ref, computed, watch } from "vue";
+import { useClipboard, useMediaQuery, useToggle } from "@vueuse/core";
 import { useauthStore } from "@/store/modules/auth/authStore";
 import { useRouter } from "vue-router";
 import ModalMypage from "@/components/mypage/components/modalMypage.vue";
@@ -219,6 +219,28 @@ function logout() {
   authstore.deleteToken();
   router.push("/logout");
 }
+
+//버튼 누르는 동작
+function clickButton(type: string, status: boolean) {
+  //웹인경우
+  if (minSize.value.value) setShowModal(status);
+  //모바일인경우
+  else {
+    router.push("/mypage/user/info/putBankAccount");
+  }
+}
+
+//사이즈 확인
+const minSize = computed(() => {
+  return useMediaQuery("(min-width: 640px)");
+});
+//화면이 작아지면 꺼지는 로직
+watch(minSize.value, (minSize) => {
+  if (!minSize) {
+    //페이지가 모바일이되는 경우
+    showModal.value = false;
+  }
+});
 
 //모달 관리
 const showModal = ref(false);

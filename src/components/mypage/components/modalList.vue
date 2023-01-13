@@ -1,18 +1,21 @@
 <template>
-  <div class="cursor-pointer">
+  <div class="cursor-pointer w-full">
     <div
       v-if="propsShowModal"
       class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 justify-center items-center flex"
     >
-      <div class="relative w-auto my-6 mx-auto">
+      <div class="relative my-6 w-11/12 h-5/6 overflow-y-scroll">
         <!--content-->
         <div
-          class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
+          class="border-0 shadow-lg relative flex flex-col bg-white outline-none focus:outline-none"
         >
-          <!-- emit 값을 다시 보냄 -->
-          <putBankAccount
-            @update:propsShowModal="emit('update:propsShowModal', false)"
-          />
+          <div
+            v-for="key in props.propsList"
+            class="w-full p-5 border-b"
+            v-on:click="emit('update:propsShowModal', key)"
+          >
+            {{ key }}
+          </div>
         </div>
       </div>
     </div>
@@ -24,13 +27,15 @@
 </template>
 
 <script lang="ts" setup>
-import putBankAccount from "../modaldetail/putBankAccount.vue";
 import { useVModel } from "@vueuse/core";
+import type { PropType } from "vue";
 
-const props = defineProps<{
-  propsShowModal: boolean;
-  propsType: string;
-}>();
+const props = defineProps({
+  propsList: Object as PropType<string[]>,
+  propsShowModal: Boolean,
+  propsType: String,
+});
+
 const emit = defineEmits(["update:propsShowModal"]);
 const propsShowModal = useVModel(props, "propsShowModal", emit);
 </script>

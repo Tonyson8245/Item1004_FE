@@ -20,7 +20,10 @@
       :class="props.propsClass"
       v-if="show"
     >
-      <ul class="list-none overflow-hidden rounded" :class="props.propsClass">
+      <ul
+        class="list-none overflow-hidden rounded"
+        :class="props.propsDropdown"
+      >
         <li v-for="key in props.propsList">
           <div
             href=""
@@ -40,9 +43,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type PropType } from "vue";
+import { ref, watch, type PropType, computed } from "vue";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { storeToRefs } from "pinia";
+import { ignorableWatch } from "@vueuse/shared";
 
 const componentStore = useComponentStore();
 const { closeDropdown } = storeToRefs(componentStore);
@@ -50,6 +54,7 @@ const { closeDropdown } = storeToRefs(componentStore);
 const emit = defineEmits(["getValue"]);
 const props = defineProps({
   propsClass: String,
+  propsDropdown: String,
   propsList: Object as PropType<string[]>,
   propsPlaceholder: String,
 });
