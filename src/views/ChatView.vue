@@ -42,8 +42,8 @@ const login = async () => await chatStore.login()
 // 채널(=채팅방) 목록 불러오기
 const getChannels = async function () {
   const result = await chatStore.getChannels();
-  console.log(result);
-  console.log(channels);
+  // console.log(result);
+  // console.log(channels);
 }
 
 // 로그인을 한번 실행

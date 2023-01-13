@@ -24,8 +24,8 @@
                     </div>
                                      
                     <!-- 채널 목록 카드 -->
-                    <channels></channels>
-                    
+                  
+                    <channel v-for="(channel, i) in channels.channels" :key="i" :channel="channel"/>
 
                 </div>                
             </div>
@@ -41,9 +41,28 @@
 
 <script setup lang="ts">
 
-import channels from './components/channels.vue';
+import channel from './components/channels.vue';
 // import { useChatStore } from "@/store/modules/chat/chatStore";
+import { storeToRefs } from "pinia";
+import { useChatStore } from "@/store/modules/chat/chatStore";
+import { ref, computed } from "vue";
 
+// import type { user } from "@/domain/user/user.interface";
+// const localData = localStorage.getItem("user");
+// const userData = JSON.parse(localData) as user;
+
+const chatStore = useChatStore();
+
+const { client, channels } = storeToRefs(chatStore);
+
+
+// console.log(userData);
+
+
+client.value.on('event', (data) => {
+    // console.log(data);
+    chatStore.setChannels(data.channel);
+})
 
 
 </script>
