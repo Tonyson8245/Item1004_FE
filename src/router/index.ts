@@ -201,6 +201,16 @@ const router = createRouter({
     {
       path: "/chat",
       component: components.ChatViewVue,
+      meta: { transition: "", name: "chat", title: "채팅" },
+      
+      // 모바일에서 사용할 분기를 만들어준다.
+      // 모바일에서 클릭 시 -> 채팅방 목록 -> 채팅창 
+      children:[
+        {
+          path:"",
+          component: components.chatPage,
+        }
+      ]
     },
     {
       path: "/redirect",
