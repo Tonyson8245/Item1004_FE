@@ -6,7 +6,7 @@ module.exports = {
       tablet: "768px",
     },
     colors: {
-      'everly':{
+      everly: {
         light_blue: "#e9e9fd",
         sub_blue: "#2a2af0",
         mid_grey: "#c7c7c7",
@@ -17,10 +17,8 @@ module.exports = {
         black: "#000000",
         bright_grey: "#f0f0f0",
         wbg_grey: "#fafafa",
-        red: "#d5152c"
-       
-      }
-
-    }
+        red: "#d5152c",
+      },
+    },
   },
 };
