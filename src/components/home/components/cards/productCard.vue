@@ -34,7 +34,7 @@
                 />
               </div>
               <span class="text-everly-dark_grey text-xs">{{
-                props.card?.post.createAt
+                commonFunction.timeForToday(createAt)
               }}</span>
             </div>
           </div>
@@ -136,6 +136,7 @@
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
+import commonFunction from "@/common";
 import type { GamePostSummaryDto } from "@/domain/home/posts/GamePostSummaryDto";
 
 const router = useRouter();
@@ -175,6 +176,9 @@ function show(b: number) {
   }
   return a;
 }
+
+const createAt =
+  props.card?.post.createAt != null ? props.card?.post.createAt : "";
 </script>
 
 <style scoped></style>

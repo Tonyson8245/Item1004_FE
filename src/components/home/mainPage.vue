@@ -206,8 +206,7 @@ const { storeGameKeywordIdx, storeServerKeywordIdx } = storeToRefs(commonStore);
 //처음 페이지 로드 될때 동작
 onMounted(() => {
   console.log("mount");
-  var payload = new getProductCardBodyDto(1, 6, "buy");
-  mainStore.setstoreProductCard(payload);
+  getProductList(6);
 });
 
 // Infinite scroll on off
@@ -221,28 +220,33 @@ function load({ loaded }: LoadAction) {
     //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때
     if (storehasnextPage.value) {
-      var page = storeNextPage.value;
-      var sellbuy = storeSellBuy.value;
-      var categorys = filterStore.getCategorys;
-      var gameIdx = storeGameKeywordIdx.value;
-      var serverIdx = storeServerKeywordIdx.value;
+      getProductList(6);
+    }
+  }
+  loaded();
+}
 
-      var payload = new getProductCardBodyDto(
-        page,
-        6,
-        sellbuy,
-        categorys,
-        gameIdx,
-        serverIdx
-      );
+function getProductList(pageUnit: number) {
+  if (storehasnextPage.value) {
+    var page = storeNextPage.value;
+    var sellbuy = storeSellBuy.value;
+    var categorys = filterStore.getCategorys;
+    var gameIdx = storeGameKeywordIdx.value;
+    var serverIdx = storeServerKeywordIdx.value;
 
-      mainStore.setstoreProductCard(payload).then((res) => {
-        console.log("loaded");
+    var payload = new getProductCardBodyDto(
+      page,
+      pageUnit,
+      sellbuy,
+      categorys,
+      gameIdx,
+      serverIdx
+    );
 
-        loaded();
-      });
-    } else loaded();
-  } else loaded();
+    mainStore.setstoreProductCard(payload).then((res) => {
+      console.log("loaded");
+    });
+  }
 }
 
 watch(storeLoad, () => {

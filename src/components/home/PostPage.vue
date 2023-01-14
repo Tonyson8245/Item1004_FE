@@ -15,7 +15,7 @@
         <div
           class="flex justify-between items-center md:justify-end gap-8 text-everly-dark_grey text-sm md:text-base"
         >
-          <span class="">10분전 올림</span>
+          <span class="">{{ commonFunction.timeForToday(storecreatAt) }}</span>
           <div class="hidden md:flex gap-5">
             <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
@@ -46,7 +46,7 @@
           >
             <div
               class="bg-everly-main rounded-md py-1 w-full"
-              v-if="SellBuy == `sell`"
+              v-if="storeSellBuy == `sell`"
             >
               팔래요
             </div>
@@ -69,15 +69,15 @@
           >
             <div class="flex md:pt-[0.5rem]">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25rem] md:w-[7rem] flex-none font-bold text-right md:text-left pr-2 md:pr-0"
               >
                 카테고리
               </div>
-              <div class="grow md:text-xl">게임머니</div>
+              <div class="grow md:text-xl">{{ storeCategoryName }}</div>
             </div>
             <div class="flex md:pt-[0.5rem]">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25rem] md:w-[7rem] flex-none font-bold text-right md:text-left pr-2 md:pr-0"
               >
                 게임명
               </div>
@@ -85,37 +85,95 @@
             </div>
             <div class="flex md:pt-[0.5rem]">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25rem] md:w-[7rem] flex-none font-bold text-right md:text-left pr-2 md:pr-0"
               >
                 서버명
               </div>
               <div class="grow md:text-xl">{{ storeServerName }}</div>
             </div>
-            <div class="flex md:pt-[1.5rem]">
+            <div
+              class="block md:text-lg md:space-y-9"
+              v-if="storeCharacterlevel != 0"
+            >
+              <div class="md:flex space-y-2 md:space-y-0">
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    직업
+                  </div>
+                  <div class="md:w-[13.5rem]">{{ storeCharacterRoleName }}</div>
+                </div>
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[3.5rem] font-bold text-right md:text-left pr-2 md:pr-0"
+                  >
+                    레벨
+                  </div>
+                  <div>{{ storeCharacterlevel }}</div>
+                </div>
+              </div>
+              <div class="md:flex space-y-2 md:space-y-0 mt-2 md:mt-0">
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    계정종류
+                  </div>
+                  <div class="md:w-[5.2rem]">{{ storeregistration }}</div>
+                </div>
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    <span class="md:hidden">결제내역</span>
+                    <span class="hidden md:block">결제내역유무</span>
+                  </div>
+                  <div class="md:w-[4.1rem]">
+                    {{ storehasInGamePaymentHistoryOX }}
+                  </div>
+                </div>
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    <span class="md:hidden">이중연동</span>
+                    <span class="hidden md:block">이중연동유무</span>
+                  </div>
+                  <div class="">{{ storeisDuplicatedSyncOX }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="flex" v-else-if="storeCharacterlevel == 0">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25] md:w-[7rem] mr-2 md:mr-0 flex-none font-bold text-right md:text-left"
               >
                 판매정보
               </div>
               <div class="grow md:text-xl">
                 <div class="flex flex-wrap pb-3 gap-x-10">
                   <div class="">
-                    최소구매수량 {{ numberToKorean(storeMinValue) }} 게임머니
+                    최소구매수량 {{ numberToKorean(storeMinValue) }}
+                    {{ storeProductunit }}
                   </div>
                   <div>
-                    최대구매수량 {{ numberToKorean(storeMaxValue) }} 게임머니
+                    최대구매수량 {{ numberToKorean(storeMaxValue) }}
+                    {{ storeProductunit }}
                   </div>
                 </div>
                 <div
                   class="font-bold space-x-5 md:block hidden text-lg md:text-xl"
                 >
-                  <span>{{ numberToKorean(storeUnitValue) }} 게임머니당</span
+                  <span
+                    >{{ numberToKorean(storeUnitValue) }}
+                    {{ storeProductunit }}당</span
                   ><span class=""
                     >{{ storePricePerUnit.toLocaleString() }}원</span
                   >
                 </div>
               </div>
             </div>
+            <div v-else></div>
           </div>
           <!-- 웹 결제 페이지 -->
           <div class="flex-1 text-lg pl-20 hidden md:block">
@@ -139,7 +197,8 @@
               <div class="font-bold">총 결제금액</div>
               <div class="flex space-x-4 items-center">
                 <div class="text-everly-dark_grey text-base">
-                  총수량 ({{ qty }}개) / {{ TotalQty }}
+                  총수량 ({{ qty }}{{ storeProductunit }}) / {{ TotalQty
+                  }}{{ storeProductunit }}
                 </div>
                 <div class="flex text-2xl font-bold items-center">
                   {{ ProductPrice
@@ -198,7 +257,7 @@
           <div
             class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem]"
           >
-            각종 게임 머니 판매 합니다! 구매 후 채팅 주시면 바로 보내드립니다
+            {{ storeContent }}
           </div>
         </div>
         <!-- 웹 안전 확인 -->
@@ -250,20 +309,7 @@
             >
               <div class="rounded-lg overflow-hidden">
                 <img
-                  v-if="storeUserIdx % 3 == 0"
-                  src="@/assets/img/profile_red.jpeg"
-                  alt=""
-                  class="w-12 md:w-28 rounded-lg"
-                />
-                <img
-                  v-else-if="storeUserIdx % 3 == 1"
-                  src="@/assets/img/profile_yellow.jpeg"
-                  alt=""
-                  class="w-12 md:w-28 rounded-lg"
-                />
-                <img
-                  v-else
-                  src="@/assets/img/profile_green.jpeg"
+                  :src="'/assets/img/' + storeUserImg"
                   alt=""
                   class="w-12 md:w-28 rounded-lg"
                 />
@@ -278,29 +324,34 @@
                       src="@/assets/icon/check_circle_blue.svg"
                       alt=""
                       class="px-1 w-5 md:w-6 mt-1"
+                      v-if="storeUserIsVerfied"
                     />
                   </div>
                 </div>
-                <div class="text-sm md:text-base">{{ storeUserCode }}</div>
-                <div
-                  class="text-sm md:text-base flex space-x-1 space-x-2 items-center"
-                >
+                <div class="flex">
+                  <div class="hidden md:block mr-2">유저코드</div>
+                  <div class="text-sm md:text-base">#{{ storeUserCode }}</div>
+                </div>
+                <div class="text-sm md:text-base flex space-x-2 items-center">
                   <div class="hidden md:block">인증상태</div>
                   <div
                     class="flex text-[0.625rem] md:text-xs justify-center items-center space-x-1"
                   >
                     <div
-                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
+                      class="border rounded-lg px-3 md:py-1"
+                      :class="storephoneVerifyClass"
                     >
                       휴대폰
                     </div>
                     <div
-                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
+                      class="border rounded-lg px-3 md:py-1"
+                      :class="storeemailVerifyClass"
                     >
                       이메일
                     </div>
                     <div
-                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
+                      class="border rounded-lg px-3 md:py-1"
+                      :class="storebankaccountlVerifyClass"
                     >
                       계좌번호
                     </div>
@@ -312,20 +363,7 @@
               >
                 <div class="h-6 w-6 md:h-14 md:w-14">
                   <img
-                    v-if="storeUserIdx % 3 == 0"
-                    src="@/assets/icon/class_bronze.svg"
-                    alt=""
-                    class="w-full"
-                  />
-                  <img
-                    v-else-if="storeUserIdx % 3 == 1"
-                    src="@/assets/icon/class_silber.svg"
-                    alt=""
-                    class="w-full"
-                  />
-                  <img
-                    v-else
-                    src="@/assets/icon/class_gold.svg"
+                    :src="'/assets/icon/' + storelevelBadge + '.svg'"
                     alt=""
                     class="w-full"
                   />
@@ -349,12 +387,12 @@
                   />
                   <div class="flex grow">
                     <div class="flex-1 flex md:gap-10">
-                      <div>판매글</div>
-                      <div>10개</div>
+                      <div class="pr-1">판매글</div>
+                      <div>{{ storeUsersellPostCount }}개</div>
                     </div>
                     <div class="flex-1 flex md:gap-10">
-                      <div>구매글</div>
-                      <div>10개</div>
+                      <div class="pr-1">구매글</div>
+                      <div>{{ storeUserbuyPostCount }}개</div>
                     </div>
                   </div>
                 </div>
@@ -364,9 +402,9 @@
                     alt=""
                     class="md:w-5 w-4"
                   />
-                  <div class="flex md:gap-10">
-                    <div>친절 평가</div>
-                    <div>1개</div>
+                  <div class="flex md:gap-10 justify-center">
+                    <div class="pr-1">친절 평가</div>
+                    <div>{{ storeUserreviewCount }}개</div>
                   </div>
                 </div>
               </div>
@@ -427,7 +465,8 @@
         <div class="flex justify-between items-center pb-8">
           <div class="font-bold px-2">총 결제금액</div>
           <div class="text-everly-dark_grey">
-            총수량 ({{ qty }}개) / {{ TotalQty }}
+            총수량 ({{ qty }}{{ storeProductunit }}) / {{ TotalQty }}
+            {{ storeProductunit }}
           </div>
         </div>
         <div class="flex text-2xl font-bold items-center justify-end">
@@ -466,6 +505,7 @@ import { storeToRefs } from "pinia";
 import { ref, watch, onUnmounted, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
+import commonFunction from "@/common";
 
 const postStore = usePostStore();
 const paymentStore = usePaymentStore();
@@ -473,6 +513,7 @@ const router = useRouter();
 const route = useRoute();
 
 const {
+  storecreatAt,
   storePostIdx,
   storeShowBuy,
   storePostTitle,
@@ -482,12 +523,35 @@ const {
   storeUnitName,
   storePricePerUnit,
 
+  storeProductunit,
+  storehasInGamePaymentHistoryOX,
+  storeisDuplicatedSyncOX,
+  storeCategoryName,
   storeGameName,
   storeServerName,
   storeCategory,
   storeUserCode,
   storeUserIdx,
   storeUserNickname,
+  storeemailVerifyClass,
+  storephoneVerifyClass,
+  storebankaccountlVerifyClass,
+  storeUserImg,
+  storeUserIsVerfied,
+  storelevelBadge,
+  storeUsersellPostCount,
+  storeUserbuyPostCount,
+  storeUserreviewCount,
+
+  storecharacterName,
+  storeregistration,
+  storehasInGamePaymentHistory,
+  storeisDuplicatedSync,
+  storeSellBuy,
+
+  storeCharacterlevel,
+  storeCharacterRoleName,
+  storeContent,
 } = storeToRefs(postStore);
 
 let SellBuy = "sell";
@@ -499,9 +563,13 @@ function updateQty(event: number) {
 //처음 페이지 들어갈때 데이터 가져오기
 onMounted(() => {
   var idx = route.query.postId;
+
   if (idx?.toString() != null) {
     postStore.setStorePostData(idx.toString());
   } else router.push("/");
+});
+onUnmounted(() => {
+  postStore.resetStorePostData();
 });
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
@@ -518,7 +586,7 @@ function toggleShowbuy(status: boolean) {
 
 //전체 갯수
 const TotalQty = computed(() => {
-  return numberToKorean(qty.value * storeUnitValue.value) + ` 게임머니`;
+  return numberToKorean(qty.value);
 });
 
 //물품 가격

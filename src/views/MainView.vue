@@ -44,7 +44,10 @@
 
     <FooterWeb
       class="hidden md:block absolute w-full"
-      v-if="!storeinfiniteStatus && route.meta.name != `paymentResult`"
+      v-if="
+        !(storeinfiniteStatus && route.meta.name == 'home') &&
+        route.meta.name != `paymentResult`
+      "
     />
     <!-- 스마트로 결제 / 결제 테스트 시 사용-->
     <!-- <smartroVue ref="childComponentRef" /> -->

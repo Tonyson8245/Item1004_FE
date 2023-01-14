@@ -10,55 +10,55 @@
             <div class="flex justify-between items-center h-[3.5rem]">
               <div class="flex space-x-4 text-xl">
                 <!-- 팔래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <div
+                  class="flex space-x-2"
+                  v-if="storeSellBuy == 'sell'"
+                  @click="toggleSellBuy('sell')"
+                >
                   <img
                     src="@/assets/icon/check_web_blue.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-main font-bold w-13"
-                    @click="toggleSellBuy('sell')"
-                    >팔래요</span
-                  >
+                  <span class="text-everly-main font-bold w-13">팔래요</span>
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <div
+                  class="flex space-x-2"
+                  v-if="storeSellBuy == 'sell'"
+                  @click="toggleSellBuy('buy')"
+                >
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-dark-grey w-13"
-                    @click="toggleSellBuy('buy')"
-                    >살래요</span
-                  >
+                  <span class="text-everly-dark-grey w-13">살래요</span>
                 </div>
 
                 <!-- 살래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <div
+                  class="flex space-x-2"
+                  v-if="storeSellBuy == 'buy'"
+                  @click="toggleSellBuy('sell')"
+                >
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-dark-grey w-13"
-                    @click="toggleSellBuy('sell')"
-                    >팔래요</span
-                  >
+                  <span class="text-everly-dark-grey w-13">팔래요</span>
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <div
+                  class="flex space-x-2"
+                  v-if="storeSellBuy == 'buy'"
+                  @click="toggleSellBuy('buy')"
+                >
                   <img
                     src="@/assets/icon/check_web_red.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-red font-bold w-13"
-                    @click="toggleSellBuy('buy')"
-                    >살래요</span
-                  >
+                  <span class="text-everly-red font-bold w-13">살래요</span>
                 </div>
               </div>
               <search
@@ -750,6 +750,9 @@ const { storeSellBuy } = storeToRefs(searchStore);
 function toggleSellBuy(type: string) {
   if (type == `sell`) searchStore.setstoreSellBuy("sell");
   else searchStore.setstoreSellBuy("buy");
+
+  mainStore.resetsetstoreProductCard();
+  mainStore.setstoreLoad(true);
 }
 
 //필터 store 가져오기
@@ -763,8 +766,6 @@ const {
   storeGameKeyword,
   storeServerKeyword,
   storeTempGameKeyword,
-  storeGameKeywordIdx,
-  storeServerKeywordIdx,
 } = storeToRefs(commonStore);
 
 const filterStore = useFilterStore();

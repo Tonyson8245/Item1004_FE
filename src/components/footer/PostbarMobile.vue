@@ -3,14 +3,13 @@
     <div class="w-full flex space-x-2">
       <div class="w-1/6 flex justify-center items-center">
         <img src="@/assets/icon/like_mid-grey.svg" alt="" class="pr-1" />
-        <div class="text-xs hidden">+99</div>
-        <div class="text-sm">10</div>
+        <div class="text-sm">{{ storeWishCount }}</div>
       </div>
       <div
         class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-light_blue text-everly-dark_grey border text-sm sm:text-base cursor-pointer"
       >
         <div class="text-everly-main" @click="router.push('/chat')">
-          채팅하기(10)
+          채팅하기({{ storeChatCount }})
         </div>
       </div>
       <div
@@ -53,7 +52,8 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const postStore = usePostStore();
-const { storeShowManagePost, storeShowBuy } = storeToRefs(postStore);
+const { storeShowManagePost, storeShowBuy, storeChatCount, storeWishCount } =
+  storeToRefs(postStore);
 
 const toggle = useToggle(storeShowBuy);
 const owner = ref(false);
