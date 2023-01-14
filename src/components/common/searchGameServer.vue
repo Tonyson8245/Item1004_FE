@@ -4,7 +4,7 @@
       <input
         :placeholder="placeholder"
         @click="toggleSearch()"
-        v-model="storeKeyword"
+        v-model="inputKeyword"
         @input="(event: Event) => {
   setTempKeyword((event.target as HTMLInputElement).value); offServerFilter();
 }"
@@ -70,10 +70,10 @@ const props = defineProps({
   type: String,
 });
 
-let storeKeyword = ref("");
+let inputKeyword = ref("");
 
-if (props.type == "game") storeKeyword = storeTempGameKeyword;
-else storeKeyword = storeTempServerKeyword;
+if (props.type == "game") inputKeyword = storeTempGameKeyword;
+else inputKeyword = storeTempServerKeyword;
 
 // 현재 type에 따라 들어갈 placeholder 를 결정
 const placeholder = computed(() => {
@@ -98,6 +98,7 @@ function toggleSearch() {
 
 const setTempKeyword = debounce((keyword: string | null) => {
   //값이 없을 경우는 초기화
+
   if (keyword == "") {
     if (props.type == "game") {
       store.setstoreTempGameKeyword("");
@@ -111,6 +112,7 @@ const setTempKeyword = debounce((keyword: string | null) => {
   }
   //값이 있는 경우
   else if (keyword != null) {
+    inputKeyword.value = keyword;
     //게임 검색일경우
     if (props.type == "game") {
       //기존값과 신규값이 다를 때만 갱신하도록 한다.

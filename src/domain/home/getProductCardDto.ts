@@ -8,28 +8,30 @@ export class getProductCardBodyDto {
   unit: number;
   type: string;
   productTypes?: string;
-  gameIdx?: string;
-  serverIdx?: string;
+  gameIdx?: number;
+  serverIdx?: number;
   constructor(
     page: number,
     unit: number,
     type: string,
     productTypes?: string,
-    gameIdx?: string,
-    serverIdx?: string
+    gameIdx?: number,
+    serverIdx?: number
   ) {
     this.page = page;
     this.unit = unit;
     this.type = type;
-    this.productTypes = productTypes;
-    this.gameIdx = gameIdx;
-    this.serverIdx = serverIdx;
+    productTypes == ""
+      ? delete this.productTypes
+      : (this.productTypes = productTypes);
+    gameIdx == 0 ? delete this.gameIdx : (this.gameIdx = gameIdx);
+    serverIdx == 0 ? delete this.serverIdx : (this.serverIdx = serverIdx);
   }
 }
 export class getProductCardResultDto {
   pagination: PaginationDto;
-  posts?: GamePostSummaryDto;
-  constructor(pagination: PaginationDto, posts: GamePostSummaryDto) {
+  posts?: GamePostSummaryDto[];
+  constructor(pagination: PaginationDto, posts: GamePostSummaryDto[]) {
     this.pagination = pagination;
     this.posts = posts;
   }

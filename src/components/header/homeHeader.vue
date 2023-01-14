@@ -493,7 +493,7 @@
     <!-- 모바일 필터 -->
     <transition name="slide-down" move="out-in">
       <div
-        class="md:hidden sticky fixed w-full bg-everly-white min-h-[700px] h-screen flex flex-col pt-[105px] z-10"
+        class="md:hidden fixed w-full bg-everly-white min-h-[700px] h-screen flex flex-col pt-[105px] z-10"
         v-if="storeShowFilter_mobile"
       >
         <!-- 카테고리 -->
@@ -598,7 +598,7 @@
                       src="@/assets/icon/character_active_mobile.svg"
                       class="w-6 h-6 sm:w-20 sm:h-20 m-1 sm:m-2"
                     />
-                    <div>아이템</div>
+                    <div>캐릭터</div>
                   </div>
                 </div>
               </div>
@@ -736,6 +736,9 @@ import { useFilterStore } from "../../store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useMainStore } from "@/store/modules/home/mainStore";
+import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
+import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 
 const router = useRouter();
 //검색 store 가져오기
@@ -759,6 +762,9 @@ const {
   storeShowServerFilter,
   storeGameKeyword,
   storeServerKeyword,
+  storeTempGameKeyword,
+  storeGameKeywordIdx,
+  storeServerKeywordIdx,
 } = storeToRefs(commonStore);
 
 const filterStore = useFilterStore();
@@ -769,12 +775,18 @@ const {
   storeCategoryCharacter,
   storeCategoryEtc,
   storeShowFilter_mobile,
+  storeTempCategory,
 } = storeToRefs(filterStore);
 
 //초기화
 function refresh() {
   filterStore.refresh();
   commonStore.refreshSearchGameServer();
+  if (!isSamefilter()) {
+    mainStore.setstoreinfiniteStatus(true);
+    mainStore.resetsetstoreProductCard();
+    loadList();
+  }
 }
 
 function toggleCategory(category: string) {
@@ -825,13 +837,43 @@ function closeFilter() {
 function setFilter() {
   filterStore.setstoreShowFilter_web(false);
   filterStore.setstoreShowFilter_mobile(false);
+  //바뀌었을 경우만 실행
+  if (!isSamefilter()) {
+    mainStore.setstoreinfiniteStatus(true);
+    mainStore.resetsetstoreProductCard();
+    loadList();
+  }
 }
+//이전 필터와 동일한지 판단하는 로직
+const isSamefilter = () => {
+  var tempCategory = storeTempCategory.value;
+  var nowCategory = [
+    storeCategoryGamemoney.value,
+    storeCategoryItem.value,
+    storeCategoryCharacter.value,
+    storeCategoryEtc.value,
+  ];
 
+  var tempGameName = storeTempGameKeyword.value;
+  var tempServerName = storeTempGameKeyword.value;
+  var nowGameName = storeGameKeyword.value;
+  var nowServerName = storeServerKeyword.value;
+
+  if (
+    tempCategory.toString() == nowCategory.toString() &&
+    tempGameName == nowGameName &&
+    tempServerName == nowServerName
+  )
+    return true;
+  else return false;
+};
 //필터 뱃지 설정
 function closeFilterBadge(type: string) {
   if (type == "gameServer") {
     commonStore.refreshSearchGameServer();
   } else filterStore.changeCategory(type);
+  mainStore.resetsetstoreProductCard();
+  mainStore.setstoreLoad(true);
 }
 
 //필터가 있을때만 뱃지가 보이는 값
@@ -861,6 +903,36 @@ const conditionBadge = computed(() => {
     return false;
   else return true;
 });
+
+///필터로 불러오는 로직6
+const mainStore = useMainStore();
+const { storeNextPage, storeinfiniteStatus, storehasnextPage } =
+  storeToRefs(mainStore);
+function loadList() {
+  mainStore.setstoreLoad(true);
+  // 로드된 페이지 : 로드되기 전에 두번 반복 안되게 하기 위함
+  /// TODO   스토어 이용해서 필터 가져오는 로직하면됨!!!!!!!!! TODO
+  // if (storeinfiniteStatus.value) {
+  //   //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
+  //   //다음 페이지가 있을때
+  //   if (storehasnextPage.value) {
+  //     var page = storeNextPage.value;
+  //     var sellbuy = storeSellBuy.value;
+  //     var categorys = filterStore.getCategorys;
+  //     var gameIdx = storeGameKeywordIdx.value;
+  //     var serverIdx = storeServerKeywordIdx.value;
+  //     var payload = new getProductCardBodyDto(
+  //       page,
+  //       12,
+  //       sellbuy,
+  //       categorys,
+  //       gameIdx,
+  //       serverIdx
+  //     );
+  //     mainStore.setstoreProductCard(payload).then((res) => {});
+  //   }
+  // }
+}
 </script>
 
 <style scoped>

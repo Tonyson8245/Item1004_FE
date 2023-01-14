@@ -37,7 +37,8 @@
       v-else-if="route.meta.name == `paymentResult`"
     />
     <Navbar
-      class="block md:hidden text-center w-full fixed bottom-0 z-20"
+      class="block md:hidden text-center w-full fixed bottom-0"
+      style="z-index: 5"
       v-else-if="route.meta.navbar"
     />
 

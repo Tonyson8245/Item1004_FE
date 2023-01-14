@@ -1,15 +1,16 @@
 import type {
   getProductCardResponseDto,
   getProductCardBodyDto,
+  getProductCardResultDto,
 } from "@/domain/home/getProductCardDto";
 import http from "../HomeHTTPClient";
 
 export async function getProductCard<T>(
   payload: getProductCardBodyDto
-): Promise<getProductCardResponseDto> {
+): Promise<getProductCardResultDto> {
   const url = "/posts/games";
   try {
-    const result: getProductCardResponseDto = await http.get(url, {
+    const result: getProductCardResultDto = await http.get(url, {
       params: {
         page: payload.page,
         unit: payload.unit,

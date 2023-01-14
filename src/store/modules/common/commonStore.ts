@@ -27,7 +27,7 @@ export const useCommonStore = defineStore("commonStore", {
     storeServerKeyword: "",
 
     storeGameKeywordIdx: 0,
-    storeServerKeywordIdx: "",
+    storeServerKeywordIdx: 0,
 
     storeTempGameKeyword: "",
     storeTempServerKeyword: "",

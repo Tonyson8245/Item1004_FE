@@ -4,7 +4,9 @@
   <BannerMobile class="block md:hidden" />
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>
-    <div class="flex-none w-full md:w-[1180px] bg-[#f0f0f0] md:bg-white pt-6">
+    <div
+      class="flex-none w-full md:w-[1180px] bg-[#f0f0f0] md:bg-white pt-6 md:min-h-none min-h-[50rem]"
+    >
       <div
         class="grid grid-cols-1 md:grid-cols-2 gap-4 px-3 md:px-0"
         v-show="!storeShowFilter_mobile"
@@ -15,19 +17,8 @@
         >
           <ProductCard :card="card" />
         </div>
-        <VueEternalLoading :load="load">
-          <template #loading>
-            <div v-if="storeinfiniteStatus">
-              <div class="flex w-full hidden md:block">
-                <div class="w-[1180px] flex justify-center pl-2 pb-3">
-                  <spinner />
-                </div>
-              </div>
-              <div class="block md:hidden w-full text-center">
-                <div class="inline-block"><spinner /></div>
-              </div>
-            </div>
-            <div v-else></div></template
+        <VueEternalLoading :load="load" v-if="storeinfiniteStatus">
+          <template #loading> <div></div></template
         ></VueEternalLoading>
       </div>
       <div
@@ -43,10 +34,7 @@
         </div>
       </div>
 
-      <div
-        class="hidden md:block flex fixed bottom-10"
-        v-if="storeinfiniteStatus"
-      >
+      <div class="hidden md:flex fixed bottom-10" v-if="storeinfiniteStatus">
         <div class="flex-grow"></div>
         <div class="flex-none w-[1180px]">
           <div class="absolute right-0 bottom-0">
@@ -183,7 +171,7 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRouter } from "vue-router";
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
@@ -208,6 +196,7 @@ const {
   storeinfiniteStatus,
   storeNextPage,
   storehasnextPage,
+  storeLoad,
 } = storeToRefs(mainStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
 const searchStore = useSearchStore();
 const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
@@ -216,42 +205,52 @@ const { storeGameKeywordIdx, storeServerKeywordIdx } = storeToRefs(commonStore);
 
 //처음 페이지 로드 될때 동작
 onMounted(() => {
+  console.log("mount");
   var payload = new getProductCardBodyDto(1, 6, "buy");
   mainStore.setstoreProductCard(payload);
 });
 
 // Infinite scroll on off
 function toggleInfiniteStatus(status: boolean) {
-  mainStore.setstoreinfiniteStatus(true);
+  mainStore.setstoreinfiniteStatus(status);
 }
 
 // 무한 스크롤 동작
 function load({ loaded }: LoadAction) {
   if (storeinfiniteStatus.value) {
-    // mainStore.setstoreProductCard();
+    //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때
-    if (storehasnextPage) {
+    if (storehasnextPage.value) {
       var page = storeNextPage.value;
       var sellbuy = storeSellBuy.value;
       var categorys = filterStore.getCategorys;
       var gameIdx = storeGameKeywordIdx.value;
       var serverIdx = storeServerKeywordIdx.value;
-      console.log(categorys);
 
-      // var payload = new getProductCardBodyDto(
-      //   page,
-      //   12,
-      //   sellbuy,
-      //   categorys,
-      //   gameIdx,
-      //   serverIdx
-      // );
-      // mainStore.setstoreProductCard(payload);
-    }
-  }
+      var payload = new getProductCardBodyDto(
+        page,
+        6,
+        sellbuy,
+        categorys,
+        gameIdx,
+        serverIdx
+      );
 
-  loaded();
+      mainStore.setstoreProductCard(payload).then((res) => {
+        console.log("loaded");
+
+        loaded();
+      });
+    } else loaded();
+  } else loaded();
 }
+
+watch(storeLoad, () => {
+  if (storeLoad.value) {
+    toggleInfiniteStatus(true);
+    mainStore.setstoreLoad(false);
+  }
+});
 
 //////배너
 //carousel
