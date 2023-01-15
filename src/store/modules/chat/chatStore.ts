@@ -6,7 +6,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const client = ref(Object)
   const user = ref(Object)
   const channels = ref([])
-
+  const hasNext = false
   const init = () =>{
       // 앱 ID 추후에 숨겨야 한다.
       // TODO: client.value가 null이면 새로 생성한다.
@@ -47,5 +47,12 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     // yes AND no : 리스트 제일 첫 번째에 내가 받은 채널 넣어라
     channels.value.unshift(channel)  
   }
+
+
+  const pagingChannels = () =>{
+
+  }
+
+
   return { client, init, login, getChannels, channels, setChannels }
 });

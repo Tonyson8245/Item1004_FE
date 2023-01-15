@@ -5,10 +5,9 @@
         </div>
         <div class=" flex-grow-0 w-full md:w-[73.750rem] md:h-[55.688rem] flex gap-5">
             <!-- 채팅 목록 div -->
-            <div class=" md:w-[25rem] border border-solid border-everly-mid_grey">
+            <div class="md:h-[55.688rem] md:w-[25rem] border border-solid border-everly-mid_grey flex flex-col">
                 <!-- 아래 div를 컴포넌트로 만들 것 -->
-                <div>
-                    <div class="p-5 pb-0">
+                    <div class="p-5 pb-0 flex-grow">
                         <div class="flex items-center">
                             <p class=" font-bold text-xl mr-3">채팅목록</p>   
                             <!-- 채팅 숫자-->
@@ -24,12 +23,11 @@
                     </div>
                                      
                     <!-- 채널 목록 카드 -->
-                    <div class="h-full overflow-hidden">
+                    <div class="flex-grow overflow-scroll overflow-x-hidden" @scroll="handleNotificationListScroll">
                         <channel v-for="(channel, i) in channels" :key="i" :channel="channel"/>
                     </div>
                     
-
-                </div>                
+           
             </div>
             <!-- 채팅 내용 div -->
             <div class=" md:w-[47.5rem]">
@@ -67,6 +65,14 @@ client.value.on('event', (data) => {
     }    
 })
 
+
+function handleNotificationListScroll(e: { target: Element }) {   
+    
+    const { scrollHeight, scrollTop, clientHeight } = e.target;
+    const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
+    // 일정 한도 밑으로 내려오면 함수 실행
+    if (isAtTheBottom) console.log("스크롤한다");
+}
 
 </script>
 

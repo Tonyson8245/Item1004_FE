@@ -1,5 +1,5 @@
 <template>
-<div class="border-b-2 border-everly-mid_grey mx-3 px-2 py-5">
+<div class="border-b-2 border-everly-mid_grey mx-3 my-1 px-2 py-4">
                         
     <div :class="{'items-center': lastMessage() }" class="flex ">
         <div class="rounded-lg overflow-hidden mr-2">                           
