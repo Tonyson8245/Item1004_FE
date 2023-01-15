@@ -46,6 +46,7 @@ const props = defineProps({
 // 채팅방의 가장 최근 메세지 리턴
 const lastMessage = () =>{
   if (props.channel.lastMessage !== null) {
+    // console.log(props.channel);    
     return props.channel.lastMessage.text
   }
   return null

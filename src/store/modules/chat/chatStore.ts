@@ -6,7 +6,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const client = ref(Object)
   const user = ref(Object)
   const channels = ref([])
-  const hasNext = false
+  const hasNext = ref(false);
   const init = () =>{
       // 앱 ID 추후에 숨겨야 한다.
       // TODO: client.value가 null이면 새로 생성한다.
@@ -24,16 +24,6 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     }      
   }
 
-  const getChannels = async () =>{
-    if (client.value.isLoggedIn()) {
-      const result = await client.value.getChannels({
-        limit: 20
-      })
-      channels.value = result.channels
-      return channels.value;
-    }      
-  }
-    
   // 채팅방 목록 갱신
   const setChannels = (channel:Object) =>{ 
     // 리스트 안에 내가 받은 채널과 같은아이디 가지고 있는 채널이 있냐?
@@ -43,16 +33,36 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       channels.value.forEach((item, i, origin)=>{
         if (item === doGetChannel)  origin.splice(i,1)        
       })      
-    }
+    }   
     // yes AND no : 리스트 제일 첫 번째에 내가 받은 채널 넣어라
-    channels.value.unshift(channel)  
+    channels.value.unshift(channel)
   }
 
 
-  const pagingChannels = () =>{
+  const pagingChannels = async () =>{
+    if (hasNext.value) {
+      // getChannels()
+      const lastChannelId = channels.value[channels.value.length-1].id;
+      console.log("마지막 채널은 : ", channels.value[channels.value.length-1]);
+      getChannels(lastChannelId);
+    }
+  }
 
+  const getChannels = async (lastChannelId?: number) =>{
+    let result = null;
+    if (lastChannelId!==null)  
+      result = await client.value.getChannels({
+        lastChannelId,
+        limit: 20
+      })
+    else result = await client.value.getChannels({     
+      limit: 20
+    })
+    channels.value.push(...result.channels);
+    hasNext.value = result.hasNext;
+    console.log(result.channels);  
   }
 
 
-  return { client, init, login, getChannels, channels, setChannels }
+  return { client, init, login, getChannels, channels, setChannels, pagingChannels }
 });

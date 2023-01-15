@@ -62,6 +62,7 @@ const { client, channels } = storeToRefs(chatStore);
 client.value.on('event', (data) => {
     if (data.type === 'message') {
         chatStore.setChannels(data.channel);
+        console.log("받은 데이터",data);        
     }    
 })
 
@@ -71,7 +72,7 @@ function handleNotificationListScroll(e: { target: Element }) {
     const { scrollHeight, scrollTop, clientHeight } = e.target;
     const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
     // 일정 한도 밑으로 내려오면 함수 실행
-    if (isAtTheBottom) console.log("스크롤한다");
+    if (isAtTheBottom) chatStore.pagingChannels()
 }
 
 </script>
