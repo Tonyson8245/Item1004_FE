@@ -24,8 +24,10 @@
                     </div>
                                      
                     <!-- 채널 목록 카드 -->
-                  
-                    <channel v-for="(channel, i) in channels.channels" :key="i" :channel="channel"/>
+                    <div class="h-full overflow-hidden">
+                        <channel v-for="(channel, i) in channels" :key="i" :channel="channel"/>
+                    </div>
+                    
 
                 </div>                
             </div>
@@ -60,8 +62,9 @@ const { client, channels } = storeToRefs(chatStore);
 
 
 client.value.on('event', (data) => {
-    // console.log(data);
-    chatStore.setChannels(data.channel);
+    if (data.type === 'message') {
+        chatStore.setChannels(data.channel);
+    }    
 })
 
 

@@ -13,7 +13,7 @@
         <div class="flex flex-col w-full">
             
         <div class="flex w-full items-baseline">
-            <p class="text-lg font-medium">이걸닉네임이라고짓다니말도안돼</p>
+            <p class="text-lg font-medium">{{ props.channel.name }}</p>
             <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-3 ml-1"/>
             <p class="text-xs ml-auto text-everly-dark_grey">오후 10:27 </p>
         </div>

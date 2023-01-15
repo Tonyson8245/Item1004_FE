@@ -34,30 +34,18 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     }      
   }
     
-  const setChannels = (channel:Object) =>{
-    // list 안에 있는 채팅방의 id와 같은 값을 가지고 있는 방을 찾아서 가장 최상단에 올려준다. 올려준다는 얘기는 같은 채팅방원소를 새로운 채팅방으로 교체한다는 얘기힘
-    // 만약에 채팅 방이 없다면은 그냥 리스트에 푸쉬해서 넣어준다.
-    console.log("채널", channel);
-    console.log("채널리스트", channels.value);
-    // 리스트 item 중에 item.id가 같은 아이템이 있다면 
-    const doGetChannel = channels.value.filter(item => item.id === channel.id)
-
-    console.log("찾은 채널 : ", doGetChannel);
-    
+  // 채팅방 목록 갱신
+  const setChannels = (channel:Object) =>{ 
+    // 리스트 안에 내가 받은 채널과 같은아이디 가지고 있는 채널이 있냐?
+    const doGetChannel = channels.value.find(item => item.id === channel.id)
+    // yes : 리스트 안에서 내가 받은 채널과 같은 아이디 가지고 잇는 채널 찾아서 지워라    
     if (doGetChannel) {
       channels.value.forEach((item, i, origin)=>{
-        if (item === doGetChannel) {
-          origin.splice(i,1);
-        }
-
-      })
-
-      console.log('결과 목록 : ',channels.value);
-      
+        if (item === doGetChannel)  origin.splice(i,1)        
+      })      
     }
+    // yes AND no : 리스트 제일 첫 번째에 내가 받은 채널 넣어라
+    channels.value.unshift(channel)  
   }
-
-
   return { client, init, login, getChannels, channels, setChannels }
-
 });
