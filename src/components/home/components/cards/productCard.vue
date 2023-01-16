@@ -1,10 +1,12 @@
 <template>
-  <div class="relative cursor-default" @click="movePost()">
-    <!-- <div
+  <div class="relative cursor-default">
+    <div
+      v-if="props.card?.post.status == 'end'"
       class="absolute w-full h-full bg-white rounded-lg opacity-50 border"
       style="z-index: 1"
     ></div>
     <div
+      v-if="props.card?.post.status == 'end'"
       class="absolute w-full h-full backdrop-blur-[1.3px] rounded-lg border flex items-center justify-center"
       style="z-index: 2"
     >
@@ -13,8 +15,8 @@
       >
         판매<br />완료
       </div>
-    </div> -->
-    <div class="p-3 md:p-5 relative">
+    </div>
+    <div class="p-3 md:p-5 relative" @click="movePost()">
       <div>
         <!--카드 헤더 -->
         <div class="flex justify-between">

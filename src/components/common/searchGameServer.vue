@@ -8,7 +8,7 @@
         @input="(event: Event) => {
   setTempKeyword((event.target as HTMLInputElement).value); offServerFilter();
 }"
-        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[220px] bg-white"
+        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[220px]"
       />
       <div class="absolute right-3 top-2 md:right-10 md:top-2">
         <img src="@/assets/icon/circle_search_grey.svg" alt="" class="w-6" />
@@ -25,6 +25,7 @@
           <li
             v-for="value in props.smiliarlist"
             class="flex items-center px-3 hover:bg-[#e9e9fd] cursor-pointer"
+            @click="clickKeyword(value)"
           >
             <div>
               <img
@@ -33,11 +34,7 @@
                 alt=""
               />
             </div>
-            <div
-              href=""
-              class="flex py-2 duration-300 text-sm"
-              @click="clickKeyword(value)"
-            >
+            <div href="" class="flex py-2 duration-300 text-sm">
               {{ value.name }}
             </div>
           </li>
@@ -98,10 +95,8 @@ function toggleSearch() {
 
 const setTempKeyword = debounce((keyword: string | null) => {
   //값이 없을 경우는 초기화
-
   if (keyword == "") {
     if (props.type == "game") {
-      store.setstoreTempGameKeyword("");
       store.setstoreGameKeyword("", 0);
       store.resetstoreGameSmilar();
     } else {
@@ -111,19 +106,26 @@ const setTempKeyword = debounce((keyword: string | null) => {
     }
   }
   //값이 있는 경우
-  else if (keyword != null) {
-    inputKeyword.value = keyword;
+  else if (keyword != "" && keyword != null) {
     //게임 검색일경우
     if (props.type == "game") {
       //기존값과 신규값이 다를 때만 갱신하도록 한다.
-      if (storeGameKeyword.value != storeTempGameKeyword.value)
+      if (storeGameKeyword.value != storeTempGameKeyword.value) {
+        //값이 다르면 해당 키워드를 대입
+        inputKeyword.value = keyword;
         store.setstoreTempGameKeyword(keyword);
+        store.getstoreGamSmimilar(keyword);
+      }
     }
     //서버 검색일 경우
     else {
       //기존값과 신규값이 다를 때만 갱신하도록 한다.
-      if (storeServerKeyword.value != storeTempServerKeyword.value)
+      if (storeServerKeyword.value != storeTempServerKeyword.value) {
+        //값이 다르면 해당 키워드를 대입
+        inputKeyword.value = keyword;
         store.setstoreTempServerKeyword(keyword);
+        store.getstoreServerKeyword(keyword);
+      }
     }
   }
 }, 200);
@@ -140,13 +142,15 @@ function clickKeyword(value: GameDto) {
 
   //type에 따라서 해당 값을 store에 저장
   if (props.type == "game") {
-    store.setstoreTempGameKeyword(name);
-    store.setstoreGameKeyword(name, idx);
+    store.setstoreGameKeyword(name, idx); // 해당값을 저장
+    store.setstoreTempGameKeyword(name); // 임시값도 통일
+    store.resetstoreGameSmilar(); // 리스트 초기화
     //서버 검색 키기
     store.setstoreShowServerFilter(true);
   } else {
-    store.setstoreTempServerKeyword(name);
     store.setstoreServerKeyword(name);
+    store.setstoreTempServerKeyword(name);
+    store.resetstoreServerSmilar();
   }
   // 리스트 닫기
   store.setstoreShowServerSimilar(false);

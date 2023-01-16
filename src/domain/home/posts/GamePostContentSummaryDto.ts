@@ -7,9 +7,9 @@ import {
   Length,
   Min,
 } from "class-validator";
-import { EnumContractTypeDto } from "./enum/EnumContractTypeDto";
-import { EnumProductTypeDto } from "./enum/EnumProductTypeDto";
-import { EnumPostStatusDto } from "./enum/EnumPostStatusDto";
+import { EnumContractTypeDto } from "../enum/EnumContractTypeDto";
+import { EnumProductTypeDto } from "../enum/EnumProductTypeDto";
+import { EnumPostStatusDto } from "../enum/EnumPostStatusDto";
 
 export class GamePostContentSummaryDto {
   /* 게임 거래글 공통 정보 */

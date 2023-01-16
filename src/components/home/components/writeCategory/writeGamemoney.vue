@@ -6,7 +6,9 @@
     >
       <!-- 보유수량을 입력해주세요 -->
       <div class="col-span-2 md:pt-0">
-        <div class="flex">보유수량 <span class="hidden md:block">을</span></div>
+        <div class="flex">
+          {{ SellBuy }}수량 <span class="hidden md:block">을</span>
+        </div>
         <div class="hidden md:block">입력해주세요</div>
       </div>
       <div class="col-span-1 hidden md:block"></div>
@@ -16,8 +18,8 @@
             <inputwithClose
               :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
               :propsPlaceholder="gamemoneyQtyPlaceholder"
-              :modelValue="gamemoneyQty"
-              @getModel="gamemoneyQty = $event"
+              :modelValue="storemaxAmount"
+              @getModel="storemaxAmount = $event"
             />
           </div>
           <div class="flex-none mx-2 sm:mx-3">
@@ -39,8 +41,8 @@
             <inputwithClose
               :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
               :propsPlaceholder="SellBuy + minQtyPlaceholder"
-              :modelValue="minQty"
-              @getModel="minQty = $event"
+              :modelValue="storeminAmount"
+              @getModel="storeminAmount = $event"
             />
           </div>
           <div class="flex-none mx-2 sm:mx-3">
@@ -63,15 +65,15 @@
           <inputwithClose
             :propsClass="`px-3 md:px-5 text-left py-2 shrink flex-1 w-full`"
             :propsPlaceholder="priceUnitPlaceholder"
-            :modelValue="priceUnit"
-            @getModel="priceUnit = $event"
+            :modelValue="storesaleUnit"
+            @getModel="storesaleUnit = $event"
           />
           <div class="flex-none">{{ currency }} 당</div>
           <inputwithClose
             :propsClass="`px-3 md:px-5 text-left py-2 shrink flex-1 w-full`"
             :propsPlaceholder="SellBuy + priceSellBuyPlaceholer"
-            :modelValue="priceSellBuy"
-            @getModel="priceSellBuy = $event"
+            :modelValue="storepricePerUnit"
+            @getModel="storepricePerUnit = $event"
           />
           <div class="flex-none">원</div>
         </div>
@@ -87,8 +89,8 @@
         <inputwithClose
           :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
           :propsPlaceholder="titlePlaceholder"
-          :modelValue="title"
-          @getModel="title = $event"
+          :modelValue="storetitle"
+          @getModel="storetitle = $event"
         />
         <div class="pl-3 md:pl-5 md:text-sm text-xs pt-1 text-everly-dark_grey">
           *거래제목은 한글,영어 숫자로만 작성이 가능합니다.
@@ -112,8 +114,10 @@
           <textarea
             id="message"
             rows="6"
-            class="block p-3 w-full text-sm md:text-base rounded-lg border resize-none md:resize-y border-everly_dark_grey focus:border-[#3f52fc] h-full"
+            class="block p-3 w-full text-sm md:text-base rounded-lg border resize-none md:resize-y border-everly-mid_grey focus:border-[#3f52fc] h-full"
             :Placeholder="descriptionPlaceholder"
+            v-model="storecontent"
+            @input="(event: Event) => { storecontent = (event.target as HTMLInputElement).value }"
           ></textarea>
         </div>
       </div>
@@ -136,8 +140,8 @@
           <inputwithClose
             :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
             :propsPlaceholder="characterPlaceholder"
-            :modelValue="character"
-            @getModel="character = $event"
+            :modelValue="storecharacterName"
+            @getModel="storecharacterName = $event"
           />
         </div>
       </div>
@@ -163,12 +167,12 @@ import modalWriteComfirm from "@/components/modal/modalWriteComfirm.vue";
 
 const currency = "메소";
 const writeStore = useWriteStore();
-const { storeSellBuy } = storeToRefs(writeStore);
+const { storepostType } = storeToRefs(writeStore);
 
 let SellBuy = ref("판매");
 
-watch(storeSellBuy, () => {
-  if (storeSellBuy.value == "buy") SellBuy.value = "구매";
+watch(storepostType, () => {
+  if (storepostType.value == "buy") SellBuy.value = "구매";
   else SellBuy.value = "판매";
 });
 
@@ -180,20 +184,29 @@ let titlePlaceholder = "거래 제목을 입력해주세요";
 let descriptionPlaceholder = "거래 상세정보를 입력해주세요";
 let characterPlaceholder = "전달할 캐릭터명을 입력해주세요";
 
-let gamemoneyQty = ref("");
-let minQty = ref("");
-let priceUnit = ref("");
-let priceSellBuy = ref("");
-let title = ref("");
-let description = ref("");
-let character = ref("");
-
 //등록 확인 모달
 const showModal = ref(false);
 function select(value: string) {
   console.log(value);
   showModal.value = false;
 }
+
+//글 작성
+const {
+  storetitle,
+  storecontent,
+  storeproductType,
+  storesaleUnit,
+  storepricePerUnit,
+  storemaxAmount,
+  storeminAmount,
+  storecharacterName,
+  storeregistration,
+  storeroleIdx,
+  storelevel,
+  storehasPaymentHistory,
+  storeisDuplicatedSync,
+} = storeToRefs(writeStore);
 </script>
 
 <style scoped></style>

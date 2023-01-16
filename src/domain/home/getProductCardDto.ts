@@ -24,7 +24,7 @@ export class getProductCardBodyDto {
     productTypes == ""
       ? delete this.productTypes
       : (this.productTypes = productTypes);
-    gameIdx == 0 ? delete this.gameIdx : (this.gameIdx = gameIdx);
+    gameIdx == 0 ? this.gameIdx : (this.gameIdx = gameIdx);
     serverIdx == 0 ? delete this.serverIdx : (this.serverIdx = serverIdx);
   }
 }

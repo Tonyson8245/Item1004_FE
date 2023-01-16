@@ -7,7 +7,7 @@ import {
   IsString,
   Length,
 } from "class-validator";
-import { EnumGameRegistrationDto } from "./enum/EnumGameRegistrationDto";
+import { EnumGameRegistrationDto } from "../enum/EnumGameRegistrationDto";
 
 export class GamePostContentDetailDto extends GamePostContentSummaryDto {
   /* 게임 거래글 공통 정보 */

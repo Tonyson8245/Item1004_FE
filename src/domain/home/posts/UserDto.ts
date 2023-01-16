@@ -9,7 +9,7 @@ import {
   Min,
 } from "class-validator";
 
-import { EnumContractLevelDto } from "./enum/EnumContractLevelDto";
+import { EnumContractLevelDto } from "../enum/EnumContractLevelDto";
 
 export class UserDto {
   @IsNumber()

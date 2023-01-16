@@ -7,7 +7,6 @@ import type { GameServerDto } from "@/domain/home/gameServerDto";
 export const useCommonStore = defineStore("commonStore", {
   state: () => ({
     //사용하는 변수
-    //더비 파일
     storeGameSimilar: {} as GameDto[],
     storeServerSimilar: {} as GameServerDto[],
 
@@ -20,8 +19,8 @@ export const useCommonStore = defineStore("commonStore", {
 
     //기존 필터 값
     storeTempKeyword: "",
-
     storeCategory: ``,
+
     //게임,게임서버 설정
     storeGameKeyword: "",
     storeServerKeyword: "",
@@ -35,6 +34,14 @@ export const useCommonStore = defineStore("commonStore", {
 
   getters: {
     //서버로 부터 가져오는 로직 나중에 axios 붙힐때 연동할 생각할 것
+    //게임 서버 뱃지
+    storeGameServerBadge: (state) => {
+      var gameName = state.storeGameKeyword;
+      var serverName = state.storeServerKeyword;
+      if (gameName != " " && serverName != "")
+        return gameName + "-" + serverName;
+      else return gameName + "-전체서버";
+    },
   },
   actions: {
     setstoreShowGameSimilar(status: boolean) {
@@ -51,9 +58,11 @@ export const useCommonStore = defineStore("commonStore", {
       this.storeServerKeyword = keyword;
     },
 
-    //입력된 게임 검색값으로 리스트를 가져오는 함수
     setstoreTempGameKeyword(keyword: string) {
       this.storeTempGameKeyword = keyword;
+    },
+    //입력된 게임 검색값으로 리스트를 가져오는 함수
+    getstoreGamSmimilar(keyword: string) {
       this.storeShowGameSimilar = true;
       //값이 있을때만 실행
 
@@ -79,6 +88,8 @@ export const useCommonStore = defineStore("commonStore", {
     //입력된 서버 검색값으로 리스트를 가져오는 함수
     setstoreTempServerKeyword(keyword: string) {
       this.storeTempServerKeyword = keyword;
+    },
+    getstoreServerKeyword(keyword: string) {
       console.log(keyword);
 
       if (keyword != null && keyword != "") {
@@ -106,6 +117,11 @@ export const useCommonStore = defineStore("commonStore", {
     },
     setstoreShowServerFilter(status: boolean) {
       this.storeShowServerFilter = status;
+      if (!status) {
+        //꺼지면 값도 초기화 되게 함
+        this.storeTempServerKeyword = "";
+        this.storeServerKeyword = "";
+      }
     },
     // 기존 필터 저장해두는 곳
     setstoreTempfilter() {
@@ -144,7 +160,7 @@ export const useCommonStore = defineStore("commonStore", {
       this.storeGameSimilar = {} as GameDto[];
     },
     resetstoreServerSmilar() {
-      this.storeServerSimilar = {} as GameDto[];
+      this.storeServerSimilar = {} as GameServerDto[];
     },
 
     refreshSearchGameServer() {

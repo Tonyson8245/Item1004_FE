@@ -205,7 +205,6 @@ const { storeGameKeywordIdx, storeServerKeywordIdx } = storeToRefs(commonStore);
 
 //처음 페이지 로드 될때 동작
 onMounted(() => {
-  console.log("mount");
   getProductList(6);
 });
 
@@ -243,9 +242,7 @@ function getProductList(pageUnit: number) {
       serverIdx
     );
 
-    mainStore.setstoreProductCard(payload).then((res) => {
-      console.log("loaded");
-    });
+    mainStore.setstoreProductCard(payload).then((res) => {});
   }
 }
 

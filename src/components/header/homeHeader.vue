@@ -1,12 +1,12 @@
 <template>
-  <div class="bg-[#fafafa]">
+  <div class="bg-[#fafafa] relative">
     <!-- 웹 팔래요/살래요/검색/등록 -->
     <!-- 검색 : 메인 페이지 & 검색 결과 페이지 -->
     <div>
-      <div class="flex cursor-default inline-block">
+      <div class="flex cursor-default">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9 relative">
+          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9">
             <div class="flex justify-between items-center h-[3.5rem]">
               <div class="flex space-x-4 text-xl">
                 <!-- 팔래요 활성화 -->
@@ -61,10 +61,7 @@
                   <span class="text-everly-red font-bold w-13">살래요</span>
                 </div>
               </div>
-              <search
-                class="w-[760px] absolute top-[37px] right-[205px]"
-                @click.stop=""
-              />
+              <search class="w-[760px]" @click.stop="" />
               <button
                 class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border h-full"
                 @click="router.push(`/write`)"
@@ -130,9 +127,9 @@
                 <!-- 게임/게임서버 베찌-->
                 <div
                   class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeServerKeyword != ''"
+                  v-if="storeServerKeyword != '' || storeGameKeyword != ''"
                 >
-                  <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span
+                  <span>{{ storeGameServerBadge }}</span
                   ><img
                     src="@/assets/icon/close_white.svg"
                     class="w-2"
@@ -148,10 +145,10 @@
             <div>
               <!-- 웹 필터 -->
               <div
-                class="flex cursor-default fixed w-full bg-[#fafafa] w-full min-w-[1180px] pt-2 left-0 top-[186px] border-b-2"
+                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[100px] border-b-2"
                 v-if="storeShowFilter_web"
               >
-                <div class="flex-1 hidden md:block"></div>
+                <div class="flex-1 block"></div>
                 <div
                   class="flex-none ml-2 w-[760px] border-everly-main border rounded-lg overflow-hidden bg-everly-white mb-12"
                 >
@@ -391,7 +388,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex-1 hidden md:block"></div>
+                <div class="flex-1 block"></div>
               </div>
             </div>
           </div>
@@ -481,10 +478,10 @@
         <!-- 게임/게임서버 베찌-->
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
-          v-if="storeServerKeyword != '' && storeGameKeyword != ''"
+          v-if="storeServerKeyword != '' || storeGameKeyword != ''"
           @click="closeFilterBadge(`gameServer`)"
         >
-          <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span
+          <span>{{ storeGameServerBadge }}</span
           ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
         </div>
       </div>
@@ -766,6 +763,7 @@ const {
   storeGameKeyword,
   storeServerKeyword,
   storeTempGameKeyword,
+  storeGameServerBadge,
 } = storeToRefs(commonStore);
 
 const filterStore = useFilterStore();
@@ -905,34 +903,12 @@ const conditionBadge = computed(() => {
   else return true;
 });
 
-///필터로 불러오는 로직6
+///필터로 불러오는 로직
 const mainStore = useMainStore();
 const { storeNextPage, storeinfiniteStatus, storehasnextPage } =
   storeToRefs(mainStore);
 function loadList() {
   mainStore.setstoreLoad(true);
-  // 로드된 페이지 : 로드되기 전에 두번 반복 안되게 하기 위함
-  /// TODO   스토어 이용해서 필터 가져오는 로직하면됨!!!!!!!!! TODO
-  // if (storeinfiniteStatus.value) {
-  //   //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
-  //   //다음 페이지가 있을때
-  //   if (storehasnextPage.value) {
-  //     var page = storeNextPage.value;
-  //     var sellbuy = storeSellBuy.value;
-  //     var categorys = filterStore.getCategorys;
-  //     var gameIdx = storeGameKeywordIdx.value;
-  //     var serverIdx = storeServerKeywordIdx.value;
-  //     var payload = new getProductCardBodyDto(
-  //       page,
-  //       12,
-  //       sellbuy,
-  //       categorys,
-  //       gameIdx,
-  //       serverIdx
-  //     );
-  //     mainStore.setstoreProductCard(payload).then((res) => {});
-  //   }
-  // }
 }
 </script>
 

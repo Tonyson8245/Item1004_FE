@@ -18,8 +18,8 @@
             <inputwithClose
               :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
               :propsPlaceholder="pricePlaceholder"
-              :modelValue="price"
-              @getModel="price = $event"
+              :modelValue="storepricePerUnit"
+              @getModel="storepricePerUnit = $event"
             />
           </div>
           <div class="px-2">원</div>
@@ -36,8 +36,8 @@
         <inputwithClose
           :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
           :propsPlaceholder="titlePlaceholder"
-          :modelValue="title"
-          @getModel="title = $event"
+          :modelValue="storetitle"
+          @getModel="storetitle = $event"
         />
         <div class="pl-3 md:pl-5 md:text-sm text-xs pt-1 text-everly-dark_grey">
           *거래제목은 한글,영어 숫자로만 작성이 가능합니다.
@@ -67,8 +67,10 @@
           <textarea
             id="message"
             rows="6"
-            class="block p-3 w-full text-sm md:text-base rounded-lg border resize-none md:resize-y border-everly_dark_grey focus:border-[#3f52fc] h-full"
+            class="block p-3 w-full text-sm md:text-base rounded-lg border resize-none md:resize-y border-everly-mid_grey focus:border-[#3f52fc] h-full"
             :Placeholder="descriptionPlaceholder"
+            v-model="storecontent"
+            @input="(event: Event) => { storecontent = (event.target as HTMLInputElement).value }"
           ></textarea>
         </div>
       </div>
@@ -104,8 +106,8 @@
           <inputwithClose
             :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
             :propsPlaceholder="`캐릭터 레벨을 입력하세요`"
-            :modelValue="level"
-            @getModel="level = $event"
+            :modelValue="storelevel"
+            @getModel="storelevel = $event"
           />
         </div>
       </div>
@@ -120,14 +122,14 @@
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="accountType = $event"
+          @getValue="storeregistration = $event"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="accountType = $event"
+          @getValue="storeregistration = $event"
         />
       </div>
       <!-- 결제내역 유무 -->
@@ -141,14 +143,14 @@
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="cashed = $event"
+          @getValue="storehasPaymentHistory = $event"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="cashed = $event"
+          @getValue="storehasPaymentHistory = $event"
         />
       </div>
       <!-- 이중연동 유무를-->
@@ -162,14 +164,14 @@
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="doublesync = $event"
+          @getValue="storeisDuplicatedSync = $event"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['a', 'b', 'c']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="doublesync = $event"
+          @getValue="storeisDuplicatedSync = $event"
         />
       </div>
     </div>
@@ -195,12 +197,12 @@ import ModalWriteComfirm from "@/components/modal/modalWriteComfirm.vue";
 
 const currency = "메소";
 const writeStore = useWriteStore();
-const { storeSellBuy } = storeToRefs(writeStore);
+const { storepostType } = storeToRefs(writeStore);
 
 let SellBuy = ref("판매");
 
-watch(storeSellBuy, () => {
-  if (storeSellBuy.value == "buy") {
+watch(storepostType, () => {
+  if (storepostType.value == "buy") {
     SellBuy.value = "구매";
   } else {
     SellBuy.value = "판매";
@@ -226,6 +228,23 @@ function select(value: string) {
   console.log(value);
   showModal.value = false;
 }
+
+//글작성
+const {
+  storetitle,
+  storecontent,
+  storeproductType,
+  storesaleUnit,
+  storepricePerUnit,
+  storemaxAmount,
+  storeminAmount,
+  storecharacterName,
+  storeregistration,
+  storeroleIdx,
+  storelevel,
+  storehasPaymentHistory,
+  storeisDuplicatedSync,
+} = storeToRefs(writeStore);
 </script>
 
 <style scoped></style>
