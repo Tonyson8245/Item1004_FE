@@ -7,7 +7,7 @@
             <!-- 채팅 목록 div -->
             <div class="md:h-[55.688rem] md:w-[25rem] border border-solid border-everly-mid_grey flex flex-col">
                 <!-- 아래 div를 컴포넌트로 만들 것 -->
-                    <div class="p-5 pb-0 flex-grow">
+                    <div class="p-5 pb-0">
                         <div class="flex items-center">
                             <p class=" font-bold text-xl mr-3">채팅목록</p>   
                             <!-- 채팅 숫자-->
@@ -16,7 +16,7 @@
                             </div>                      
                             
                         </div>
-                        <div class="rounded-lg mt-3 px-5 py-3 w-full bg-everly-light_grey flex">
+                        <div class=" hidden rounded-lg mt-3 px-5 py-3 w-full bg-everly-light_grey flex">
                             <input v-model="searchTargetUser" class="focus:outline-none bg-everly-light_grey" type="text" placeholder="상대방의 닉네임을 입력해주세요">
                             <img class="ml-auto" src="@/assets/icon/search_gray.svg" @click="searchChannel" />
                         </div>   

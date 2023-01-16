@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import type resp from "@/domain/chat/resp.interface";
 import type channel from "@/domain/chat/channel.interface";
+import type { user } from "@/domain/user/user.interface";
 
 export const useChatStore = defineStore("chatStore", ()=>  {
     
@@ -18,20 +19,21 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       // TODO: client.value가 null이면 새로 생성한다.
     return client.value = new TalkPlus.Client({appId: 'bf5ae95e-5f1d-42af-90cf-c725c78db1e0'});
   }
-
-  
   //원래는 여기서 사용자 로그인을 서버에서 톡플러스로 요청 해와야 합니데이~~~~   
   const login = async () => {
     if (!client.value.isLoggedIn()) {
+      const localData = localStorage.getItem("user");
+      const userData = JSON.parse(localData) as user;
+            
       try {
-        user.value = await client.value.loginAnonymous({
-          userId: 'YSBhHC65Kh', // unique userId
-          profileImageUrl: 'https://archeage.nexon.com/characters/dbf279b5-20ff-4fba-8e6a-c1301fb97657/profileImage', // username
-        });   
+          user.value = await client.value.loginAnonymous({
+            userId: `${userData.idx}`, // unique userId
+            profileImageUrl: "https://archeage.nexon.com/characters/dbf279b5-20ff-4fba-8e6a-c1301fb97657/profileImage",
+            username: userData.nickname
+          });   
       } catch (error) {
-        console.log("error : ",error);
-      }
-          
+        console.log("error : ", error);
+      }          
       return user        
     }      
   }
@@ -68,7 +70,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     }
     try {
       result = await client.value.getChannels(getchannelparams)
-      console.log("인터페이스 확인용", result);    
+      // console.log("인터페이스 확인용", result);    
       channels.value.push(...result.channels);
       hasNext.value = result.hasNext;
       getUnreadCount();
@@ -91,21 +93,13 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   // 채팅 대상 검색
   const searchChannel = async (targetUser: string) =>{
     let result: resp;   
-
-    console.log("내 아이디",user.value);
-    console.log("찾을 유저",targetUser);
-    
-    // try {
-    //   result = await client.value.getChannels({
-    //     members:[]
-
-    //   })
-    // } catch (error) {
-      
-    // }
+    // console.log("내 아이디",user.value.id);
+    // console.log("찾을 유저",targetUser);    
+    result = await client.value.searchChannels({      
+      members: ['5Qxp8jLsrx'],
+      limit: 10,
+    });
+    console.log(result);    
   }
-
-
-
   return { client, init, login, getChannels, channels, setChannels, pagingChannels, unreadCount, getUnreadCount, searchChannel }
 });
