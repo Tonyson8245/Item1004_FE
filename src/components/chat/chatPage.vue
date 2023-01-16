@@ -12,13 +12,13 @@
                             <p class=" font-bold text-xl mr-3">채팅목록</p>   
                             <!-- 채팅 숫자-->
                             <div class="w-5 h-5 rounded-full text-center bg-everly-red text-everly-white flex items-center justify-center">
-                                <p class=" text-sm">9</p>
+                                <p class=" text-sm">{{ unreadCount }}</p>
                             </div>                      
                             
                         </div>
                         <div class="rounded-lg mt-3 px-5 py-3 w-full bg-everly-light_grey flex">
-                            <input class=" focus:outline-none bg-everly-light_grey" type="text" placeholder="상대방의 닉네임을 입력해주세요">
-                            <img src="@/assets/icon/search_gray.svg" class=" ml-auto"/>
+                            <input v-model="searchTargetUser" class="focus:outline-none bg-everly-light_grey" type="text" placeholder="상대방의 닉네임을 입력해주세요">
+                            <img class="ml-auto" src="@/assets/icon/search_gray.svg" @click="searchChannel" />
                         </div>   
                     </div>
                                      
@@ -52,29 +52,35 @@ import { ref, computed } from "vue";
 // const userData = JSON.parse(localData) as user;
 
 const chatStore = useChatStore();
-
-const { client, channels } = storeToRefs(chatStore);
-
-
-// console.log(userData);
-
+const { client, channels, unreadCount } = storeToRefs(chatStore);
+const searchTargetUser = ref("");
 
 client.value.on('event', (data) => {
     if (data.type === 'message') {
         chatStore.setChannels(data.channel);
-        console.log("받은 데이터",data);        
+        console.log("받은 데이터", data);
+        chatStore.getUnreadCount()
     }    
 })
 
 
-function handleNotificationListScroll(e: { target: Element }) {   
-    
-    const { scrollHeight, scrollTop, clientHeight } = e.target;
+const handleNotificationListScroll = (e: any) => {          
+    const { scrollHeight, scrollTop, clientHeight } = e.target;       
+    // console.log(scrollHeight, scrollTop, clientHeight);    
     const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
+    // console.log("scrollHeight : ",scrollHeight);
+    // console.log("scrollTop + clientHeight : ",scrollTop + clientHeight);
     // 일정 한도 밑으로 내려오면 함수 실행
-    if (isAtTheBottom) chatStore.pagingChannels()
+    if (isAtTheBottom) chatStore.pagingChannels()    
 }
 
+
+const searchChannel = () => {
+    console.log(searchTargetUser.value);
+    
+    chatStore.searchChannel(searchTargetUser.value);
+    
+}
 </script>
 
 <style scoped></style>

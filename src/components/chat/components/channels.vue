@@ -36,22 +36,15 @@
 </template>
 
 <script setup lang="ts">
+import type channel from '@/domain/chat/channel.interface';
 
-const props = defineProps({
-  channel: Object  
-});
-
-
+const props = defineProps<{ channel: channel}>();
 
 // 채팅방의 가장 최근 메세지 리턴
 const lastMessage = () =>{
-  if (props.channel.lastMessage !== null) {
-    // console.log(props.channel);    
-    return props.channel.lastMessage.text
-  }
+  if (props.channel.lastMessage !== null) return props.channel.lastMessage.text  
   return null
 }
-
 const channelTitle= () =>{
 
 }

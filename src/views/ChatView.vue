@@ -35,7 +35,6 @@ const chatClient = chatStore.init();
 const { client, channels } = storeToRefs(chatStore);
 
 
-
 // TalkPlus api 로그인
 const login = async () => await chatStore.login()
 
@@ -55,4 +54,7 @@ login().then((data)=>{
 
 </script>
 
-<style scoped></style>
+<style scoped>
+
+
+</style>
