@@ -16,7 +16,7 @@
                             </div>                      
                             
                         </div>
-                        <div class=" hidden rounded-lg mt-3 px-5 py-3 w-full bg-everly-light_grey flex">
+                        <div class=" rounded-lg mt-3 px-5 py-3 w-full bg-everly-light_grey flex">
                             <input v-model="searchTargetUser" class="focus:outline-none bg-everly-light_grey" type="text" placeholder="상대방의 닉네임을 입력해주세요">
                             <img class="ml-auto" src="@/assets/icon/search_gray.svg" @click="searchChannel" />
                         </div>   
@@ -25,16 +25,62 @@
                     <!-- 채널 목록 카드 -->
                     <div class="flex-grow overflow-scroll overflow-x-hidden" @scroll="handleNotificationListScroll">
                         <channel v-for="(channel, i) in channels" :key="i" :channel="channel"/>
-                    </div>
-                    
+                    </div>                    
            
             </div>
             <!-- 채팅 내용 div -->
-            <div class=" md:w-[47.5rem]">
+            <div class=" md:w-[47.5rem] border border-everly-mid_grey flex flex-col rounded-b-lg overflow-hidden">
+                <div class=" h-[6.5rem] border-b border-everly-mid_grey flex items-center pl-5">
+                    <!-- 프로필 이미지 -->
+                    <div class="rounded-lg overflow-hidden mr-2">                           
+                        <img
+                            src="@/assets/img/profile_green.jpeg"
+                            alt=""
+                            class=" w-14 rounded-lg"
+                        />
+                    </div> 
+                    <!-- 닉네임, 유저코드 -->
+                    <div class="flex flex-col">
+                        <div class="flex">
+                            <h1 class=" font-bold ">에블리</h1>
+                            <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-4 ml-1"/>
+                        </div>
+                        <div class="flex text-xs flex-grow text-everly-dark_grey">
+                            <p class="mr-2">유저코드</p>
+                            <p class="mr-1">#A2379F56GH</p>
+                            <img src="@/assets/icon/copy_grey.svg" alt="" />
+                        </div>
+                    </div>                    
+                </div>
+                <div class="h-full bg-op-30-right-blue flex flex-col">
+                    <!-- 채팅 내용 화면 영역 -->
+                    <div class="px-5 mt-5">
+                        <div class="w-full flex items-end">
+                            <!-- 프로필 사진 -->
+                            <div class="rounded-lg overflow-hidden mr-3">                           
+                                <img
+                                    src="@/assets/img/profile_green.jpeg"
+                                    alt=""
+                                    class="w-14 rounded-lg"
+                                />
+                            </div>
+                            <!-- 채팅 내용 -->
+                            <p class="text-sm px-3 py-2 h-fit rounded-lg shadow-md bg-everly-white text-everly-dark_grey">안녕하세요 답장이 늦었습니다!!!!</p>
+                            <p class=" ml-2 text-xs text-everly-dark_grey">오후 06:00</p>
+                        </div>
+                    </div>
+                    <!-- 채팅 입력 영역 -->
+                    <form class=" mt-auto bg-white border-t rounded-t-lg flex items-center">   
+                        <div class="w-full flex justify-center">
+                            <textarea class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용 입력하셈 시벌탱" rows="1" ></textarea>                        
+                        </div>                     
+                        <button class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
+                    </form>
+                </div>
 
             </div>
         </div>
-        <div class="flex-grow"></div>
+        <div class="flex-grow "></div>
     </div>
 </div>
 </template>
@@ -57,8 +103,8 @@ const searchTargetUser = ref("");
 
 client.value.on('event', (data) => {
     if (data.type === 'message') {
-        chatStore.setChannels(data.channel);
         console.log("받은 데이터", data);
+        chatStore.setChannels(data.channel);
         chatStore.getUnreadCount()
     }    
 })
@@ -66,12 +112,10 @@ client.value.on('event', (data) => {
 
 const handleNotificationListScroll = (e: any) => {          
     const { scrollHeight, scrollTop, clientHeight } = e.target;       
-    // console.log(scrollHeight, scrollTop, clientHeight);    
     const isAtTheBottom = scrollHeight === scrollTop + clientHeight;
-    // console.log("scrollHeight : ",scrollHeight);
-    // console.log("scrollTop + clientHeight : ",scrollTop + clientHeight);
     // 일정 한도 밑으로 내려오면 함수 실행
     if (isAtTheBottom) chatStore.pagingChannels()    
+   
 }
 
 
@@ -83,4 +127,10 @@ const searchChannel = () => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.bg-op-30-right-blue{
+    background-color: rgba(233, 233, 253, 0.23)
+}
+
+</style>
