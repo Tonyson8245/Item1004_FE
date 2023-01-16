@@ -45,21 +45,22 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onUnmounted } from "vue";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
 import type { PropType } from "vue";
 import type { GameDto } from "@/domain/home/gameDto";
+import common from "@/common";
 
-const store = useCommonStore();
+const commonStore = useCommonStore();
 
 const {
-  storeGameKeyword,
-  storeServerKeyword,
+  commonStoreGameKeyword,
+  commonStoreServerKeyword,
   storeTempGameKeyword,
   storeTempServerKeyword,
-} = storeToRefs(store);
+} = storeToRefs(commonStore);
 
 const props = defineProps({
   smiliarlist: Object as PropType<GameDto[]>,
@@ -83,11 +84,11 @@ const placeholder = computed(() => {
 //현재 type에 따라 검색창 실행
 function toggleSearch() {
   if (props.type == "game") {
-    store.setstoreShowGameSimilar(true);
-    store.setstoreShowServerSimilar(false);
+    commonStore.setstoreShowGameSimilar(true);
+    commonStore.setstoreShowServerSimilar(false);
   } else {
-    store.setstoreShowServerSimilar(true);
-    store.setstoreShowGameSimilar(false);
+    commonStore.setstoreShowServerSimilar(true);
+    commonStore.setstoreShowGameSimilar(false);
   }
 }
 
@@ -97,12 +98,12 @@ const setTempKeyword = debounce((keyword: string | null) => {
   //값이 없을 경우는 초기화
   if (keyword == "") {
     if (props.type == "game") {
-      store.setstoreGameKeyword("", 0);
-      store.resetstoreGameSmilar();
+      commonStore.setstoreGameKeyword("", 0);
+      commonStore.resetstoreGameSmilar();
     } else {
-      store.setstoreTempServerKeyword("");
-      store.setstoreServerKeyword("");
-      store.resetstoreServerSmilar();
+      commonStore.setstoreTempServerKeyword("");
+      commonStore.setstoreServerKeyword("", 0);
+      commonStore.resetstoreServerSmilar();
     }
   }
   //값이 있는 경우
@@ -110,21 +111,21 @@ const setTempKeyword = debounce((keyword: string | null) => {
     //게임 검색일경우
     if (props.type == "game") {
       //기존값과 신규값이 다를 때만 갱신하도록 한다.
-      if (storeGameKeyword.value != storeTempGameKeyword.value) {
+      if (commonStoreGameKeyword.value != storeTempGameKeyword.value) {
         //값이 다르면 해당 키워드를 대입
         inputKeyword.value = keyword;
-        store.setstoreTempGameKeyword(keyword);
-        store.getstoreGamSmimilar(keyword);
+        commonStore.setstoreTempGameKeyword(keyword);
+        commonStore.getstoreGamSmimilar(keyword);
       }
     }
     //서버 검색일 경우
     else {
       //기존값과 신규값이 다를 때만 갱신하도록 한다.
-      if (storeServerKeyword.value != storeTempServerKeyword.value) {
+      if (commonStoreServerKeyword.value != storeTempServerKeyword.value) {
         //값이 다르면 해당 키워드를 대입
         inputKeyword.value = keyword;
-        store.setstoreTempServerKeyword(keyword);
-        store.getstoreServerKeyword(keyword);
+        commonStore.setstoreTempServerKeyword(keyword);
+        commonStore.getstoreServerKeyword(keyword);
       }
     }
   }
@@ -132,7 +133,7 @@ const setTempKeyword = debounce((keyword: string | null) => {
 
 //검색어가 바뀌면 서버 검색 꺼버리기
 function offServerFilter() {
-  if (props.type == "game") store.setstoreShowServerFilter(false);
+  if (props.type == "game") commonStore.setstoreShowServerFilter(false);
 }
 
 // 검색 리스트를 클릭했을 경우
@@ -142,40 +143,40 @@ function clickKeyword(value: GameDto) {
 
   //type에 따라서 해당 값을 store에 저장
   if (props.type == "game") {
-    store.setstoreGameKeyword(name, idx); // 해당값을 저장
-    store.setstoreTempGameKeyword(name); // 임시값도 통일
-    store.resetstoreGameSmilar(); // 리스트 초기화
+    commonStore.setstoreGameKeyword(name, idx); // 해당값을 저장
+    commonStore.setstoreTempGameKeyword(name); // 임시값도 통일
+    commonStore.resetstoreGameSmilar(); // 리스트 초기화
     //서버 검색 키기
-    store.setstoreShowServerFilter(true);
+    commonStore.setstoreShowServerFilter(true);
   } else {
-    store.setstoreServerKeyword(name);
-    store.setstoreTempServerKeyword(name);
-    store.resetstoreServerSmilar();
+    commonStore.setstoreServerKeyword(name, idx);
+    commonStore.setstoreTempServerKeyword(name);
+    commonStore.resetstoreServerSmilar();
   }
   // 리스트 닫기
-  store.setstoreShowServerSimilar(false);
-  store.setstoreShowGameSimilar(false);
+  commonStore.setstoreShowServerSimilar(false);
+  commonStore.setstoreShowGameSimilar(false);
 }
 
 // 서버가 검색되어 있는 상태에서, 값을 변경하려고하면 모두 지워짐
 watch(storeTempServerKeyword, () => {
   if (
-    storeServerKeyword.value != "" &&
-    storeServerKeyword.value != storeTempServerKeyword.value
+    commonStoreServerKeyword.value != "" &&
+    commonStoreServerKeyword.value != storeTempServerKeyword.value
   ) {
-    store.setstoreTempServerKeyword("");
-    store.setstoreServerKeyword("");
+    commonStore.setstoreTempServerKeyword("");
+    commonStore.setstoreServerKeyword("", 0);
   }
 });
 
 // 게임이 검색되어 있는 상태에서, 값을 변경하려고하면 모두 지워짐
 watch(storeTempGameKeyword, () => {
   if (
-    storeGameKeyword.value != "" &&
-    storeGameKeyword.value != storeTempGameKeyword.value
+    commonStoreGameKeyword.value != "" &&
+    commonStoreGameKeyword.value != storeTempGameKeyword.value
   ) {
-    store.setstoreTempGameKeyword("");
-    store.setstoreGameKeyword("", 0);
+    commonStore.setstoreTempGameKeyword("");
+    commonStore.setstoreGameKeyword("", 0);
   }
 });
 </script>

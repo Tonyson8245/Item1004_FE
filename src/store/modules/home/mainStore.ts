@@ -30,8 +30,8 @@ export const useMainStore = defineStore("mainStore", {
       await homeApi
         .getProductCard(payload)
         .then((res) => {
-          console.log(res);
           //성공하면 페이지를 올린다.
+          console.log(res);
 
           if (res.pagination.hasNextPage != null) {
             this.storehasnextPage = res.pagination.hasNextPage;

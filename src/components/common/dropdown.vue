@@ -2,6 +2,7 @@
   <div class="relative">
     <div
       :class="props.propsClass"
+      class="relative"
       @click.stop="componentStore.toogleCloseDropdown(false)"
       v-on:click="toggleDropdown()"
     >
@@ -43,10 +44,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type PropType, computed } from "vue";
+import { ref, watch, type PropType } from "vue";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { storeToRefs } from "pinia";
-import { ignorableWatch } from "@vueuse/shared";
 
 const componentStore = useComponentStore();
 const { closeDropdown } = storeToRefs(componentStore);

@@ -510,7 +510,7 @@
         </div>
         <!-- 키워드가 있고 선택하는 것에 따라 내용이 달라짐 -->
         <div
-          v-if="storeGameKeyword != '' && storeServerKeyword != ''"
+          v-if="commonStoreGameKeyword != '' && commonStoreServerKeyword != ''"
           class="p-5"
         >
           <div v-if="storeCategory == 'gameMoney'"><writeGamemoney /></div>
@@ -545,8 +545,8 @@ const {
   storeServerSimilar,
   storeShowServerSimilar,
   storeCategory,
-  storeGameKeyword,
-  storeServerKeyword,
+  commonStoreGameKeyword,
+  commonStoreServerKeyword,
 } = storeToRefs(commonStore);
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit

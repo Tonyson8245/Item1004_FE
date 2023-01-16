@@ -7,8 +7,8 @@
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
           <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9">
-            <div class="flex justify-between items-center h-[3.5rem]">
-              <div class="flex space-x-4 text-xl">
+            <div class="flex justify-between items-start h-[3.5rem]">
+              <div class="flex space-x-4 text-xl pt-4">
                 <!-- 팔래요 활성화 -->
                 <div
                   class="flex space-x-2"
@@ -61,7 +61,7 @@
                   <span class="text-everly-red font-bold w-13">살래요</span>
                 </div>
               </div>
-              <search class="w-[760px]" @click.stop="" />
+              <search class="w-[760px]" @click.stop="" style="z-index: 5" />
               <button
                 class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border h-full"
                 @click="router.push(`/write`)"
@@ -127,7 +127,7 @@
                 <!-- 게임/게임서버 베찌-->
                 <div
                   class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeServerKeyword != '' || storeGameKeyword != ''"
+                  v-if="storeGameServerBadge != ''"
                 >
                   <span>{{ storeGameServerBadge }}</span
                   ><img
@@ -145,7 +145,7 @@
             <div>
               <!-- 웹 필터 -->
               <div
-                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[100px] border-b-2"
+                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[6rem] border-b-2"
                 v-if="storeShowFilter_web"
               >
                 <div class="flex-1 block"></div>
@@ -478,7 +478,7 @@
         <!-- 게임/게임서버 베찌-->
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
-          v-if="storeServerKeyword != '' || storeGameKeyword != ''"
+          v-if="storeGameServerBadge != ''"
           @click="closeFilterBadge(`gameServer`)"
         >
           <span>{{ storeGameServerBadge }}</span
@@ -717,9 +717,9 @@
     <!-- 필터가 없을때 생기는 공백 -->
 
     <!-- 뱃지가 있을때 -->
-    <div v-if="storeShowFilter_web && conditionBadge" class="p-5"></div>
+    <div v-if="storeShowFilter_web && conditionBadge" class="p-4"></div>
     <!-- 뱃지가 없을때 -->
-    <div v-if="storeShowFilter_web && !conditionBadge" class=""></div>
+    <div v-if="storeShowFilter_web && !conditionBadge" class="p-4"></div>
   </div>
   <div class="absolute bottom-0"></div>
 </template>
@@ -734,8 +734,6 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useMainStore } from "@/store/modules/home/mainStore";
-import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
-import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 
 const router = useRouter();
 //검색 store 가져오기
@@ -760,10 +758,10 @@ const {
   storeShowGameSimilar,
   storeShowServerSimilar,
   storeShowServerFilter,
-  storeGameKeyword,
-  storeServerKeyword,
-  storeTempGameKeyword,
-  storeGameServerBadge,
+  commonStoreGameKeyword,
+  commonStoreServerKeyword,
+  commonStoreGameKeywordIdx,
+  commonStoreServerKeywordIdx,
 } = storeToRefs(commonStore);
 
 const filterStore = useFilterStore();
@@ -775,17 +773,24 @@ const {
   storeCategoryEtc,
   storeShowFilter_mobile,
   storeTempCategory,
+  storeGameServerBadge,
+  filterStoreGameKeyword,
+  filterStoreServerKeyword,
+  filterStoreGameKeywordIdx,
+  filterStoreServerKeywordIdx,
 } = storeToRefs(filterStore);
 
-//초기화
+//필터 초기화(주의!! 닫기 아님)
 function refresh() {
   filterStore.refresh();
-  commonStore.refreshSearchGameServer();
-  if (!isSamefilter()) {
-    mainStore.setstoreinfiniteStatus(true);
-    mainStore.resetsetstoreProductCard();
-    loadList();
-  }
+  commonStore.reset();
+  filterStore.refreshSearchGameServer();
+  // 초기화 이후 완료를 누르기 전에는 굳이 들어갈 필요가 없음 // TODO 추후 삭제 필요
+  // if (!isSamefilter()) {
+  //   mainStore.setstoreinfiniteStatus(true);
+  //   mainStore.resetsetstoreProductCard();
+  //   loadList();
+  // }
 }
 
 function toggleCategory(category: string) {
@@ -826,13 +831,15 @@ function toggleCategory(category: string) {
       break;
   }
 }
-// 필터 닫기
+// 필터 닫기(취소)
 function closeFilter() {
   filterStore.cancelstoreFilter();
   filterStore.setstoreShowFilter_web(false);
-}
 
-// 필터 설정
+  //닫히는 경우, 이후에는 공통 스토어를 초기화시킨다.
+  commonStore.reset();
+}
+// 필터 닫기(설정)
 function setFilter() {
   filterStore.setstoreShowFilter_web(false);
   filterStore.setstoreShowFilter_mobile(false);
@@ -840,8 +847,18 @@ function setFilter() {
   if (!isSamefilter()) {
     mainStore.setstoreinfiniteStatus(true);
     mainStore.resetsetstoreProductCard();
+    console.log("filtter 설정");
+    filterStore.setstoreGameServerFilter(
+      commonStoreGameKeyword.value,
+      commonStoreServerKeyword.value,
+      commonStoreGameKeywordIdx.value,
+      commonStoreServerKeywordIdx.value
+    );
+
+    //값을 저장한 이후에는 공통 스토어를 초기화시킨다.
     loadList();
   }
+  commonStore.reset();
 }
 //이전 필터와 동일한지 판단하는 로직
 const isSamefilter = () => {
@@ -853,15 +870,11 @@ const isSamefilter = () => {
     storeCategoryEtc.value,
   ];
 
-  var tempGameName = storeTempGameKeyword.value;
-  var tempServerName = storeTempGameKeyword.value;
-  var nowGameName = storeGameKeyword.value;
-  var nowServerName = storeServerKeyword.value;
-
+  //common 에 저장된 값과 filter에 저장된 값을 비교하는 로직
   if (
     tempCategory.toString() == nowCategory.toString() &&
-    tempGameName == nowGameName &&
-    tempServerName == nowServerName
+    commonStoreGameKeyword.value == filterStoreGameKeyword.value &&
+    commonStoreServerKeyword.value == filterStoreServerKeyword.value
   )
     return true;
   else return false;
@@ -869,7 +882,7 @@ const isSamefilter = () => {
 //필터 뱃지 설정
 function closeFilterBadge(type: string) {
   if (type == "gameServer") {
-    commonStore.refreshSearchGameServer();
+    filterStore.refreshSearchGameServer();
   } else filterStore.changeCategory(type);
   mainStore.resetsetstoreProductCard();
   mainStore.setstoreLoad(true);
@@ -884,8 +897,7 @@ const conditionBadge_mobile = computed(() => {
     !filterStore.storeCategoryEtc &&
     !filterStore.storeCategoryItem &&
     !filterStore.storeCategoryCharacter &&
-    commonStore.storeGameKeyword == "" &&
-    commonStore.storeServerKeyword == ""
+    filterStore.storeGameServerBadge == ""
   )
     return false;
   else return true;
@@ -897,7 +909,7 @@ const conditionBadge = computed(() => {
     !filterStore.storeTempCategory[1] &&
     !filterStore.storeTempCategory[2] &&
     !filterStore.storeTempCategory[3] &&
-    filterStore.storeTempKeyword == "-"
+    filterStore.storeGameServerBadge == ""
   )
     return false;
   else return true;
@@ -905,8 +917,6 @@ const conditionBadge = computed(() => {
 
 ///필터로 불러오는 로직
 const mainStore = useMainStore();
-const { storeNextPage, storeinfiniteStatus, storehasnextPage } =
-  storeToRefs(mainStore);
 function loadList() {
   mainStore.setstoreLoad(true);
 }

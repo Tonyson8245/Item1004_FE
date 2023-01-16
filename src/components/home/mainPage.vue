@@ -189,7 +189,11 @@ const router = useRouter();
 
 //////조회 관련
 const filterStore = useFilterStore();
-const { storeShowFilter_mobile } = storeToRefs(filterStore); //  웹 필터 켜짐 여부
+const {
+  storeShowFilter_mobile,
+  filterStoreGameKeywordIdx,
+  filterStoreServerKeywordIdx,
+} = storeToRefs(filterStore); //  웹 필터 켜짐 여부
 const mainStore = useMainStore();
 const {
   storeProductCard,
@@ -200,8 +204,6 @@ const {
 } = storeToRefs(mainStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
 const searchStore = useSearchStore();
 const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
-const commonStore = useCommonStore();
-const { storeGameKeywordIdx, storeServerKeywordIdx } = storeToRefs(commonStore);
 
 //처음 페이지 로드 될때 동작
 onMounted(() => {
@@ -230,8 +232,8 @@ function getProductList(pageUnit: number) {
     var page = storeNextPage.value;
     var sellbuy = storeSellBuy.value;
     var categorys = filterStore.getCategorys;
-    var gameIdx = storeGameKeywordIdx.value;
-    var serverIdx = storeServerKeywordIdx.value;
+    var gameIdx = filterStoreGameKeywordIdx.value;
+    var serverIdx = filterStoreServerKeywordIdx.value;
 
     var payload = new getProductCardBodyDto(
       page,

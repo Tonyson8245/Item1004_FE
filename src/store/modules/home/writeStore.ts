@@ -1,7 +1,8 @@
-import { defineStore, storeToRefs } from "pinia";
-import dummy_gameSimilar from "../../../assets/dummy/home/filter/gameSimilar";
-import dummy_serverSimilar from "../../../assets/dummy/home/filter/serverSimilar";
+import { defineStore } from "pinia";
 import { useCommonStore } from "@/store/modules/common/commonStore";
+import * as homeApi from "@/api/home-service/index";
+import { CreatePostDtoBody } from "@/domain/home/writePost/CreatePostDto";
+import { storeToRefs } from "pinia";
 
 export const useWriteStore = defineStore("writeStore", {
   state: () => ({
@@ -29,9 +30,36 @@ export const useWriteStore = defineStore("writeStore", {
     setstoreCategory(productType: string) {
       this.storeproductType = productType;
     },
-    test() {
-      const user = useCommonStore();
-      console.log(user.storeCategory);
+    createPost(productType: string) {
+      var commonStore = useCommonStore();
+      var { commonStoreGameKeywordIdx, commonStoreServerKeywordIdx } =
+        storeToRefs(commonStore);
+      var post = new CreatePostDtoBody(
+        this.storetitle,
+        this.storecontent,
+        commonStoreGameKeywordIdx.value,
+        commonStoreServerKeywordIdx.value,
+        productType,
+        this.storepostType,
+        parseInt(this.storesaleUnit),
+        parseInt(this.storepricePerUnit),
+        parseInt(this.storemaxAmount),
+        parseInt(this.storeminAmount),
+        this.storecharacterName,
+        this.storeregistration,
+        this.storeroleIdx,
+        this.storelevel,
+        this.storehasPaymentHistory,
+        this.storeisDuplicatedSync
+      );
+      homeApi
+        .createPost(post)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 });

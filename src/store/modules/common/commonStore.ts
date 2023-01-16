@@ -22,27 +22,17 @@ export const useCommonStore = defineStore("commonStore", {
     storeCategory: ``,
 
     //게임,게임서버 설정
-    storeGameKeyword: "",
-    storeServerKeyword: "",
+    commonStoreGameKeyword: "",
+    commonStoreServerKeyword: "",
 
-    storeGameKeywordIdx: 0,
-    storeServerKeywordIdx: 0,
+    commonStoreGameKeywordIdx: 0,
+    commonStoreServerKeywordIdx: 0,
 
     storeTempGameKeyword: "",
     storeTempServerKeyword: "",
   }),
 
-  getters: {
-    //서버로 부터 가져오는 로직 나중에 axios 붙힐때 연동할 생각할 것
-    //게임 서버 뱃지
-    storeGameServerBadge: (state) => {
-      var gameName = state.storeGameKeyword;
-      var serverName = state.storeServerKeyword;
-      if (gameName != " " && serverName != "")
-        return gameName + "-" + serverName;
-      else return gameName + "-전체서버";
-    },
-  },
+  getters: {},
   actions: {
     setstoreShowGameSimilar(status: boolean) {
       this.storeShowGameSimilar = status;
@@ -51,11 +41,12 @@ export const useCommonStore = defineStore("commonStore", {
       this.storeShowServerSimilar = status;
     },
     setstoreGameKeyword(keyword: string, idx: number) {
-      this.storeGameKeyword = keyword;
-      this.storeGameKeywordIdx = idx;
+      this.commonStoreGameKeyword = keyword;
+      this.commonStoreGameKeywordIdx = idx;
     },
-    setstoreServerKeyword(keyword: string) {
-      this.storeServerKeyword = keyword;
+    setstoreServerKeyword(keyword: string, idx: number) {
+      this.commonStoreServerKeyword = keyword;
+      this.commonStoreServerKeywordIdx = idx;
     },
 
     setstoreTempGameKeyword(keyword: string) {
@@ -90,11 +81,9 @@ export const useCommonStore = defineStore("commonStore", {
       this.storeTempServerKeyword = keyword;
     },
     getstoreServerKeyword(keyword: string) {
-      console.log(keyword);
-
       if (keyword != null && keyword != "") {
         homeApi
-          .getServerName(this.storeGameKeywordIdx, keyword)
+          .getServerName(this.commonStoreGameKeywordIdx, keyword)
           .then((res) => {
             console.log(res);
 
@@ -115,19 +104,14 @@ export const useCommonStore = defineStore("commonStore", {
         this.resetstoreServerSmilar();
       }
     },
+
     setstoreShowServerFilter(status: boolean) {
       this.storeShowServerFilter = status;
       if (!status) {
         //꺼지면 값도 초기화 되게 함
         this.storeTempServerKeyword = "";
-        this.storeServerKeyword = "";
+        this.commonStoreServerKeyword = "";
       }
-    },
-    // 기존 필터 저장해두는 곳
-    setstoreTempfilter() {
-      console.log("저장");
-      this.storeTempKeyword =
-        this.storeGameKeyword + "-" + this.storeServerKeyword;
     },
 
     setstoreCategory(Category: string) {
@@ -149,11 +133,14 @@ export const useCommonStore = defineStore("commonStore", {
       this.storeTempKeyword = "";
       this.storeCategory = ``;
       //게임,게임서버 설정
-      this.storeGameKeyword = "";
-      this.storeServerKeyword = "";
+      this.commonStoreGameKeyword = "";
+      this.commonStoreServerKeyword = "";
 
       this.storeTempGameKeyword = "";
       this.storeTempServerKeyword = "";
+
+      this.commonStoreGameKeywordIdx = 0;
+      this.commonStoreServerKeywordIdx = 0;
     },
 
     resetstoreGameSmilar() {
@@ -163,14 +150,21 @@ export const useCommonStore = defineStore("commonStore", {
       this.storeServerSimilar = {} as GameServerDto[];
     },
 
-    refreshSearchGameServer() {
-      this.resetstoreGameSmilar();
-      this.resetstoreServerSmilar();
-      this.storeTempGameKeyword = "";
-      this.storeTempServerKeyword = "";
-      this.storeGameKeywordIdx = 0;
-      this.storeServerKeyword = "";
-      this.storeGameKeyword = "";
+    //기존에 설정되어있는 필터를 다시 가져오는 로직
+    setstoreGameServerFilter(
+      game: string,
+      server: string,
+      gameIdx: number,
+      serverIdx: number
+    ) {
+      this.commonStoreGameKeyword = game;
+      this.commonStoreServerKeyword = server;
+      this.commonStoreGameKeywordIdx = gameIdx;
+      this.commonStoreServerKeywordIdx = serverIdx;
+      this.storeTempGameKeyword = game;
+      this.storeTempServerKeyword = server;
+
+      if (server != "") this.storeShowServerFilter = true;
     },
   },
 });

@@ -9,7 +9,7 @@ import {
   Min,
 } from "class-validator";
 
-export class CreatePostDto {
+export class CreatePostDtoBody {
   @IsString()
   @Matches(/^[a-zA-Z0-9ㄱ-힣()\[\]'",./\s]+$/)
   title: string;

@@ -179,7 +179,7 @@
     <div class="flex justify-center items-center w-full pb-3 pt-7 md:py-20">
       <div
         class="md:text-xl text-base border md:py-3 py-2 border-everly-mid_grey rounded-lg bg-everly-mid_grey font-bold text-everly-white w-full md:w-[490px] text-center cursor-pointer"
-        @click="showModal = true"
+        @click="createPost()"
       >
         거래 등록하기
       </div>
@@ -245,6 +245,10 @@ const {
   storehasPaymentHistory,
   storeisDuplicatedSync,
 } = storeToRefs(writeStore);
+
+function createPost() {
+  writeStore.createPost("character");
+}
 </script>
 
 <style scoped></style>
