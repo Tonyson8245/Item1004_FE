@@ -9,10 +9,12 @@
                 <!-- 아래 div를 컴포넌트로 만들 것 -->
                     <div class="p-5 pb-0">
                         <div class="flex items-center">
-                            <p class="font-bold text-xl mr-3">채팅목록</p>   
+                            <p class="font-bold text-xl mr-2">채팅목록</p>   
                             <!-- 채팅 숫자-->
-                            <div class="w-5 h-5 rounded-full text-center bg-everly-red text-everly-white flex items-center justify-center">
-                                <p class="text-sm">{{ unreadCount }}</p>
+                            <div class="min-w-[1.25rem] w-auto  h-5 rounded-full text-center bg-everly-red text-everly-white flex items-center justify-center">
+                                <p class="text-sm px-1">
+                                    {{ unreadCount }}                                    
+                                </p>
                             </div>                      
                             
                         </div>

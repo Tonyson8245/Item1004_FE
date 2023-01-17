@@ -21,8 +21,10 @@
         <div class="flex">
             <p class="text-sm text-everly-dark_grey">{{ lastMessage()  }}</p>
 
-            <div v-if="props.channel.unreadCount !==0"  class="ml-auto w-5 h-5 rounded-full text-center bg-everly-red text-everly-white flex items-center justify-center">
-                <p class=" text-sm">{{ props.channel.unreadCount }}</p>
+            <div v-if="props.channel.unreadCount !==0"  class="ml-auto min-w-[1.25rem] w-auto  h-5 rounded-full text-center bg-everly-red text-everly-white flex items-center justify-center">
+                <p class=" text-sm px-1">
+                    {{ props.channel.unreadCount }}                    
+                </p>
             </div>    
         </div>
             
