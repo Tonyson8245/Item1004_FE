@@ -1,5 +1,5 @@
 <template>
-<div @click="selectChannel" class="border-b-2 hover:opacity-40 cursor-pointer border-everly-mid_grey mx-3 my-1 px-2 py-4">
+<div :class="{' bg-everly-light_blue opacity-40': selectedChannel === props.channel }"  @click="selectChannel" class="border-b-2 hover:opacity-40 cursor-pointer border-everly-mid_grey mx-3 my-1 px-2 py-4">
                         
     <div :class="{'items-center': lastMessage() }" class="flex ">
         <div class="rounded-lg overflow-hidden mr-2">                           
@@ -40,10 +40,12 @@
 <script setup lang="ts">
 import type channel from '@/domain/chat/channel.interface';
 import { useChatStore } from "@/store/modules/chat/chatStore";
+import { storeToRefs } from "pinia";
 
 
 const chatStore = useChatStore();
 const props = defineProps<{ channel: channel}>();
+const {selectedChannel } = storeToRefs(chatStore);
 
 // 채팅방의 가장 최근 메세지 리턴
 const lastMessage = () =>{
@@ -56,6 +58,9 @@ const selectChannel = (e: MouseEvent) =>{
     // console.log(props.channel);    
     chatStore.setSelectedChannel(props.channel);
 }
+
+
+
 // console.log(props.channel);
 </script>
 

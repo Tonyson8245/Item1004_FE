@@ -77,7 +77,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       channels.value.push(...result.channels);
       hasNext.value = result.hasNext;
       getUnreadCount();
-    // console.log(result.channe
+    // console.log(result.channe);
     } catch (error) {
       console.log("error : ",error);        
     }      
@@ -105,12 +105,10 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     console.log(result);    
   }
 
-
-
   // 채팅방 클릭 시 작동
   const setSelectedChannel = (clickedChannel: channel) => {
     selectedChannel.value = clickedChannel;
-    console.log(selectedChannel.value);    
+    // console.log(selectedChannel.value);    
   }
 
   return { client, init, login, getChannels, channels, setChannels, pagingChannels, unreadCount, getUnreadCount, searchChannel, selectedChannel, setSelectedChannel }

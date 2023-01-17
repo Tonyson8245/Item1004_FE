@@ -29,7 +29,7 @@
                     class="flex-grow overflow-scroll overflow-x-hidden"
                     @scroll="handleNotificationListScroll"
                     ref="trigger">  
-                        <channel v-for="(channel, i) in channels" :key="i" :channel="channel"/>
+                        <channel  v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
                     </div> 
            
             </div>
@@ -53,7 +53,7 @@ import { ref, computed  } from "vue";
 
 
 const chatStore = useChatStore();
-const { client, channels, unreadCount } = storeToRefs(chatStore);
+const { client, channels, unreadCount,selectedChannel } = storeToRefs(chatStore);
 const searchTargetUser = ref("");
 
 

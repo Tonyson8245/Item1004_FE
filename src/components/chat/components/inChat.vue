@@ -52,7 +52,7 @@ const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore
 
 
 
-console.log(selectedChannel);
+// console.log(selectedChannel);
 
 //  import type channel from '@/domain/chat/channel.interface';
 //  const props = defineProps<{ selectedChannel: channel}>();
