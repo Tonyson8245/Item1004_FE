@@ -210,6 +210,8 @@ function toggleInfiniteStatus(status: boolean) {
 
 // 무한 스크롤 동작
 function load({ loaded }: LoadAction) {
+  
+  
   if (storeinfiniteStatus.value) {
     console.log("it works?");
     mainStore.setstoreProductCard();

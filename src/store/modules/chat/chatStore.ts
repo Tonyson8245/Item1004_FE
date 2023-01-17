@@ -12,7 +12,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const channels = ref<channel[]>([])
   const hasNext = ref(false);
   const unreadCount = ref(0);
-
+  // 클릭하여 선택된 채팅방
+  const selectedChannel = ref<channel>();
 
   const init = () => {
       // 앱 ID 추후에 숨겨야 한다.
@@ -55,6 +56,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   const pagingChannels = async () =>{
     if (hasNext.value) {
+      console.log("페이징 실행합니다");
+      
       // getChannels()
       const lastChannelId:string = channels.value[channels.value.length-1].id;
       getChannels(lastChannelId);
@@ -101,5 +104,14 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     });
     console.log(result);    
   }
-  return { client, init, login, getChannels, channels, setChannels, pagingChannels, unreadCount, getUnreadCount, searchChannel }
+
+
+
+  // 채팅방 클릭 시 작동
+  const setSelectedChannel = (clickedChannel: channel) => {
+    selectedChannel.value = clickedChannel;
+    console.log(selectedChannel.value);    
+  }
+
+  return { client, init, login, getChannels, channels, setChannels, pagingChannels, unreadCount, getUnreadCount, searchChannel, selectedChannel, setSelectedChannel }
 });

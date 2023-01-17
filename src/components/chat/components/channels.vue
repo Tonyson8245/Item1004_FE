@@ -1,5 +1,5 @@
 <template>
-<div class="border-b-2 border-everly-mid_grey mx-3 my-1 px-2 py-4">
+<div @click="selectChannel" class="border-b-2 hover:opacity-40 cursor-pointer border-everly-mid_grey mx-3 my-1 px-2 py-4">
                         
     <div :class="{'items-center': lastMessage() }" class="flex ">
         <div class="rounded-lg overflow-hidden mr-2">                           
@@ -37,7 +37,10 @@
 
 <script setup lang="ts">
 import type channel from '@/domain/chat/channel.interface';
+import { useChatStore } from "@/store/modules/chat/chatStore";
 
+
+const chatStore = useChatStore();
 const props = defineProps<{ channel: channel}>();
 
 // 채팅방의 가장 최근 메세지 리턴
@@ -45,15 +48,13 @@ const lastMessage = () =>{
   if (props.channel.lastMessage !== null) return props.channel.lastMessage.text  
   return null
 }
-const channelTitle= () =>{
 
+const selectChannel = (e: MouseEvent) =>{
+    // console.log(e);
+    // console.log(props.channel);    
+    chatStore.setSelectedChannel(props.channel);
 }
-
 // console.log(props.channel);
-
-
-
-
 </script>
 
 <style scoped></style>
