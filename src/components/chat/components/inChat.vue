@@ -24,7 +24,7 @@
     </div>
     <!-- bg-[url('@/assets/img/chat-background.svg')] -->
     <!-- bg-op-30-right-blue  -->
-    <div class=" h-full flex bg-[#e9e9fd] bg-opacity-60 flex-col bg-[url('@/assets/img/chat-background.svg')]" >
+    <div class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70%" >
         <!-- 채팅 내용 화면 영역 -->
         <message/>
         <!-- 채팅 입력 영역 -->
@@ -62,7 +62,9 @@ console.log(selectedChannel);
 
 <style scoped>
 
-
+.chat-bg{
+    background-color: rgba(233, 233, 253, 0.23);
+}
 
 
 </style>

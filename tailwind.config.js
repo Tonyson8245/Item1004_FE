@@ -7,6 +7,13 @@ module.exports = {
       tablet: "768px",
     },
     extend: {
+      backgroundSize:{
+        '50%': '50%',
+        '60%': '60%',
+        '70%': '70%',
+        '80%': '80%',
+      },
+
       colors: {
         'everly':{
           light_blue: "#e9e9fd",
