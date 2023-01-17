@@ -3,6 +3,7 @@ import { useCommonStore } from "@/store/modules/common/commonStore";
 import * as homeApi from "@/api/home-service/index";
 import { CreatePostDtoBody } from "@/domain/home/writePost/CreatePostDto";
 import { storeToRefs } from "pinia";
+import type { GameRoleDto } from "@/domain/home/gameRoleDto";
 
 export const useWriteStore = defineStore("writeStore", {
   state: () => ({
@@ -18,8 +19,11 @@ export const useWriteStore = defineStore("writeStore", {
     storeregistration: "",
     storeroleIdx: 0,
     storelevel: 0,
-    storehasPaymentHistory: false,
-    storeisDuplicatedSync: false,
+    storehasPaymentHistory: null as boolean | null,
+    storeisDuplicatedSync: null as boolean | null,
+
+    // 직업리스트
+    storeRoleList: {} as GameRoleDto[],
   }),
 
   getters: {},
@@ -30,7 +34,8 @@ export const useWriteStore = defineStore("writeStore", {
     setstoreCategory(productType: string) {
       this.storeproductType = productType;
     },
-    createPost(productType: string) {
+    async createPost(productType: string) {
+      var result = "";
       var commonStore = useCommonStore();
       var { commonStoreGameKeywordIdx, commonStoreServerKeywordIdx } =
         storeToRefs(commonStore);
@@ -49,13 +54,30 @@ export const useWriteStore = defineStore("writeStore", {
         this.storeregistration,
         this.storeroleIdx,
         this.storelevel,
-        this.storehasPaymentHistory,
-        this.storeisDuplicatedSync
+        this.storehasPaymentHistory != null
+          ? this.storehasPaymentHistory
+          : false,
+        this.storeisDuplicatedSync != null ? this.storeisDuplicatedSync : false
       );
-      homeApi
+      await homeApi
         .createPost(post)
         .then((res) => {
           console.log(res);
+          result = res as string;
+        })
+        .catch((err) => {
+          console.log(err);
+          result = "";
+        });
+      return result;
+    },
+    getGameRole() {
+      const commonStore = useCommonStore();
+      const { commonStoreGameKeywordIdx } = storeToRefs(commonStore);
+      homeApi
+        .getGameRole(commonStoreGameKeywordIdx.value.toString())
+        .then((res) => {
+          this.storeRoleList = res;
         })
         .catch((err) => {
           console.log(err);

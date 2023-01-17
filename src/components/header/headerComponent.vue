@@ -121,7 +121,7 @@ const { storeShowFilter_mobile } = storeToRefs(filterStore);
 function toggleFilter_mobile() {
   if (!storeShowFilter_mobile.value) {
     filterStore.setstoreTempfilter();
-    commonStore.setstoreTempfilter();
+    // commonStore.setstoreTempfilter();
   } else filterStore.cancelstoreFilter();
 
   filterStore.setstoreShowFilter_mobile(!storeShowFilter_mobile.value);

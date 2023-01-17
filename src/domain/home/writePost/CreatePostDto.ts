@@ -28,7 +28,7 @@ export class CreatePostDtoBody {
 
   productType: string;
 
-  postType: string;
+  type: string;
 
   @IsNumber()
   @Min(1)
@@ -80,7 +80,7 @@ export class CreatePostDtoBody {
     gameIdx: number,
     serverIdx: number,
     productType: string,
-    postType: string,
+    type: string,
     saleUnit: number,
     pricePerUnit: number,
     maxAmount: number,
@@ -97,7 +97,7 @@ export class CreatePostDtoBody {
     this.gameIdx = gameIdx;
     this.serverIdx = serverIdx;
     this.productType = productType;
-    this.postType = postType;
+    this.type = type;
     this.saleUnit = saleUnit;
     this.pricePerUnit = pricePerUnit;
     this.maxAmount = maxAmount;
@@ -109,14 +109,14 @@ export class CreatePostDtoBody {
     this.hasPaymentHistory = hasPaymentHistory;
     this.isDuplicatedSync = isDuplicatedSync;
 
-    if (postType != "character") {
-      delete this.characterName;
+    if (productType != "character") {
       delete this.registration;
       delete this.roleIdx;
       delete this.level;
       delete this.hasPaymentHistory;
       delete this.isDuplicatedSync;
     } else {
+      delete this.characterName;
       delete this.maxAmount;
       delete this.minAmount;
       delete this.saleUnit;

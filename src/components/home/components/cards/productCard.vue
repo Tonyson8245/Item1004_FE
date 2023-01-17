@@ -30,6 +30,7 @@
               <div class="flex space-x-1 justify-center items-center text-sm">
                 <span>{{ props.card?.writer.nickname }}</span>
                 <img
+                  v-if="props.card?.writer.isVerified"
                   src="@/assets/icon/check_circle_blue.svg"
                   alt=""
                   class="w-4"
@@ -117,7 +118,9 @@
         </div>
         <div class="flex justify-between mt-3 md:mt-0">
           <div class="flex justify-start items-center mt-1 space-x-1 font-bold">
-            <span class="text-xs sm:text-sm pr-2">{{ minQty }} 개당</span>
+            <span class="text-xs sm:text-sm pr-2"
+              >{{ saleUnit }} {{ currency }}당</span
+            >
             <span class="text-sm sm:text-base"
               >{{ props.card?.post.pricePerUnit.toLocaleString() }}원</span
             >
@@ -149,16 +152,28 @@ const props = defineProps({
   },
 });
 
+const currency = computed(() => {
+  if (props.card?.post.productType == "gameMoney") {
+    return "게임머니";
+  } else return "개";
+});
+
+const saleUnit = computed(() => {
+  if (props.card?.post.saleUnit != null) {
+    return numberToKorean(props.card.post.saleUnit);
+  } else return 1;
+});
+
 const minQty = computed(() => {
   if (props.card?.post.minAmount != null) {
     return numberToKorean(props.card.post.minAmount);
-  } else return 0;
+  } else return 1;
 });
 
 const maxQty = computed(() => {
   if (props.card?.post.maxAmount != null) {
     return numberToKorean(props.card.post.maxAmount);
-  } else return 0;
+  } else return 1;
 });
 
 function movePost() {

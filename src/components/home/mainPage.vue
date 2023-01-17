@@ -180,11 +180,6 @@ import { useCommonStore } from "@/store/modules/common/commonStore";
 const emit = defineEmits([`goPay`]);
 function goPay() {}
 
-//로고
-function getImageUrl(path: any) {
-  return new URL(path).href;
-}
-
 const router = useRouter();
 
 //////조회 관련
@@ -207,6 +202,8 @@ const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 
 //처음 페이지 로드 될때 동작
 onMounted(() => {
+  console.log("mainPage :: onMount");
+  mainStore.$reset();
   getProductList(6);
 });
 

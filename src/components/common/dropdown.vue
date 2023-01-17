@@ -24,6 +24,7 @@
       <ul
         class="list-none overflow-hidden rounded"
         :class="props.propsDropdown"
+        v-if="props.propsList != undefined"
       >
         <li v-for="key in props.propsList">
           <div
@@ -39,6 +40,25 @@
           </div>
         </li>
       </ul>
+      <ul
+        class="list-none overflow-hidden rounded"
+        :class="props.propsDropdown"
+        v-else
+      >
+        <li v-for="key in props.propsRoleList">
+          <div
+            href=""
+            class="flex py-2 px-4 hover:bg-[#f0f0f0]"
+            @click="
+              title = key.name;
+              show = !show;
+              emit(`getValue`, key.idx);
+            "
+          >
+            {{ key.name }}
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -47,6 +67,7 @@
 import { ref, watch, type PropType } from "vue";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { storeToRefs } from "pinia";
+import type { GameRoleDto } from "@/domain/home/gameRoleDto";
 
 const componentStore = useComponentStore();
 const { closeDropdown } = storeToRefs(componentStore);
@@ -57,6 +78,7 @@ const props = defineProps({
   propsDropdown: String,
   propsList: Object as PropType<string[]>,
   propsPlaceholder: String,
+  propsRoleList: Object as PropType<GameRoleDto[]>,
 });
 
 let show = ref(false);

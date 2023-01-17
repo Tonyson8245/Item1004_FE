@@ -63,7 +63,10 @@
           </div>
           <div
             class="flex-1 rounded-lg py-2 bg-everly-main cursor-pointer"
-            @click="emit('select', `comfirm`)"
+            @click="
+              create();
+              emit('select', `comfirm`);
+            "
           >
             확인완료
           </div>
@@ -74,11 +77,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { useWriteStore } from "@/store/modules/home/writeStore";
+import { useRouter } from "vue-router";
 
 const emit = defineEmits(["select"]);
 const props = defineProps({
   showModal: Boolean,
+  postType: String,
 });
+const writeStore = useWriteStore();
+const router = useRouter();
+function create() {
+  if (props.postType != undefined)
+    writeStore.createPost(props.postType).then((res) => {
+      router.replace("/post?postId=" + res);
+    });
+}
 </script>
 <style scoped></style>

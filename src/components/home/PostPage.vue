@@ -244,8 +244,12 @@
         <!-- 모바일용 단위가격당 가겨 -->
         <div class="block md:hidden">
           <div class="font-bold space-x-5 flex justify-between py-3">
-            <span>8억메소당</span
-            ><span class="text-lg md:text-xl">26,046 원</span>
+            <span>
+              {{ numberToKorean(storeUnitValue) }}
+              {{ storeProductunit }}당</span
+            ><span class="text-lg md:text-xl"
+              >{{ storePricePerUnit.toLocaleString() }}원</span
+            >
           </div>
           <hr
             class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
@@ -452,6 +456,7 @@
           <counter
             @getValue="updateQty($event)"
             :qty="qty"
+            :maxQty="MaxQty"
             class="grow max-w-[6.875rem]"
           />
           <div class="text-everly-dark_grey w-1/2 text-right">
@@ -596,6 +601,11 @@ const ProductPrice = computed(() => {
 
 //최대 구매 갯수
 const MaxQty = computed(() => {
+  //최대 갯수가 없경우 -> 캐릭터의 경우 최대 갯수가 1개
+  console.log(storeMaxValue.value);
+  console.log(storeUnitValue.value);
+
+  if (storeCategory.value == "character") return 1;
   return Math.floor(storeMaxValue.value / storeUnitValue.value);
 });
 

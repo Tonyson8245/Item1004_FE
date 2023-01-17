@@ -441,8 +441,14 @@
             </div>
           </div>
 
-          <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1">
+          <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1 pt-0">
             <!-- 모바일 게임/서버 검색-->
+            <div
+              class="text-xs text-everly-dark_grey col-span-9 flex md:hidden"
+            >
+              <img src="@/assets/icon/info_grey.svg" alt="" class="w-3 pr-1" />
+              원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+            </div>
             <div class="col-span-2 block md:hidden">게임명</div>
             <div class="col-span-9 block md:hidden">
               <div class="flex">
@@ -480,6 +486,14 @@
             </div>
             <div class="col-span-1 hidden md:block"></div>
             <div class="col-span-9 hidden md:block">
+              <div class="text-xs text-everly-dark_grey hidden md:flex">
+                <img
+                  src="@/assets/icon/info_grey.svg"
+                  alt=""
+                  class="w-4 pr-1"
+                />
+                원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+              </div>
               <div class="flex">
                 <div class="flex w-1/2">
                   <div class="flex-none py-2">게임검색</div>
@@ -535,7 +549,7 @@ import writeGamemoney from "./components/writeCategory/writeGamemoney.vue";
 import writeItem from "./components/writeCategory/writeItem.vue";
 import WriteCharacter from "./components/writeCategory/writeCharacter.vue";
 import WriteEtc from "./components/writeCategory/writeEtc.vue";
-import { onUnmounted, onMounted, ref } from "vue";
+import { onUnmounted } from "vue";
 
 const commonStore = useCommonStore();
 const {
@@ -563,10 +577,10 @@ function setCategory(Category: string) {
 }
 
 // 생명주기, 들어가고 나갈때 초기화
-onMounted(() => {
-  commonStore.reset();
-  console.log(`초기화`);
-});
+// onMounted(() => {
+//   commonStore.reset();
+//   console.log(`초기화`);
+// });
 onUnmounted(() => {
   commonStore.reset();
   console.log(`초기화`);

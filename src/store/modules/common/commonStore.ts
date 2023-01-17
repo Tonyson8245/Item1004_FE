@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-import dummy_serverSimilar from "../../../assets/dummy/home/filter/serverSimilar";
 import * as homeApi from "@/api/home-service/index";
 import type { GameDto } from "@/domain/home/gameDto";
 import type { GameServerDto } from "@/domain/home/gameServerDto";
@@ -121,7 +120,6 @@ export const useCommonStore = defineStore("commonStore", {
     reset() {
       this.storeGameSimilar = {} as GameDto[];
       this.storeServerSimilar = {} as GameServerDto[];
-
       //게임; 게임 서버 검색할 때, 유사리스트 상태값
       this.storeShowServerSimilar = false;
       this.storeShowGameSimilar = false;

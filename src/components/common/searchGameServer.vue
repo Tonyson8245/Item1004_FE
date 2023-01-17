@@ -51,7 +51,8 @@ import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
 import type { PropType } from "vue";
 import type { GameDto } from "@/domain/home/gameDto";
-import common from "@/common";
+import { useRoute } from "vue-router";
+const route = useRoute();
 
 const commonStore = useCommonStore();
 
@@ -77,7 +78,8 @@ else inputKeyword = storeTempServerKeyword;
 const placeholder = computed(() => {
   if (props.type == "game") return "게임명을 입력해주세요";
   else {
-    return "서버명을 입력해주세요";
+    if (route.meta.name == "write") return "서버명을 입력해주세요 ";
+    else return "전체 서버";
   }
 });
 

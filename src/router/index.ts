@@ -220,6 +220,7 @@ const router = createRouter({
       path: "/logout",
       component: components.logout,
     },
+
     {
       path: "/:anything(.*)",
       redirect: () => {

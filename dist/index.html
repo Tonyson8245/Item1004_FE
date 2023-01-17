@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/assets/mypage_blue.fa9d2ef9.svg" />
+    <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAGAPAABgDwAAAAAAAAAAAAD8Uj8E/FI/h/xSP+r8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI/6vxSP4f8Uj8E/FI/iPxSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI/hfxSP+r8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP+r8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///uHe//7Tzv/+wrv//r+3//7DvP/+0cz//+Pf//7e2v/9fW7//FI///xSP//8Uj///FI///xSP//8Uj///FI///2jmf//////////////////7+7//svF//2mnP/9f3H//XFh//xSP//8Uj///FI///xSP//8Uj///FI///xSP//8VkT//sO9////////6uj//sW+//7c2f///v3///X0//7KxP/9dGX//FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//9gXT//uHe///9/f/+v7f//XNk//2Ie//+tKz//tnV//xpWf/8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xUQf/9l4z///Du///8+//+uLD//GNS//xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xbSf/+raT///r5///6+f/+qZ///FNB//xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xmVv/+wrv///////2kmv/8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///13aP/+yML//FI///xSP//8Uj///FI/6vxSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI/6vxSP4T8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP4T8Uj8D/FI/ffxSP+r8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI///xSP//8Uj///FI/6vxSP338Uj8DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
@@ -27,10 +27,11 @@
     <!-- <script src="https://tmpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=20221219"></script> -->
 
     <script src="https://api2.dangunpay.co.kr/js/pgAsistant.js"></script>
+    <script src="https://asset.talkplus.io/talkplus-js-0.3.2.js"></script>
 
     <title>Item1004</title>
-    <script type="module" crossorigin src="/assets/index.9bac1ea5.js"></script>
-    <link rel="stylesheet" href="/assets/index.b069e974.css">
+    <script type="module" crossorigin src="/assets/index.0a44870c.js"></script>
+    <link rel="stylesheet" href="/assets/index.0da6721f.css">
   </head>
   <body>
     <div id="app"></div>
@@ -47,4 +48,33 @@
   function pay_result_close() {
     alert("결제를 취소하였습니다.");
   }
+
+  // 인앱 브라우저로 열리면 해결 방법
+  window.onload = function () {
+    // alert(
+    //   navigator.userAgent.match(
+    //     /inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1]/i
+    //   )
+    // );
+    if (
+      navigator.userAgent.match(
+        /inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1]/i
+      )
+    ) {
+      document.body.innerHTML = "";
+      alert("빵");
+      if (navigator.userAgent.match(/iPhone|iPad/i)) {
+        location.href =
+          "ftp://vue.d27plzynpw231y.amplifyapp.com/bridge" + location.href;
+        console.log(location.href);
+      } else {
+        location.href =
+          "intent://" +
+          location.href.replace(/https?:\/\//i, "") +
+          "#Intent;scheme=http;package=com.android.chrome;end";
+
+        console.log(location.href);
+      }
+    }
+  };
 </script>

@@ -12,7 +12,7 @@ export const usePostStore = defineStore("postStore", {
     storecreatAt: "",
     storePostTitle: "",
     storePostIdx: 0,
-    storeUnitValue: 0, // 물품 단위
+    storeUnitValue: 1, // 물품 단위
     storeMinValue: 0, // 물품 단위
     storeMaxValue: 0, // 물품 단위
     storeUnitName: "개", // 물품 단위

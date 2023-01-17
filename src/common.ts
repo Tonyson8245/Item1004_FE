@@ -72,6 +72,18 @@ function timeForToday(value: string | Date) {
 
   return `${Math.floor(betweenTimeDay / 365)}년전`;
 }
+//특수 문자 유무 체크 정규식
+function checkTitle(title: string) {
+  var regExp = /^[a-zA-Z0-9ㄱ-힣()\[\]'",./\s]+$/;
+
+  return !regExp.test(title); // 형식에 맞는 경우 true 리턴
+}
+
+//최대 최소 확인 정규식
+function checkMinMax(min: string, max: string) {
+  if (parseInt(max) < parseInt(min)) return true;
+  else return false;
+}
 
 export default {
   inputNumberFormat,
@@ -80,4 +92,6 @@ export default {
   comma,
   numberToKorean,
   timeForToday,
+  checkMinMax,
+  checkTitle,
 };
