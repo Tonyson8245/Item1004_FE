@@ -1,4 +1,15 @@
+import * as paymentApi from "@/api/payment-service";
+
 import { defineStore } from "pinia";
+import { numberToKorean } from "@/common";
+import type {
+  contractCompleteBody,
+  contractCompleteResult,
+} from "@/domain/payment/contractCompleteDto";
+import type {
+  chargeCompleteBody,
+  chargeCompleteResult,
+} from "@/domain/payment/chargeCompleteDto";
 
 export const usePaymentStore = defineStore("paymentStore", {
   state: () => ({
@@ -6,18 +17,16 @@ export const usePaymentStore = defineStore("paymentStore", {
     //포스트 정보
     storePostIdx: 0,
     storePostTitle: "", // 게시글명
-    storeMinValue: 0, // 물품 단위
-    storeUnitName: "", // 물품 단위
-    storePricePerUnit: 0, // 물품 단위당 가격
+    storeSaleUnit: 1, // 물품 단위
+    storeMinValue: 1, // 물품 단위
+    storeSaleUnitName: "", // 물품 단위
+    storePricePerUnit: 1, // 물품 단위당 가격
+    storeSellerIdx: 0,
 
     storeGameName: "",
     storeServerName: "",
     storeCategory: "",
 
-    // 유저 정보
-    storeName: "김철수", // 유저 이름
-    storeNickname: "이걸닉네임이라고짓다니말도안돼", // 유저 닉네임
-    storePhonenumber: "010-1234-5678", // 유저 전화번호
     storeCharaterName: "", // 유저 캐릭터 이름
 
     // 쿠폰/마일리지
@@ -33,27 +42,65 @@ export const usePaymentStore = defineStore("paymentStore", {
     storeDiscountCoupon: 0, //쿠폰 효과
     storeTotalPrice: 0, //최종결제금액 (제품가격+수수료)
     storeFinalPrice: 0, //최종결제금액 (수수료 + 제품가격 - 마일리지 - 쿠폰)
+    storeOrderQty: 0,
 
     // 동의 내용
     storeTerms: false,
     // storeTerms: [false, false],
-
-    storeTermsforUse: false,
-    storeOrderQty: 0,
-    storeTotalQty: 6400000000,
-
-    //reslt
-    storeResultTid: "",
-    storeResultAmt: "",
-    storeResultPayMethod: "",
-    storeResultPayDate: "",
-
     //수수료
     storefeePercent: 20,
     storefeePrice: 0,
+
+    ///결과 값 모음
+    storeContractResult: {} as contractCompleteResult,
+    storeChargeResult: {} as chargeCompleteResult,
   }),
 
-  getters: {},
+  getters: {
+    productInfo: (state) => {
+      if (state.storeContractResult.pricePerUnit != null) {
+        return (
+          numberToKorean(state.storeContractResult.saleUnit) +
+          " " +
+          "메소" +
+          " " +
+          state.storeContractResult.pricePerUnit.toLocaleString() +
+          `원 / ` +
+          state.storeContractResult.countPricePerUnit.toLocaleString() +
+          "개 (" +
+          numberToKorean(state.storeContractResult.multiPricePerUnit) +
+          " " +
+          "메소" +
+          ")"
+        );
+      } else return "";
+    },
+    chargeTotalPrice: (state) => {
+      var value = state.storeChargeResult.totalPrice;
+      if (value != undefined) return value.toLocaleString();
+      else return "";
+    },
+    chargeChargePoint: (state) => {
+      var value = state.storeChargeResult.afterChargePoint;
+      if (value != undefined) return value.toLocaleString();
+      else return "";
+    },
+    chargeafterChargePoint: (state) => {
+      var value = state.storeChargeResult.chargePoint;
+      if (value != undefined) return value.toLocaleString();
+      else return "";
+    },
+    chargewithdrawalPoint: (state) => {
+      var value = state.storeChargeResult.withdrawalPoint;
+      if (value != undefined) return value.toLocaleString();
+      else return "";
+    },
+    chargepurchasePoint: (state) => {
+      var value = state.storeChargeResult.purchasePoint;
+      if (value != undefined) return value.toLocaleString();
+      else return "";
+    },
+  },
   actions: {
     // 약관 각각 선택상황
     // setstoreTerms(type: string) {
@@ -110,22 +157,26 @@ export const usePaymentStore = defineStore("paymentStore", {
       idx: number,
       title: string,
       unit: number,
-      unitName: string,
+      saleUnit: number,
+      saleUnitName: string,
       pricePerUnit: number,
       orderQty: number,
       GameName: string,
       ServerName: string,
-      Category: string
+      Category: string,
+      SellerIdx: number
     ) {
       this.storePostIdx = idx;
       this.storePostTitle = title;
       this.storeMinValue = unit;
-      this.storeUnitName = unitName;
+      this.storeSaleUnit = saleUnit;
+      this.storeSaleUnitName = saleUnitName;
       this.storePricePerUnit = pricePerUnit;
       this.storeOrderQty = orderQty;
       this.storeGameName = GameName;
       this.storeServerName = ServerName;
       this.storeCategory = Category;
+      this.storeSellerIdx = SellerIdx;
     },
 
     //해당 페이지 들어갈 때 값 설정할 때 사용
@@ -134,18 +185,13 @@ export const usePaymentStore = defineStore("paymentStore", {
     },
     //최종값과 수수료 값 세팅
     mountstoreFinalPrice(price: number) {
-      this.storeFinalPrice = price * (1 + this.storefeePercent / 100);
-      this.storeTotalPrice = price * (1 + this.storefeePercent / 100);
-      this.storefeePrice = Math.round(
-        this.storeFinalPrice - this.storeProductPrice
+      this.storeFinalPrice = Math.round(
+        price * (1 + this.storefeePercent / 100)
       );
-    },
-
-    setResult(Tid: string, Amt: string, PayMethod: string, PayDate: string) {
-      this.storeResultTid = Tid;
-      this.storeResultAmt = Amt;
-      this.storeResultPayMethod = PayMethod;
-      this.storeResultPayDate = PayDate;
+      this.storeTotalPrice = Math.round(
+        price * (1 + this.storefeePercent / 100)
+      );
+      this.storefeePrice = this.storeFinalPrice - this.storeProductPrice;
     },
 
     // 충전 페이지 들어갈 때 값 설정할 때 사용
@@ -160,53 +206,21 @@ export const usePaymentStore = defineStore("paymentStore", {
       );
     },
 
-    resetpaymentStore() {
-      //서버로 부터 업데이되야할 정보
-      //포스트 정보
-      this.storePostTitle = ""; // 게시글명
-      this.storeMinValue = 0; // 물품 단위
-      this.storeUnitName = ""; // 물품 단위
-      this.storePricePerUnit = 0; // 물품 단위당 가격
-
-      (this.storeGameName = ""),
-        (this.storeServerName = ""),
-        (this.storeCategory = ""),
-        // 유저 정보
-        (this.storeName = "김철수"); // 유저 이름
-      this.storeNickname = "이걸닉네임이라고짓다니말도안돼"; // 유저 닉네임
-      this.storePhonenumber = "010-1234-5678"; // 유저 전화번호
-      this.storeCharaterName = ""; // 유저 캐릭터 이름
-
-      // 쿠폰/마일리지
-      this.storeCouponList = ["30% 할인", "1,000원 할인", "10,000원 할인"]; //쿠폰 종류
-      (this.storeCouponEffect = "*0.3"), (this.storeTotalMileage = 210000); // 보유마일리지
-      this.storeDiscountMileage = 0; // 사용 마일리지
-
-      //여기서는 클라만 있는 정보
-      this.storePaymentMethod = "CARD"; // 결제방법
-
-      this.storeProductPrice = 0; //상품금액
-      this.storeDiscountCoupon = 0; //쿠폰 효과
-      this.storeTotalPrice = 0; //최종결제금액 (제품가격+수수료)
-      this.storeFinalPrice = 0; //최종결제금액 (수수료 + 제품가격 - 마일리지 - 쿠폰)
-
-      // 동의 내용
-      this.storeTerms = false;
-      // this.// storeTerms= [false, false],
-
-      this.storeTermsforUse = false;
-      this.storeOrderQty = 0;
-      this.storeTotalQty = 6400000000;
-
-      //reslt
-      this.storeResultTid = "";
-      this.storeResultAmt = "";
-      this.storeResultPayMethod = "";
-      this.storeResultPayDate = "";
-
-      //수수료
-      this.storefeePercent = 20;
-      this.storefeePrice = 0;
+    getContractCompleteResult(payload: contractCompleteBody) {
+      paymentApi
+        .getcontractResult(payload)
+        .then((res) => {
+          this.storeContractResult = res;
+        })
+        .catch((err) => {});
+    },
+    getChargeCompleteResult(payload: chargeCompleteBody) {
+      paymentApi
+        .getchargeResult(payload)
+        .then((res) => {
+          this.storeChargeResult = res;
+        })
+        .catch((err) => {});
     },
   },
 });

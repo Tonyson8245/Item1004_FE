@@ -1,2 +1,4 @@
 export * from "./mileage/mileage";
-export * as paymentApi from "./payment/payment";
+export * from "./payment/payment";
+export * from "./result/getcontractResult";
+export * from "./result/getchargeResult";

@@ -24,7 +24,10 @@ async function payment(
   totalPrice: number,
   point?: number,
   sellerIdx?: number,
-  postIdx?: number
+  postIdx?: number,
+  pricePerUnit?: number,
+  salesUnit?: number,
+  countBuyProduct?: number
 ) {
   //포인트로만 결제가 아닌경우
   if (type != "onlyPoint") {
@@ -62,9 +65,16 @@ async function payment(
         if (type == "contract") {
           payload.point = point;
           payload.sellerIdx = sellerIdx;
+          payload.pricePerUnit = pricePerUnit;
+          payload.salesUnit = salesUnit;
+          payload.countBuyProduct = countBuyProduct;
         }
 
         var uuid = new UUID().toString();
+
+        console.log("뭐야너");
+        console.log(type);
+        console.log(payload);
 
         await paytus.setFormControl(formUrl, payload, uuid).catch((err) => {
           console.log(`Paytus set parameter Error`);
@@ -78,19 +88,30 @@ async function payment(
   }
   // 포인트로만 결제 할 경우 (페이투스 모듈을 사용할 필요가 없음)
   else {
-    if (sellerIdx != undefined && point != undefined && postIdx != undefined) {
+    if (
+      sellerIdx != undefined &&
+      point != undefined &&
+      postIdx != undefined &&
+      pricePerUnit != undefined &&
+      salesUnit != undefined &&
+      countBuyProduct != undefined
+    ) {
       pointonlyContract(
         sellerIdx,
         buyerIdx,
         point,
         productPrice,
         postIdx,
-        totalPrice
+        totalPrice,
+        pricePerUnit,
+        salesUnit,
+        countBuyProduct
       )
         .then((res) => {
           //결제 완료 페이지로 보내기
           // TODO 결제 완료 페이지 보내기 구현 필요
-          alert("포인트로만 결제 성공");
+          // alert("포인트로만 결제 성공");
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);

@@ -165,7 +165,7 @@
                   class="font-bold space-x-5 md:block hidden text-lg md:text-xl"
                 >
                   <span
-                    >{{ numberToKorean(storeUnitValue) }}
+                    >{{ numberToKorean(storeSaleUnit) }}
                     {{ storeProductunit }}당</span
                   ><span class=""
                     >{{ storePricePerUnit.toLocaleString() }}원</span
@@ -245,7 +245,7 @@
         <div class="block md:hidden">
           <div class="font-bold space-x-5 flex justify-between py-3">
             <span>
-              {{ numberToKorean(storeUnitValue) }}
+              {{ numberToKorean(storeSaleUnit) }}
               {{ storeProductunit }}당</span
             ><span class="text-lg md:text-xl"
               >{{ storePricePerUnit.toLocaleString() }}원</span
@@ -522,7 +522,7 @@ const {
   storePostIdx,
   storeShowBuy,
   storePostTitle,
-  storeUnitValue,
+  storeSaleUnit,
   storeMinValue,
   storeMaxValue,
   storeUnitName,
@@ -603,17 +603,16 @@ const ProductPrice = computed(() => {
 const MaxQty = computed(() => {
   //최대 갯수가 없경우 -> 캐릭터의 경우 최대 갯수가 1개
   console.log(storeMaxValue.value);
-  console.log(storeUnitValue.value);
+  console.log(storeSaleUnit.value);
 
   if (storeCategory.value == "character") return 1;
-  return Math.floor(storeMaxValue.value / storeUnitValue.value);
+  return Math.floor(storeMaxValue.value / storeSaleUnit.value);
 });
 
 //  글 삭제 관련 로직
 const deleteStatus = ref("delete");
 const showModal = ref(false);
 const toggleShowModal = useToggle(showModal);
-const bottomClass = ref("");
 
 const { storeShowManagePost } = storeToRefs(postStore);
 const toggleManagePost = useToggle(storeShowManagePost);
@@ -638,26 +637,31 @@ function getRandomInt(min: number, max: number) {
 function goPaymentPage() {
   var idx = storePostIdx.value;
   var title = storePostTitle.value;
-  var unit = storeUnitValue.value;
-  var unitName = storeUnitName.value;
+  var unit = storeSaleUnit.value;
+  var saleUnitName = storeUnitName.value;
   var pricePerUnit = storePricePerUnit.value;
   var orderQty = qty.value;
 
   var GameName = storeGameName.value;
   var ServerName = storeServerName.value;
   var Category = storeCategory.value;
+  var saleUnit = storeSaleUnit.value;
+  var SellerIdx = storeUserIdx.value;
 
   paymentStore.setPostData(
     idx,
     title,
     unit,
-    unitName,
+    saleUnit,
+    saleUnitName,
     pricePerUnit,
     orderQty,
     GameName,
     ServerName,
-    Category
+    Category,
+    SellerIdx
   );
+
   router.push("/payment");
 }
 </script>

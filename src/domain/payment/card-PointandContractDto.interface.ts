@@ -15,6 +15,12 @@ class payload {
   totalPrice: number;
   @IsNumber()
   postIdx?: number;
+  @IsNumber()
+  pricePerUnit?: number;
+  @IsNumber()
+  salesUnit?: number;
+  @IsNumber()
+  countBuyProduct?: number;
 
   constructor(
     buyerIdx: number,

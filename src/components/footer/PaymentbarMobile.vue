@@ -42,31 +42,23 @@ import type { user } from "@/domain/user/user.interface";
 const router = useRouter();
 const paymentStore = usePaymentStore();
 const {
-  storePostTitle,
-  storeMinValue,
-  storeUnitName,
   storePricePerUnit,
   // 유저 정보
-  storeName,
-  storeNickname,
-  storePhonenumber,
-  storeCharaterName,
-
   // 쿠폰/마일리지
-  storeTotalMileage,
   storeDiscountMileage,
 
   //여기서는 클라만 있는 정보
-  storePaymentMethod,
+  storePostIdx,
   storeProductPrice,
   storeFinalPrice,
+  storeSellerIdx,
 
   // 동의 내용
   storeTerms,
   storeOrderQty,
+  storeSaleUnit,
 
   //수수료
-  storefeePercent,
   storefeePrice,
 } = storeToRefs(paymentStore);
 
@@ -88,8 +80,11 @@ function goPayment() {
         storeProductPrice.value, // productPrice
         storeProductPrice.value, // totalPrice
         storeProductPrice.value, // point
-        2, // sellerIdx
-        1 // postIdx
+        storeSellerIdx.value, // sellerIdx
+        storePostIdx.value, // postIdx
+        storePricePerUnit.value,
+        storeSaleUnit.value,
+        storeOrderQty.value
       );
     }
     //포인트 + 일반 결제일 경우
@@ -103,8 +98,11 @@ function goPayment() {
         storeProductPrice.value, // productPrice
         storeFinalPrice.value, // totalPrice
         storeDiscountMileage.value, // point
-        2, // sellerIdx
-        1 // postIdx
+        storeSellerIdx.value, // sellerIdx
+        storePostIdx.value, // postIdx
+        storePricePerUnit.value,
+        storeSaleUnit.value,
+        storeOrderQty.value
       );
     }
   } else console.log("유저정보가 없습니다.");

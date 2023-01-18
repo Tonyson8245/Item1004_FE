@@ -34,10 +34,10 @@
             <div class="flex">
               <div class="font-bold w-14 md:w-[6.9rem]">거래물품</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>{{ storePostTitle }}</div>
+                <div>{{ data.title }}</div>
                 <div class="md:text-base">
-                  {{ storeGameName }} > {{ storeServerName }} >
-                  {{ storeCategory }}
+                  {{ data.gameName }} > {{ data.serverName }} >
+                  {{ data.productType }}
                 </div>
               </div>
             </div>
@@ -45,7 +45,7 @@
             <div class="flex">
               <div class="font-bold w-14 md:w-[6.9rem]">결제금액</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>{{ storeProductPrice.toLocaleString() }} 원</div>
+                <div>{{ data.totalPrice }} 원</div>
                 <div class="md:text-base">{{ productInfo }}</div>
               </div>
             </div>
@@ -55,13 +55,13 @@
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div class="md:text-base text-everly-dark_grey">(쿠폰)</div>
-                  <div>- {{ storeDiscountCoupon.toLocaleString() }}원</div>
+                  <div>- {{ data.couponDiscountPrice }}원</div>
                 </div>
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div class="md:text-base text-everly-dark_grey">
                     (마일리지)
                   </div>
-                  <div>- {{ storeDiscountMileage.toLocaleString() }}원</div>
+                  <div>- {{ data.point }}원</div>
                 </div>
               </div>
             </div>
@@ -72,7 +72,7 @@
               </div>
               <div class="grow text-right md:justify-end md:flex md:items-end">
                 <div class="text-base font-bold md:text-xl">
-                  {{ parseInt(storeResultAmt).toLocaleString() }} 원
+                  {{ data.totalPrice }} 원
                 </div>
                 <div class="text-everly-dark_grey text-xs md:text-sm">
                   (수수료 포함)
@@ -98,20 +98,20 @@
             <div class="flex md:space-x-11">
               <div class="font-bold">결제번호</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ storeResultTid }}
+                {{ tid }}
               </div>
             </div>
             <div class="flex md:space-x-11">
               <div class="font-bold">결제일시</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ storeResultPayDate }}
+                {{ data.createdAt }}
               </div>
             </div>
 
             <div class="flex md:space-x-11">
               <div class="font-bold">결제방법</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ storeResultPayMethod }}
+                {{ payMehod }}
               </div>
             </div>
 
@@ -150,56 +150,55 @@
 
 <script setup lang="ts">
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { numberToKorean } from "@/common";
-import { computed, onUnmounted } from "vue";
+import { computed, onUnmounted, onMounted, ref } from "vue";
+import { contractCompleteBody } from "@/domain/payment/contractCompleteDto";
 const router = useRouter();
+const route = useRoute();
 const paymentStore = usePaymentStore();
 
-const {
-  storeTotalQty,
-  storePostTitle,
-  storeProductPrice,
-  storePricePerUnit,
-  storeMinValue,
-  storeUnitName,
-  storeOrderQty,
-  storeDiscountCoupon,
-  storeDiscountMileage,
-  storeResultAmt,
-  storeResultTid,
-  storeResultPayDate,
-  storeResultPayMethod,
-
-  storeGameName,
-  storeServerName,
-  storeCategory,
-} = storeToRefs(paymentStore);
+const { storeContractResult, productInfo } = storeToRefs(paymentStore);
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
 function goPay() {}
 
-const productInfo = computed(() => {
-  return (
-    numberToKorean(storeMinValue.value) +
-    " " +
-    storeUnitName.value +
-    " " +
-    storePricePerUnit.value.toLocaleString() +
-    `원 / ` +
-    storeOrderQty.value +
-    "개 (" +
-    numberToKorean(storeTotalQty.value) +
-    " " +
-    storeUnitName.value +
-    ")"
+const data = storeContractResult;
+
+const tid = ref("");
+const amt = ref("");
+const payMehod = ref("");
+const ediDate = ref("");
+const postIdx = ref("");
+const userIdx = ref("");
+
+onMounted(() => {
+  var querytid = route.query.tid?.toString();
+  var queryamt = route.query.amt?.toString();
+  var querypayMehod = route.query.payMethod?.toString();
+  var queryediDate = route.query.ediDate?.toString();
+  var querypostIdx = route.query.postIdx?.toString();
+  var queryuserIdx = route.query.userIdx?.toString();
+
+  tid.value = querytid == undefined ? "" : querytid;
+  amt.value = queryamt == undefined ? "" : queryamt;
+  payMehod.value = querypayMehod == undefined ? "" : querypayMehod;
+  ediDate.value = queryediDate == undefined ? "" : queryediDate;
+  postIdx.value = querypostIdx == undefined ? "" : querypostIdx;
+  userIdx.value = queryuserIdx == undefined ? "" : queryuserIdx;
+
+  var payload = new contractCompleteBody(
+    tid.value,
+    payMehod.value,
+    parseInt(postIdx.value),
+    parseInt(userIdx.value)
   );
+  paymentStore.getContractCompleteResult(payload);
 });
 
 onUnmounted(() => {
-  paymentStore.resetpaymentStore(); // 페이지 벗어나면서 초기화
+  paymentStore.$reset(); // 페이지 벗어나면서 초기화
 });
 </script>
 

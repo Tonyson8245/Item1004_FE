@@ -12,9 +12,9 @@ export const usePostStore = defineStore("postStore", {
     storecreatAt: "",
     storePostTitle: "",
     storePostIdx: 0,
-    storeUnitValue: 1, // 물품 단위
-    storeMinValue: 0, // 물품 단위
-    storeMaxValue: 0, // 물품 단위
+    storeSaleUnit: 1, // 물품 단위
+    storeMinValue: 0, // 최소 갯수
+    storeMaxValue: 0, // 최대 갯수
     storeUnitName: "개", // 물품 단위
     storePricePerUnit: 0, // 물품 단위당 가격
 
@@ -110,28 +110,6 @@ export const usePostStore = defineStore("postStore", {
     },
   },
   actions: {
-    setStorePostDatatest(idx: string) {
-      var idxInt = parseInt(idx);
-      var data = dummyPost[idxInt - 1];
-
-      this.storePostIdx = data.postidx;
-      this.storeShowBuy = data.ShowBuy;
-      this.storeShowManagePost = data.ShowManagePost;
-
-      this.storePostTitle = data.PostTitle;
-      this.storeUnitValue = data.UnitValue;
-      this.storeMinValue = data.MinValue;
-      this.storeMaxValue = data.MaxValue;
-      this.storeUnitName = data.UnitName;
-      this.storePricePerUnit = data.PricePerUnit;
-      this.storeGameName = data.GameName;
-      this.storeServerName = data.ServerName;
-      this.storeCategory = data.Category;
-
-      this.storeUserCode = data.userinfo.code;
-      this.storeUserNickname = data.userinfo.nickname;
-      this.storeUserIdx = data.userinfo.userIdx;
-    },
     setstoreShowBuy(status: boolean) {
       this.storeShowBuy = status;
     },
@@ -158,7 +136,7 @@ export const usePostStore = defineStore("postStore", {
 
           this.storePostTitle = res.post.title;
           res.post.saleUnit != null
-            ? (this.storeUnitValue = res.post.saleUnit)
+            ? (this.storeSaleUnit = res.post.saleUnit)
             : {};
           res.post.minAmount != null
             ? (this.storeMinValue = res.post.minAmount)
@@ -244,7 +222,7 @@ export const usePostStore = defineStore("postStore", {
       this.storecreatAt = "";
       this.storePostTitle = "";
       this.storePostIdx = 0;
-      this.storeUnitValue = 0; // 물품 단;
+      this.storeSaleUnit = 0; // 물품 단;
       this.storeMinValue = 0; // 물품 단;
       this.storeMaxValue = 0; // 물품 단;
       this.storeUnitName = "개"; // 물품 단;

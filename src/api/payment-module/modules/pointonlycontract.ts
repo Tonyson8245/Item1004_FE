@@ -15,7 +15,10 @@ export async function pointonlyContract(
   point: number,
   productPrice: number,
   postIdx: number,
-  totalPrice: number
+  totalPrice: number,
+  pricePerUnit: number,
+  salesUnit: number,
+  countBuyProduct: number
 ): Promise<pointonlyContractResult> {
   const url = "/point/point-only-contract.php";
   try {
@@ -28,6 +31,9 @@ export async function pointonlyContract(
         productPrice: productPrice,
         postIdx: postIdx,
         totalPrice: totalPrice,
+        pricePerUnit: pricePerUnit,
+        salesUnit: salesUnit,
+        countBuyProduct: countBuyProduct,
       },
       {
         headers: { "Content-Type": "multipart/form-data" },

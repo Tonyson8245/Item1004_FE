@@ -228,6 +228,15 @@ async function setFormControl(
         productPrice: payload.productPrice,
         totalPrice: payload.totalPrice,
         postIdx: payload.postIdx,
+        ...(payload.pricePerUnit != undefined
+          ? { pricePerUnit: payload.pricePerUnit }
+          : {}),
+        ...(payload.salesUnit != undefined
+          ? { salesUnit: payload.salesUnit }
+          : {}),
+        ...(payload.countBuyProduct != undefined
+          ? { countBuyProduct: payload.countBuyProduct }
+          : {}),
       },
       {
         headers: { "Content-Type": "multipart/form-data" },
