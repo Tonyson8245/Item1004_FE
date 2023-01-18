@@ -2,6 +2,7 @@ import { createApp, markRaw } from "vue";
 
 import App from "./App.vue";
 import store from "./store/index";
+
 import "./assets/main.css";
 import vueDebounce from "vue-debounce";
 import router from "./router/index";
