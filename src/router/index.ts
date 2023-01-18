@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useCommon } from "../store/modules/ui/common";
 import type { user } from "../domain/user/user.interface";
 
+
+import inChat from "@/components/chat/components/inChat.vue";
+import chatPage from "@/components/chat/chatPage.vue";
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
@@ -183,7 +188,7 @@ const router = createRouter({
       ],
     },
     {
-      path: "/chat",
+      path: "/chat",      
       component: components.ChatViewVue,
       meta: { transition: "", name: "chat", title: "채팅" },
       
@@ -193,6 +198,10 @@ const router = createRouter({
         {
           path:"",
           component: components.chatPage,
+        },
+        {
+          path:":channelId",
+          component: components.inChat,
         }
       ]
     },

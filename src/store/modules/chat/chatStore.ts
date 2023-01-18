@@ -29,9 +29,10 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       try {
           user.value = await client.value.loginAnonymous({
             userId: `${userData.idx}`, // unique userId
-            profileImageUrl: "https://archeage.nexon.com/characters/dbf279b5-20ff-4fba-8e6a-c1301fb97657/profileImage",
-            username: userData.nickname
-          });   
+            // profileImageUrl: "https://archeage.nexon.com/characters/dbf279b5-20ff-4fba-8e6a-c1301fb97657/profileImage",
+            // username: userData.nickname
+            // loginToken: "$2a$06$Q4WYHQa16ChPTJTy2IWVNuQzxgEFAe2Up.SuikpS8WYMeqy.3Qk4S"
+          });             
       } catch (error) {
         console.log("error : ", error);
       }          

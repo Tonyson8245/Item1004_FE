@@ -9,9 +9,11 @@
       class="h-screen w-screen"
     /> -->
 
-    <router-view></router-view>
+    <router-view/>
+    <!-- <router-view v-if="!isMobile"/>
+    <router-view v-else name="mobile"/> -->
 
-    <div class=" ">
+    <div class="">
     
     </div>
     
@@ -24,7 +26,7 @@
 import headerComponentVue from "../components/header/headerComponent.vue";
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, createApp } from "vue";
 
 
 const chatStore = useChatStore();
@@ -33,7 +35,6 @@ const chatStore = useChatStore();
 const chatClient = chatStore.init();
 
 const { client, channels } = storeToRefs(chatStore);
-
 
 // TalkPlus api 로그인
 const login = async () => await chatStore.login()

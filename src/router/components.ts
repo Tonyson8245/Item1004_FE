@@ -17,6 +17,7 @@ import paymentPageVue from "@/components/home/paymentPage.vue";
 import paymetnTest from "@/views/Paymenttest.vue";
 import ChatViewVue from "@/views/ChatView.vue";
 import chatPage from "@/components/chat/chatPage.vue";
+import inChat from "@/components/chat/components/inChat.vue";
 import MypagePage from "@/components/mypage/mypagePage.vue";
 import main from "@/components/mypage/detail/main.vue";
 import mileageOverview from "@/components/mypage/detail/mileageOverview.vue";
@@ -40,6 +41,7 @@ export default {
   MypagePage,
   ChatViewVue,
   chatPage,
+  inChat,
   paymetnTest,
   paymentPageVue,
   MypageViewVue,
@@ -57,4 +59,5 @@ export default {
   infoSet,
   signUpComfirm,
   MainView,
+  
 };

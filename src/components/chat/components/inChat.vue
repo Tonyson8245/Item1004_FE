@@ -24,17 +24,19 @@
     </div>
     <!-- bg-[url('@/assets/img/chat-background.svg')] -->
     <!-- bg-op-30-right-blue  -->
-    <div class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70%" >
+    <div class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" >
         <!-- 채팅 내용 화면 영역 -->
         <message/>
-        <!-- 채팅 입력 영역 -->
-        <form class="mt-auto bg-white border-t rounded-t-lg flex items-center">   
-            <div class="w-full flex justify-center">
-                <textarea class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용 입력하셈 시벌탱" rows="1" ></textarea>                        
-            </div>                     
-            <button class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
-        </form>
+        
     </div>
+
+    <!-- 채팅 입력 영역 -->
+    <form class="mt-auto bg-white border-t rounded-t-lg flex items-center">   
+        <div class="w-full flex justify-center">
+            <textarea class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용 입력하셈 시벌탱" rows="1" ></textarea>                        
+        </div>                     
+        <button class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
+    </form>
 </div>
 
 </template>
@@ -44,11 +46,13 @@
 import message from './messages.vue';
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
-
+import { useRouter, useRoute } from "vue-router";
 
 
 const chatStore = useChatStore();
 const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore);
+
+// const route = useRoute();
 
 
 
@@ -56,6 +60,7 @@ const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore
 
 //  import type channel from '@/domain/chat/channel.interface';
 //  const props = defineProps<{ selectedChannel: channel}>();
+
 
 
 </script>
