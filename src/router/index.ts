@@ -198,12 +198,12 @@ const router = createRouter({
           path:"",
           components: {
             default: async ()=>{
-                if(!ismobile.value){
-                  return  components.chatPage
-                }    else{
-                  return  components.channelList
-                }
-              } ,            
+              if(!ismobile.value){
+                return  components.chatPage
+              }    else{
+                return  components.channelList
+              }
+            },            
           },
         },
         {

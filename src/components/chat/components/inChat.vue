@@ -26,7 +26,7 @@
     <!-- bg-op-30-right-blue  -->
     <div class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" >
         <!-- 채팅 내용 화면 영역 -->
-        <message/>
+        <message v-for=" message in messages" :message="message"/>
         
     </div>
 
@@ -46,15 +46,15 @@
 import message from './message.vue';
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
-import { useRouter, useRoute } from "vue-router";
+import { onMounted } from 'vue';
 
-
-const chatStore = useChatStore();
-const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore);
-
-// const route = useRoute();
 
 // console.log(selectedChannel);
+
+const chatStore = useChatStore();
+
+const { messages } = storeToRefs(chatStore);
+
 
 //  import type channel from '@/domain/chat/channel.interface';
 //  const props = defineProps<{ selectedChannel: channel}>();

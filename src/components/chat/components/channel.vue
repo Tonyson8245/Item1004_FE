@@ -47,7 +47,7 @@ import { useRouter, useRoute } from "vue-router";
 
 const chatStore = useChatStore();
 const props = defineProps<{ channel: channel}>();
-const {selectedChannel } = storeToRefs(chatStore);
+const { selectedChannel } = storeToRefs(chatStore);
 const router = useRouter();
 
 // 채팅방의 가장 최근 메세지 리턴
@@ -60,8 +60,8 @@ const selectChannel = (e: MouseEvent) =>{
     // console.log(e);
     // console.log(props.channel);        
     router.push(`/chat/${props.channel.id}`);
-
     chatStore.setSelectedChannel(props.channel);
+
 }
 
 

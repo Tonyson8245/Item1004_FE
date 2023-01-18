@@ -21,12 +21,10 @@
 <script setup lang="ts">
 
 import channelList from './components/channelList.vue';
-
 import inChatView from './components/inChat.vue';
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { ref, computed, onMounted  } from "vue";
-import { useRoute } from "vue-router";
 
 const chatStore = useChatStore();
 

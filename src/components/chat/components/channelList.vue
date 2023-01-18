@@ -29,19 +29,18 @@
 
 <script setup lang="ts">
 
-
 import channel from './channel.vue';
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { ref, computed, onMounted  } from "vue";
-// import { useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 
 
 const chatStore = useChatStore();
 const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore);
 
-// const route = useRoute();
-// const channelId  = route.params.channelId;
+const route = useRoute();
+const channelId  = route.params.channelId;
 
 
 // client.value.on('event', (data) => {
