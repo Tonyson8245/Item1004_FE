@@ -4,8 +4,7 @@ import { useCommon } from "../store/modules/ui/common";
 import type { user } from "../domain/user/user.interface";
 
 
-import inChat from "@/components/chat/components/inChat.vue";
-import chatPage from "@/components/chat/chatPage.vue";
+
 
 
 const router = createRouter({
@@ -197,11 +196,27 @@ const router = createRouter({
       children:[
         {
           path:"",
-          component: components.chatPage,
+          components: {
+            default: async ()=>{
+                if(!ismobile.value){
+                  return  components.chatPage
+                }    else{
+                  return  components.channelList
+                }
+              } ,            
+          },
         },
         {
           path:":channelId",
-          component: components.inChat,
+          components: {
+            default: async ()=>{
+                if(!ismobile.value){
+                  return  components.chatPage
+                }    else{
+                  return  components.inChat
+                }
+              } ,            
+          },
         }
       ]
     },
@@ -224,6 +239,17 @@ const router = createRouter({
     },
   ],
 });
+
+
+import { ref, onMounted } from 'vue';
+const ismobile = ref(false);
+onResize()
+function onResize(){
+  ismobile.value = window.innerWidth < 600
+  // console.log("라우터에서 ",ismobile.value);
+}
+
+
 
 router.beforeEach((to) => {
   window.scrollTo({ top: 0, behavior: "auto" });

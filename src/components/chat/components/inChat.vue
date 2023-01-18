@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 
-import message from './messages.vue';
+import message from './message.vue';
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
@@ -54,14 +54,10 @@ const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore
 
 // const route = useRoute();
 
-
-
 // console.log(selectedChannel);
 
 //  import type channel from '@/domain/chat/channel.interface';
 //  const props = defineProps<{ selectedChannel: channel}>();
-
-
 
 </script>
 

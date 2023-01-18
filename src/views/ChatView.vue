@@ -9,7 +9,10 @@
       class="h-screen w-screen"
     /> -->
 
+    <!-- <router-view /> -->
+
     <router-view/>
+
     <!-- <router-view v-if="!isMobile"/>
     <router-view v-else name="mobile"/> -->
 
@@ -27,7 +30,6 @@ import headerComponentVue from "../components/header/headerComponent.vue";
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { ref, computed, onMounted, createApp } from "vue";
-
 
 const chatStore = useChatStore();
 
@@ -49,7 +51,22 @@ const getChannels = async function () {
 // 로그인을 한번 실행
 login().then((data)=>{
   getChannels();
+
+  client.value.on('event', (data) => {
+      if (data.type === 'message') {
+          console.log("받은 데이터", data);
+          chatStore.setChannels(data.channel);
+          chatStore.getUnreadCount()
+      }
+  })
+
 });
+
+
+// const chatView = ref(false);
+// const channelsView = ref(false);
+
+// const isMobile = ref(false);
 
 
 
