@@ -1,5 +1,5 @@
 <template>
-<div :class="{' bg-op-40-right-blue ': selectedChannel === props.channel }">
+<div :class="{' bg-op-40-right-blue ': route.params.channelId === props.channel.id }">
 
   
     <div @click="selectChannel" class="border-b-2 hover:opacity-40 cursor-pointer border-everly-mid_grey mx-2  py-5">
@@ -47,8 +47,13 @@ import { useRouter, useRoute } from "vue-router";
 
 const chatStore = useChatStore();
 const props = defineProps<{ channel: channel}>();
-const {selectedChannel } = storeToRefs(chatStore);
+// const { selectedChannel } = storeToRefs(chatStore);
 const router = useRouter();
+
+const route = useRoute();
+
+console.log(route.params);
+
 
 // 채팅방의 가장 최근 메세지 리턴
 const lastMessage = () =>{
@@ -60,8 +65,8 @@ const selectChannel = (e: MouseEvent) =>{
     // console.log(e);
     // console.log(props.channel);        
     router.push(`/chat/${props.channel.id}`);
-
     chatStore.setSelectedChannel(props.channel);
+
 }
 
 

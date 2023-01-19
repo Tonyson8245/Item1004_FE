@@ -29,7 +29,13 @@
 import headerComponentVue from "../components/header/headerComponent.vue";
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
-import { ref, computed, onMounted, createApp } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+
+const route = useRoute();
+console.log(route.params);
+const channelId = route.params.channelId;
 
 const chatStore = useChatStore();
 
@@ -42,15 +48,17 @@ const { client, channels } = storeToRefs(chatStore);
 const login = async () => await chatStore.login()
 
 // 채널(=채팅방) 목록 불러오기
-const getChannels = async function () {
-  const result = await chatStore.getChannels();
-  // console.log(result);
-  // console.log(channels);
-}
+const getChannels = async () => await chatStore.getChannels(); 
+
 
 // 로그인을 한번 실행
 login().then((data)=>{
   getChannels();
+  
+  // 뷰에서 inChat에서 사용될 채팅 내용들을 여기서 로드
+  if (channelId) {
+    chatStore.getSelectedChannel(channelId)
+  }
 
   client.value.on('event', (data) => {
       if (data.type === 'message') {
@@ -58,9 +66,14 @@ login().then((data)=>{
           chatStore.setChannels(data.channel);
           chatStore.getUnreadCount()
       }
-  })
-
+  })  
 });
+
+
+onUnmounted(()=>{
+  chatStore.resetChannels()
+})
+
 
 
 // const chatView = ref(false);

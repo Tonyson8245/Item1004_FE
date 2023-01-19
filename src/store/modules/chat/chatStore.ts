@@ -3,17 +3,22 @@ import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 import type resp from "@/domain/chat/resp.interface";
 import type channel from "@/domain/chat/channel.interface";
+import type message from "@/domain/chat/message.interface";
+
 import type { user } from "@/domain/user/user.interface";
+import { loadRouteLocation } from "vue-router";
 
 export const useChatStore = defineStore("chatStore", ()=>  {
     
   const client = ref(Object)
   const user = ref(Object)
-  const channels = ref<channel[]>([])
+  const channels = ref<channel[] | undefined>([])
   const hasNext = ref(false);
   const unreadCount = ref(0);
   // 클릭하여 선택된 채팅방
   const selectedChannel = ref<channel>();
+  // 메세지 담고 있는 변수
+  const messages = ref<message[] | undefined>([]);
 
   const init = () => {
       // 앱 ID 추후에 숨겨야 한다.
@@ -84,6 +89,10 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     }      
   }
 
+  const resetChannels = () =>{
+    channels.value = [];
+  }
+
   // 안 읽은 메세지 숫자 조회
   const getUnreadCount = async () =>{
     try {
@@ -94,23 +103,50 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     }    
   }
 
-  // 채팅 대상 검색
-  const searchChannel = async (targetUser: string) =>{
-    let result: resp;   
-    // console.log("내 아이디",user.value.id);
-    // console.log("찾을 유저",targetUser);    
-    result = await client.value.searchChannels({      
-      members: ['5Qxp8jLsrx'],
-      limit: 10,
-    });
-    console.log(result);    
-  }
+ 
 
   // 채팅방 클릭 시 작동
   const setSelectedChannel = (clickedChannel: channel) => {
     selectedChannel.value = clickedChannel;
-    // console.log(selectedChannel.value);    
+    // console.log(selectedChannel.value);     
+    getMessage(selectedChannel.value.id);
   }
 
-  return { client, init, login, getChannels, channels, setChannels, pagingChannels, unreadCount, getUnreadCount, searchChannel, selectedChannel, setSelectedChannel }
+
+  // 채팅방 id로 불러오기 
+  const getSelectedChannel = async (channelId:string | string[]) =>{
+    const result = await client.value.getChannel({
+      channelId: channelId,
+    });
+    selectedChannel.value = result.channel;   
+    await getMessage(result.channel.id);
+  }
+
+  // 메세지 불러오기
+  const getMessage = async (channelId:string) =>{
+    let result: resp;   
+    result = await client.value.getMessages({
+        channelId: channelId,
+        order: 'latest', // default: 'latest'. Use 'oldest' to order by oldest messages first
+        limit: 10, // how many messages to fetch, default: 20, max: 50
+    });
+    messages.value=result.messages
+    console.log(messages);
+  }
+
+  
+
+   // 채팅 대상 검색
+  //  const searchChannel = async (targetUser: string) =>{
+  //   let result: resp;   
+  //   // console.log("내 아이디",user.value.id);
+  //   // console.log("찾을 유저",targetUser);    
+  //   result = await client.value.searchChannels({      
+  //     members: ['5Qxp8jLsrx'],
+  //     limit: 10,
+  //   });
+  //   console.log(result);    
+  // }
+
+  return { client, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages }
 });
