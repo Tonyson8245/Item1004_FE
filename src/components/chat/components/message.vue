@@ -29,6 +29,8 @@ import type message from '@/domain/chat/message.interface';
 
 const props = defineProps<{ message: message}>();
 
+
+
 </script>
 
 <style scoped></style>

@@ -27,8 +27,12 @@
     <div ref="scrollView" class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" 
         @scroll="handleListScroll">
         <!-- 채팅 내용 화면 영역 -->
-        <message v-for=" message in messages" :message="message"/>
         
+        <div v-for="message in messages">
+            
+            <message v-if="message.userId !== client.channel.userId"  :message="message"/>
+            <myMessage v-else     :message="message"/>
+        </div>
     </div>
 
     <!-- 채팅 입력 영역 -->
@@ -56,6 +60,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref,onUpdated,onMounted  } from 'vue';
 
 const chatStore = useChatStore();
+const { messages, client, user } = storeToRefs(chatStore);
 
 const scrollView = ref(HTMLElement);
 
@@ -69,7 +74,7 @@ const isScrollBottom = ref(true);
 
 const text = ref("");
 
-const { messages } = storeToRefs(chatStore);
+
 
 
 
@@ -78,9 +83,12 @@ const { messages } = storeToRefs(chatStore);
 
 const sendMessage = async (e:any) => {
     // console.log(text);
-    const result =  await chatStore.sendMessage(text.value)
-    text.value = ""    
-    scrollView.value.scrollTop = scrollView.value.scrollHeight
+    if (text.value !='') {
+        const result =  await chatStore.sendMessage(text.value)
+        text.value = ""    
+        scrollView.value.scrollTop = scrollView.value.scrollHeight
+    }
+    
     // console.log(result);
     // result.then()
 }

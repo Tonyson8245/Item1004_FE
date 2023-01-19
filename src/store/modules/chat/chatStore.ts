@@ -174,5 +174,5 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   //   console.log(result);    
   // }
 
-  return { client, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, setMessages,sendMessage }
+  return { client, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, setMessages,sendMessage }
 });
