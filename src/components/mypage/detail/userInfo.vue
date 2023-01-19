@@ -1,7 +1,7 @@
 <template>
   <ModalMypage
     :propsShowModal="showModal"
-    :propsType="'123'"
+    :propsType="'userinfoPutAccount'"
     @update:propsShowModal="setShowModal(false)"
   />
   <div class="py-5 md:py-0 md:pl-8">

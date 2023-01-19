@@ -109,22 +109,37 @@
         class="md:mt-14 bg-white md:pb-10 py-2"
         v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
       >
-        <Carousel :settings="settings" :breakpoints="breakpoints">
-          <Slide v-for="slide in 5" :key="slide">
-            <div
-              class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
-            >
-              <div>
-                <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
-                <img :src="`/assets/img/logo/${slide}.jpg`" alt="" />
+        <div class="hidden md:block">
+          <Carousel :settings="settings" :breakpoints="breakpoints">
+            <Slide v-for="slide in 7" :key="slide">
+              <div
+                class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
+              >
+                <div>
+                  <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
+                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                </div>
               </div>
-            </div>
-          </Slide>
-
-          <template #addons>
-            <Navigation />
-          </template>
-        </Carousel>
+            </Slide>
+            <template #addons>
+              <Navigation />
+            </template>
+          </Carousel>
+        </div>
+        <div class="md:hidden">
+          <Carousel :settings="settings" :breakpoints="breakpoints">
+            <Slide v-for="slide in 7" :key="slide">
+              <div
+                class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
+              >
+                <div>
+                  <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
+                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                </div>
+              </div>
+            </Slide>
+          </Carousel>
+        </div>
       </div>
 
       <FooterMobile
@@ -255,12 +270,14 @@ watch(storeLoad, () => {
 const settings = {
   itemsToShow: 3,
   snapAlign: "center",
+  autoplay: "2000",
 };
 const breakpoints = {
   // 700px and up
   768: {
     itemsToShow: 5,
     snapAlign: "start",
+    autoplay: "0",
   },
 };
 

@@ -82,6 +82,15 @@ const router = createRouter({
           },
         },
         {
+          path: "/mypage/mileage/withdraw/result",
+          component: components.mitlageWithdrawResult,
+          meta: {
+            name: "chargeResult",
+            title: "출금 신청 완료",
+            navbar: false,
+          },
+        },
+        {
           path: "/mypage",
           component: components.MypagePage,
           meta: { transition: "", name: "mypage", title: "마이페이지" },

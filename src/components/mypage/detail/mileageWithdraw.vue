@@ -2,7 +2,7 @@
   <div @click="setshowMileageGuide(false)">
     <ModalMypage
       :propsShowModal="showModal"
-      :propsType="'withdraw'"
+      :propsType="type"
       @update:propsShowModal="setShowModal(false)"
     />
     <div class="py-4 px-4 md:py-0 md:px-0 md:pl-8 bg-everly-wbg_grey">
@@ -12,13 +12,13 @@
           <span class="bg-everly-light_blue px-1 rounded font-normal mr-1"
             >1</span
           >
-          출금 계좌 확인
+          출금 계좌 확인{{ type }}
         </div>
         <div
           class="sm:flex md:ml-6 justify-between items-center md:pr-96 text-xs md:text-base"
         >
           <div class="m:pb-4 sm:flex-1">
-            <div v-if="accountCondition" class="space-x-1 md:space-x-4 pb-4 s">
+            <div v-if="accountCondition" class="space-x-1 md:space-x-4">
               <span>신한은행</span>
               <span>110-403-902006</span>
               <span>(예금주 : 오지윤)</span>
@@ -36,7 +36,7 @@
           </div>
           <div
             class="bg-everly-white border-everly-mid_grey border text-everly-dark_grey rounded-lg w-full md:w-auto px-2 py-2 md:py-2 md:px-3 flex justify-between items-center sm:flex-1 md:flex-none max-w-[17.5rem] sm:max-w-none cursor-pointer"
-            @click="clickButton(true)"
+            @click="clickButton('withdrawPutAccount', true)"
           >
             <div>출금 계좌 변경하기</div>
             <img
@@ -105,12 +105,12 @@
         </div>
         <div class="md:hidden">
           <div
-            class="md:hiddn w-full border border-everly-mid_grey bg-everly-wbg_grey rounded-lg top-5"
+            class="md:hiddn w-full border border-everly-mid_grey bg-everly-wbg_grey rounded-lg top-5 flex justify-center"
           >
             <img
               src="@/assets/img/mileage_logic.svg"
               alt=""
-              class="p-3 w-full"
+              class="p-3 sm:w-[20rem]"
             />
           </div>
         </div>
@@ -177,6 +177,7 @@
       <div
         class="rounded-lg bg-everly-main text-everly-white w-full py-2 md:py-3 px-5 text-center"
         v-if="accountCondition"
+        @click="clickButton('withdrawCheck', true)"
       >
         출금하기
       </div>
@@ -212,17 +213,36 @@ function setshowMileageGuide(status: boolean) {
 }
 //모달 관리
 const showModal = ref(false);
+
 function setShowModal(status: boolean) {
+  if (!status) type.value = "";
   showModal.value = status;
 }
 
 //버튼 누르는 동작
-function clickButton(status: boolean) {
-  //웹인경우
-  if (minSize.value.value) setShowModal(status);
-  //모바일인경우
-  else {
-    router.push("/mypage/user/info/putBankAccount");
+const type = ref("");
+function clickButton(typeName: string, status: boolean) {
+  if (typeName == "withdrawPutAccount") type.value = "withdrawPutAccount";
+  else if (typeName == "withdrawCheck") type.value = "withdrawCheck";
+
+  //확인
+  if (typeName == "withdrawCheck") {
+    type.value = "withdrawCheck";
+    setShowModal(status);
+  }
+  //게좌 등록
+  else if (typeName == "withdrawPutAccount") {
+    //웹인경우
+    if (minSize.value.value) {
+      type.value = "withdrawPutAccount";
+      console.log(type.value);
+
+      setShowModal(status);
+    }
+    //모바일인경우
+    else {
+      router.push("/mypage/user/info/putBankAccount");
+    }
   }
 }
 
