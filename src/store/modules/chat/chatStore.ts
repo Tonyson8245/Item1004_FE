@@ -12,13 +12,13 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     
   const client = ref(Object)
   const user = ref(Object)
-  const channels = ref<channel[] | undefined>([])
+  const channels = ref<channel[] >([])
   const hasNext = ref(false);
   const unreadCount = ref(0);
   // 클릭하여 선택된 채팅방
   const selectedChannel = ref<channel>();
   // 메세지 담고 있는 변수
-  const messages = ref<message[] | undefined>([]);
+  const messages = ref<message[] >([]);
 
   const init = () => {
       // 앱 ID 추후에 숨겨야 한다.
@@ -103,13 +103,12 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     }    
   }
 
- 
 
   // 채팅방 클릭 시 작동
   const setSelectedChannel = (clickedChannel: channel) => {
     selectedChannel.value = clickedChannel;
     // console.log(selectedChannel.value);     
-    getMessage(selectedChannel.value.id);
+    getMessages(selectedChannel.value.id);
   }
 
 
@@ -119,20 +118,46 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       channelId: channelId,
     });
     selectedChannel.value = result.channel;   
-    await getMessage(result.channel.id);
+    await getMessages(result.channel.id);
   }
 
   // 메세지 불러오기
-  const getMessage = async (channelId:string) =>{
+  const getMessages = async (channelId:string) => {
     let result: resp;   
     result = await client.value.getMessages({
-        channelId: channelId,
-        order: 'latest', // default: 'latest'. Use 'oldest' to order by oldest messages first
-        limit: 10, // how many messages to fetch, default: 20, max: 50
-    });
-    messages.value=result.messages
+              channelId: channelId,
+              order: 'latest', // default: 'latest'. Use 'oldest' to order by oldest messages first
+              
+              limit: 20, // how many messages to fetch, default: 20, max: 50
+          });
+    messages.value = result.messages?.reverse()
     console.log(messages);
   }
+
+
+  // 메세지 수신 시 작동
+  const setMessages = (message: message) => {
+    messages.value.push(message);
+  }
+
+
+  // 메세지 보내기
+  const sendMessage = async (text: string) => {
+    let result;
+    try {
+      result = await client.value.sendMessage({
+          channelId: selectedChannel.value?.id, 
+          type: 'text', 
+          text: text
+      });
+      setMessages(result.message)
+      console.log(result);
+    } catch (error) {
+      console.log(error);      
+    } 
+  }
+
+  
 
   
 
@@ -148,5 +173,5 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   //   console.log(result);    
   // }
 
-  return { client, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages }
+  return { client, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, setMessages,sendMessage }
 });

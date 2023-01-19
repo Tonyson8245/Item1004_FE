@@ -34,7 +34,6 @@ import { useRouter, useRoute } from "vue-router";
 
 
 const route = useRoute();
-console.log(route.params);
 const channelId = route.params.channelId;
 
 const chatStore = useChatStore();
@@ -62,15 +61,17 @@ login().then((data)=>{
 
   client.value.on('event', (data) => {
       if (data.type === 'message') {
+          
           console.log("받은 데이터", data);
           chatStore.setChannels(data.channel);
           chatStore.getUnreadCount()
+          chatStore.setMessages(data.message)
       }
   })  
 });
 
 
-onUnmounted(()=>{
+onUnmounted(() => {
   chatStore.resetChannels()
 })
 
