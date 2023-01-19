@@ -10,7 +10,12 @@
           class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
         >
           <!-- emit 값을 다시 보냄 -->
+          <putBankAccountWithdraw
+            v-if="props.propsType == 'withdraw'"
+            @update:propsShowModal="emit('update:propsShowModal', false)"
+          />
           <putBankAccount
+            v-else
             @update:propsShowModal="emit('update:propsShowModal', false)"
           />
         </div>
@@ -25,6 +30,7 @@
 
 <script lang="ts" setup>
 import putBankAccount from "../modaldetail/putBankAccount.vue";
+import putBankAccountWithdraw from "../modaldetail/putBankAccountInWithdraw.vue";
 import { useVModel } from "@vueuse/core";
 
 const props = defineProps<{

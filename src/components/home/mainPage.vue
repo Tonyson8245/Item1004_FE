@@ -98,7 +98,7 @@
       <!-- 협력사 -->
 
       <div
-        class="grid grid-cols-1 divide-y py-10 w-screen left-0 fixed hidden md:block"
+        class="grid grid-cols-1 divide-y py-10 w-screen left-0 fixed md:block"
         v-if="!storeinfiniteStatus"
       >
         <div></div>
@@ -112,7 +112,7 @@
         <Carousel :settings="settings" :breakpoints="breakpoints">
           <Slide v-for="slide in 5" :key="slide">
             <div
-              class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center h-full text-everly-mid_grey"
+              class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
             >
               <div>
                 <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
@@ -165,7 +165,6 @@ import { useFilterStore } from "@/store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "@/store/modules/home/mainStore";
 import { VueEternalLoading } from "@ts-pro/vue-eternal-loading";
-import spinner from "@/components/common/spinner.vue";
 import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
@@ -174,7 +173,6 @@ import { useRouter } from "vue-router";
 import { onMounted, watch } from "vue";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import { useSearchStore } from "@/store/modules/home/searchStore";
-import { useCommonStore } from "@/store/modules/common/commonStore";
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
