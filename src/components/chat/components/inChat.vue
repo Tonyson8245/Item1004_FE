@@ -24,7 +24,8 @@
     </div>
     <!-- bg-[url('@/assets/img/chat-background.svg')] -->
     <!-- bg-op-30-right-blue  -->
-    <div class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" >
+    <div ref="scrollView" class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" 
+        @scroll="handleListScroll">
         <!-- 채팅 내용 화면 영역 -->
         <message v-for=" message in messages" :message="message"/>
         
@@ -52,9 +53,17 @@ import myMessage from './myMessage.vue';
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
-import { ref } from 'vue';
+import { ref,onUpdated,onMounted  } from 'vue';
 
 const chatStore = useChatStore();
+
+const scrollView = ref(HTMLElement);
+
+
+// 스크롤이 하단에 고정되어 있으면 true로 주고, 내가 스크롤을 올리면 false
+// 스크롤 올리는 와중에는 메세지가 왔을 때 스크롤이 하단으로 이동 X
+const isScrollBottom = ref(true);
+
 
 // console.log(selectedChannel);
 
@@ -63,16 +72,30 @@ const text = ref("");
 const { messages } = storeToRefs(chatStore);
 
 
+
 //  import type channel from '@/domain/chat/channel.interface';
 //  const props = defineProps<{ selectedChannel: channel}>();
 
-const sendMessage = (e:any) => {
-    console.log(text);        
-    chatStore.sendMessage(text.value);
-    text.value=""
+const sendMessage = async (e:any) => {
+    // console.log(text);
+    const result =  await chatStore.sendMessage(text.value)
+    text.value = ""    
+    scrollView.value.scrollTop = scrollView.value.scrollHeight
+    // console.log(result);
+    // result.then()
 }
 
 
+const handleListScroll = (e: any) => {
+    // console.log("페이징 노 실행");    
+    const { scrollHeight, scrollTop, clientHeight } = e.target;    
+    isScrollBottom.value = scrollHeight === scrollTop + clientHeight;  
+    // const bottom = scrollHeight - (scrollTop + clientHeight)
+    console.log(isScrollBottom.value);
+    // console.log("스크린 총 길이 : ",scrollHeight);
+    // console.log("화면에 보이는 길이 : ",clientHeight);
+    // console.log("화면에 보이는 길이 : ",clientHeight);
+}
 
 </script>
 

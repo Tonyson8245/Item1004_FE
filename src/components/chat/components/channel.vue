@@ -52,7 +52,7 @@ const router = useRouter();
 
 const route = useRoute();
 
-console.log(route.params);
+// console.log(route.params);
 
 
 // 채팅방의 가장 최근 메세지 리턴

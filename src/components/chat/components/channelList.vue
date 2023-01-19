@@ -17,10 +17,10 @@
             </div>    -->
         </div>
                          
-        <!-- 채널 목록 카드   @scroll="handleNotificationListScroll"-->
+        <!-- 채널 목록 카드   @scroll="handleListScroll"-->
         <div 
         class="flex-grow overflow-scroll overflow-x-hidden"
-        @scroll="handleNotificationListScroll"
+        @scroll="handleListScroll"
         ref="trigger">  
             <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
         </div> 
@@ -57,7 +57,7 @@ const channelId  = route.params.channelId;
 
 
 // 무한 스크롤
-const handleNotificationListScroll = (e: any) => {
+const handleListScroll = (e: any) => {
     // console.log("페이징 노 실행");    
     const { scrollHeight, scrollTop, clientHeight } = e.target;    
     const isAtTheBottom = scrollHeight <= scrollTop + clientHeight;  

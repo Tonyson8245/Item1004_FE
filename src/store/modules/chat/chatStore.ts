@@ -131,7 +131,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
               limit: 20, // how many messages to fetch, default: 20, max: 50
           });
     messages.value = result.messages?.reverse()
-    console.log(messages);
+    // console.log(messages);
   }
 
 
@@ -151,7 +151,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
           text: text
       });
       setMessages(result.message)
-      console.log(result);
+      // console.log(result);
+      return result.message
     } catch (error) {
       console.log(error);      
     } 
