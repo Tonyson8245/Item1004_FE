@@ -245,7 +245,7 @@ import { ref, onMounted } from 'vue';
 const ismobile = ref(false);
 onResize()
 function onResize(){
-  ismobile.value = window.innerWidth < 600
+  ismobile.value = window.innerWidth < 640
   // console.log("라우터에서 ",ismobile.value);
 }
 
