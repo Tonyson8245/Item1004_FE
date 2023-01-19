@@ -20,19 +20,26 @@
               <img src="@/assets/icon/pig_blue.svg" alt="" class="pr-2" />
               마일리지
             </div>
+
+            <div
+              @click="router.push('/mypage/mileage/charge')"
+              class="cursor-pointer"
+            >
+              충전하기
+            </div>
+            <div
+              @click="router.push('/mypage/mileage/withdraw')"
+              class="cursor-pointer"
+            >
+              출금하기
+            </div>
             <div
               @click="router.push('/mypage/mileage/overview')"
               class="cursor-pointer"
             >
               마일리지 현황
             </div>
-            <div
-              @click="router.push('/mypage/mileage/charge')"
-              class="cursor-pointer"
-            >
-              마일리지 충전
-            </div>
-            <div>마일리지 인출</div>
+            <div>마일리지 내역</div>
           </div>
           <div class="space-y-2">
             <div class="text-everly-main font-bold text-xl flex">
@@ -44,7 +51,20 @@
             </div>
             <div>판매내역</div>
             <div>구매내역</div>
-            <div>찜한 목록 보기</div>
+            <div>취소내역</div>
+          </div>
+          <div class="space-y-2">
+            <div class="text-everly-main font-bold text-xl flex">
+              <img
+                src="@/assets/icon/store_blue.svg"
+                alt=""
+                class="pr-2"
+              />거래글
+            </div>
+            <div>판매글</div>
+            <div>구매글</div>
+            <div>찜한목록</div>
+            <div @click="logout()">로그아웃</div>
           </div>
           <div class="space-y-2">
             <div class="text-everly-main font-bold text-xl flex">

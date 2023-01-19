@@ -22,6 +22,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@hennge/vue3-pagination@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.npmjs.org/@hennge/vue3-pagination/-/vue3-pagination-1.0.17.tgz"
+  integrity sha512-HV9blF/Us0IvRwWl2sOEmegxgKd0aVnjSxE1ksrsMnTv4F7FoLx/25M9gOszDJn7mFTi1kMapQoDGkaW+nbdvA==
+
 "@humanwhocodes/config-array@^0.11.6":
   version "0.11.7"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.7.tgz"
@@ -2298,7 +2303,7 @@ vue@^2.5.22:
     "@vue/compiler-sfc" "2.7.14"
     csstype "^3.1.0"
 
-"vue@^2.6.14 || ^3.2.0", "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, "vue@>= 2.0.0", vue@3.2.45:
+"vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, "vue@>= 2.0.0", vue@3.2.45:
   version "3.2.45"
   resolved "https://registry.npmjs.org/vue/-/vue-3.2.45.tgz"
   integrity sha512-9Nx/Mg2b2xWlXykmCwiTUCWHbWIj53bnkizBxKai1g61f2Xit700A1ljowpTIM11e3uipOeiPcSqnmBg6gyiaA==

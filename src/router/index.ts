@@ -131,6 +131,15 @@ const router = createRouter({
               },
             },
             {
+              path: "mileage/withdraw",
+              component: components.mileageWithdraw,
+              meta: {
+                title: "마일리지 출금",
+                name: `charge`,
+                navbar: false,
+              },
+            },
+            {
               path: "user/info",
               component: components.userinfo,
               meta: {

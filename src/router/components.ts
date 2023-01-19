@@ -28,8 +28,10 @@ import mileageCharge from "@/components/mypage/detail/mileageCharge.vue";
 import mileageChargeResult from "@/components/mypage/ChargeResultPage.vue";
 import paytus from "@/components/payment/paytus.vue";
 import putBankAccount from "@/components/mypage/modaldetail/putBankAccount.vue";
+import mileageWithdraw from "@/components/mypage/detail/mileageWithdraw.vue";
 
 export default {
+  mileageWithdraw,
   putBankAccount,
   paytus,
   mileageChargeResult,
