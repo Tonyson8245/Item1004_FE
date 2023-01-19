@@ -13,12 +13,12 @@
         <div class="flex flex-col">
             <div class="flex">
                 <h1 class=" font-bold ">에블리</h1>
-                <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-4 ml-1"/>
+                <!-- <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-4 m ml-1"/> -->
             </div>
             <div class="flex text-xs flex-grow text-everly-dark_grey">
                 <p class="mr-2">유저코드</p>
                 <p class="mr-1">#A2379F56GH</p>
-                <img src="@/assets/icon/copy_grey.svg" alt="" />
+                <img class="" src="@/assets/icon/copy_grey.svg" alt="" />
             </div>
         </div>                    
     </div>
@@ -26,7 +26,7 @@
     <!-- bg-op-30-right-blue  -->
     <div class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" >
         <!-- 채팅 내용 화면 영역 -->
-        <message v-for=" message in messages" :message="message"/>
+        <myMessage v-for=" message in messages" :message="message"/>
         
     </div>
 
@@ -44,6 +44,8 @@
 <script setup lang="ts">
 
 import message from './message.vue';
+import myMessage from './myMessage.vue';
+
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
 import { onMounted } from 'vue';
