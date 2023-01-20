@@ -45,21 +45,72 @@
 </template>
 
 <script setup lang="ts">
+import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { usePostStore } from "@/store/modules/home/postStore";
 import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const postStore = usePostStore();
-const { storeShowManagePost, storeShowBuy, storeChatCount, storeWishCount } =
-  storeToRefs(postStore);
+
+const {
+  storeShowManagePost,
+  storeChatCount,
+  storeWishCount,
+  storePostIdx,
+  storeShowBuy,
+  storePostTitle,
+  storeSaleUnit,
+  storeUnitName,
+  storePricePerUnit,
+
+  storeGameName,
+  storeServerName,
+  storeCategory,
+  storeUserIdx,
+  storeqty,
+} = storeToRefs(postStore);
 
 const toggle = useToggle(storeShowBuy);
 const owner = ref(false);
 
 const togglestoreShowManagePost = useToggle(storeShowManagePost);
+
+const paymentStore = usePaymentStore();
 const router = useRouter();
+
+//payment page로 보내기
+function goPaymentPage() {
+  var idx = storePostIdx.value;
+  var title = storePostTitle.value;
+  var unit = storeSaleUnit.value;
+  var saleUnitName = storeUnitName.value;
+  var pricePerUnit = storePricePerUnit.value;
+  var orderQty = storeqty.value;
+
+  var GameName = storeGameName.value;
+  var ServerName = storeServerName.value;
+  var Category = storeCategory.value;
+  var saleUnit = storeSaleUnit.value;
+  var SellerIdx = storeUserIdx.value;
+
+  paymentStore.setPostData(
+    idx,
+    title,
+    unit,
+    saleUnit,
+    saleUnitName,
+    pricePerUnit,
+    orderQty,
+    GameName,
+    ServerName,
+    Category,
+    SellerIdx
+  );
+
+  router.push("/payment");
+}
 </script>
 
 <style scoped></style>

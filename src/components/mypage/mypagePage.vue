@@ -64,7 +64,6 @@
             <div>판매글</div>
             <div>구매글</div>
             <div>찜한목록</div>
-            <div @click="logout()">로그아웃</div>
           </div>
           <div class="space-y-2">
             <div class="text-everly-main font-bold text-xl flex">

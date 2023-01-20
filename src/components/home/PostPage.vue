@@ -181,11 +181,13 @@
               <div class="flex-1 font-bold">수량</div>
               <counter
                 @getValue="updateQty($event)"
-                :qty="qty"
+                :qty="storeqty"
                 :maxQty="MaxQty"
                 class="flex-none md:w-32 md:h-9"
               />
-              <div class="flex-1 text-right">{{ TotalQty }}</div>
+              <div class="flex-1 text-right">
+                {{ TotalQty }}{{ storeProductunit }}
+              </div>
             </div>
             <div>
               <div class="text-everly-dark_grey text-xs py-3 px-2">
@@ -197,7 +199,7 @@
               <div class="font-bold">총 결제금액</div>
               <div class="flex space-x-4 items-center">
                 <div class="text-everly-dark_grey text-base">
-                  총수량 ({{ qty }}{{ storeProductunit }}) / {{ TotalQty
+                  총수량 ({{ storeqty }}{{ storeProductunit }}) / {{ TotalQty
                   }}{{ storeProductunit }}
                 </div>
                 <div class="flex text-2xl font-bold items-center">
@@ -455,7 +457,7 @@
           <div class="grow font-bold text-center">수량</div>
           <counter
             @getValue="updateQty($event)"
-            :qty="qty"
+            :qty="storeqty"
             :maxQty="MaxQty"
             class="grow max-w-[6.875rem]"
           />
@@ -470,7 +472,7 @@
         <div class="flex justify-between items-center pb-8">
           <div class="font-bold px-2">총 결제금액</div>
           <div class="text-everly-dark_grey">
-            총수량 ({{ qty }}{{ storeProductunit }}) / {{ TotalQty }}
+            총수량 ({{ storeqty }}{{ storeProductunit }}) / {{ TotalQty }}
             {{ storeProductunit }}
           </div>
         </div>
@@ -557,12 +559,12 @@ const {
   storeCharacterlevel,
   storeCharacterRoleName,
   storeContent,
+  storeqty,
 } = storeToRefs(postStore);
 
 let SellBuy = "sell";
-const qty = ref(1);
 function updateQty(event: number) {
-  qty.value = event;
+  postStore.setstoreQty(event);
 }
 
 //처음 페이지 들어갈때 데이터 가져오기
@@ -591,12 +593,12 @@ function toggleShowbuy(status: boolean) {
 
 //전체 갯수
 const TotalQty = computed(() => {
-  return numberToKorean(qty.value);
+  return numberToKorean(storeqty.value);
 });
 
 //물품 가격
 const ProductPrice = computed(() => {
-  return (qty.value * storePricePerUnit.value).toLocaleString();
+  return (storeqty.value * storePricePerUnit.value).toLocaleString();
 });
 
 //최대 구매 갯수
@@ -640,7 +642,7 @@ function goPaymentPage() {
   var unit = storeSaleUnit.value;
   var saleUnitName = storeUnitName.value;
   var pricePerUnit = storePricePerUnit.value;
-  var orderQty = qty.value;
+  var orderQty = storeqty.value;
 
   var GameName = storeGameName.value;
   var ServerName = storeServerName.value;

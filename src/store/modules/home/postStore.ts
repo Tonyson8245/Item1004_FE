@@ -49,6 +49,8 @@ export const usePostStore = defineStore("postStore", {
     storeUsersellPostCount: 0,
     storeUserbuyPostCount: 0,
     storeUserreviewCount: 0,
+
+    storeqty: 1,
   }),
 
   getters: {
@@ -110,6 +112,9 @@ export const usePostStore = defineStore("postStore", {
     },
   },
   actions: {
+    setstoreQty(qty: number) {
+      this.storeqty = qty;
+    },
     setstoreShowBuy(status: boolean) {
       this.storeShowBuy = status;
     },

@@ -416,7 +416,8 @@ function goPayment() {
         storePostIdx.value, // postIdx
         storePricePerUnit.value,
         storeSaleUnit.value,
-        storeOrderQty.value
+        storeOrderQty.value,
+        storeCharaterName.value
       );
     }
     //포인트 + 일반 결제일 경우
@@ -434,7 +435,8 @@ function goPayment() {
         storePostIdx.value, // postIdx
         storePricePerUnit.value,
         storeSaleUnit.value,
-        storeOrderQty.value
+        storeOrderQty.value,
+        storeCharaterName.value
       );
     }
   } else console.log("유저정보가 없습니다.");
@@ -469,6 +471,7 @@ const {
   //수수료
   storefeePercent,
   storefeePrice,
+  storeCharaterName,
 } = storeToRefs(paymentStore);
 
 //유저 정보 닉네일

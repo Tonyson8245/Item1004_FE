@@ -21,6 +21,8 @@ class payload {
   salesUnit?: number;
   @IsNumber()
   countBuyProduct?: number;
+  @IsString()
+  characterName?: string;
 
   constructor(
     buyerIdx: number,

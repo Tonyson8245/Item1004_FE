@@ -119,6 +119,7 @@ export const usePaymentStore = defineStore("paymentStore", {
     //   else this.storeTerms = [false, false];
     // },
     // 전체 선택 값 변경
+
     setstoreTerms(status: boolean) {
       this.storeTerms = status;
     },

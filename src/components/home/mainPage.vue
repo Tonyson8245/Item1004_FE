@@ -17,7 +17,10 @@
         >
           <ProductCard :card="card" />
         </div>
-        <VueEternalLoading :load="load" v-if="storeinfiniteStatus">
+        <VueEternalLoading
+          :load="load"
+          v-if="storeinfiniteStatus && storehasnextPage"
+        >
           <template #loading> <div></div></template
         ></VueEternalLoading>
       </div>
@@ -34,7 +37,7 @@
         </div>
       </div>
 
-      <div class="hidden md:flex fixed bottom-10" v-if="storeinfiniteStatus">
+      <div class="hidden md:flex fixed bottom-10" v-else="storeinfiniteStatus">
         <div class="flex-grow"></div>
         <div class="flex-none w-[1180px]">
           <div class="absolute right-0 bottom-0">
@@ -231,10 +234,33 @@ function load({ loaded }: LoadAction) {
     //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때
     if (storehasnextPage.value) {
-      getProductList(6);
+      if (storehasnextPage.value) {
+        var page = storeNextPage.value;
+        var sellbuy = storeSellBuy.value;
+        var categorys = filterStore.getCategorys;
+        var gameIdx = filterStoreGameKeywordIdx.value;
+        var serverIdx = filterStoreServerKeywordIdx.value;
+
+        var payload = new getProductCardBodyDto(
+          page,
+          6,
+          sellbuy,
+          categorys,
+          gameIdx,
+          serverIdx
+        );
+
+        mainStore
+          .setstoreProductCard(payload)
+          .then((res) => {
+            if (res) {
+              loaded();
+            } else console.log("loaded failed");
+          })
+          .catch(() => {});
+      }
     }
   }
-  loaded();
 }
 
 function getProductList(pageUnit: number) {
@@ -260,9 +286,15 @@ function getProductList(pageUnit: number) {
 
 watch(storeLoad, () => {
   if (storeLoad.value) {
+    console.log("watch load");
+    scrollToTopinstant();
     toggleInfiniteStatus(true);
     mainStore.setstoreLoad(false);
   }
+});
+watch(storehasnextPage, () => {
+  if (!storehasnextPage) mainStore.setstoreinfiniteStatus(false);
+  else mainStore.setstoreinfiniteStatus(true);
 });
 
 //////배너
@@ -284,6 +316,9 @@ const breakpoints = {
 //위로 올라가는 함수
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function scrollToTopinstant() {
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function moveLink(link: string) {

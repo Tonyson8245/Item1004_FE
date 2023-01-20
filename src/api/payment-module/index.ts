@@ -3,6 +3,7 @@ import {
   contractCheckResultDto,
 } from "@/domain/payment/contractCheckDto.interface";
 import * as cardDto from "@/domain/payment/card-PointandContractDto.interface";
+import * as pointDto from "@/domain/payment/pointonlyContracttDto.interface";
 import * as routing from "./modules/paymentRounting";
 import * as paytus from "./modules/paytusModule";
 import { UUID } from "uuid-generator-ts";
@@ -27,7 +28,8 @@ async function payment(
   postIdx?: number,
   pricePerUnit?: number,
   salesUnit?: number,
-  countBuyProduct?: number
+  countBuyProduct?: number,
+  characterName?: string
 ) {
   //포인트로만 결제가 아닌경우
   if (type != "onlyPoint") {
@@ -72,10 +74,6 @@ async function payment(
 
         var uuid = new UUID().toString();
 
-        console.log("뭐야너");
-        console.log(type);
-        console.log(payload);
-
         await paytus.setFormControl(formUrl, payload, uuid).catch((err) => {
           console.log(`Paytus set parameter Error`);
           console.log(err);
@@ -88,30 +86,50 @@ async function payment(
   }
   // 포인트로만 결제 할 경우 (페이투스 모듈을 사용할 필요가 없음)
   else {
+    var uuid = new UUID().toString();
     if (
       sellerIdx != undefined &&
       point != undefined &&
       postIdx != undefined &&
       pricePerUnit != undefined &&
       salesUnit != undefined &&
-      countBuyProduct != undefined
+      countBuyProduct != undefined &&
+      characterName != undefined
     ) {
-      pointonlyContract(
+      var body = new pointDto.payload(
         sellerIdx,
         buyerIdx,
         point,
-        productPrice,
-        postIdx,
+        pricePerUnit,
+        point,
         totalPrice,
         pricePerUnit,
         salesUnit,
-        countBuyProduct
-      )
+        countBuyProduct,
+        characterName
+      );
+
+      pointonlyContract(body, uuid)
         .then((res) => {
           //결제 완료 페이지로 보내기
           // TODO 결제 완료 페이지 보내기 구현 필요
           // alert("포인트로만 결제 성공");
           console.log(res);
+          var payMethod = res.payMethod;
+          var tid = res.tid;
+          var userIdx = res.userIdx;
+          var postIdx = res.postIdx;
+
+          router.replace(
+            "https://vue.d27plzynpw231y.amplifyapp.com/payment/result?tid=" +
+              tid +
+              "&payMethod=" +
+              payMethod +
+              "&userIdx=" +
+              userIdx +
+              "&postIdx=" +
+              postIdx
+          );
         })
         .catch((err) => {
           console.log(err);
