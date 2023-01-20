@@ -29,7 +29,7 @@
 import headerComponentVue from "../components/header/headerComponent.vue";
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 
@@ -69,6 +69,8 @@ login().then((data)=>{
       }
   })  
 });
+
+
 
 
 onUnmounted(() => {

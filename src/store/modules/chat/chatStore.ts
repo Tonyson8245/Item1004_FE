@@ -1,12 +1,14 @@
 import axios from "axios";
-import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { defineStore,storeToRefs } from "pinia";
+import { ref, computed, watch } from "vue";
 import type resp from "@/domain/chat/resp.interface";
 import type channel from "@/domain/chat/channel.interface";
 import type message from "@/domain/chat/message.interface";
 
 import type { user } from "@/domain/user/user.interface";
 import { loadRouteLocation } from "vue-router";
+
+
 
 export const useChatStore = defineStore("chatStore", ()=>  {
     
@@ -124,12 +126,15 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   // 메세지 불러오기
   const getMessages = async (channelId:string) => {
     let result: resp;   
-    result = await client.value.getMessages({
-              channelId: channelId,
-              order: 'latest', // default: 'latest'. Use 'oldest' to order by oldest messages first
-              
-              limit: 20, // how many messages to fetch, default: 20, max: 50
-          });
+    try {
+      result = await client.value.getMessages({
+          channelId: channelId,
+          order: 'latest', // default: 'latest'. Use 'oldest' to order by oldest messages first
+          limit: 20, // how many messages to fetch, default: 20, max: 50
+      });
+    } catch (error) {
+      console.log(error);      
+    }   
     messages.value = result.messages?.reverse()
     // console.log(messages);
   }
@@ -137,7 +142,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   // 메세지 수신 시 작동
   const setMessages = (message: message) => {
-    messages.value.push(message);
+    messages.value.push(message);    
   }
 
 
@@ -157,10 +162,6 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       console.log(error);      
     } 
   }
-
-  
-
-  
 
    // 채팅 대상 검색
   //  const searchChannel = async (targetUser: string) =>{

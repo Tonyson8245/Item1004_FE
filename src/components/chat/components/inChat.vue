@@ -12,7 +12,7 @@
         <!-- 닉네임, 유저코드 -->
         <div class="flex flex-col">
             <div class="flex">
-                <h1 class=" font-bold ">에블리</h1>
+                <h1 class="font-bold">에블리</h1>
                 <!-- <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-4 m ml-1"/> -->
             </div>
             <div class="flex text-xs flex-grow text-everly-dark_grey">
@@ -24,14 +24,12 @@
     </div>
     <!-- bg-[url('@/assets/img/chat-background.svg')] -->
     <!-- bg-op-30-right-blue  -->
-    <div ref="scrollView" class=" h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" 
+    <div id="scroll-view" ref="scrollView" class=" py-1 h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" 
         @scroll="handleListScroll">
-        <!-- 채팅 내용 화면 영역 -->
-        
-        <div v-for="message in messages">
-            
+        <!-- 채팅 내용 화면 영역 -->        
+        <div  v-for="message in messages">            
             <message v-if="message.userId !== client.channel.userId"  :message="message"/>
-            <myMessage v-else     :message="message"/>
+            <myMessage v-else                                         :message="message"/>
         </div>
     </div>
 
@@ -48,6 +46,7 @@
     </div>
 </div>
 
+
 </template>
 
 <script setup lang="ts">
@@ -56,13 +55,12 @@ import message from './message.vue';
 import myMessage from './myMessage.vue';
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
-import { useRouter, useRoute } from "vue-router";
-import { ref,onUpdated,onMounted  } from 'vue';
+import { ref,onUpdated,onMounted, watch  } from 'vue';
 
 const chatStore = useChatStore();
 const { messages, client, user } = storeToRefs(chatStore);
 
-const scrollView = ref(HTMLElement);
+const scrollView:any = ref();
 
 
 // 스크롤이 하단에 고정되어 있으면 true로 주고, 내가 스크롤을 올리면 false
@@ -70,11 +68,7 @@ const scrollView = ref(HTMLElement);
 const isScrollBottom = ref(true);
 
 
-// console.log(selectedChannel);
-
 const text = ref("");
-
-
 
 
 
@@ -86,7 +80,7 @@ const sendMessage = async (e:any) => {
     if (text.value !='') {
         const result =  await chatStore.sendMessage(text.value)
         text.value = ""    
-        scrollView.value.scrollTop = scrollView.value.scrollHeight
+        scrollToBottom();
     }
     
     // console.log(result);
@@ -94,15 +88,48 @@ const sendMessage = async (e:any) => {
 }
 
 
+  
+
+
+onMounted(()=>{
+// 메세지 송, 수신 시 작동 하기 위해 사용함
+// dom node에 변화가 감지되면 스크롤 하단 이동이 실행된다.
+    // 감시자 인스턴스 만들기
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(m => {
+            if (isScrollBottom.value) scrollToBottom()
+        });
+    });
+    // 감시자 설정
+    const config = { 
+        childList: true, 
+    }
+    // 감시 시작
+    observer.observe(scrollView.value, config);
+})
+
+const scrollToBottom = () => {
+    scrollView.value.scrollTop = scrollView.value.scrollHeight
+}
+
+
+
+
+
+
+// 스크롤 시 작동
 const handleListScroll = (e: any) => {
     // console.log("페이징 노 실행");    
     const { scrollHeight, scrollTop, clientHeight } = e.target;    
-    isScrollBottom.value = scrollHeight === scrollTop + clientHeight;  
+    const cal =  (scrollTop + clientHeight) / scrollHeight * 100
+    isScrollBottom.value = 95 < cal
     // const bottom = scrollHeight - (scrollTop + clientHeight)
-    console.log(isScrollBottom.value);
     // console.log("스크린 총 길이 : ",scrollHeight);
     // console.log("화면에 보이는 길이 : ",clientHeight);
     // console.log("화면에 보이는 길이 : ",clientHeight);
+
+
+  
 }
 
 </script>

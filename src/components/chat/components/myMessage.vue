@@ -1,6 +1,6 @@
 <template>
    
-    <div class="w-full px-5 mt-5">
+    <div class="w-full px-5 mt-3 ">
          <div class="flex">
             <div class="ml-auto flex items-end">
                 <!-- 채팅 시간 -->
