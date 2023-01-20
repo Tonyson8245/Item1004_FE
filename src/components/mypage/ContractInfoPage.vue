@@ -74,7 +74,7 @@
           </div>
         </div>
       </div>
-      <div class="sm:flex sm:h-[22rem] sm:space-x-4">
+      <div class="sm:flex sm:h-[22rem] sm:space-x-8">
         <!-- 남의정보 -->
         <div class="p-4 md:px-0 text-sm md:text-base sm:flex-1">
           <!-- 헤더 -->
@@ -321,7 +321,7 @@
 <script setup lang="ts">
 import { useMediaQuery } from "@vueuse/core";
 import { useToggle } from "@vueuse/shared";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
@@ -329,10 +329,16 @@ const showuserInfo = ref(false);
 const toggleshowbuyerInfo = useToggle(showbuyerInfo);
 const toggleshowuserInfo = useToggle(showuserInfo);
 
-let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));
+const minSize = computed(() => {
+  return useMediaQuery("(min-width: 768px)");
+});
+var isBig = minSize.value.value;
+if (isBig) {
+  showbuyerInfo.value = isBig;
+  showuserInfo.value = isBig;
+}
 
-showbuyerInfo.value = isLargeScreen.value.value;
-showuserInfo.value = isLargeScreen.value.value;
+watch(minSize.value, () => {});
 </script>
 
 <style scoped></style>
