@@ -10,6 +10,7 @@ import type {
   chargeCompleteBody,
   chargeCompleteResult,
 } from "@/domain/payment/chargeCompleteDto";
+import type { user } from "@/domain/user/user.interface";
 
 export const usePaymentStore = defineStore("paymentStore", {
   state: () => ({
@@ -32,7 +33,7 @@ export const usePaymentStore = defineStore("paymentStore", {
     // 쿠폰/마일리지
     storeCouponList: ["30% 할인", "1,000원 할인", "10,000원 할인"], //쿠폰 종류
     storeCouponEffect: "*0.3",
-    storeTotalMileage: 210000, // 보유마일리지
+    storeTotalMileage: 0, // 보유마일리지
     storeDiscountMileage: 0, // 사용 마일리지
 
     //여기서는 클라만 있는 정보
@@ -221,6 +222,21 @@ export const usePaymentStore = defineStore("paymentStore", {
           this.storeChargeResult = res;
         })
         .catch((err) => {});
+    },
+    getCheckUseablePoint() {
+      const localData = localStorage.getItem("user");
+      const userIdx =
+        localData == null ? `로그인하기` : (JSON.parse(localData) as user).idx;
+
+      paymentApi
+        .chechUseablePoint(userIdx.toString())
+        .then((res) => {
+          console.log(res);
+          this.storeTotalMileage = parseInt(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 });

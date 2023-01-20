@@ -96,30 +96,28 @@
         >
           <div class="p-5 pb-0 md:px-0 md:py-[2.215rem] space-y-2 md:space-y-4">
             <div class="flex md:space-x-11">
-              <div class="font-bold">결제번호</div>
-              <div class="col-span-3 grow text-right md:text-left">
+              <div class="font-bold md:w-[5rem]">결제번호</div>
+              <div class="col-span-3 text-right md:text-left">
                 {{ tid }}
               </div>
             </div>
             <div class="flex md:space-x-11">
-              <div class="font-bold">결제일시</div>
-              <div class="col-span-3 grow text-right md:text-left">
+              <div class="font-bold md:w-[5rem]">결제일시</div>
+              <div class="col-span-3 text-right md:text-left">
                 {{ data.createdAt }}
               </div>
             </div>
 
             <div class="flex md:space-x-11">
-              <div class="font-bold">결제방법</div>
-              <div class="col-span-3 grow text-right md:text-left">
+              <div class="font-bold md:w-[5rem]">결제방법</div>
+              <div class="col-span-3 text-right md:text-left">
                 {{ payMehod }}
               </div>
             </div>
 
             <div class="flex md:space-x-11">
-              <div class="font-bold">거래상태</div>
-              <div class="col-span-3 grow text-right md:text-left">
-                결제완료
-              </div>
+              <div class="font-bold md:w-[5rem]">거래상태</div>
+              <div class="col-span-3 text-right md:text-left">결제완료</div>
             </div>
           </div>
         </div>

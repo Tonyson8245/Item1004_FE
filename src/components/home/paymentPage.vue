@@ -117,7 +117,9 @@
                     <div
                       class="border-everly-main border rounded-lg text-everly-main flex justify-center items-center py-2 px-3 md:px-6 hover:bg-[#3f52fc] hover:text-[#ffffff]"
                     >
-                      <div>충전하기</div>
+                      <div @click="router.push('/mypage/mileage/charge')">
+                        충전하기
+                      </div>
                     </div>
                   </div>
                   <div class="flex mt-4 md:mt-8">
@@ -479,6 +481,9 @@ const userNickname =
 onMounted(() => {
   var router = useRouter();
   console.log(storePostTitle.value.length);
+
+  // 보유 포인트 가져오기
+  paymentStore.getCheckUseablePoint();
 
   // 유저 정보 가져오기
   authStore.getUserPersonlData();

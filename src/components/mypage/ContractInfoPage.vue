@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[3rem] flex h-full bg-everly-light_grey md:bg-everly-white">
+  <div class="py-[3rem] flex h-screen bg-everly-light_grey md:bg-everly-white">
     <div class="flex-grow"></div>
     <div class="flex-grow-0 w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
       <!-- 판매정보 -->
@@ -155,11 +155,12 @@
                 <div>거래등급아이콘</div>
               </div>
               <div class="flex">
-                <div
+                <!-- TODO 인수인계 : 초기에 핸드폰 빠짐 -->
+                <!-- <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   핸드폰번호
-                </div>
+                </div> -->
                 <div class="flex">
                   <div>0502-1234-5789</div>
                   <div class="flex items-center ml-2">
@@ -280,11 +281,12 @@
                 <div>거래등급아이콘</div>
               </div>
               <div class="flex">
-                <div
+                <!-- TODO 인수인계 : 초기에 핸드폰 빠짐 -->
+                <!-- <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   핸드폰번호
-                </div>
+                </div> -->
                 <div class="flex">
                   <div>0502-1234-5789</div>
                   <div class="flex items-center ml-2">

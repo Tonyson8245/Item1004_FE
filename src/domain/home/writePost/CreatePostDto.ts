@@ -121,5 +121,24 @@ export class CreatePostDtoBody {
       delete this.minAmount;
       delete this.saleUnit;
     }
+
+    content != "" ? { content: content } : delete this.content;
+    saleUnit != 0 ? { saleUnit: saleUnit } : delete this.saleUnit;
+    maxAmount != 0 ? { maxAmount: maxAmount } : delete this.maxAmount;
+    minAmount != 0 ? { minAmount: minAmount } : delete this.minAmount;
+    characterName != ""
+      ? { characterName: characterName }
+      : delete this.characterName;
+    registration != ""
+      ? { registration: registration }
+      : delete this.registration;
+    roleIdx != 0 ? { roleIdx: roleIdx } : delete this.roleIdx;
+    level != 0 ? { level: level } : delete this.level;
+    hasPaymentHistory != null
+      ? { hasPaymentHistory: hasPaymentHistory }
+      : delete this.hasPaymentHistory;
+    isDuplicatedSync != null
+      ? { isDuplicatedSync: isDuplicatedSync }
+      : delete this.isDuplicatedSync;
   }
 }

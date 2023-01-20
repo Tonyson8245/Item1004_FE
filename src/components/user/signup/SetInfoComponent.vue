@@ -421,8 +421,10 @@ function signUp() {
   authStore
     .signUp(tempuserId.value, password.value, termAllIdxs, recommend, authId)
     .then((res) => {
-      if (res) router.push("/account/login");
-      else router.push("/account/confirm");
+      if (res) {
+        alert("회원가입이 성공되었습니다.");
+        router.push("/account/login");
+      } else router.push("/account/confirm");
     });
   // console.log("회원가입 실행");
 }
