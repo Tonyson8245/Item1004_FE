@@ -8,6 +8,7 @@ import * as routing from "./modules/paymentRounting";
 import * as paytus from "./modules/paytusModule";
 import { UUID } from "uuid-generator-ts";
 import { pointonlyContract } from "./modules/pointonlycontract";
+import { useRouter } from "vue-router";
 
 //payment(type: string, payMethod: string, buyerIdx: number, fee: number, productPrice: number, totalPrice: number, point?: number, sellerIdx?: number, postIdx?: number)
 
@@ -120,8 +121,8 @@ async function payment(
           var userIdx = res.userIdx;
           var postIdx = res.postIdx;
 
-          router.replace(
-            "https://vue.d27plzynpw231y.amplifyapp.com/payment/result?tid=" +
+          router.push(
+            "/payment/result?tid=" +
               tid +
               "&payMethod=" +
               payMethod +

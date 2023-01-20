@@ -45,7 +45,7 @@
             <div class="flex">
               <div class="font-bold w-14 md:w-[6.9rem]">결제금액</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>{{ data.totalPrice }} 원</div>
+                <div>{{ commonFunction.comma(data.totalPrice) }} 원</div>
                 <div class="md:text-base">{{ productInfo }}</div>
               </div>
             </div>
@@ -55,13 +55,15 @@
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div class="md:text-base text-everly-dark_grey">(쿠폰)</div>
-                  <div>- {{ data.couponDiscountPrice }}원</div>
+                  <div>
+                    - {{ commonFunction.comma(data.couponDiscountPrice) }}원
+                  </div>
                 </div>
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div class="md:text-base text-everly-dark_grey">
                     (마일리지)
                   </div>
-                  <div>- {{ data.point }}원</div>
+                  <div>- {{ commonFunction.comma(data.point) }}원</div>
                 </div>
               </div>
             </div>
@@ -72,7 +74,7 @@
               </div>
               <div class="grow text-right md:justify-end md:flex md:items-end">
                 <div class="text-base font-bold md:text-xl">
-                  {{ data.totalPrice }} 원
+                  {{ commonFunction.comma(data.totalPrice) }} 원
                 </div>
                 <div class="text-everly-dark_grey text-xs md:text-sm">
                   (수수료 포함)
@@ -97,27 +99,37 @@
           <div class="p-5 pb-0 md:px-0 md:py-[2.215rem] space-y-2 md:space-y-4">
             <div class="flex md:space-x-11">
               <div class="font-bold md:w-[5rem]">결제번호</div>
-              <div class="col-span-3 text-right md:text-left">
+              <div
+                class="col-span-3 text-right flex-1 md:flex-none md:text-left"
+              >
                 {{ tid }}
               </div>
             </div>
             <div class="flex md:space-x-11">
               <div class="font-bold md:w-[5rem]">결제일시</div>
-              <div class="col-span-3 text-right md:text-left">
+              <div
+                class="col-span-3 text-right flex-1 md:flex-none md:text-left"
+              >
                 {{ data.createdAt }}
               </div>
             </div>
 
             <div class="flex md:space-x-11">
               <div class="font-bold md:w-[5rem]">결제방법</div>
-              <div class="col-span-3 text-right md:text-left">
+              <div
+                class="col-span-3 text-right flex-1 md:flex-none md:text-left"
+              >
                 {{ payMehod }}
               </div>
             </div>
 
             <div class="flex md:space-x-11">
               <div class="font-bold md:w-[5rem]">거래상태</div>
-              <div class="col-span-3 text-right md:text-left">결제완료</div>
+              <div
+                class="col-span-3 text-right flex-1 md:flex-none md:text-left"
+              >
+                결제완료
+              </div>
             </div>
           </div>
         </div>
@@ -152,6 +164,7 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { computed, onUnmounted, onMounted, ref } from "vue";
 import { contractCompleteBody } from "@/domain/payment/contractCompleteDto";
+import commonFunction from "@/common";
 const router = useRouter();
 const route = useRoute();
 const paymentStore = usePaymentStore();

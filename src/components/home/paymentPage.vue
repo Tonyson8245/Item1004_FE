@@ -393,6 +393,7 @@ const { storeUserPersonalData } = storeToRefs(authStore);
 // function goPay() {
 //   emit("goPay");
 // }
+
 // 신규 결제 모듈
 function goPayment() {
   //포인트로만 결제 할 떄,
