@@ -17,7 +17,8 @@
       ></i>
     </div>
     <div
-      class="text-everly-dark_grey mt-1 rounded absolute z-10 shadow-lg border border-everly-mid_grey text-xs md:text-sm bg-white cursor-pointer"
+      class="text-everly-dark_grey mt-1 rounded absolute shadow-lg border border-everly-mid_grey text-xs md:text-sm bg-white cursor-pointer"
+      style="z-index: 5"
       :class="props.propsClass"
       v-if="show"
     >

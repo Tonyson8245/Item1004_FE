@@ -1,5 +1,5 @@
 <template>
-  <div class="py-[3rem] flex h-screen bg-everly-light_grey md:bg-everly-white">
+  <div class="py-[3rem] flex h-auto bg-everly-light_grey md:bg-everly-white">
     <div class="flex-grow"></div>
     <div class="flex-grow-0 w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
       <!-- 판매정보 -->

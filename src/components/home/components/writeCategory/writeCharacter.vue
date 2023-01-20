@@ -116,7 +116,7 @@
             :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
             :propsPlaceholder="`캐릭터 레벨을 입력하세요`"
             :modelValue="storelevel.toString()"
-            @getModel="storelevel = $event"
+            @getModel="storelevel = parseInt($event)"
           />
         </div>
       </div>

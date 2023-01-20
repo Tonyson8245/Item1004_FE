@@ -43,7 +43,7 @@
     />
 
     <FooterWeb
-      class="hidden md:block absolute w-full"
+      class="hidden md:block w-full bottom-0"
       v-if="
         !(storeinfiniteStatus && route.meta.name == 'home') &&
         route.meta.name != `paymentResult`
