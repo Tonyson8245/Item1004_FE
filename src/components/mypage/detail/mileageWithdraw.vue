@@ -18,7 +18,10 @@
           class="sm:flex md:ml-6 justify-between items-center md:pr-96 text-xs md:text-base"
         >
           <div class="m:pb-4 sm:flex-1">
-            <div v-if="accountCondition" class="space-x-1 md:space-x-4">
+            <div
+              v-if="accountCondition"
+              class="space-x-1 md:space-x-4 pb-2 md:pb-0"
+            >
               <span>신한은행</span>
               <span>110-403-902006</span>
               <span>(예금주 : 오지윤)</span>

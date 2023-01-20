@@ -83,10 +83,19 @@ const router = createRouter({
         },
         {
           path: "/mypage/mileage/withdraw/result",
-          component: components.mitlageWithdrawResult,
+          component: components.milageWithdrawResult,
           meta: {
             name: "chargeResult",
             title: "출금 신청 완료",
+            navbar: false,
+          },
+        },
+        {
+          path: "/mypage/contractlist/sell",
+          component: components.contractInfo,
+          meta: {
+            name: "",
+            title: "거래정보확인-판매중",
             navbar: false,
           },
         },
