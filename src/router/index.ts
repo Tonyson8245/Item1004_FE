@@ -91,11 +91,11 @@ const router = createRouter({
           },
         },
         {
-          path: "/mypage/contractlist/sell",
+          path: "/mypage/contractInfo",
           component: components.contractInfo,
           meta: {
             name: "",
-            title: "거래정보확인-판매중",
+            title: "거래정보확인",
             navbar: false,
           },
         },

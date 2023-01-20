@@ -34,7 +34,7 @@
           v-else
           @click="
             toggle();
-            router.push('/payment');
+            goPaymentPage();
           "
         >
           바로 구매
