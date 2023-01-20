@@ -1,7 +1,57 @@
 <template>
+<<<<<<< develop
   <div class="py-[3rem] flex h-auto bg-everly-light_grey md:bg-everly-white">
     <div class="flex-grow"></div>
     <div class="flex-grow-0 w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
+=======
+  <div class="py-[3rem] flex h-full bg-everly-light_grey md:bg-everly-white">
+    <div class="flex-1"></div>
+    <div class="flex-none w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
+      <div class="p-4 md:px-0 space-y-5">
+        <div class="flex space-x-2">
+          <img src="@/assets/icon/check_special_blue.svg" alt="" />
+          <span class="font-bold">거래진행단계</span>
+        </div>
+        <div class="w-full flex justify-center">
+          <div v-if="contractStatus == 'takeover_complete'">
+            <img
+              src="@/assets/img/contractProcess_complete_mobile.svg"
+              alt=""
+              class="md:hidden"
+            />
+            <img
+              src="@/assets/img/contractProcess_complete_web.svg"
+              alt=""
+              class="hidden md:block"
+            />
+          </div>
+          <div v-else-if="contractStatus == 'takeover_ongoing'">
+            <img
+              src="@/assets/img/contractProcess_takeover_ongoing_web.svg"
+              alt=""
+              class="hidden md:block"
+            />
+            <img
+              src="@/assets/img/contractProcess_takeover_ongoing_mobile.svg"
+              alt=""
+              class="block md:hidden"
+            />
+          </div>
+          <div v-else-if="contractStatus == 'take_ongoing'">
+            <img
+              src="@/assets/img/contractProcess_take_ongoing_web.svg"
+              alt=""
+              class="hidden md:block"
+            />
+            <img
+              src="@/assets/img/contractProcess_take_ongoing_mobile.svg"
+              class="md:hidden"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+>>>>>>> Ongoing UI
       <!-- 판매정보 -->
       <div class="p-4 md:px-0 text-sm md:text-base">
         <!-- 헤더 -->
@@ -104,7 +154,7 @@
             </div>
           </div>
           <div
-            class="mt-2 md:border rounded-lg shadow-md overflow-hidden sm:h-[15rem]"
+            class="mt-2 md:border rounded-lg shadow-md overflow-hidden sm:h-[15rem] bg-everly-wbg_grey md:bg-everly-white"
           >
             <!-- 프로필  -->
             <div
@@ -118,13 +168,22 @@
                 />
               </div>
               <div class="flex-1">
-                <div class="flex items-center font-bold">
-                  <div>이걸닉네임이라고짓다니말도안돼</div>
+                <div class="flex justify-between items-center font-bold">
+                  <div class="flex items-center">
+                    <div>이걸닉네임이라고짓다니말도안돼</div>
+                    <div>
+                      <img
+                        src="@/assets/icon/check_circle_blue.svg"
+                        alt=""
+                        class="w-3 md:w-4 ml-1"
+                      />
+                    </div>
+                  </div>
                   <div>
                     <img
-                      src="@/assets/icon/check_circle_blue.svg"
+                      src="@/assets/icon/dice_grey.svg"
                       alt=""
-                      class="w-3 md:w-4 ml-1"
+                      class="hidden md:block"
                     />
                   </div>
                 </div>
@@ -237,7 +296,7 @@
             </div>
           </div>
           <div
-            class="mt-2 md:border rounded-lg shadow-md overflow-hidden sm:h-[15rem]"
+            class="mt-2 md:border rounded-lg shadow-md overflow-hidden sm:h-[15rem] bg-everly-wbg_grey md:bg-everly-white"
           >
             <!-- 프로필  -->
             <div
@@ -251,8 +310,24 @@
                 />
               </div>
               <div class="flex-1">
-                <div class="flex items-center font-bold">
-                  <div>호날두는우리팀</div>
+                <div class="flex items-center justify-between font-bold">
+                  <div class="flex items-center">
+                    <div>호날두는우리팀</div>
+                    <div>
+                      <img
+                        src="@/assets/icon/check_circle_blue.svg"
+                        alt=""
+                        class="w-3 md:w-4 ml-1"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <img
+                      src="@/assets/icon/dice_grey.svg"
+                      alt=""
+                      class="hidden md:block"
+                    />
+                  </div>
                 </div>
                 <div class="flex justify-between items-center">
                   <div>#A2379F56GH</div>
@@ -314,8 +389,14 @@
           </div>
         </div>
       </div>
+      <div>
+        <div>
+          <img src="@/assets/icon/warning_red.svg" alt="" />
+          <div>잠깐! 물품을 넘겨주기 전 꼭 확인하세요!</div>
+        </div>
+      </div>
     </div>
-    <div class="flex-grow"></div>
+    <div class="flex-1"></div>
   </div>
 </template>
 <script setup lang="ts">
@@ -330,7 +411,7 @@ const toggleshowbuyerInfo = useToggle(showbuyerInfo);
 const toggleshowuserInfo = useToggle(showuserInfo);
 
 const minSize = computed(() => {
-  return useMediaQuery("(min-width: 768px)");
+  return useMediaQuery("(min-width: 640px)");
 });
 var isBig = minSize.value.value;
 if (isBig) {
@@ -338,7 +419,12 @@ if (isBig) {
   showuserInfo.value = isBig;
 }
 
-watch(minSize.value, () => {});
+watch(minSize.value, () => {
+  showbuyerInfo.value = minSize.value.value;
+  showuserInfo.value = minSize.value.value;
+});
+
+const contractStatus = ref("takeover_complete");
 </script>
 
 <style scoped></style>
