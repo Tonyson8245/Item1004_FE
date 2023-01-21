@@ -230,6 +230,8 @@ function toggleInfiniteStatus(status: boolean) {
 
 // 무한 스크롤 동작
 function load({ loaded }: LoadAction) {
+  
+  
   if (storeinfiniteStatus.value) {
     //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때

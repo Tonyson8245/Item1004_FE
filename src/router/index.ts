@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useCommon } from "../store/modules/ui/common";
 import type { user } from "../domain/user/user.interface";
 
+
+
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
@@ -226,7 +230,7 @@ const router = createRouter({
       ],
     },
     {
-      path: "/chat",
+      path: "/chat",      
       component: components.ChatViewVue,
       meta: { transition: "", name: "chat", title: "채팅" },
 
@@ -234,10 +238,30 @@ const router = createRouter({
       // 모바일에서 클릭 시 -> 채팅방 목록 -> 채팅창
       children: [
         {
-          path: "",
-          component: components.chatPage,
+          path:"",
+          components: {
+            default: async ()=>{
+              if(!isMobile()){
+                return  components.chatPage
+              }    else{
+                return  components.channelList
+              }
+            },            
+          },
         },
-      ],
+        {
+          path:":channelId",
+          components: {
+            default: async ()=>{
+                if(!isMobile()){
+                  return  components.chatPage
+                }    else{
+                  return  components.inChat
+                }
+              } ,            
+          },
+        }
+      ]
     },
     {
       path: "/redirect",
@@ -260,7 +284,14 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from) => {
+
+
+const isMobile = () => {
+  return window.innerWidth < 640
+}
+
+
+router.beforeEach((to) => {
   window.scrollTo({ top: 0, behavior: "auto" });
   const localData = localStorage.getItem("user");
   const userNickname =
