@@ -198,7 +198,7 @@ const router = createRouter({
           path:"",
           components: {
             default: async ()=>{
-              if(!ismobile.value){
+              if(!isMobile()){
                 return  components.chatPage
               }    else{
                 return  components.channelList
@@ -210,7 +210,7 @@ const router = createRouter({
           path:":channelId",
           components: {
             default: async ()=>{
-                if(!ismobile.value){
+                if(!isMobile()){
                   return  components.chatPage
                 }    else{
                   return  components.inChat
@@ -241,12 +241,9 @@ const router = createRouter({
 });
 
 
-import { ref, onMounted } from 'vue';
-const ismobile = ref(false);
-onResize()
-function onResize(){
-  ismobile.value = window.innerWidth < 640
-  // console.log("라우터에서 ",ismobile.value);
+
+const isMobile = () => {
+  return window.innerWidth < 640
 }
 
 

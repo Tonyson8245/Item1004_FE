@@ -41,7 +41,7 @@ const chatStore = useChatStore();
 // TalkPlus 초기화 실행 
 const chatClient = chatStore.init();
 
-const { client, channels } = storeToRefs(chatStore);
+const { client, channels, selectedChannel } = storeToRefs(chatStore);
 
 // TalkPlus api 로그인
 const login = async () => await chatStore.login()
@@ -51,27 +51,35 @@ const getChannels = async () => await chatStore.getChannels();
 
 
 // 로그인을 한번 실행
-login().then((data)=>{
+login().then( async (data)=>{
   getChannels();
   
   // 뷰에서 inChat에서 사용될 채팅 내용들을 여기서 로드
   if (channelId) {
-    chatStore.getSelectedChannel(channelId)
+  await  chatStore.getSelectedChannel(channelId)
   }
 
-  client.value.on('event', (data) => {
-      if (data.type === 'message') {
-          
-          console.log("받은 데이터", data);
-          chatStore.setChannels(data.channel);
-          chatStore.getUnreadCount()
-          chatStore.setMessages(data.message)
-      }
+  client.value.on('event', async (data) => {
+    if (data.type === 'message') {          
+        // console.log("받은 데이터", data);
+      await onReceiveMessage(data)
+    }
   })  
 });
 
 
 
+// 받은 메세지 처리기
+async function onReceiveMessage(data:any){
+    let channel  = data.channel   
+    if (data.message.channelId === selectedChannel.value?.id) {      
+      const getChannel = await chatStore.messageRead(data.message.channelId);   
+      channel = getChannel.channel
+      chatStore.setMessages(data.message)
+    }
+    chatStore.setChannels(channel);
+    chatStore.getUnreadCount()
+}
 
 onUnmounted(() => {
   chatStore.resetChannels()

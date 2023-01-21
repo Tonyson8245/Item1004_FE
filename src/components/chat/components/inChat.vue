@@ -1,24 +1,26 @@
 <template>
 <div class="h-full flex flex-col">
-    <div  class=" h-[6.5rem] border-b border-everly-mid_grey flex items-center pl-5">
-        <!-- 프로필 이미지 -->
+
+
+    <div class=" border-b border-everly-mid_grey flex items-center pl-5 py-3">
         <div class="rounded-lg overflow-hidden mr-2">                           
             <img
                 src="@/assets/img/profile_green.jpeg"
                 alt=""
-                class=" w-14 rounded-lg"
+                class="w-14 rounded-lg"
             />
         </div> 
-        <!-- 닉네임, 유저코드 -->
         <div class="flex flex-col">
             <div class="flex">
-                <h1 class="font-bold">에블리</h1>
-                <!-- <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-4 m ml-1"/> -->
+                <p class=" text-xs text-bck">메이플 스토리 > 엘리시움</p>
+            </div>
+            <div class="flex text-sm">
+                <p class="font-bold mr-2">거래완료</p> <p>9억 ~580억 메이플 메소 판매합니다</p>
             </div>
             <div class="flex text-xs flex-grow text-everly-dark_grey">
-                <p class="mr-2">유저코드</p>
-                <p class="mr-1">#A2379F56GH</p>
-                <img class="" src="@/assets/icon/copy_grey.svg" alt="" />
+                <p class="mr-2">8억</p>
+                <p class="mr-1">게임머니당</p>
+                <p>26,084원</p>               
             </div>
         </div>                    
     </div>
@@ -78,11 +80,10 @@ const text = ref("");
 const sendMessage = async (e:any) => {
     // console.log(text);
     if (text.value !='') {
-        const result =  await chatStore.sendMessage(text.value)
+        await chatStore.sendMessage(text.value) 
         text.value = ""    
         scrollToBottom();
     }
-    
     // console.log(result);
     // result.then()
 }

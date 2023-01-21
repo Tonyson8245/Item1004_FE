@@ -5,7 +5,7 @@
             <div class="flex items-center">
                 <p class="font-bold text-xl mr-2">채팅목록</p>   
                 <!-- 채팅 숫자-->
-                <div class="min-w-[1.25rem] w-auto  h-5 rounded-full text-center bg-everly-red text-everly-white flex items-center justify-center">
+                <div v-if="unreadCount != 0" class="min-w-[1.25rem] w-auto  h-5 rounded-full text-center bg-everly-red text-everly-white flex items-center justify-center">
                     <p class="text-sm px-1">
                         {{ unreadCount }}                                    
                     </p>
@@ -35,7 +35,6 @@ import { useChatStore } from "@/store/modules/chat/chatStore";
 import { ref, computed, onMounted  } from "vue";
 // import { useRoute } from "vue-router";
 import { useRoute } from "vue-router";
-
 
 const chatStore = useChatStore();
 const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore);

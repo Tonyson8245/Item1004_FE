@@ -13,7 +13,7 @@
             
             <div class="flex items-end">
                 <p class="text-sm px-3 py-2 h-fit md:max-w-md rounded-lg shadow-md bg-everly-white text-everly-dark_grey">{{ props.message.text }}</p>
-                <p class=" ml-2 text-xs text-everly-dark_grey">오후 06:00</p>
+                <p class=" ml-2 text-xs text-everly-dark_grey">{{lastMessageTime()}}</p>
             </div>
             <!-- 채팅 내용 -->
             
@@ -29,7 +29,9 @@ import type message from '@/domain/chat/message.interface';
 
 const props = defineProps<{ message: message}>();
 
-
+const lastMessageTime = () => {    
+    return  new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date(props.message.createdAt))
+}
 
 </script>
 

@@ -4,7 +4,7 @@
          <div class="flex">
             <div class="ml-auto flex items-end">
                 <!-- 채팅 시간 -->
-                <p class=" mr-3 text-xs text-everly-dark_grey">오후 06:00</p>
+                <p class=" mr-3 text-xs text-everly-dark_grey">{{lastMessageTime()}}</p>
                 <!-- 채팅 내용 -->
                 <p class="text-sm mr-3 px-3 py-2 h-fit  md:max-w-md  rounded-lg shadow-md bg-everly-main text-everly-white">{{ props.message.text }}</p>
            
@@ -19,8 +19,7 @@
                  />
              </div>
          </div>
-     </div>
- 
+     </div> 
  </template>
  
  <script setup lang="ts">
@@ -28,6 +27,13 @@
  
  
  const props = defineProps<{ message: message}>();
+ 
+ const lastMessageTime = () => {
+    
+    return  new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date(props.message.createdAt))
+        
+    
+}
  
  </script>
  
