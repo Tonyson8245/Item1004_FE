@@ -5,6 +5,7 @@ import type mileageOveriewResponseDto from "@/domain/payment/mileageOverviewRepo
 import { putBankAccountBody } from "@/domain/auth";
 import * as contractInfo from "@/domain/payment/contractPostDetailDto.interaface";
 import { isNotEmptyObject, isObject } from "class-validator";
+import { withdrawMileageResult } from "@/domain/payment/withdrawMileage.interface";
 
 export const usemypageStore = defineStore("mypageStore", {
   state: () => ({
@@ -18,6 +19,11 @@ export const usemypageStore = defineStore("mypageStore", {
     storeordNm: "23465cda-448b-48bc-8da6-be331910531e",
 
     storeContractDetail: {} as contractInfo.contractPostDetailResult,
+
+    //출금 관련
+    storewithdrawAmt: 0,
+    //출금 결과 관련
+    storewithdrawResult: {} as withdrawMileageResult,
   }),
 
   getters: {
@@ -30,6 +36,7 @@ export const usemypageStore = defineStore("mypageStore", {
       }
     },
     getterMylevel: (state) => {
+      if (!isNotEmptyObject(state.storeContractDetail)) return "";
       switch (state.storeContractDetail.my.contractLevelName) {
         case "rookie":
           return "level_rookie";
@@ -48,6 +55,7 @@ export const usemypageStore = defineStore("mypageStore", {
       }
     },
     getterWriterlevel: (state) => {
+      if (!isNotEmptyObject(state.storeContractDetail)) return "";
       switch (state.storeContractDetail.other.contractLevelName) {
         case "rookie":
           return "level_rookie";
@@ -91,8 +99,40 @@ export const usemypageStore = defineStore("mypageStore", {
         return new contractInfo.contractPostDetailResult();
       }
     },
+    getterwithdrawResultBankname: (state) => {
+      if (!isNotEmptyObject(state.storewithdrawResult)) return "";
+      else {
+        var bankname = state.storewithdrawResult.bankName;
+        var accountNumber = state.storewithdrawResult.accountNumber;
+
+        return "(" + bankname + ") " + accountNumber;
+      }
+    },
+    getterstorewithdrawResult: (state) => {
+      var data = state.storewithdrawResult;
+      if (isNotEmptyObject(data)) return data;
+      else return new withdrawMileageResult("", "", 0, 0);
+    },
   },
   actions: {
+    setstorewithdrawAmt(amt: number) {
+      if (isNaN(amt)) this.storewithdrawAmt = 0;
+      else this.storewithdrawAmt = amt;
+    },
+    async postWithdrawMileage() {
+      var amt = this.storewithdrawAmt;
+      var result = false;
+      await paymentApi
+        .withdrawMileage(amt)
+        .then((res) => {
+          this.storewithdrawResult = res;
+          result = true;
+        })
+        .catch((err) => {
+          result = false;
+        });
+      return result;
+    },
     getMileageOverview(userIdx: string) {
       paymentApi
         .getMileageOverview(userIdx)

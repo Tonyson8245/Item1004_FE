@@ -21,7 +21,7 @@
               >
                 <div class="text-sm md:text-lg">
                   <div class="text-everly-main font-bold">
-                    {{ amt.toLocaleString() }} 원
+                    {{ storewithdrawAmt.toLocaleString() }} 원
                   </div>
                   출금하시겠습니까?
                 </div>
@@ -39,8 +39,9 @@
                   </div>
                   <div
                     class="flex-1 rounded-lg bg-everly-main text-everly-white py-2 cursor-pointer"
+                    @click="withdraw()"
                   >
-                    출금하기
+                    확인완료
                   </div>
                 </div>
               </div>
@@ -65,14 +66,33 @@ import putBankAccount from "../modaldetail/putBankAccount.vue";
 import putBankAccountWithdraw from "../modaldetail/putBankAccountInWithdraw.vue";
 import { useVModel } from "@vueuse/core";
 import { ref } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
+import router from "@/router";
 
 const props = defineProps<{
   propsShowModal: boolean;
   propsType: string;
 }>();
 
-const amt = ref(40000);
 const emit = defineEmits(["update:propsShowModal"]);
 const propsShowModal = useVModel(props, "propsShowModal", emit);
+
+const mypageStore = usemypageStore();
+const { storewithdrawAmt } = storeToRefs(mypageStore);
+
+function withdraw() {
+  mypageStore.postWithdrawMileage().then((res) => {
+    console.log(res);
+
+    if (res) router.push("/mypage/mileage/withdraw/result");
+    else {
+      alert("출금 신청이 실패되었습니다.");
+      router.push("/mypage/mileage/withdraw");
+    }
+
+    mypageStore.setstorewithdrawAmt(0);
+  });
+}
 </script>
 <style scoped></style>

@@ -12,7 +12,7 @@
           <span class="bg-everly-light_blue px-1 rounded font-normal mr-1"
             >1</span
           >
-          출금 계좌 확인{{ type }}
+          출금 계좌 확인
         </div>
         <div
           class="sm:flex md:ml-6 justify-between items-center md:pr-96 text-xs md:text-base"
@@ -67,7 +67,7 @@
             <div class="md:w-[8.6rem]">총 마일리지</div>
             <div>100,250원</div>
           </div>
-          <div class="flex justify-between relative z-10">
+          <div class="flex justify-between relative">
             <div class="md:w-[8.6rem] flex item-center">
               출금 가능 마일리지
               <img
@@ -202,14 +202,16 @@ import commonFunction from "@/common";
 import ModalMypage from "../components/modalMypage.vue";
 import { useRouter } from "vue-router";
 import { useMediaQuery } from "@vueuse/core";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
-const withdrawAmt = ref("");
+const mypageStore = usemypageStore();
 const showMilageGuide = ref(false);
 const accountCondition = ref(true);
 
 function changeValue(value: string) {
-  withdrawAmt.value = commonFunction.uncomma(value);
+  mypageStore.setstorewithdrawAmt(parseInt(commonFunction.uncomma(value)));
 }
 function setshowMileageGuide(status: boolean) {
   showMilageGuide.value = status;

@@ -32,14 +32,17 @@
             <div class="flex">
               <div class="font-bold w-22 md:w-[15rem]">출금 계좌</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>(신한) 110-403-902006</div>
+                <div>{{ getterwithdrawResultBankname }}</div>
               </div>
             </div>
 
             <div class="flex">
               <div class="font-bold w-22 md:w-[15rem]">출금신청 마일리지</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>40,000 원</div>
+                <div>
+                  {{ commonFunction.comma(data.withdrawalPoint) }}
+                  원
+                </div>
               </div>
             </div>
 
@@ -68,7 +71,7 @@
             <div class="flex">
               <div class="font-bold md:w-[15rem]">남은 출금가능 마일리지</div>
               <div class="col-span-3 grow text-right md:text-left">
-                6,250 원
+                {{ commonFunction.comma(data.currentWithdrawalPoint) }} 원
               </div>
             </div>
           </div>
@@ -111,56 +114,18 @@
 </template>
 
 <script setup lang="ts">
-import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { computed, ref, onMounted } from "vue";
-import { chargeCompleteBody } from "@/domain/payment/chargeCompleteDto";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import commonFunction from "@/common";
 const router = useRouter();
 const route = useRoute();
-const paymentStore = usePaymentStore();
+const mypageStore = usemypageStore();
 
-const {
-  storeChargeResult,
-  chargeTotalPrice,
-  chargeChargePoint,
-  chargeafterChargePoint,
-  chargewithdrawalPoint,
-  chargepurchasePoint,
-} = storeToRefs(paymentStore);
+const { getterstorewithdrawResult, getterwithdrawResultBankname } =
+  storeToRefs(mypageStore);
 
-// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
-const emit = defineEmits([`goPay`]);
-function goPay() {}
-
-const data = storeChargeResult;
-
-const tid = ref("");
-const amt = ref("");
-const payMehod = ref("");
-const ediDate = ref("");
-const userIdx = ref("");
-
-onMounted(() => {
-  var querytid = route.query.tid?.toString();
-  var queryamt = route.query.amt?.toString();
-  var querypayMehod = route.query.payMethod?.toString();
-  var queryediDate = route.query.ediDate?.toString();
-  var queryuserIdx = route.query.userIdx?.toString();
-
-  tid.value = querytid == undefined ? "" : querytid;
-  amt.value = queryamt == undefined ? "" : queryamt;
-  payMehod.value = querypayMehod == undefined ? "" : querypayMehod;
-  ediDate.value = queryediDate == undefined ? "" : queryediDate;
-  userIdx.value = queryuserIdx == undefined ? "" : queryuserIdx;
-
-  var payload = new chargeCompleteBody(
-    tid.value,
-    payMehod.value,
-    parseInt(userIdx.value)
-  );
-  paymentStore.getChargeCompleteResult(payload);
-});
+const data = getterstorewithdrawResult;
 </script>
 
 <style scoped></style>
