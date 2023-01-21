@@ -1,20 +1,14 @@
 <template>
-<<<<<<< develop
-<<<<<<< develop
-  <div class="py-[3rem] flex h-auto bg-everly-light_grey md:bg-everly-white">
-    <div class="flex-grow"></div>
-    <div class="flex-grow-0 w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
-=======
-  <div class="py-[3rem] flex h-full bg-everly-light_grey md:bg-everly-white">
-=======
   <div
     class="py-[3rem] pb-[4rem] flex h-full bg-everly-light_grey md:bg-everly-white"
     @click="setshowMore(false)"
   >
->>>>>>> finish API getContactInfo detail
     <div class="flex-1"></div>
     <div class="flex-none w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
-      <div class="p-4 md:px-0 space-y-5">
+      <div
+        class="p-4 md:px-0 space-y-5"
+        v-if="getterContractStageStatus != 'cancel'"
+      >
         <div class="flex space-x-2">
           <img
             src="@/assets/icon/check_special_blue.svg"
@@ -62,7 +56,6 @@
           </div>
         </div>
       </div>
->>>>>>> Ongoing UI
       <!-- 판매정보 -->
       <div class="p-4 md:px-0 text-sm md:text-base">
         <!-- 헤더 -->
@@ -268,19 +261,12 @@
                 </div>
                 <div>거래등급 아이콘</div>
               </div>
-<<<<<<< develop
               <div class="flex">
-                <!-- TODO 인수인계 : 초기에 핸드폰 빠짐 -->
-                <!-- <div
-=======
-              <!-- TODO 인수인계 - 휴대폰 번호 추가 -->
-              <!-- <div class="flex">
                 <div
->>>>>>> finish API getContactInfo detail
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   핸드폰번호
-                </div> -->
+                </div>
                 <div class="flex">
                   <div>0502-1234-5789</div>
                   <div class="flex items-center ml-2">
@@ -294,7 +280,7 @@
                     <div class="text-xs pl-1">안심번호사용중</div>
                   </div>
                 </div>
-              </div> -->
+              </div>
               <div class="flex items-center">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
@@ -431,19 +417,13 @@
                 </div>
                 <div>거래등급아이콘</div>
               </div>
-<<<<<<< develop
               <div class="flex">
                 <!-- TODO 인수인계 : 초기에 핸드폰 빠짐 -->
-                <!-- <div
-=======
-              <!-- TODO 인수인계 전화번호 추가 -->
-              <!-- <div class="flex">
                 <div
->>>>>>> finish API getContactInfo detail
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   핸드폰번호
-                </div> -->
+                </div>
                 <div class="flex">
                   <div>0502-1234-5789</div>
                   <div class="flex items-center ml-2">
@@ -457,7 +437,7 @@
                     <div class="text-xs pl-1">안심번호사용중</div>
                   </div>
                 </div>
-              </div> -->
+              </div>
 
               <div class="flex">
                 <div

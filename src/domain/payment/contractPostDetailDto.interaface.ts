@@ -1,10 +1,6 @@
 import { isEmpty } from "class-validator";
 import type meta from "../common/meta.interface";
-<<<<<<< develop
-import common from "../../common";
-=======
 import common from "@/common";
->>>>>>> finish API getContactInfo detail
 export class post {
   idx: number;
   productType: string;
