@@ -94,7 +94,7 @@ const router = createRouter({
           path: "/mypage/contractInfo",
           component: components.contractInfo,
           meta: {
-            name: "",
+            name: "contractInfo",
             title: "거래정보확인",
             navbar: false,
           },

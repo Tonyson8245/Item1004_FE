@@ -1,19 +1,30 @@
 <template>
 <<<<<<< develop
+<<<<<<< develop
   <div class="py-[3rem] flex h-auto bg-everly-light_grey md:bg-everly-white">
     <div class="flex-grow"></div>
     <div class="flex-grow-0 w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
 =======
   <div class="py-[3rem] flex h-full bg-everly-light_grey md:bg-everly-white">
+=======
+  <div
+    class="py-[3rem] pb-[4rem] flex h-full bg-everly-light_grey md:bg-everly-white"
+    @click="setshowMore(false)"
+  >
+>>>>>>> finish API getContactInfo detail
     <div class="flex-1"></div>
     <div class="flex-none w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
       <div class="p-4 md:px-0 space-y-5">
         <div class="flex space-x-2">
-          <img src="@/assets/icon/check_special_blue.svg" alt="" />
-          <span class="font-bold">거래진행단계</span>
+          <img
+            src="@/assets/icon/check_special_blue.svg"
+            alt=""
+            class="w-5 md:w-6"
+          />
+          <span class="font-bold text-sm md:text-lg">거래진행단계 </span>
         </div>
         <div class="w-full flex justify-center">
-          <div v-if="contractStatus == 'takeover_complete'">
+          <div v-if="getterContractStageStatus == 'takeover_complete'">
             <img
               src="@/assets/img/contractProcess_complete_mobile.svg"
               alt=""
@@ -25,19 +36,19 @@
               class="hidden md:block"
             />
           </div>
-          <div v-else-if="contractStatus == 'takeover_ongoing'">
+          <div v-else-if="getterContractStageStatus == 'takeover_ongoing'">
             <img
               src="@/assets/img/contractProcess_takeover_ongoing_web.svg"
               alt=""
               class="hidden md:block"
             />
             <img
-              src="@/assets/img/contractProcess_takeover_ongoing_mobile.svg"
+              src="@/assets/img/contractProcess_takeover_ongoing_mobile.png"
               alt=""
               class="block md:hidden"
             />
           </div>
-          <div v-else-if="contractStatus == 'take_ongoing'">
+          <div v-else-if="getterContractStageStatus == 'take_ongoing'">
             <img
               src="@/assets/img/contractProcess_take_ongoing_web.svg"
               alt=""
@@ -82,28 +93,28 @@
             <div class="md:flex text-xs md:text-base md:space-x-10">
               <div>
                 <span class="font-bold pr-2 md:pr-4">거래번호</span>
-                <span>ASDFQWERT11235</span>
+                <span>{{ getterContractDetail.contract.ordNm }}</span>
               </div>
               <div>
                 <span class="font-bold pr-2 md:pr-4">거래일시</span>
-                <span>2022/12/06 17:20:57</span>
+                <span>{{ getterContractDetail.contract.createdAt }}</span>
               </div>
             </div>
             <div class="hidden md:flex items-center space-x-2">
               <div><img src="@/assets/icon/report_grey.svg" alt="" /></div>
-              <div>신고하기</div>
+              <div class="text-everly-dark_grey">신고하기</div>
             </div>
           </div>
           <div class="space-y-1 md:space-y-3 p-3 bg-everly-white">
             <div class="flex space-x-2 text-xs md:text-sm">
-              <div>메이플스토리</div>
+              <div>{{ getterContractDetail.post.gameName }}</div>
               <span>></span>
-              <div>서버명</div>
+              <div>{{ getterContractDetail.post.serverName }}</div>
               <span>></span>
-              <div>아이템머니</div>
+              <div>{{ getterContractDetail.post.productType }}</div>
             </div>
             <div class="md:text-lg">
-              국교는인정되지아니하며종교와정치는분리된다대통령후보자가1인일때에는그득표수가선거권총총총총총총총총
+              {{ getterContractDetail.post.title }}
             </div>
           </div>
           <div
@@ -111,22 +122,48 @@
           >
             <div class="flex justify-between md:space-x-4">
               <div class="md:font-bold">수량당 금액</div>
-              <div class="font-bold md:font-normal">2,000원</div>
+              <div class="font-bold md:font-normal">
+                {{
+                  commonFunction.comma(
+                    getterContractDetail.contract.pricePerUnit
+                  )
+                }}원
+              </div>
             </div>
             <div class="flex justify-between md:space-x-4">
               <div class="md:font-bold">주문수량</div>
-              <div class="font-bold md:font-normal">8</div>
+              <div class="font-bold md:font-normal">
+                {{
+                  commonFunction.comma(
+                    getterContractDetail.contract.purchaseNumber
+                  )
+                }}
+              </div>
             </div>
             <div class="flex justify-between md:space-x-4">
               <div class="md:font-bold">판매금액</div>
-              <div class="font-bold md:font-normal">16,000원</div>
+              <div class="font-bold md:font-normal">
+                {{
+                  commonFunction.comma(
+                    getterContractDetail.contract.purchaseTotalPrice
+                  )
+                }}원
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="sm:flex sm:h-[22rem] sm:space-x-8">
+      <div class="sm:flex sm:h-[22rem] sm:space-x-8 relative">
         <!-- 남의정보 -->
-        <div class="p-4 md:px-0 text-sm md:text-base sm:flex-1">
+        <div class="p-4 md:px-0 text-sm md:text-base sm:flex-1 relative">
+          <div
+            class="border bg-everly-white absolute right-4 md:right-3 top-[1rem] md:top-[4rem] w-[6rem] md:w-[10rem] text-center divide-y rounded-lg text-xs md:text-sm text-everly-dark_grey"
+            v-if="showMore"
+          >
+            <div class="px-4 py-2">사기조회</div>
+            <div class="px-4 py-2">신고하기</div>
+            <div class="px-4 py-2">채팅하기</div>
+          </div>
           <!-- 헤더 -->
           <div class="flex justify-between w-full">
             <div class="flex items-center">
@@ -147,10 +184,24 @@
                   class="w-7 hidden md:block"
                 />
               </div>
-              <div class="font-bold md:text-lg">구매자정보</div>
+              <div
+                class="font-bold md:text-lg"
+                v-if="!getterContractDetail.my.isSeller"
+              >
+                판매자정보
+              </div>
+              <div class="font-bold md:text-lg" v-else>구매자정보</div>
             </div>
-            <div class="md:hidden">
-              <img src="@/assets/icon/dice_grey.svg" alt="" />
+            <div
+              class="md:hidden w-3 flex justify-end"
+              @click="setshowMore(true)"
+              @click.stop=""
+            >
+              <img
+                src="@/assets/icon/dice_grey.svg"
+                alt=""
+                class="w-[0.2rem]"
+              />
             </div>
           </div>
           <div
@@ -170,8 +221,8 @@
               <div class="flex-1">
                 <div class="flex justify-between items-center font-bold">
                   <div class="flex items-center">
-                    <div>이걸닉네임이라고짓다니말도안돼</div>
-                    <div>
+                    <div>{{ getterContractDetail.other.nickname }}</div>
+                    <div v-if="getterContractDetail.other.isVerified">
                       <img
                         src="@/assets/icon/check_circle_blue.svg"
                         alt=""
@@ -179,23 +230,27 @@
                       />
                     </div>
                   </div>
-                  <div>
-                    <img
-                      src="@/assets/icon/dice_grey.svg"
-                      alt=""
-                      class="hidden md:block"
-                    />
+                  <div
+                    @click="setshowMore(true)"
+                    @click.stop=""
+                    class="hidden md:block w-3 justify-end"
+                  >
+                    <img src="@/assets/icon/dice_grey.svg" alt="" class="" />
                   </div>
                 </div>
                 <div class="flex justify-between items-center">
-                  <div>#A2379F56GH</div>
+                  <div>#{{ getterContractDetail.other.code }}</div>
                   <div @click="toggleshowbuyerInfo()" class="md:hidden">
                     <img
-                      src="@/assets/icon/arrow_up.svg"
+                      src="@/assets/icon/arrow_up_card.svg"
                       alt=""
                       v-if="showbuyerInfo"
                     />
-                    <img src="@/assets/icon/arrow_down.svg" alt="" v-else />
+                    <img
+                      src="@/assets/icon/arrow_down_card.svg"
+                      alt=""
+                      v-else
+                    />
                   </div>
                 </div>
               </div>
@@ -211,11 +266,17 @@
                 >
                   거래등급
                 </div>
-                <div>거래등급아이콘</div>
+                <div>거래등급 아이콘</div>
               </div>
+<<<<<<< develop
               <div class="flex">
                 <!-- TODO 인수인계 : 초기에 핸드폰 빠짐 -->
                 <!-- <div
+=======
+              <!-- TODO 인수인계 - 휴대폰 번호 추가 -->
+              <!-- <div class="flex">
+                <div
+>>>>>>> finish API getContactInfo detail
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   핸드폰번호
@@ -233,7 +294,7 @@
                     <div class="text-xs pl-1">안심번호사용중</div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="flex items-center">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
@@ -242,17 +303,38 @@
                 </div>
                 <div class="flex space-x-1">
                   <div
-                    class="border-everly-main px-2 py-1 rounded-lg text-everly-main border"
+                    class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
+                    v-if="getterContractDetail.other.isPhoneValid"
                   >
                     휴대폰
                   </div>
                   <div
-                    class="border-everly-main px-2 py-1 rounded-lg text-everly-main border"
+                    class="border-everly-mid_grey px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-mid_grey border"
+                    v-else
+                  >
+                    휴대폰
+                  </div>
+                  <div
+                    class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
+                    v-if="getterContractDetail.other.isEmailValid"
                   >
                     이메일
                   </div>
                   <div
-                    class="border-everly-main px-2 py-1 rounded-lg text-everly-main border"
+                    class="border-everly-mid_grey px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-mid_grey border"
+                    v-else
+                  >
+                    이메일
+                  </div>
+                  <div
+                    class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
+                    v-if="getterContractDetail.other.isAccountValid"
+                  >
+                    출금계좌
+                  </div>
+                  <div
+                    class="border-everly-mid_grey px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-mid_grey border"
+                    v-else
                   >
                     출금계좌
                   </div>
@@ -264,7 +346,7 @@
                 >
                   캐릭터명
                 </div>
-                <div>띠용때용띠용때용띠용때용띠용때용띠용때용</div>
+                <div>캐릭터이름</div>
               </div>
             </div>
           </div>
@@ -289,10 +371,7 @@
                 alt=""
                 class="w-7 hidden md:block"
               />
-              <div class="font-bold md:text-lg">구매자정보</div>
-            </div>
-            <div class="md:hidden">
-              <img src="@/assets/icon/dice_grey.svg" alt="" />
+              <div class="font-bold md:text-lg">내정보</div>
             </div>
           </div>
           <div
@@ -312,7 +391,7 @@
               <div class="flex-1">
                 <div class="flex items-center justify-between font-bold">
                   <div class="flex items-center">
-                    <div>호날두는우리팀</div>
+                    <div>{{ userNickname }}</div>
                     <div>
                       <img
                         src="@/assets/icon/check_circle_blue.svg"
@@ -321,23 +400,20 @@
                       />
                     </div>
                   </div>
-                  <div>
-                    <img
-                      src="@/assets/icon/dice_grey.svg"
-                      alt=""
-                      class="hidden md:block"
-                    />
-                  </div>
                 </div>
                 <div class="flex justify-between items-center">
-                  <div>#A2379F56GH</div>
+                  <div>#{{ getterContractDetail.my.code }}</div>
                   <div @click="toggleshowuserInfo()" class="md:hidden">
                     <img
-                      src="@/assets/icon/arrow_up.svg"
+                      src="@/assets/icon/arrow_up_card.svg"
                       alt=""
                       v-if="showuserInfo"
                     />
-                    <img src="@/assets/icon/arrow_down.svg" alt="" v-else />
+                    <img
+                      src="@/assets/icon/arrow_down_card.svg"
+                      alt=""
+                      v-else
+                    />
                   </div>
                 </div>
               </div>
@@ -355,9 +431,15 @@
                 </div>
                 <div>거래등급아이콘</div>
               </div>
+<<<<<<< develop
               <div class="flex">
                 <!-- TODO 인수인계 : 초기에 핸드폰 빠짐 -->
                 <!-- <div
+=======
+              <!-- TODO 인수인계 전화번호 추가 -->
+              <!-- <div class="flex">
+                <div
+>>>>>>> finish API getContactInfo detail
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   핸드폰번호
@@ -375,7 +457,7 @@
                     <div class="text-xs pl-1">안심번호사용중</div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div class="flex">
                 <div
@@ -383,16 +465,88 @@
                 >
                   캐릭터명
                 </div>
-                <div>띠용때용띠용때용띠용때용띠용때용띠용때용</div>
+                <div>캐릭터명</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div>
-        <div>
-          <img src="@/assets/icon/warning_red.svg" alt="" />
+      <div
+        class="p-4 md:p-0"
+        v-if="
+          getterContractStageStatus != 'takeover_complete' &&
+          getterContractStageStatus != 'take_complete' &&
+          getterContractStageStatus != 'cancel'
+        "
+      >
+        <div
+          class="flex space-x-2 items-center text-sm md:text-lg font-bold pb-2 md:pb-4"
+        >
+          <img
+            src="@/assets/icon/warning_yellow.svg"
+            alt=""
+            class="w-4 md:w-5"
+          />
           <div>잠깐! 물품을 넘겨주기 전 꼭 확인하세요!</div>
+        </div>
+        <div
+          class="w-full bg-everly-white md:bg-everly-light_grey p-5 space-y-4 text-xs md:text-base"
+        >
+          <div>
+            1. 구매자의 연락처가 다를경우 거래를 중지 하시고 고객센터를 통해
+            문의해 주시기 바랍니다.
+          </div>
+          <div>
+            2. 게임상에서 거래할 캐릭터명이 위의 구매자 캐릭터명과 같은지
+            확인하기시 바랍니다.
+          </div>
+          <div>
+            3. 거래에는 게임상에서 채팅이나 귓말은 삼가하시고 가능하시면
+            채팅으로 대화하기실 바랍니다.
+          </div>
+          <div>
+            4. 반드시 물품을 정상적으로 인계하신 후 물품인계확인을 하시기
+            바랍니다.
+          </div>
+          <div>
+            5. 거래취소 SMS 수신 후 1시간 이내 인계확인이 되지 않은 경우 거래가
+            자동취소 될 수 있으니 유의하시기 바랍니다.
+          </div>
+        </div>
+      </div>
+      <div
+        class="hidden md:flex w-full px-72 space-x-5 py-24"
+        v-if="
+          getterContractStageStatus == 'take_complete' ||
+          getterContractStageStatus == 'takeover_complete'
+        "
+      >
+        <div
+          class="bg-everly-mid_grey text-everly-white flex-1 text-center rounded-lg py-3 font-bold"
+        >
+          종료된 거래입니다
+        </div>
+      </div>
+      <div
+        class="hidden md:flex w-full px-72 space-x-5 py-24"
+        v-else-if="getterContractStageStatus == 'cancel'"
+      >
+        <div
+          class="bg-everly-mid_grey text-everly-white flex-1 text-center rounded-lg py-3 font-bold"
+        >
+          취소된 거래입니다
+        </div>
+      </div>
+      <div class="hidden md:flex w-full px-48 space-x-5 py-24" v-else>
+        <div
+          class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold"
+        >
+          거래취소
+        </div>
+        <div
+          class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold"
+        >
+          {{ getterButtonContent }}
         </div>
       </div>
     </div>
@@ -402,10 +556,17 @@
 <script setup lang="ts">
 import { useMediaQuery } from "@vueuse/core";
 import { useToggle } from "@vueuse/shared";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
+import commonFunction from "@/common";
+import type { user } from "@/domain/user/user.interface";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
+const mypageStore = usemypageStore();
+const { getterContractDetail, getterContractStageStatus, getterButtonContent } =
+  storeToRefs(mypageStore);
 
 const toggleshowbuyerInfo = useToggle(showbuyerInfo);
 const toggleshowuserInfo = useToggle(showuserInfo);
@@ -424,7 +585,20 @@ watch(minSize.value, () => {
   showuserInfo.value = minSize.value.value;
 });
 
-const contractStatus = ref("takeover_complete");
+onMounted(() => {
+  mypageStore.getContractPostDetail();
+});
+
+//localstorage 가져오기
+const localData = localStorage.getItem("user");
+const userNickname =
+  localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
+
+//사기조회 채팅하기 신고하기
+const showMore = ref(false);
+function setshowMore(status: boolean) {
+  showMore.value = status;
+}
 </script>
 
 <style scoped></style>

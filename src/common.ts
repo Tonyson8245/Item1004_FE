@@ -19,7 +19,7 @@ function comma(str: string | number) {
   return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
 }
 
-function uncomma(str: string) {
+function uncomma(str: string | number) {
   str = String(str);
   return str.replace(/[^\d]+/g, "");
 }
