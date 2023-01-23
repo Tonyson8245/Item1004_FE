@@ -24,6 +24,8 @@ export const usemypageStore = defineStore("mypageStore", {
     storewithdrawAmt: 0,
     //출금 결과 관련
     storewithdrawResult: {} as withdrawMileageResult,
+
+    storeContractListSellTabType: "인계필요",
   }),
 
   getters: {
@@ -115,6 +117,9 @@ export const usemypageStore = defineStore("mypageStore", {
     },
   },
   actions: {
+    setstoreContractListSellTabType(value: string) {
+      this.storeContractListSellTabType = value;
+    },
     setstorewithdrawAmt(amt: number) {
       if (isNaN(amt)) this.storewithdrawAmt = 0;
       else this.storewithdrawAmt = amt;
