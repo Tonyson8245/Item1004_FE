@@ -7,7 +7,8 @@ import type message from "@/domain/chat/message.interface";
 
 import type { user } from "@/domain/user/user.interface";
 import { loadRouteLocation } from "vue-router";
-
+import * as chatapi from "@/api/chat-service/index";
+import router from "@/router";
 
 
 export const useChatStore = defineStore("chatStore", ()=>  {
@@ -20,7 +21,11 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   // 클릭하여 선택된 채팅방
   const selectedChannel = ref<channel>();
   // 메세지 담고 있는 변수
-  const messages = ref<message[] >([]);
+  const messages = ref<message[]>([]);
+  // 현재 새로운 게시물을 쓰는지 확인하기 위한 플래그
+  const isNewChat = ref<boolean>(false);
+  // 현재 채팅방에 연결된 postid
+  const postId = ref<string | string[]>('');
 
   const init = () => {
       // 앱 ID 추후에 숨겨야 한다.
@@ -47,6 +52,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
             // username: userData.nickname
             // loginToken: "$2a$06$Q4WYHQa16ChPTJTy2IWVNuQzxgEFAe2Up.SuikpS8WYMeqy.3Qk4S"
           });             
+
+          
       } catch (error) {
         console.log("error : ", error);
       }          
@@ -82,17 +89,20 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   // 채팅방 목록 가지고 오기 && 페이징
   const getChannels = async (lastChannelId?: string) => {
+
     let result: resp;   
     const getchannelparams = {
       lastChannelId : lastChannelId,
       limit: 20
     }
     try {
+      //@ts-ignore    
       result = await client.value.getChannels(getchannelparams)
-      // console.log("인터페이스 확인용", result);    
+      // console.log("인터페이스 확인용", result);
       channels.value.push(...result.channels);
       hasNext.value = result.hasNext;
-    // console.log(result.channe);
+
+    // console.log(result);
     } catch (error) {
       console.log("error : ",error);        
       return
@@ -101,15 +111,18 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     if (isMobile()) getUnreadCount();
   }
 
-  const resetChannels = () =>{
+  const resetChannels = () => {
     channels.value = [];
+  }
+  const resetMessages = () => {
+    messages.value = [];
   }
 
   // 안 읽은 메세지 숫자 조회
   // 채팅방 메세지 읽었을 때, 메세지 보낼 때 , 메세지 받을 때
   // TODO: 채팅방 리스트가져오기 채팅 내용 가져오기 두곳에서 실행되고 있기 때문에 두 메서드 같이 한 페이지에서 실행되면 이 메서드는 두번 실행이 된다. 
   const getUnreadCount = async () => {
-    console.log('전체 메세지 카운팅');    
+    // console.log('전체 메세지 카운팅');    
     try {
       const result = await client.value.getUnreadCount();
       unreadCount.value = result.count     
@@ -126,7 +139,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     let result ; 
     try {
       result = await client.value.markAsRead({channelId: channelId}); 
-      console.log("읽은 채널 메세지 : ", result);     
+      // console.log("읽은 채널 메세지 : ", result);     
     } catch (error) {
       console.log(error);
       return      
@@ -179,7 +192,16 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const setMessages = async (message: message) => {
     messageIntoMessages(message)
     // 내가 현재 보고 있는 방과 같은 방에서 온 메세지 일 경우 읽음 처리 해준다
-    
+  }
+
+
+  const setIsNewChat = (isNew : boolean) => {
+    isNewChat.value = isNew
+  }
+
+  
+  const setPostId = (postid: string | string[]) => {
+    postId.value = postid
   }
 
   // 메세지를 메세지 리스트에 넣기
@@ -220,7 +242,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     }    
     messageIntoMessages(result.message)
     messagesIntoChannel(result.message.channelId, result.message)
-    console.log(result);
+    // console.log(result);
   }
 
 
@@ -235,7 +257,54 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     return window.innerWidth < 640
   }
 
+
+  const isRoomExist = async (postIdx: string | string[]) => {
+    var result;
+      await chatapi
+        .getChatRoom(postIdx)
+        .then((res) => {
+          //성공하면 페이지를 올린다.
+          console.log('요청성공 : ',res);      
+        })
+        .catch((err) => {
+          //서버 가져오기 완료
+          console.log(err);
+          
+          if (err.status === 404 && err.data.meta.code === "extinct_chatroom") {
+            // 새로운 채팅방 생성
+            router.push('/chat/new?postId='+postIdx)
+          }
+          else if (err.status === 400 && err.data.meta.code === "invalid_value") {
+            // 형식 올바
+            console.log("형식이 올바르지 않음");    
+            alert("올바른 요청이 아닙니다")
+          }
+          else if (err.status === 200 && err.data.meta.code === "success"){
+            // 존재하는 채팅방
+            console.log('요청성공');
+          }
+          else if (err.status === 401){            
+            alert("올바른 요청이 아닙니다")
+          }
+          // console.log(err.response);
+          // router.push('/chat/')              
+        });
+  }
   
+
+  const getPost = async (postIdx: string | string[]) => {
+    var result;
+      await chatapi
+        .getPost("55")
+        .then((res) => {
+          //성공하면 페이지를 올린다.
+          console.log(res);      
+        })
+        .catch((err) => {
+          //서버 가져오기 완료
+          console.log(err);          
+        });
+  }
 
    // 채팅 대상 검색
   //  const searchChannel = async (targetUser: string) =>{
@@ -249,5 +318,5 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   //   console.log(result);    
   // }
 
-  return { client, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, setMessages,sendMessage, messageRead, messagesIntoChannel }
+  return { client, postId, isNewChat, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, setPostId, setIsNewChat}
 });

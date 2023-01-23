@@ -10,6 +10,7 @@ export async function getContractCheck<T>(
       params: {
         totalPrice: payload.totalPrice,
         payMethod: payload.payMethod,
+        type: payload.type,
       },
     });
     return result;

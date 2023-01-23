@@ -46,23 +46,45 @@ const minSize = computed(() => {
 // 들어가는 클래스
 const classBgcolor = ref(``);
 //색상 정보
-const bgColoType = (type: boolean) => {
-  return type
+const bgColoType = (type: string) => {
+  return type == "blue"
     ? `bg-everly-main text-everly-white`
     : `bg-everly-white text-everly-black border-b`;
 };
 
 onMounted(() => {
   //초기 색상 잡아주기
-  if (whiteHeader) {
-    classBgcolor.value = bgColoType(minSize.value.value);
-  } else classBgcolor.value = bgColoType(true);
+  //모바일
+  if (!minSize.value.value) {
+    //마이페이지의 경우
+    if (whiteHeader.value) classBgcolor.value = bgColoType("white");
+    //그외의 페이지의 경우
+    else classBgcolor.value = bgColoType("blue");
+  }
+  //웹
+  else {
+    //무조건 파랑색
+    classBgcolor.value = bgColoType("blue");
+  }
+
+  // if (whiteHeader) {
+  //   classBgcolor.value = bgColoType(minSize.value.value);
+  // } else classBgcolor.value = bgColoType(false);
 });
+
 //반응형 배경
 watch(minSize.value, (minSize) => {
-  if (whiteHeader) {
-    classBgcolor.value = bgColoType(minSize);
-  } else classBgcolor.value = bgColoType(true);
+  if (!minSize) {
+    //마이페이지의 경우
+    if (whiteHeader.value) classBgcolor.value = bgColoType("white");
+    //그외의 페이지의 경우
+    else classBgcolor.value = bgColoType("blue");
+  }
+  //웹
+  else {
+    //무조건 파랑색
+    classBgcolor.value = bgColoType("blue");
+  }
 });
 
 function backPress() {
@@ -72,7 +94,8 @@ function backPress() {
 //마이페이지의 경우, 웹은 "마이페이지" 고정 / 모바일은 상태에 따라 바뀜
 const title = computed(() => {
   let meta = route.meta.title;
-  if (headermyPageTheme) {
+
+  if (headermyPageTheme.value) {
     if (minSize.value.value) return "마이페이지";
     else return meta;
   } else return meta;
@@ -81,19 +104,23 @@ const title = computed(() => {
 //마이페이지 전용 헤더 타입
 const headermyPageTheme = computed(() => {
   let title = route.meta.title;
-  if (title == "마일리지" || title == "판매/구매내역" || title == "회원정보")
-    return false;
-  else false;
+  if (
+    title == "마일리지" ||
+    title == "판매/구매내역" ||
+    title == "회원정보" ||
+    title == "마일리지 충전"
+  )
+    return true;
+  else return false;
 });
 
 //하얀 헤더만들기
 const whiteHeader = computed(() => {
   let title = route.meta.title;
   let name = route.meta.name;
-  console.log(name);
 
   if (title == `결제 완료` || name == "chargeResult") return true;
-  else false;
+  else return false;
 });
 </script>
 

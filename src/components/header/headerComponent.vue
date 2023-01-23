@@ -19,8 +19,8 @@
           </div>
           <div class="hidden md:block">
             <div class="flex space-x-4 items-center">
-              <img 
-                src="@/assets/icon/chat_mid-grey.svg" 
+              <img
+                src="@/assets/icon/chat_mid-grey.svg"
                 alt=""
                 @click="moveLink('/chat')"
               />
@@ -121,7 +121,7 @@ const { storeShowFilter_mobile } = storeToRefs(filterStore);
 function toggleFilter_mobile() {
   if (!storeShowFilter_mobile.value) {
     filterStore.setstoreTempfilter();
-    commonStore.setstoreTempfilter();
+    // commonStore.setstoreTempfilter();
   } else filterStore.cancelstoreFilter();
 
   filterStore.setstoreShowFilter_mobile(!storeShowFilter_mobile.value);

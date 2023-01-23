@@ -86,6 +86,24 @@ const router = createRouter({
           },
         },
         {
+          path: "/mypage/mileage/withdraw/result",
+          component: components.milageWithdrawResult,
+          meta: {
+            name: "chargeResult",
+            title: "출금 신청 완료",
+            navbar: false,
+          },
+        },
+        {
+          path: "/mypage/contractInfo",
+          component: components.contractInfo,
+          meta: {
+            name: "contractInfo",
+            title: "거래정보확인",
+            navbar: false,
+          },
+        },
+        {
           path: "/mypage",
           component: components.MypagePage,
           meta: { transition: "", name: "mypage", title: "마이페이지" },
@@ -130,12 +148,30 @@ const router = createRouter({
               component: components.mileageCharge,
               meta: {
                 title: "마일리지 충전",
+                name: `charge`,
+                navbar: false,
+              },
+            },
+            {
+              path: "mileage/withdraw",
+              component: components.mileageWithdraw,
+              meta: {
+                title: "마일리지 출금",
+                name: `charge`,
                 navbar: false,
               },
             },
             {
               path: "user/info",
               component: components.userinfo,
+              meta: {
+                title: "회원정보수정",
+                navbar: false,
+              },
+            },
+            {
+              path: "user/info/putBankAccount",
+              component: components.putBankAccount,
               meta: {
                 title: "회원정보수정",
                 navbar: false,
@@ -159,30 +195,37 @@ const router = createRouter({
         {
           path: "login",
           component: components.loginComponent,
+          meta: { title: "로그인" },
         },
         {
           path: "findID/confirm",
           component: components.findIDcomponent,
+          meta: { title: "아이디 찾기" },
         },
         {
           path: "findID/result",
           component: components.findIDResultComponent,
+          meta: { title: "아이디 찾기" },
         },
         {
           path: "changePassword/confirm",
           component: components.passwordConfirm,
+          meta: { title: "비밀번호 재설정" },
         },
         {
           path: "changePassword/set",
           component: components.passwordSet,
+          meta: { title: "비밀번호 재설정" },
         },
         {
           path: "signUp/setinfo",
           component: components.infoSet,
+          meta: { title: "회원가입" },
         },
         {
           path: "signUp/confirm",
           component: components.signUpComfirm,
+          meta: { title: "본인인증" },
         },
       ],
     },
@@ -190,10 +233,10 @@ const router = createRouter({
       path: "/chat",      
       component: components.ChatViewVue,
       meta: { transition: "", name: "chat", title: "채팅" },
-      
+
       // 모바일에서 사용할 분기를 만들어준다.
-      // 모바일에서 클릭 시 -> 채팅방 목록 -> 채팅창 
-      children:[
+      // 모바일에서 클릭 시 -> 채팅방 목록 -> 채팅창
+      children: [
         {
           path:"",
           components: {
@@ -217,6 +260,18 @@ const router = createRouter({
                 }
               } ,            
           },
+        },
+        {
+          path:"/new",
+          components: {
+            default: async ()=>{
+                if(!isMobile()){
+                  return  components.chatPage
+                }    else{
+                  return  components.inChat
+                }
+              } ,            
+          },
         }
       ]
     },
@@ -228,6 +283,7 @@ const router = createRouter({
       path: "/logout",
       component: components.logout,
     },
+
     {
       path: "/:anything(.*)",
       redirect: () => {
@@ -245,7 +301,6 @@ const router = createRouter({
 const isMobile = () => {
   return window.innerWidth < 640
 }
-
 
 
 router.beforeEach((to) => {
@@ -283,8 +338,11 @@ router.beforeEach((to) => {
       commonStore.setheaderTitle("비밀번호 재설정");
       commonStore.setcsShowLink(true);
       break;
-    case "/account/signup/confirm":
-    case "/account/signup/setInfo":
+    case "/account/signUp/confirm":
+      commonStore.setheaderTitle("본인인증");
+      commonStore.setcsShowLink(false);
+      break;
+    case "/account/signUp/setinfo":
       commonStore.setheaderTitle("회원가입");
       commonStore.setcsShowLink(false);
       break;

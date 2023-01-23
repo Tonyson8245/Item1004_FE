@@ -34,7 +34,6 @@ import { useRouter, useRoute } from "vue-router";
 
 
 const route = useRoute();
-const channelId = route.params.channelId;
 
 const chatStore = useChatStore();
 
@@ -50,14 +49,21 @@ const login = async () => await chatStore.login()
 const getChannels = async () => await chatStore.getChannels(); 
 
 
+// watch(route, ()=>{
+//   console.log(route);  
+// })
 // 로그인을 한번 실행
-login().then( async (data)=>{
-  getChannels();
+login().then( async (data)=>{  
+  // console.log(data); 
   
-  // 뷰에서 inChat에서 사용될 채팅 내용들을 여기서 로드
-  if (channelId) {
-  await  chatStore.getSelectedChannel(channelId)
-  }
+  // 전체 채팅방 목록 세팅
+  getChannels()  
+  // 선택된 채널 세팅
+  setSelectedChannel(route.params.channelId);
+  // 새로운 채팅 여부 세팅
+  setNewChat();
+  // 채팅화면 거래글 postId 세팅
+  setPostId();
 
   client.value.on('event', async (data) => {
     if (data.type === 'message') {          
@@ -65,12 +71,41 @@ login().then( async (data)=>{
       await onReceiveMessage(data)
     }
   })  
-});
 
+
+  
+});
+console.log(route.query.postId);
+
+
+
+// url 변경에 따른 선택된 채널 변경
+watch(route, async()=> {
+  console.log(route.path);
+
+  // 선택된 채널 세팅
+  setSelectedChannel(route.params.channelId)
+  
+  // route에서 new?postId 아니면 channel의 data에 저장되어 있을 것이다.
+  setNewChat();
+})
+
+// 새로운 채팅 여부 파악
+async function setNewChat() {
+  // route.query.postId가 있다 == url = new?postId == 새 게시글
+  if (route.query.postId) chatStore.setIsNewChat(true);
+  else chatStore.setIsNewChat(false);
+}
+
+// 선택된 채널 세팅
+async function setSelectedChannel(channelId:string | string[]) {    
+  // url이 새로운 방 생성인 new?postId일 수 있음
+  if (channelId!==undefined && !channelId) await  chatStore.getSelectedChannel(channelId)  
+}
 
 
 // 받은 메세지 처리기
-async function onReceiveMessage(data:any){
+async function onReceiveMessage(data:any) {
     let channel  = data.channel   
     if (data.message.channelId === selectedChannel.value?.id) {      
       const getChannel = await chatStore.messageRead(data.message.channelId);   
@@ -83,6 +118,7 @@ async function onReceiveMessage(data:any){
 
 onUnmounted(() => {
   chatStore.resetChannels()
+  chatStore.resetMessages()
 })
 
 
