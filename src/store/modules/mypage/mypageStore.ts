@@ -115,6 +115,26 @@ export const usemypageStore = defineStore("mypageStore", {
     },
   },
   actions: {
+    setContractTake() {
+      paymentApi
+        .putContractTake(this.storeordNm)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    setContractTakeover() {
+      paymentApi
+        .putContractTakeover(this.storeordNm)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     setstorewithdrawAmt(amt: number) {
       if (isNaN(amt)) this.storewithdrawAmt = 0;
       else this.storewithdrawAmt = amt;

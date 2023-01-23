@@ -8,13 +8,26 @@
       </div>
       <div
         class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-main text-sm sm:text-base cursor-pointer"
+        @click="putContractStatus(getterButtonContent)"
       >
-        <div class="font-bold text-everly-white">물품인계</div>
+        <div class="font-bold text-everly-white">{{ getterButtonContent }}</div>
       </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
+
+const mypageStore = usemypageStore();
+const { getterButtonContent } = storeToRefs(mypageStore);
+
+//인수 인계 버튼
+function putContractStatus(status: string) {
+  if (status == "물품인계") mypageStore.setContractTakeover();
+  else mypageStore.setContractTake();
+}
+</script>
 
 <style scoped></style>

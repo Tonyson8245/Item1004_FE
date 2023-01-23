@@ -525,6 +525,7 @@
         </div>
         <div
           class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold"
+          @click="putContractStatus(getterButtonContent)"
         >
           {{ getterButtonContent }}
         </div>
@@ -541,6 +542,8 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import commonFunction from "@/common";
 import type { user } from "@/domain/user/user.interface";
+import { payment } from "@/api/payment-module";
+import { usePaymentStore } from "@/store/modules/home/paymentStore";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
@@ -578,6 +581,12 @@ const userNickname =
 const showMore = ref(false);
 function setshowMore(status: boolean) {
   showMore.value = status;
+}
+
+//인수 인계 버튼
+function putContractStatus(status: string) {
+  if (status == "물품인계") mypageStore.setContractTakeover();
+  else mypageStore.setContractTake();
 }
 </script>
 

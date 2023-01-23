@@ -1,8 +1,9 @@
 import type { TokenDto } from "@/domain/auth";
 import type meta from "@/domain/common/meta.interface";
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
-import axios, { type AxiosResponse } from "axios";
+import type { AxiosResponse } from "axios";
 import { storeToRefs } from "pinia";
+import http from "../paymentmoduletHTTPClient";
 
 class infoResult {
   name: string;
@@ -34,7 +35,7 @@ async function getuseinfo<T>(): Promise<infoResponse | undefined> {
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
     try {
-      const { status, data }: AxiosResponse<infoResponse> = await axios.get(
+      const { status, data }: AxiosResponse<infoResponse> = await http.get(
         url,
         {
           headers: {
