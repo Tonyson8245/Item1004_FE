@@ -1,16 +1,15 @@
 import type { TokenDto } from "@/domain/auth";
-import type { GamePostDetailDto } from "@/domain/home/posts/GamePostDetailDto";
+import type { postDto } from "@/domain/chat/postDto";
 import http from "../ChatHTTPClient";
 
-export async function getPost<T>(
+export async function getPost<postDto>(
   postIdx: string
-): Promise<T> {
-  const url = "/chatroom/posts/"+postIdx;
+): Promise<postDto> {
+  const url = "/chatrooms/posts/"+postIdx;
   var accessTokenData = localStorage.getItem("accessToken");
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
-    // console.log("토큰이다!!!",token);
-    
+    // console.log("토큰이다!!!",token);    
     try {
       const result: any = await http.get(url, {
         headers: {

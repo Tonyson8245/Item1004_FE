@@ -2,32 +2,7 @@
 <div class="h-full flex flex-col">
 
 
-    <div class=" border-b border-everly-mid_grey flex items-center pl-5 py-3">
-
-        <!-- <input :value="bottom" /> -->
-
-        <div class="rounded-lg overflow-hidden mr-2">           
-                
-            <img
-                src="@/assets/img/profile_green.jpeg"
-                alt=""
-                class="w-14 rounded-lg"
-            />
-        </div> 
-        <div class="flex flex-col">
-            <div class="flex">
-                <p class=" text-xs text-bck">메이플 스토리 > 엘리시움</p>
-            </div>
-            <div class="flex text-sm">
-                <p class="font-bold mr-2">거래완료</p> <p>9억 ~580억 메이플 메소 판매합니다</p>
-            </div>
-            <div class="flex text-xs flex-grow text-everly-dark_grey">
-                <p class="mr-2">8억</p>
-                <p class="mr-1">게임머니당</p>
-                <p>26,084원</p>               
-            </div>
-        </div>                    
-    </div>
+    <postHead/>
     <!-- bg-[url('@/assets/img/chat-background.svg')] -->
     <!-- bg-op-30-right-blue  -->
     <div id="scroll-view" ref="scrollView" class=" py-1 h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" 
@@ -57,6 +32,7 @@
 
 <script setup lang="ts">
 
+import postHead from './postHead.vue';
 import message from './message.vue';
 import myMessage from './myMessage.vue';
 import { useChatStore } from "@/store/modules/chat/chatStore";
@@ -65,7 +41,7 @@ import { ref,onUpdated,onMounted, toRefs, watch  } from 'vue';
 import { useScroll } from '@vueuse/core';
 
 const chatStore = useChatStore();
-const { messages, client, user, selectedChannel } = storeToRefs(chatStore);
+const { messages, client, user, selectedChannel, postItem } = storeToRefs(chatStore);
 const scrollView = ref<HTMLElement | null>(null);
 const {arrivedState,directions} = useScroll(scrollView);
 const { left, right, top, bottom } = toRefs(arrivedState)

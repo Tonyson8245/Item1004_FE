@@ -40,7 +40,7 @@ const chatStore = useChatStore();
 // TalkPlus 초기화 실행 
 const chatClient = chatStore.init();
 
-const { client, channels, selectedChannel } = storeToRefs(chatStore);
+const { client, channels, selectedChannel, postId, isNewChat } = storeToRefs(chatStore);
 
 // TalkPlus api 로그인
 const login = async () => await chatStore.login()
@@ -59,11 +59,12 @@ login().then( async (data)=>{
   // 전체 채팅방 목록 세팅
   getChannels()  
   // 선택된 채널 세팅
-  setSelectedChannel(route.params.channelId);
+  await setSelectedChannel();
   // 새로운 채팅 여부 세팅
   setNewChat();
   // 채팅화면 거래글 postId 세팅
-  setPostId();
+  setPostItem();
+  
 
   client.value.on('event', async (data) => {
     if (data.type === 'message') {          
@@ -71,42 +72,53 @@ login().then( async (data)=>{
       await onReceiveMessage(data)
     }
   })  
-
-
   
 });
-console.log(route.query.postId);
+// console.log(route.query.postId);
 
 
 
-// url 변경에 따른 선택된 채널 변경
-watch(route, async()=> {
-  console.log(route.path);
-
+// url 변경에 따른 채널&메세지, 새 채팅방 여부,관련판매글id 변경
+watch(route, async()=> {  
   // 선택된 채널 세팅
-  setSelectedChannel(route.params.channelId)
-  
-  // route에서 new?postId 아니면 channel의 data에 저장되어 있을 것이다.
+  await setSelectedChannel()  
+  // 새로운 채팅 여부 세팅
   setNewChat();
+  // 채팅화면 거래글 postId 세팅
+  setPostItem();
 })
 
 // 새로운 채팅 여부 파악
 async function setNewChat() {
   // route.query.postId가 있다 == url = new?postId == 새 게시글
   if (route.query.postId) chatStore.setIsNewChat(true);
-  else chatStore.setIsNewChat(false);
+  else chatStore.setIsNewChat(false);  
+}
+
+// 채팅 관련 거래 게시글 
+function setPostId() {
+  if (route.query.postId) chatStore.setPostId(route.query.postId);
+  else chatStore.setPostId(selectedChannel.value?.data.postIdx);
+}
+
+// 채팅 관련 거래 게시글 
+function setPostItem() {
+  if (route.query.postId) chatStore.setPostItem(route.query.postId);
+  else chatStore.setPostItem(selectedChannel.value?.data.postIdx);
 }
 
 // 선택된 채널 세팅
-async function setSelectedChannel(channelId:string | string[]) {    
+async function setSelectedChannel() {    
   // url이 새로운 방 생성인 new?postId일 수 있음
-  if (channelId!==undefined && !channelId) await  chatStore.getSelectedChannel(channelId)  
+  if (!route.query.postId) await chatStore.getSelectedChannel(route.params.channelId)
 }
+
+
 
 
 // 받은 메세지 처리기
 async function onReceiveMessage(data:any) {
-    let channel  = data.channel   
+    let channel = data.channel   
     if (data.message.channelId === selectedChannel.value?.id) {      
       const getChannel = await chatStore.messageRead(data.message.channelId);   
       channel = getChannel.channel

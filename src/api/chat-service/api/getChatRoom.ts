@@ -1,5 +1,4 @@
 import type { TokenDto } from "@/domain/auth";
-import type { GamePostDetailDto } from "@/domain/home/posts/GamePostDetailDto";
 import http from "../ChatHTTPClient";
 
 export async function getChatRoom<T>(
@@ -9,7 +8,7 @@ export async function getChatRoom<T>(
   var accessTokenData = localStorage.getItem("accessToken");
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
-    console.log("token",token);
+    // console.log("token",token);
     
     try {
       const result: any = await http.get(url, {

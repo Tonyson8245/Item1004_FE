@@ -55,7 +55,6 @@ const { messages, client, user,channels, selectedChannel } = storeToRefs(chatSto
 
 // console.log(route.params);
 
-
 // 채팅방의 가장 최근 메세지 리턴
 const lastMessageText = () =>{
     if (props.channel.lastMessage !== null) return props.channel.lastMessage.text  
@@ -74,7 +73,7 @@ const selectChannel = (e: MouseEvent) => {
     // console.log(e);
     // console.log(props.channel);        
     router.push(`/chat/${props.channel.id}`);
-    chatStore.setSelectedChannel(props.channel);
+    // chatStore.setSelectedChannel(props.channel);
 }
 
 

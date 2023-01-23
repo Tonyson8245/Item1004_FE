@@ -4,6 +4,7 @@ import { ref, computed, watch } from "vue";
 import type resp from "@/domain/chat/resp.interface";
 import type channel from "@/domain/chat/channel.interface";
 import type message from "@/domain/chat/message.interface";
+import type postResult from "@/domain/chat/postResult.interface";
 
 import type { user } from "@/domain/user/user.interface";
 import { loadRouteLocation } from "vue-router";
@@ -24,8 +25,10 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const messages = ref<message[]>([]);
   // 현재 새로운 게시물을 쓰는지 확인하기 위한 플래그
   const isNewChat = ref<boolean>(false);
-  // 현재 채팅방에 연결된 postid
+  // 현재 채팅방에 관련된 postid
   const postId = ref<string | string[]>('');
+  // 현재 채팅방에 관련된 postItem
+  const postItem = ref<postResult>();
 
   const init = () => {
       // 앱 ID 추후에 숨겨야 한다.
@@ -41,9 +44,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       let uerid = "5"
       if (userData) {
         uerid = `${userData.idx}`
-      }
-
-      
+      }      
       try {
           user.value = await client.value.loginAnonymous({
             // userId: `${userData.idx}`, // unique userId
@@ -51,12 +52,10 @@ export const useChatStore = defineStore("chatStore", ()=>  {
             // profileImageUrl: "https://archeage.nexon.com/characters/dbf279b5-20ff-4fba-8e6a-c1301fb97657/profileImage",
             // username: userData.nickname
             // loginToken: "$2a$06$Q4WYHQa16ChPTJTy2IWVNuQzxgEFAe2Up.SuikpS8WYMeqy.3Qk4S"
-          });             
-
-          
+          });          
       } catch (error) {
         console.log("error : ", error);
-      }          
+      }
       return user        
     }      
   }
@@ -199,9 +198,19 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     isNewChat.value = isNew
   }
 
-  
-  const setPostId = (postid: string | string[]) => {
+  const setPostId = (postid: any) => {
     postId.value = postid
+  }
+
+  const setPostItem = async (postid: any) => {
+    // postItem.value = postid
+    await chatapi.getPost(postid).then((res) => {    
+      postItem.value = res.data.result;
+      // console.log('요청성공 : ', res);      
+      console.log('post는 : ', postItem.value);      
+    }).catch((err) => {      
+      console.log('에러 : ', err);      
+    })
   }
 
   // 메세지를 메세지 리스트에 넣기
@@ -276,7 +285,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
           }
           else if (err.status === 400 && err.data.meta.code === "invalid_value") {
             // 형식 올바
-            console.log("형식이 올바르지 않음");    
+            // console.log("형식이 올바르지 않음");    
             alert("올바른 요청이 아닙니다")
           }
           else if (err.status === 200 && err.data.meta.code === "success"){
@@ -295,14 +304,14 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const getPost = async (postIdx: string | string[]) => {
     var result;
       await chatapi
-        .getPost("55")
+        .getPost(postIdx)
         .then((res) => {
           //성공하면 페이지를 올린다.
-          console.log(res);      
+          console.log(res);
         })
         .catch((err) => {
           //서버 가져오기 완료
-          console.log(err);          
+          console.log(err);
         });
   }
 
@@ -318,5 +327,5 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   //   console.log(result);    
   // }
 
-  return { client, postId, isNewChat, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, setPostId, setIsNewChat}
+  return { client, postId, isNewChat, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, getMessages,setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, setPostId, postItem,setPostItem,setIsNewChat}
 });

@@ -250,7 +250,7 @@ const router = createRouter({
           },
         },
         {
-          path:":channelId",
+          path:"/new",
           components: {
             default: async ()=>{
                 if(!isMobile()){
@@ -262,7 +262,7 @@ const router = createRouter({
           },
         },
         {
-          path:"/new",
+          path:":channelId",
           components: {
             default: async ()=>{
                 if(!isMobile()){
@@ -272,7 +272,8 @@ const router = createRouter({
                 }
               } ,            
           },
-        }
+        },
+        
       ]
     },
     {
