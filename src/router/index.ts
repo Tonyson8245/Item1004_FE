@@ -260,6 +260,18 @@ const router = createRouter({
                 }
               } ,            
           },
+        },
+        {
+          path:"/new",
+          components: {
+            default: async ()=>{
+                if(!isMobile()){
+                  return  components.chatPage
+                }    else{
+                  return  components.inChat
+                }
+              } ,            
+          },
         }
       ]
     },

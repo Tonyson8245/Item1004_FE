@@ -227,7 +227,7 @@
               </div>
               <div
                 class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border cursor-pointer"
-                @click="router.push('/chat')"
+                @click="goChatPage"
               >
                 <img
                   src="@/assets/icon/chat_mid-grey.svg"
@@ -513,7 +513,9 @@ import { ref, watch, onUnmounted, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
 import commonFunction from "@/common";
+import { useChatStore } from "@/store/modules/chat/chatStore";
 
+const chatStore = useChatStore();
 const postStore = usePostStore();
 const paymentStore = usePaymentStore();
 const router = useRouter();
@@ -663,8 +665,19 @@ function goPaymentPage() {
     Category,
     SellerIdx
   );
-
   router.push("/payment");
+}
+
+
+
+// 채팅 페이지로 보내기
+function goChatPage() {
+
+  console.log(route.query.postId);
+  
+   chatStore.isRoomExist(route.query.postId);
+    // chatStore.getPost();  
+  // router.push('/chat/'+route.query.postId);
 }
 </script>
 
