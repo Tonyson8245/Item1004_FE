@@ -185,7 +185,7 @@ const router = createRouter({
               path: "contractList/buy",
               component: components.contractListBuy,
               meta: {
-                title: "판매내역",
+                title: "구매내역",
                 navbar: false,
               },
             },

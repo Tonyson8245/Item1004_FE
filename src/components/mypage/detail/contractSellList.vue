@@ -41,9 +41,9 @@
           <div
             class="flex justify-between p-3 md:px-5 flex-grow bg-white items-center cursor-pointer"
             :class="contracCompleteClass"
-            @click="changeTab('거래완료')"
+            @click="changeTab('거래종료')"
           >
-            <span>거래완료</span>
+            <span>거래종료</span>
             <div class="flex">
               <span>10</span><span class="hidden md:block">건</span>
               <img
@@ -60,20 +60,20 @@
       <div class="md:w-[60rem]">
         <div class="border-y border-everly-black font-bold py-4 hidden md:flex">
           <div class="w-[35rem] text-center">상품정보</div>
-          <div class="w-[11.625rem] text-center">금액(원)</div>
-          <div class="w-[13.375rem] text-center">구매자</div>
+          <div class="w-[11.625rem] text-right">금액(원)</div>
+          <div class="w-[13.375rem] text-right">구매자</div>
         </div>
       </div>
       <div>
-        <div v-for="key in 1">
-          <contractListComponent />
+        <div v-for="key in storeContractList">
+          <contractListComponent :card="key" />
         </div>
       </div>
     </div>
     <div class="w-full flex justify-center my-5 md:mt-32">
       <v-pagination
         v-model="page"
-        :pages="pages"
+        :pages="storeContractListTotalPage"
         :range-size="1"
         active-color="#DCEDFF"
         @update:modelValue="updateHandler"
@@ -83,28 +83,59 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, onMounted, onUpdated, onUnmounted } from "vue";
 import contractListComponent from "../components/contractListComponent.vue";
 import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
+import { useRoute, useRouter } from "vue-router";
 
 const mypageStore = usemypageStore();
-const { storeContractListSellTabType } = storeToRefs(mypageStore);
-//페
+const {
+  storeContractListTabType,
+  storeContractListTotalPage,
+  storeContractList,
+} = storeToRefs(mypageStore);
+const router = useRouter();
+const route = useRoute();
+//페이지 로드 될때 데이터 가져오기
+onMounted(() => {
+  mypageStore.getContractList(1, 2, "sell");
+  console.log(`onMounted :: 위의 데이터 가져오기`);
+});
 
 //페이징
 const page = ref(1);
-const pages = ref(10);
 
 function updateHandler(value: number) {
   page.value = value;
+  mypageStore.getContractList(value, 2, "sell");
+  router.replace({ path: route.path, query: { page: value } });
 }
 
 //탭 상태 변경
 function changeTab(tab: string) {
-  mypageStore.setstoreContractListSellTabType(tab);
+  var value;
+  switch (tab) {
+    case "인계필요":
+      value = 0;
+      break;
+    case "인계완료":
+      value = 1;
+      break;
+    case "거래종료":
+      value = 2;
+      break;
+    default:
+      value = 0;
+      break;
+  }
+
+  mypageStore.resetContractList(); //store 리스트 초기화
+  router.replace({ path: route.path, query: { page: 1 } }); // 페이지 변경
+  mypageStore.setstoreContractListTabType(value); //탭변경
+  mypageStore.getContractList(1, 2, "sell"); //다시 가져오기
 }
 
 // 탭 상태 class
@@ -120,12 +151,13 @@ const contracCompleteClass = ref(
 const activeTab =
   "bg-everly-main rounded-lg md:bg-everly-main text-everly-white md:rounded-t-none md:h-[3.3rem]";
 
-checkTab(storeContractListSellTabType.value);
-watch(storeContractListSellTabType, (a) => {
+watch(storeContractListTabType, (a) => {
   checkTab(a);
 });
 
-function checkTab(a: string) {
+checkTab(storeContractListTabType.value);
+
+function checkTab(a: number) {
   needTabClass.value =
     "md:border-t md:border-l md:border-b md:rounded-l-lg text-everly-dark_grey md:h-[3.1rem]";
   completeTabClass.value =
@@ -134,13 +166,13 @@ function checkTab(a: string) {
     "md:border-t md:border-r md:border-b md:rounded-r-lg text-everly-dark_grey md:h-[3.1rem]";
 
   switch (a) {
-    case "인계필요":
+    case 0:
       needTabClass.value = activeTab;
       break;
-    case "인계완료":
+    case 1:
       completeTabClass.value = activeTab;
       break;
-    case "거래완료":
+    case 2:
       contracCompleteClass.value = activeTab;
       break;
   }

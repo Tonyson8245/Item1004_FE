@@ -1,3 +1,4 @@
+import { IsNotEmpty } from "class-validator";
 import type meta from "../common/meta.interface";
 
 class pagination {
@@ -81,23 +82,20 @@ export class contractPostListBody {
     this.postType = postType;
   }
 }
-
-export class contracPostListResult {
-  pagination: pagination;
+export class card {
   otherUser: otherUser;
   post: post;
   contract: contract;
-  constructor(
-    pagination: pagination,
-    otherUser: otherUser,
-    post: post,
-    contract: contract
-  ) {
-    this.pagination = pagination;
+  constructor(otherUser: otherUser, post: post, contract: contract) {
     this.otherUser = otherUser;
     this.post = post;
     this.contract = contract;
   }
+}
+
+export class contracPostListResult {
+  pagination: pagination;
+  card: card[];
 }
 
 export class contracPOstListResponse {

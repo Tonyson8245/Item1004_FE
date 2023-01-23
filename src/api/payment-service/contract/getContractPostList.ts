@@ -1,26 +1,29 @@
 import http from "../paymentHTTPClient";
-import type {
-  contractPostDetailBody,
-  contractPostDetailResult,
-} from "@/domain/payment/contractPostDetailDto.interaface";
+
 import type { TokenDto } from "@/domain/auth";
+import type {
+  contracPostListResult,
+  contractPostListBody,
+} from "@/domain/payment/contracPostListDto.interface";
 
 export async function getContractPostList<T>(
-  payload: contractPostDetailBody
-): Promise<contractPostDetailResult> {
+  payload: contractPostListBody
+): Promise<contracPostListResult> {
   var accessTokenData = localStorage.getItem("accessToken");
 
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
-    const url = "/posts/contract-posts-detail.php";
+    const url = "/posts/contract-posts-list.php";
     try {
-      const result: contractPostDetailResult = await http.get(url, {
+      const result: contracPostListResult = await http.get(url, {
         headers: {
           accesstoken: token,
         },
         params: {
-          postIdx: payload.postIdx,
-          ordNm: payload.ordNm,
+          page: payload.page,
+          pageUnit: payload.pageUnit,
+          contractStage: payload.contractStage,
+          postType: payload.postType,
         },
       });
 
