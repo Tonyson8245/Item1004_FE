@@ -4,6 +4,7 @@ import * as authApi from "@/api/auth-service/index";
 import type { term } from "@/domain/user/serviceTermList.interface";
 import { useLocalStorage } from "@vueuse/core";
 import type * as authDto from "@/domain/auth/index";
+import type { userPersonalDataResult } from "@/domain/user/userPersonalDataDto";
 
 export const useauthStore = defineStore("authStore", {
   state: () => ({
@@ -21,6 +22,7 @@ export const useauthStore = defineStore("authStore", {
     storeCheckSMSisSuccess: false,
 
     storeuserID: "",
+    storeUserPersonalData: {} as userPersonalDataResult,
   }),
 
   getters: {},
@@ -194,6 +196,29 @@ export const useauthStore = defineStore("authStore", {
           result = false;
         });
       return result;
+    },
+
+    deleteToken() {
+      authApi
+        .deleteToken()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    getUserPersonlData() {
+      authApi
+        .getPersoncalData()
+        .then((res) => {
+          console.log(res);
+          this.storeUserPersonalData = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 });

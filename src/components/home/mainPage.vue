@@ -4,30 +4,24 @@
   <BannerMobile class="block md:hidden" />
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>
-    <div class="flex-none w-full md:w-[1180px] bg-[#f0f0f0] md:bg-white pt-6">
+    <div
+      class="flex-none w-full md:w-[1180px] bg-[#f0f0f0] md:bg-white pt-6 md:min-h-none min-h-[50rem]"
+    >
       <div
         class="grid grid-cols-1 md:grid-cols-2 gap-4 px-3 md:px-0"
         v-show="!storeShowFilter_mobile"
       >
         <div
-          v-for="card in cards"
+          v-for="card in storeProductCard"
           class="border rounded-xl shadow-md md:shadow-none bg-white"
         >
           <ProductCard :card="card" />
         </div>
-        <VueEternalLoading :load="load">
-          <template #loading>
-            <div v-if="storeinfiniteStatus">
-              <div class="flex w-full hidden md:block">
-                <div class="w-[1180px] flex justify-center pl-2 pb-3">
-                  <spinner />
-                </div>
-              </div>
-              <div class="block md:hidden w-full text-center">
-                <div class="inline-block"><spinner /></div>
-              </div>
-            </div>
-            <div v-else></div></template
+        <VueEternalLoading
+          :load="load"
+          v-if="storeinfiniteStatus && storehasnextPage"
+        >
+          <template #loading> <div></div></template
         ></VueEternalLoading>
       </div>
       <div
@@ -43,10 +37,7 @@
         </div>
       </div>
 
-      <div
-        class="hidden md:block flex fixed bottom-10"
-        v-if="storeinfiniteStatus"
-      >
+      <div class="hidden md:flex fixed bottom-10" v-else="storeinfiniteStatus">
         <div class="flex-grow"></div>
         <div class="flex-none w-[1180px]">
           <div class="absolute right-0 bottom-0">
@@ -110,7 +101,7 @@
       <!-- 협력사 -->
 
       <div
-        class="grid grid-cols-1 divide-y py-10 w-screen left-0 fixed hidden md:block"
+        class="grid grid-cols-1 divide-y py-10 w-screen left-0 fixed md:block"
         v-if="!storeinfiniteStatus"
       >
         <div></div>
@@ -121,22 +112,37 @@
         class="md:mt-14 bg-white md:pb-10 py-2"
         v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
       >
-        <Carousel :settings="settings" :breakpoints="breakpoints">
-          <Slide v-for="slide in 5" :key="slide">
-            <div
-              class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center h-full text-everly-mid_grey"
-            >
-              <div>
-                <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
-                <img :src="`/assets/img/logo/${slide}.jpg`" alt="" />
+        <div class="hidden md:block">
+          <Carousel :settings="settings" :breakpoints="breakpoints">
+            <Slide v-for="slide in 7" :key="slide">
+              <div
+                class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
+              >
+                <div>
+                  <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
+                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                </div>
               </div>
-            </div>
-          </Slide>
-
-          <template #addons>
-            <Navigation />
-          </template>
-        </Carousel>
+            </Slide>
+            <template #addons>
+              <Navigation />
+            </template>
+          </Carousel>
+        </div>
+        <div class="md:hidden">
+          <Carousel :settings="settings" :breakpoints="breakpoints">
+            <Slide v-for="slide in 7" :key="slide">
+              <div
+                class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
+              >
+                <div>
+                  <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
+                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                </div>
+              </div>
+            </Slide>
+          </Carousel>
+        </div>
       </div>
 
       <FooterMobile
@@ -149,7 +155,7 @@
     <!-- 맨위로 모바일-->
 
     <!-- 모바일 글작성 -->
-    <div class="block md:hidden bottom-20 w-full fixed z-20">
+    <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
       <div class="flex justify-end">
         <img
           src="@/assets/icon/button_write_mobile.svg"
@@ -177,35 +183,49 @@ import { useFilterStore } from "@/store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "@/store/modules/home/mainStore";
 import { VueEternalLoading } from "@ts-pro/vue-eternal-loading";
-import spinner from "@/components/common/spinner.vue";
 import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRouter } from "vue-router";
-import Test from "../common/ChargeModal.vue";
+import { onMounted, watch } from "vue";
+import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
+import { useSearchStore } from "@/store/modules/home/searchStore";
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
 function goPay() {}
 
-//로고
-function getImageUrl(path: any) {
-  return new URL(path).href;
-}
-
 const router = useRouter();
+
+//////조회 관련
 const filterStore = useFilterStore();
-const { storeShowFilter_mobile } = storeToRefs(filterStore);
-
+const {
+  storeShowFilter_mobile,
+  filterStoreGameKeywordIdx,
+  filterStoreServerKeywordIdx,
+} = storeToRefs(filterStore); //  웹 필터 켜짐 여부
 const mainStore = useMainStore();
-const { storeProductCard, storeinfiniteStatus } = storeToRefs(mainStore);
+const {
+  storeProductCard,
+  storeinfiniteStatus,
+  storeNextPage,
+  storehasnextPage,
+  storeLoad,
+} = storeToRefs(mainStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
+const searchStore = useSearchStore();
+const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 
-const cards = storeProductCard;
+//처음 페이지 로드 될때 동작
+onMounted(() => {
+  console.log("mainPage :: onMount");
+  mainStore.$reset();
+  getProductList(6);
+});
 
 // Infinite scroll on off
 function toggleInfiniteStatus(status: boolean) {
-  mainStore.setstoreinfiniteStatus(true);
+  mainStore.setstoreinfiniteStatus(status);
 }
 
 // 무한 스크롤 동작
@@ -213,29 +233,94 @@ function load({ loaded }: LoadAction) {
   
   
   if (storeinfiniteStatus.value) {
-    console.log("it works?");
-    mainStore.setstoreProductCard();
-  }
+    //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
+    //다음 페이지가 있을때
+    if (storehasnextPage.value) {
+      if (storehasnextPage.value) {
+        var page = storeNextPage.value;
+        var sellbuy = storeSellBuy.value;
+        var categorys = filterStore.getCategorys;
+        var gameIdx = filterStoreGameKeywordIdx.value;
+        var serverIdx = filterStoreServerKeywordIdx.value;
 
-  loaded();
+        var payload = new getProductCardBodyDto(
+          page,
+          6,
+          sellbuy,
+          categorys,
+          gameIdx,
+          serverIdx
+        );
+
+        mainStore
+          .setstoreProductCard(payload)
+          .then((res) => {
+            if (res) {
+              loaded();
+            } else console.log("loaded failed");
+          })
+          .catch(() => {});
+      }
+    }
+  }
 }
 
+function getProductList(pageUnit: number) {
+  if (storehasnextPage.value) {
+    var page = storeNextPage.value;
+    var sellbuy = storeSellBuy.value;
+    var categorys = filterStore.getCategorys;
+    var gameIdx = filterStoreGameKeywordIdx.value;
+    var serverIdx = filterStoreServerKeywordIdx.value;
+
+    var payload = new getProductCardBodyDto(
+      page,
+      pageUnit,
+      sellbuy,
+      categorys,
+      gameIdx,
+      serverIdx
+    );
+
+    mainStore.setstoreProductCard(payload).then((res) => {});
+  }
+}
+
+watch(storeLoad, () => {
+  if (storeLoad.value) {
+    console.log("watch load");
+    scrollToTopinstant();
+    toggleInfiniteStatus(true);
+    mainStore.setstoreLoad(false);
+  }
+});
+watch(storehasnextPage, () => {
+  if (!storehasnextPage) mainStore.setstoreinfiniteStatus(false);
+  else mainStore.setstoreinfiniteStatus(true);
+});
+
+//////배너
 //carousel
 const settings = {
   itemsToShow: 3,
   snapAlign: "center",
+  autoplay: "2000",
 };
 const breakpoints = {
   // 700px and up
   768: {
     itemsToShow: 5,
     snapAlign: "start",
+    autoplay: "0",
   },
 };
 
 //위로 올라가는 함수
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function scrollToTopinstant() {
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function moveLink(link: string) {

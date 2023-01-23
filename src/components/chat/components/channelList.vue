@@ -21,7 +21,7 @@
         <div 
         class="flex-grow overflow-scroll overflow-x-hidden"
         @scroll="handleListScroll"
-        ref="trigger">  
+        ref="scroll">  
             <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
         </div> 
 
@@ -32,7 +32,9 @@
 import channel from './channel.vue';
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
-import { ref, computed, onMounted  } from "vue";
+import { ref, toRefs   } from "vue";
+import { useScroll } from '@vueuse/core';
+
 // import { useRoute } from "vue-router";
 import { useRoute } from "vue-router";
 
@@ -41,6 +43,15 @@ const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore
 
 const route = useRoute();
 const channelId  = route.params.channelId;
+
+
+const scroll = ref<HTMLElement | null>(null);
+
+const {arrivedState,directions} = useScroll(scroll);
+const { left, right, top, bottom } = toRefs(arrivedState)
+const { left: toLeft, right: toRight, top: toTop, bottom: toBottom } = toRefs(directions)
+
+// console.log(bottom);
 
 
 // client.value.on('event', (data) => {

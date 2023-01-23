@@ -3,7 +3,11 @@
 
 
     <div class=" border-b border-everly-mid_grey flex items-center pl-5 py-3">
-        <div class="rounded-lg overflow-hidden mr-2">                           
+
+        <!-- <input :value="bottom" /> -->
+
+        <div class="rounded-lg overflow-hidden mr-2">           
+                
             <img
                 src="@/assets/img/profile_green.jpeg"
                 alt=""
@@ -41,7 +45,7 @@
             <textarea id="messageInputArea"  v-model="text"
             @keydown.enter.shift.exact.prevent="text += '\n'"
             @keydown.enter.exact.prevent="sendMessage"            
-            maxlength="8000" class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용 입력하셈 시벌탱" rows="1" ></textarea>                        
+            maxlength="8000" class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용을 입력하세요" rows="1" ></textarea>                        
         </div>         
         
         <button @click="sendMessage" class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
@@ -57,21 +61,22 @@ import message from './message.vue';
 import myMessage from './myMessage.vue';
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
-import { ref,onUpdated,onMounted, watch  } from 'vue';
+import { ref,onUpdated,onMounted, toRefs, watch  } from 'vue';
+import { useScroll } from '@vueuse/core';
 
 const chatStore = useChatStore();
-const { messages, client, user } = storeToRefs(chatStore);
-
-const scrollView:any = ref();
+const { messages, client, user, selectedChannel } = storeToRefs(chatStore);
+const scrollView = ref<HTMLElement | null>(null);
+const {arrivedState,directions} = useScroll(scrollView);
+const { left, right, top, bottom } = toRefs(arrivedState)
+// console.log("로그",bottom);
 
 
 // 스크롤이 하단에 고정되어 있으면 true로 주고, 내가 스크롤을 올리면 false
 // 스크롤 올리는 와중에는 메세지가 왔을 때 스크롤이 하단으로 이동 X
 const isScrollBottom = ref(true);
 
-
 const text = ref("");
-
 
 
 //  import type channel from '@/domain/chat/channel.interface';
@@ -89,9 +94,6 @@ const sendMessage = async (e:any) => {
 }
 
 
-  
-
-
 onMounted(()=>{
 // 메세지 송, 수신 시 작동 하기 위해 사용함
 // dom node에 변화가 감지되면 스크롤 하단 이동이 실행된다.
@@ -107,7 +109,11 @@ onMounted(()=>{
     }
     // 감시 시작
     observer.observe(scrollView.value, config);
+
+    // chatStore.isRoomExit();
+    // chatStore.getPost();
 })
+
 
 const scrollToBottom = () => {
     scrollView.value.scrollTop = scrollView.value.scrollHeight

@@ -9,7 +9,11 @@
     />
     <div class="grid place-items-center w-full m-auto">
       <div class="">
-        <img src="@/assets/icon/logo_mobile.svg" alt="" />
+        <img
+          src="@/assets/icon/logo_mobile.svg"
+          alt=""
+          @click="router.push('/')"
+        />
       </div>
 
       <div class="grid gap-2 place-items-center w-full mt-8 md:mt-16">

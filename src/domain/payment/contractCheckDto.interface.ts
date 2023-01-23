@@ -4,9 +4,11 @@ import type meta from "../common/meta.interface";
 class contractCheckBodyDto {
   totalPrice: number;
   payMethod: string;
-  constructor(totalPrice: number, payMethod: string) {
+  type: string;
+  constructor(totalPrice: number, payMethod: string, type: string) {
     this.totalPrice = totalPrice;
     this.payMethod = payMethod;
+    this.type = type;
   }
 }
 class contractCheckResultDto {
