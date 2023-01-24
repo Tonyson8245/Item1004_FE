@@ -214,8 +214,8 @@
               <div class="flex-1">
                 <div class="flex justify-between items-center font-bold">
                   <div class="flex items-center">
-                    <div>{{ getterContractDetail.other.nickname }}</div>
-                    <div v-if="getterContractDetail.other.isVerified">
+                    <div>{{ getterContractDetail.otherUser.nickname }}</div>
+                    <div v-if="getterContractDetail.otherUser.isVerified">
                       <img
                         src="@/assets/icon/check_circle_blue.svg"
                         alt=""
@@ -232,7 +232,7 @@
                   </div>
                 </div>
                 <div class="flex justify-between items-center">
-                  <div>#{{ getterContractDetail.other.code }}</div>
+                  <div>#{{ getterContractDetail.otherUser.code }}</div>
                   <div @click="toggleshowbuyerInfo()" class="md:hidden">
                     <img
                       src="@/assets/icon/arrow_up_card.svg"
@@ -290,7 +290,7 @@
                 <div class="flex space-x-1">
                   <div
                     class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
-                    v-if="getterContractDetail.other.isPhoneValid"
+                    v-if="getterContractDetail.otherUser.isPhoneValid"
                   >
                     휴대폰
                   </div>
@@ -302,7 +302,7 @@
                   </div>
                   <div
                     class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
-                    v-if="getterContractDetail.other.isEmailValid"
+                    v-if="getterContractDetail.otherUser.isEmailValid"
                   >
                     이메일
                   </div>
@@ -314,7 +314,7 @@
                   </div>
                   <div
                     class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
-                    v-if="getterContractDetail.other.isAccountValid"
+                    v-if="getterContractDetail.otherUser.isAccountValid"
                   >
                     출금계좌
                   </div>

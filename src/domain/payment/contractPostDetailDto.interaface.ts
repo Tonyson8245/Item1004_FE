@@ -15,7 +15,7 @@ export class post {
     this.title = "제목";
   }
 }
-export class other {
+export class otherUser {
   image: string;
   nickname: string;
   isVerified: boolean;
@@ -75,13 +75,13 @@ export class contractPostDetailBody {
 
 export class contractPostDetailResult {
   post: post;
-  other: other;
+  otherUser: otherUser;
   my: my;
   contract: contract;
 
   constructor() {
     this.post = new post();
-    this.other = new other();
+    this.otherUser = new otherUser();
     this.my = new my();
     this.contract = new contract();
   }

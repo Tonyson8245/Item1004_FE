@@ -4,8 +4,17 @@ import * as authApi from "@/api/auth-service/index";
 import type mileageOveriewResponseDto from "@/domain/payment/mileageOverviewReponseDTO.interface";
 import { putBankAccountBody } from "@/domain/auth";
 import * as contractInfo from "@/domain/payment/contractPostDetailDto.interaface";
-import { isNotEmptyObject, isObject } from "class-validator";
+import {
+  IsNotEmpty,
+  IsNotEmptyObject,
+  isNotEmptyObject,
+  isObject,
+} from "class-validator";
 import { withdrawMileageResult } from "@/domain/payment/withdrawMileage.interface";
+import {
+  contractPostListBody,
+  card,
+} from "@/domain/payment/contracPostListDto.interface";
 
 export const usemypageStore = defineStore("mypageStore", {
   state: () => ({
@@ -24,6 +33,11 @@ export const usemypageStore = defineStore("mypageStore", {
     storewithdrawAmt: 0,
     //출금 결과 관련
     storewithdrawResult: {} as withdrawMileageResult,
+
+    storeContractListTabType: 0,
+    storeContractListTotalPage: 0,
+    storeContractList: [] as card[],
+    storepage: 1,
   }),
 
   getters: {
@@ -56,7 +70,7 @@ export const usemypageStore = defineStore("mypageStore", {
     },
     getterWriterlevel: (state) => {
       if (!isNotEmptyObject(state.storeContractDetail)) return "";
-      switch (state.storeContractDetail.other.contractLevelName) {
+      switch (state.storeContractDetail.otherUser.contractLevelName) {
         case "rookie":
           return "level_rookie";
         case "bronze":
@@ -134,6 +148,41 @@ export const usemypageStore = defineStore("mypageStore", {
         .catch((err) => {
           console.log(err);
         });
+    },
+    setstorepage(page: number) {
+      this.storepage = page;
+    },
+    // 거래내역을 가져오기 위한 데이터 설정
+    setContractordNmAndPostIdx(postIdx: number, ordNm: string) {
+      this.storepostIdx = postIdx;
+      this.storeordNm = ordNm;
+    },
+    resetContractList() {
+      this.storeContractListTabType = 0;
+      this.storeContractListTotalPage = 0;
+      this.storeContractList = [] as card[];
+    },
+    getContractList(page: number, pageunit: number, type: string) {
+      var stage = this.storeContractListTabType;
+      var payload = new contractPostListBody(page, pageunit, stage, type);
+
+      //값 초기화
+      this.storeContractListTotalPage = 0;
+      this.storeContractList = [] as card[];
+      paymentApi
+        .getContractPostList(payload)
+        .then((res) => {
+          this.storeContractListTotalPage = res.pagination.resultTotalPage;
+          var list = res.card;
+          if (list != undefined) this.storeContractList = [...list];
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    setstoreContractListTabType(value: number) {
+      this.storeContractListTabType = value;
     },
     setstorewithdrawAmt(amt: number) {
       if (isNaN(amt)) this.storewithdrawAmt = 0;
