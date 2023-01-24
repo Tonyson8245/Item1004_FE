@@ -28,11 +28,11 @@
           >
             <div class="none flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/profile_grey.svg" class="pr-2" alt="" />
-              <div>이름 : {{ storeUserPersonalData.name }}</div>
+              <div>이름 : {{ storeUserInfoOverview.name }}</div>
             </div>
             <div class="grow flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/phone_grey.svg" class="pr-2" alt="" />
-              <div>핸드폰번호 : {{ storeUserPersonalData.phone }}</div>
+              <div>핸드폰번호 : {{ storeUserInfoOverview.phone }}</div>
             </div>
             <div class="none flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/safephone_grey.svg" class="pr-2" alt="" />
@@ -82,6 +82,7 @@ import { useWriteStore } from "@/store/modules/home/writeStore";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 
 const emit = defineEmits(["select"]);
 const props = defineProps({
@@ -98,11 +99,7 @@ function create() {
 }
 
 //유저 정보 가져오기
-const authStore = useauthStore();
-const { storeUserPersonalData } = storeToRefs(authStore);
-
-onMounted(() => {
-  authStore.getUserPersonlData();
-});
+const mypageStore = usemypageStore();
+const { storeUserInfoOverview } = storeToRefs(mypageStore);
 </script>
 <style scoped></style>

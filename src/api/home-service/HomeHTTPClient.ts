@@ -2,6 +2,9 @@ import type { TokenDto } from "@/domain/auth";
 import type { user } from "@/domain/user/user.interface";
 import { useLocalStorage } from "@vueuse/core";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_HOME_TEST;
 
@@ -50,6 +53,8 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log("재발급 실패");
+            alert("다시 로그인해주세요");
+            router.push("/account/login");
           });
 
         var response: any;

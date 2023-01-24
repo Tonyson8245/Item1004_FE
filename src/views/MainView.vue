@@ -72,8 +72,11 @@ import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
 import FooterLogin from "@/components/footer/footerLogin.vue";
 import ContractInfobar from "@/components/footer/ContractInfobarMobile.vue";
+import { onMounted, onUnmounted } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import type { TokenDto } from "@/domain/auth";
+
 // import smartroVue from "@/components/payment/smartro.vue";
-import { ref } from "vue";
 
 // 결제 시작 버튼 // 결제시 사용
 // const childComponentRef = ref<InstanceType<typeof smartroVue> | null>(null);
@@ -82,6 +85,7 @@ import { ref } from "vue";
 // };
 
 const mainStore = useMainStore();
+const mypageStore = usemypageStore();
 const commonStore = useCommonStore();
 const componentStore = useComponentStore();
 const route = useRoute();
@@ -97,6 +101,16 @@ function toggleSearchWeb() {
     searchStore.setstoreShowSearch_web(false);
   }
 }
+
+//OnMounted()
+onMounted(() => {
+  const localData = localStorage.getItem("refreshToken");
+  const token =
+    localData == null ? `` : (JSON.parse(localData) as TokenDto).token;
+  if (token != "") {
+    mypageStore.getUserInfoOverview();
+  }
+});
 
 //웹 필터 검색창 비활성화
 function toggleSearch() {

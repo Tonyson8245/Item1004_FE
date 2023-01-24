@@ -553,8 +553,6 @@ const {
 
   storecharacterName,
   storeregistration,
-  storehasInGamePaymentHistory,
-  storeisDuplicatedSync,
   storeSellBuy,
 
   storeCharacterlevel,

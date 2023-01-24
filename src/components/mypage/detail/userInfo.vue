@@ -202,18 +202,7 @@ import { storeToRefs } from "pinia";
 const mypageStore = usemypageStore();
 const { storeUserInfoOverview } = storeToRefs(mypageStore);
 
-//OnMounted()
-onMounted(() => {
-  mypageStore.getUserInfoOverview();
-});
-onUnmounted(() => {
-  mypageStore.resetUserInfoOverview();
-});
-
 const { copy } = useClipboard({});
-
-const storeverifiedEmail = ref(false);
-const storeverifiedBankAccount = ref(false);
 
 const emailContent = (string: string) => {
   if (string == "") return `이메일 인증을 해주세요.`;

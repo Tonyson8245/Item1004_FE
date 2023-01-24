@@ -1,6 +1,9 @@
 import type { TokenDto } from "@/domain/auth";
 import type { user } from "@/domain/user/user.interface";
 import { useLocalStorage } from "@vueuse/core";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 import axios from "axios";
 
@@ -49,8 +52,9 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log("재발급 실패");
+            alert("다시 로그인해주세요");
+            router.push("/account/login");
           });
-
         var rsponse: any;
 
         await axios(originalRequest)

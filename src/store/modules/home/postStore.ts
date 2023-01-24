@@ -260,6 +260,7 @@ export const usePostStore = defineStore("postStore", {
       this.storeUsersellPostCount = 0;
       this.storeUserbuyPostCount = 0;
       this.storeUserreviewCount = 0;
+      this.storeqty = 1;
     },
   },
 });

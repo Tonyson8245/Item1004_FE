@@ -16,7 +16,7 @@
             <div class="md:text-2xl">{{ storePostTitle }}</div>
             <div class="md:flex md:text-xl text-sm font-bold md:justify-start">
               <div class="md:pr-5">
-                {{ numberToKorean(storeMinValue) }} {{ storeSaleUnitName }} /
+                {{ numberToKorean(storeSaleUnit) }} {{ storeProductunit }}당 /
                 {{ storePricePerUnit.toLocaleString() }} 원
               </div>
               <div>{{ storeOrderQty }}개 ({{ TotalQty }})</div>
@@ -35,7 +35,7 @@
               <div class="flex">
                 <div class="w-14 md:w-[8rem] md:text-base font-bold">이름</div>
                 <div class="grow md:text-lg">
-                  {{ storeUserPersonalData.name }}
+                  {{ storeUserInfoOverview.name }}
                 </div>
               </div>
               <div class="flex">
@@ -43,7 +43,7 @@
                   닉네임
                 </div>
                 <div class="grow md:text-lg">
-                  {{ userNickname }}
+                  {{ storeUserInfoOverview.nickname }}
                 </div>
               </div>
               <div class="flex">
@@ -51,7 +51,7 @@
                   연락처
                 </div>
                 <div class="grow md:text-lg flex space-x-4">
-                  <div>{{ storeUserPersonalData.phone }}</div>
+                  <div>{{ storeUserInfoOverview.phone }}</div>
                   <div class="flex space-x-1 items-center">
                     <img
                       src="@/assets/icon/safephone_grey.svg"
@@ -383,10 +383,8 @@ import { useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
 import { payment } from "@/api/payment-module";
 import type { user } from "@/domain/user/user.interface";
-import { useauthStore } from "@/store/modules/auth/authStore";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 
-const authStore = useauthStore();
-const { storeUserPersonalData } = storeToRefs(authStore);
 //결제 클릭
 // 스마트로 방식
 // const emit = defineEmits([`goPay`]);
@@ -446,11 +444,12 @@ function goPayment() {
 // 라우팅
 const router = useRouter();
 const paymentStore = usePaymentStore();
+const mypageStore = usemypageStore();
 const {
   storePostIdx,
   storePostTitle,
   storeMinValue,
-  storeSaleUnitName,
+  storeProductunit,
   storePricePerUnit,
   storeSaleUnit,
 
@@ -474,12 +473,7 @@ const {
   storefeePrice,
   storeCharaterName,
 } = storeToRefs(paymentStore);
-
-//유저 정보 닉네일
-//localstorage 가져오기
-const localData = localStorage.getItem("user");
-const userNickname =
-  localData == null ? `닉네임` : (JSON.parse(localData) as user).nickname;
+const { storeUserInfoOverview } = storeToRefs(mypageStore);
 
 //페이지 들어올때 계산 먼저함
 onMounted(() => {
@@ -488,9 +482,6 @@ onMounted(() => {
 
   // 보유 포인트 가져오기
   paymentStore.getCheckUseablePoint();
-
-  // 유저 정보 가져오기
-  authStore.getUserPersonlData();
 
   //포스트에서 값을 보내지 않았을 경우 홈으로 보낸다.
   if (storePostTitle.value.length < 1) {
