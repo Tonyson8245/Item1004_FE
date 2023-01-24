@@ -12,8 +12,7 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   (response) => {
-    //성공 시에는 result 값만 돌려보넴
-    return response.data.result;
+    return response;
   },
   async (error) => {
     const {
@@ -37,7 +36,7 @@ instance.interceptors.response.use(
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
-            console.log("재발급 성공");
+            console.log(res);
             // 새로운 토큰 저장
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
@@ -63,8 +62,8 @@ instance.interceptors.response.use(
           });
       }
       // module 별로 다름 위에 참고
-      return data.data.result;
-    } else return Promise.reject(error.response.data.meta);
+      return data;
+    } else return Promise.reject(error);
     return Promise.reject(error.response.data.meta);
   }
 );
