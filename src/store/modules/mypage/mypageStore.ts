@@ -70,7 +70,7 @@ export const usemypageStore = defineStore("mypageStore", {
     },
     getterWriterlevel: (state) => {
       if (!isNotEmptyObject(state.storeContractDetail)) return "";
-      switch (state.storeContractDetail.other.contractLevelName) {
+      switch (state.storeContractDetail.otherUser.contractLevelName) {
         case "rookie":
           return "level_rookie";
         case "bronze":
