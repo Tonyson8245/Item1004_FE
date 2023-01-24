@@ -93,8 +93,12 @@ import type { user } from "@/domain/user/user.interface";
 
 //localstorage 가져오기
 const localData = localStorage.getItem("user");
+const refreshTokenData = localStorage.getItem("refreshToken");
+
 const userNickname =
-  localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
+  refreshTokenData == null || localData == null
+    ? `로그인하기`
+    : (JSON.parse(localData) as user).nickname;
 
 //store 가져오기
 const searchStore = useSearchStore();
@@ -135,8 +139,8 @@ function moveLink(link: string) {
   } else if (link == "/account/login") {
     if (userNickname == `로그인하기`) router.push(link);
   } else if (link == "/mypage") {
-    var userinfo = localStorage.getItem("user");
-    if (userinfo == null) {
+    var refreshTokenData = localStorage.getItem("refreshToken");
+    if (refreshTokenData == null) {
       router.push("/account/login");
       return;
     }

@@ -5,10 +5,13 @@ import type {
   contracPostListResult,
   contractPostListBody,
 } from "@/domain/payment/contracPostListDto.interface";
+import { checkTokenStatus } from "@/api/common";
 
 export async function getContractPostList<T>(
   payload: contractPostListBody
 ): Promise<contracPostListResult> {
+  // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
+  checkTokenStatus();
   var accessTokenData = localStorage.getItem("accessToken");
 
   if (accessTokenData != null) {

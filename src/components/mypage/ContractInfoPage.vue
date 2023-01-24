@@ -573,8 +573,12 @@ onMounted(() => {
 
 //localstorage 가져오기
 const localData = localStorage.getItem("user");
+const refreshTokenData = localStorage.getItem("refreshToken");
+
 const userNickname =
-  localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
+  refreshTokenData == null || localData == null
+    ? `로그인하기`
+    : (JSON.parse(localData) as user).nickname;
 
 //사기조회 채팅하기 신고하기
 const showMore = ref(false);

@@ -4,6 +4,7 @@ import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import type { AxiosResponse } from "axios";
 import { storeToRefs } from "pinia";
 import http from "../paymentmoduletHTTPClient";
+import { checkTokenStatus } from "@/api/common";
 
 class infoResult {
   name: string;
@@ -31,6 +32,8 @@ class postDataDto {
 async function getuseinfo<T>(): Promise<infoResponse | undefined> {
   var url =
     "https://4045zs3ccg.execute-api.ap-northeast-2.amazonaws.com/develop/my/infos";
+  // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
+  checkTokenStatus();
   var accessTokenData = localStorage.getItem("accessToken");
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;

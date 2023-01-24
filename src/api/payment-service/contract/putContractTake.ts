@@ -1,11 +1,14 @@
 import http from "../paymentHTTPClient";
 import type { TokenDto } from "@/domain/auth";
 import type meta from "@/domain/common/meta.interface";
+import { checkTokenStatus } from "@/api/common";
 
 export async function putContractTake<T>(
   ordNm: string,
   otherUserIdx: number
 ): Promise<meta> {
+  // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
+  checkTokenStatus();
   var accessTokenData = localStorage.getItem("accessToken");
 
   if (accessTokenData != null) {

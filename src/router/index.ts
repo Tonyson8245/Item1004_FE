@@ -333,8 +333,12 @@ router.beforeEach((to, from) => {
 
   window.scrollTo({ top: 0, behavior: "auto" });
   const localData = localStorage.getItem("user");
+  const refreshTokenData = localStorage.getItem("refreshToken");
+
   const userNickname =
-    localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
+    refreshTokenData == null || localData == null
+      ? `로그인하기`
+      : (JSON.parse(localData) as user).nickname;
 
   //접근 확인 하는 것들
   // if (to.matched[1] != undefined) {

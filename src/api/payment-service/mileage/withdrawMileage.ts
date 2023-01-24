@@ -1,11 +1,14 @@
 import type { TokenDto } from "@/domain/auth";
 import type { withdrawMileageResult } from "@/domain/payment/withdrawMileage.interface";
 import http from "../paymentHTTPClient";
+import { checkTokenStatus } from "@/api/common";
 
 export async function withdrawMileage(
   withdrawalPoint: number
 ): Promise<withdrawMileageResult> {
   const url = "/point/request-withdraw.php";
+  // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
+  checkTokenStatus();
   var accessTokenData = localStorage.getItem("accessToken");
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;

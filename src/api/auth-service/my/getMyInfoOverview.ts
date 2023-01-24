@@ -1,10 +1,15 @@
 import http from "@/api/auth-service/authHTTPClient";
+import { checkTokenStatus } from "@/api/common";
 import type { TokenDto } from "@/domain/auth";
 import type { userInfoOverviewResult } from "@/domain/user/userInfoOverview";
 
 export async function getMyInfoOverview<T>(): Promise<userInfoOverviewResult> {
   const url = "/my/infos/overview";
   var token = "";
+
+  // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
+  checkTokenStatus();
+
   var accessTokenData = localStorage.getItem("accessToken");
 
   if (accessTokenData != null) {

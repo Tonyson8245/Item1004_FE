@@ -4,10 +4,13 @@ import type {
   contractPostDetailResult,
 } from "@/domain/payment/contractPostDetailDto.interaface";
 import type { TokenDto } from "@/domain/auth";
+import { checkTokenStatus } from "@/api/common";
 
 export async function getcontractPostDetail<T>(
   payload: contractPostDetailBody
 ): Promise<contractPostDetailResult> {
+  // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
+  checkTokenStatus();
   var accessTokenData = localStorage.getItem("accessToken");
 
   if (accessTokenData != null) {

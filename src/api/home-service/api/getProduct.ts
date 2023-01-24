@@ -1,11 +1,14 @@
 import type { TokenDto } from "@/domain/auth";
 import type { GamePostDetailDto } from "@/domain/home/posts/GamePostDetailDto";
 import http from "../HomeHTTPClient";
+import { checkTokenStatus } from "@/api/common";
 
 export async function getProduct<T>(
   postIdx: string
 ): Promise<GamePostDetailDto> {
   const url = "/posts/games/" + postIdx;
+  // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
+  checkTokenStatus();
   var accessTokenData = localStorage.getItem("accessToken");
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
