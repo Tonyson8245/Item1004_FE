@@ -4,6 +4,7 @@ import { useLocalStorage } from "@vueuse/core";
 import axios from "axios";
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_PAYMENT_TEST;
+const tokenUrl = import.meta.env.VITE_BASE_URL_USER_TEST;
 
 const instance = axios.create({
   baseURL: baseurl_test, // baseUrl 설정
@@ -33,7 +34,7 @@ instance.interceptors.response.use(
         // token refresh 요청
         await axios
           .put(
-            baseurl_test + `/auth/tokens`, // token refresh api
+            tokenUrl + `/auth/tokens`, // token refresh api
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
