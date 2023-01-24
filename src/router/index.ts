@@ -2,6 +2,8 @@ import components from "./components";
 import { createRouter, createWebHistory } from "vue-router";
 import { useCommon } from "../store/modules/ui/common";
 import type { user } from "../domain/user/user.interface";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
@@ -18,18 +20,25 @@ const router = createRouter({
         name: "",
         title: "거래/결제",
         navbar: false,
+        needLogin: true,
+        needCheckAdult: true,
       },
     },
     // 홈
     {
       path: "/",
       component: components.MainView,
-      meta: { transition: "slide-right", name: "home" },
+      meta: { transition: "slide-right", name: "home", needLogin: false },
       children: [
         {
           path: "home",
           component: components.mainPage,
-          meta: { transition: "slide-right", name: "home", navbar: true },
+          meta: {
+            transition: "slide-right",
+            name: "home",
+            navbar: true,
+            needLogin: false,
+          },
         },
         {
           path: "write",
@@ -39,6 +48,8 @@ const router = createRouter({
             name: "write",
             title: "거래 등록",
             navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
           },
         },
         {
@@ -49,6 +60,8 @@ const router = createRouter({
             name: "post",
             title: "거래 상세 정보",
             navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
           },
         },
 
@@ -60,6 +73,8 @@ const router = createRouter({
             name: "payment",
             title: "거래/결제",
             navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
           },
         },
         {
@@ -70,6 +85,8 @@ const router = createRouter({
             name: "paymentResult",
             title: "결제 완료",
             navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
           },
         },
         {
@@ -79,6 +96,8 @@ const router = createRouter({
             name: "chargeResult",
             title: "충전 완료",
             navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
           },
         },
         {
@@ -88,6 +107,8 @@ const router = createRouter({
             name: "chargeResult",
             title: "출금 신청 완료",
             navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
           },
         },
         {
@@ -97,12 +118,19 @@ const router = createRouter({
             name: "contractInfo",
             title: "거래정보확인",
             navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
           },
         },
         {
           path: "/mypage",
           component: components.MypagePage,
-          meta: { transition: "", name: "mypage", title: "마이페이지" },
+          meta: {
+            transition: "",
+            name: "mypage",
+            title: "마이페이지",
+            needLogin: true,
+          },
           children: [
             {
               path: "",
@@ -244,7 +272,7 @@ const router = createRouter({
     {
       path: "/chat",
       component: components.ChatViewVue,
-      meta: { transition: "", name: "chat", title: "채팅" },
+      meta: { transition: "", name: "chat", title: "채팅", needLogin: true },
 
       // 모바일에서 사용할 분기를 만들어준다.
       // 모바일에서 클릭 시 -> 채팅방 목록 -> 채팅창
@@ -300,19 +328,25 @@ const isMobile = () => {
   return window.innerWidth < 640;
 };
 
-router.beforeEach((to) => {
+router.beforeEach((to, from) => {
+  console.log("before");
+
   window.scrollTo({ top: 0, behavior: "auto" });
   const localData = localStorage.getItem("user");
   const userNickname =
     localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
 
-  //마이페이지 접근시, 로그인이 안되있다면 이전 페이지로
-  if (to.matched[1] != undefined) {
-    if (to.matched[1].path == "/mypage")
-      if (localData == null) {
-        router.push("/account/login");
-        return;
-      }
+  //접근 확인 하는 것들
+  // if (to.matched[1] != undefined) {
+  //   if (to.matched[1].path == "/mypage") checkLogin(); //마이페이지의
+  // }
+
+  if (to.meta.needLogin == true) {
+    checkLogin();
+    return;
+  } else if (to.meta.needCheckAdult == true) {
+    checkIsAdult();
+    return;
   }
 
   const commonStore = useCommon();
@@ -347,5 +381,28 @@ router.beforeEach((to) => {
       commonStore.resetheaderTitle;
       break;
   }
+
+  // 로그인 유무 확인
+  function checkLogin() {
+    var token = localStorage.getItem("refreshToken");
+    if (token == null) {
+      alert("로그인이 필요합니다.");
+      router.replace(from);
+    }
+  }
+  //성인 여부 확인
+  function checkIsAdult() {
+    var store = usemypageStore();
+    var { storeUserInfo } = storeToRefs(store);
+    //미성년자 사용 불가능하게 하는 코드
+    var userInfo = storeUserInfo;
+    console.log(!userInfo.value.isAdult);
+
+    if (!userInfo.value.isAdult) {
+      alert("미성년자는 사용이 불가능합니다.");
+      router.replace(from);
+    }
+  }
 });
+
 export default router;

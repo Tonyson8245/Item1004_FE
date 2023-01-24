@@ -514,12 +514,12 @@ import { ref, watch, onUnmounted, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
 import commonFunction from "@/common";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 
 const postStore = usePostStore();
 const paymentStore = usePaymentStore();
 const router = useRouter();
 const route = useRoute();
-
 const {
   storecreatAt,
   storePostIdx,
@@ -574,6 +574,7 @@ onMounted(() => {
     postStore.setStorePostData(idx.toString());
   } else router.push("/");
 });
+//페이지 나갈때 기존 데이터 지우기
 onUnmounted(() => {
   postStore.resetStorePostData();
 });
