@@ -138,7 +138,6 @@ function moveToCard() {
   var ordNm = props.card?.contract.ordNm;
   if (postIdx != undefined && ordNm != undefined) {
     mypageStore.setContractordNmAndPostIdx(postIdx, ordNm);
-    mypageStore.resetContractList();
     router.push("/mypage/contractInfo");
   } else {
     alert("정보가 올바르지 않습니다.");

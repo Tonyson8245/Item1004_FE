@@ -104,7 +104,15 @@ const route = useRoute();
 
 //페이지 로드 될때 데이터 가져오기
 onMounted(() => {
-  mypageStore.getContractList(storepage.value, 2, "buy");
+  console.log(route.query.page);
+  //페이지 값이 있을때
+  if (route.query.page != undefined) {
+    // 이미 가져온 데이터가 다를때만 가져온다.
+    if (parseInt(route.query.page.toString()) != storepage.value)
+      mypageStore.getContractList(storepage.value, 2, "buy");
+  }
+  //값이 없는 경우 1페이지 부터 다시 가져옴
+  else mypageStore.getContractList(1, 2, "buy");
   console.log(`onMounted :: 위의 데이터 가져오기`);
 });
 

@@ -146,6 +146,9 @@ export const usemypageStore = defineStore("mypageStore", {
       var stage = this.storeContractListTabType;
       var payload = new contractPostListBody(page, pageunit, stage, type);
 
+      //값 초기화
+      this.storeContractListTotalPage = 0;
+      this.storeContractList = [] as card[];
       paymentApi
         .getContractPostList(payload)
         .then((res) => {
