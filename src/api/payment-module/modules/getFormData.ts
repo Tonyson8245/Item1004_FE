@@ -30,7 +30,7 @@ class postDataDto {
 
 async function getuseinfo<T>(): Promise<infoResponse | undefined> {
   var url =
-    "https://4045zs3ccg.execute-api.ap-northeast-2.amazonaws.com/develop/my/infos/personal";
+    "https://4045zs3ccg.execute-api.ap-northeast-2.amazonaws.com/develop/my/infos";
   var accessTokenData = localStorage.getItem("accessToken");
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
@@ -40,6 +40,9 @@ async function getuseinfo<T>(): Promise<infoResponse | undefined> {
         {
           headers: {
             accessToken: token,
+          },
+          params: {
+            scope: "name,phone",
           },
         }
       );
