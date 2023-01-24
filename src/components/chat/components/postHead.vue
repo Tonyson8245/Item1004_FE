@@ -1,7 +1,7 @@
 <template>
         
         <!-- 글이 삭제 됐거나 판매가 완료 됐을 때 흐림처리 -->
-    <div :class="{'opacity-50': postItem?.isDeleted===true || postItem?.status==='end' }" class="border-b border-everly-mid_grey flex items-center pl-5 py-3">
+    <div :class="{'opacity-50 cursor-default': postItem?.isDeleted===true || postItem?.status==='end' }" @click="goPostPage(postItem?.idx)" class="cursor-pointer border-b border-everly-mid_grey flex items-center pl-5 py-3">
 
         <!-- <input :value="bottom" /> -->
 
@@ -39,12 +39,16 @@ import { storeToRefs } from "pinia";
 import { ref,onUpdated,onMounted, toRefs, watch  } from 'vue';
 import { numberToKorean } from "@/common";
 import itemLogo from "./itemLogo.vue"
+import router from "@/router";
 
 
 const chatStore = useChatStore();
 const { postItem } = storeToRefs(chatStore);
 
 
+function goPostPage(postIdx:number) {
+    if(!postItem.value?.isDeleted) router.push('/post?postId='+postIdx);
+}
 
 </script>
 

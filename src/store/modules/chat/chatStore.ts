@@ -5,6 +5,9 @@ import type resp from "@/domain/chat/resp.interface";
 import type channel from "@/domain/chat/channel.interface";
 import type message from "@/domain/chat/message.interface";
 import type postResult from "@/domain/chat/postResult.interface";
+import { createRoomBody } from "@/domain/chat/createRoomBody";
+
+import type createRoomResponse  from "@/domain/chat/createRoomResponse";
 
 import type { user } from "@/domain/user/user.interface";
 import { loadRouteLocation } from "vue-router";
@@ -25,8 +28,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const messages = ref<message[]>([]);
   // 현재 새로운 게시물을 쓰는지 확인하기 위한 플래그
   const isNewChat = ref<boolean>(false);
-  // 현재 채팅방에 관련된 postid
-  const postId = ref<string | string[]>('');
+  // // 현재 채팅방에 관련된 postid
+  // const postId = ref<string | string[]>('');
   // 현재 채팅방에 관련된 postItem
   const postItem = ref<postResult>();
 
@@ -63,17 +66,26 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   // 채팅방 목록 갱신
   const setChannels = (channel:channel ) =>{ 
     // 리스트 안에 내가 받은 채널과 같은아이디 가지고 있는 채널이 있냐?
-    // yes : 리스트 안에서 내가 받은 채널과 같은 아이디 가지고 잇는 채널 찾아서 지워라    
+    // yes : 리스트 안에서 내가 받은 채널과 같은 아이디 가지고 잇는 채널 찾아서 지워라 
+       
     const pickChannel = findChannel(channel.id)
     // console.log("채널 : ", pickChannel);    
     // console.log("채널 정보",pickChannel);
+    // console.log(channels.value);
+    
     if (pickChannel) {      
-      // console.log("받은 채널 : ", channel);      
+      // console.log("받은 채널 : ", channel);   
+     
       channels.value.forEach((item, i, origin)=>{
-        if (item === pickChannel)  origin.splice(i,1)        
+        if (item === pickChannel)  {          
+            origin.splice(i,1) 
+        }
       })      
     }   
+    
     channels.value.unshift(channel)
+    // console.log(channels.value);
+
   }
 
 
@@ -139,7 +151,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       result = await client.value.markAsRead({channelId: channelId}); 
       // console.log("읽은 채널 메세지 : ", result);     
     } catch (error) {
-      console.log(error);
+      console.log('에러 : ', error);     
       return      
     }
     // 전체 안 읽은 메세지 카운팅
@@ -177,7 +189,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
           limit: 20, // how many messages to fetch, default: 20, max: 50
       });
     } catch (error) {
-      console.log(error);      
+      console.log('에러 : ', error);     
       return
     }   
     // 메세지 리스트에 세팅
@@ -197,24 +209,26 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     isNewChat.value = isNew
   }
 
-  const setPostId = (postid: any) => {
-    postId.value = postid
-  }
+  // const setPostId = (postid: any) => {
+  //   postId.value = postid
+  // }
 
   const setPostItem = async (postid: any) => {
     // postItem.value = postid
     await chatapi.getPost(postid).then((res) => {    
       postItem.value = res.data.result;
       // console.log('요청성공 : ', res);      
-      console.log('post는 : ', postItem.value);      
+      // console.log('post는 : ', postItem.value);      
     }).catch((err) => {      
       console.log('에러 : ', err);      
     })
   }
 
   // 메세지를 메세지 리스트에 넣기
-  const messageIntoMessages = (message: message) => {
-    messages.value.push(message);    
+  const messageIntoMessages =  (message: message) => {
+     messages.value.push(message);   
+     console.log("메세지 들어가쥬");
+      
   }
 
   // 메세지 리스트를 채널에 넣기
@@ -222,30 +236,44 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     let pickChannel:channel | undefined = findChannel(channelId);
     // 메세지 리스트에 채널이 있으면 있는 채널에 메세지 리스트를 꽂아주고
     if (pickChannel) {
+
       pickChannel.lastMessage = message
     }
     // 없으면 채널을 API로 찾아온다
     else {
       // 메서드 그냥 읽어온거면은 메세지 자동 포함되어 있으니깐 추가 안 해줘도 된다.
-      pickChannel = await client.value.getChannel({
-        channelId: channelId,
-      });
+      
+
+      try {
+        const bringChannel =  pickChannel = await client.value.getChannel({
+          channelId: channelId,
+        });
+        pickChannel = bringChannel.channel
+      } catch (error) {
+        console.log(error);        
+        return
+      }
+
     }
     // 채널을 채널리스트에 꽂아준다
+
     setChannels(pickChannel);
   }
 
   // 메세지 보내기
-  const sendMessage = async (text: string) => {
+  const sendMessage = async (text: string, channelId:string) => {
     let result;
     try {
       result = await client.value.sendMessage({
-          channelId: selectedChannel.value?.id, 
+          channelId: channelId, 
           type: 'text', 
           text: text
       });    
+      console.log("보낸 메세지에 대한 결과");   
+      console.log(result);
+         
     } catch (error) {
-      console.log(error);      
+      console.log('에러 : ', error);     
       return
     }    
     messageIntoMessages(result.message)
@@ -265,18 +293,19 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     return window.innerWidth < 640
   }
 
-
+  // 채팅룸 존재 여부 확인
   const isRoomExist = async (postIdx: string | string[]) => {
     var result;
       await chatapi
         .getChatRoom(postIdx)
         .then((res) => {
           //성공하면 페이지를 올린다.
-          console.log('요청성공 : ',res);      
+          console.log('요청성공 : ',res);    
+          router.push('/chat/'+res.result);
         })
         .catch((err) => {
           //서버 가져오기 완료
-          console.log(err);
+          // console.log(err);
           
           if (err.status === 404 && err.data.meta.code === "extinct_chatroom") {
             // 새로운 채팅방 생성
@@ -297,6 +326,29 @@ export const useChatStore = defineStore("chatStore", ()=>  {
           // console.log(err.response);
           // router.push('/chat/')              
         });
+  }
+  // 채팅방 새로 생성
+  const createNewRoom = async (postIdx: string | string[]) => {
+    let result;
+    console.log("postIdx는 : ",postIdx);
+    const body = new createRoomBody(postIdx)
+    console.log("body는 : ",body);
+    
+    await chatapi.createChatRoom(body)
+          .then((res) => {
+            console.log("요청성공 : ", res);
+            // 요청 성공
+            if (res.meta.isSuccess) {
+              result = res.result
+            }            
+          })
+          .catch((res) => {
+            console.log("요청실패 : ",res);
+            result = null
+          })
+          console.log("result는 성공인가? ", result);
+          
+    return result
   }
   
 
@@ -326,5 +378,5 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   //   console.log(result);    
   // }
 
-  return { client, postId, isNewChat, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, getMessages,setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, setPostId, postItem,setPostItem,setIsNewChat}
+  return { client,  isNewChat, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, getMessages,setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, postItem,setPostItem,setIsNewChat,createNewRoom}
 });

@@ -63,6 +63,7 @@ const lastMessageText = () =>{
 
 const lastMessageTime = () => {
     if (props.channel.lastMessage !== null) {
+        //@ts-ignore
         return  new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date(props.channel.lastMessage.createdAt))
         // return props.channel.lastMessage.createdAt
     }

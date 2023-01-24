@@ -40,7 +40,7 @@ const chatStore = useChatStore();
 // TalkPlus 초기화 실행 
 const chatClient = chatStore.init();
 
-const { client, channels, selectedChannel, postId, isNewChat } = storeToRefs(chatStore);
+const { client, channels, selectedChannel, isNewChat } = storeToRefs(chatStore);
 
 // TalkPlus api 로그인
 const login = async () => await chatStore.login()
@@ -86,6 +86,9 @@ watch(route, async()=> {
   setNewChat();
   // 채팅화면 거래글 postId 세팅
   setPostItem();
+
+  console.log("ㄴㅇㄹㄴㅇㄹㄴㅇ");
+  
 })
 
 // 새로운 채팅 여부 파악
@@ -96,10 +99,10 @@ async function setNewChat() {
 }
 
 // 채팅 관련 거래 게시글 
-function setPostId() {
-  if (route.query.postId) chatStore.setPostId(route.query.postId);
-  else chatStore.setPostId(selectedChannel.value?.data.postIdx);
-}
+// function setPostId() {
+//   if (route.query.postId) chatStore.setPostId(route.query.postId);
+//   else chatStore.setPostId(selectedChannel.value?.data.postIdx);
+// }
 
 // 채팅 관련 거래 게시글 
 function setPostItem() {
@@ -121,7 +124,9 @@ async function onReceiveMessage(data:any) {
     let channel = data.channel   
     if (data.message.channelId === selectedChannel.value?.id) {      
       const getChannel = await chatStore.messageRead(data.message.channelId);   
-      channel = getChannel.channel
+      channel = getChannel.channel    
+      console.log("메세지 받음");
+        
       chatStore.setMessages(data.message)
     }
     chatStore.setChannels(channel);

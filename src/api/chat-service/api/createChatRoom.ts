@@ -1,17 +1,18 @@
 import type { TokenDto } from "@/domain/auth";
-import http from "../ChatHTTPClient";
+import type { createRoomBody } from "@/domain/chat/createRoomBody";
 import type createRoomResponse from "@/domain/chat/createRoomResponse";
+import http from "../ChatHTTPClient";
 
-export async function getChatRoom(
-  postIdx: string | string[]
+export async function createChatRoom(
+  body: createRoomBody
 ): Promise<createRoomResponse> {
-  const url = "/chatrooms/ids?postIdx="+postIdx;  
+  const url = "/chatrooms";  
   var accessTokenData = localStorage.getItem("accessToken");
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
     // console.log("token",token);    
     try {
-      const result: any = await http.get(url, {
+      const result: any = await http.post(url, body, {
         headers: {
           accessToken: token
         },
@@ -20,7 +21,7 @@ export async function getChatRoom(
       return result.data;
     } catch (err) {
       console.log("API error");
-      return Promise.reject(err.response);
+      return Promise.reject(err);
     }
   } else return Promise.reject("token error");
 }

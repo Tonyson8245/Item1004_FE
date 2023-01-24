@@ -19,11 +19,11 @@
         <div class="w-full flex justify-center">
             <textarea id="messageInputArea"  v-model="text"
             @keydown.enter.shift.exact.prevent="text += '\n'"
-            @keydown.enter.exact.prevent="sendMessage"            
+            @keydown.enter.exact.prevent="sendMessageProcess"            
             maxlength="8000" class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용을 입력하세요" rows="1" ></textarea>                        
         </div>         
         
-        <button @click="sendMessage" class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
+        <button @click="sendMessageProcess" class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
     </div>
 </div>
 
@@ -39,14 +39,17 @@ import { useChatStore } from "@/store/modules/chat/chatStore";
 import { storeToRefs } from "pinia";
 import { ref,onUpdated,onMounted, toRefs, watch  } from 'vue';
 import { useScroll } from '@vueuse/core';
+import { useRouter, useRoute } from "vue-router";
 
 const chatStore = useChatStore();
-const { messages, client, user, selectedChannel, postItem } = storeToRefs(chatStore);
+const { messages, client, isNewChat,channels, selectedChannel, } = storeToRefs(chatStore);
 const scrollView = ref<HTMLElement | null>(null);
 const {arrivedState,directions} = useScroll(scrollView);
 const { left, right, top, bottom } = toRefs(arrivedState)
-// console.log("로그",bottom);
 
+
+const route = useRoute();
+const router = useRouter();
 
 // 스크롤이 하단에 고정되어 있으면 true로 주고, 내가 스크롤을 올리면 false
 // 스크롤 올리는 와중에는 메세지가 왔을 때 스크롤이 하단으로 이동 X
@@ -58,15 +61,35 @@ const text = ref("");
 //  import type channel from '@/domain/chat/channel.interface';
 //  const props = defineProps<{ selectedChannel: channel}>();
 
-const sendMessage = async (e:any) => {
-    // console.log(text);
+async function sendMessageProcess(e:any) {
     if (text.value !='') {
-        await chatStore.sendMessage(text.value) 
+        console.log("isNewChat ? ",isNewChat.value);
+        
+        if (isNewChat.value) {
+            // 새로운 챗이면 새로 방 만드는 API 쏘고 완료된 결과를 받아서 방 생성이 완성되면은 텍스트를 쏴주도록 합니다.
+            const result = await chatStore.createNewRoom(String(route.query.postId))
+            if (result) {
+                console.log("리절트 확인 : " ,result);  
+                await sendMessage(result)  
+                // 여기서 replace 해주면 chatview에서 라우터에 반응해서 방추가 자동으로 해준다
+                router.replace('/chat/'+result)
+            }  
+            // 방이 생성 되면은 방에 대한 정보를 api 요청해서 가지고 오고, 
+            //방을 channels에 꽂아주고, 
+            //selectedChannel에 현재 방 꽂아주고, 
+            //메세지 보내고 메세지 보낸걸 messages에 꽂아주고, 
+            //lastMessage를 channels의 해당 channel에 꽂아주고,
+            
+        }
+        else await sendMessage(selectedChannel.value?.id)        
+    }
+    
+}
+
+async function sendMessage (channelId:string | undefined) {
+    await chatStore.sendMessage(text.value , channelId as string) 
         text.value = ""    
         scrollToBottom();
-    }
-    // console.log(result);
-    // result.then()
 }
 
 
