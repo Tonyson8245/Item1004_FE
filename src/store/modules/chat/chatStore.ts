@@ -88,7 +88,6 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   // 채팅방 목록 가지고 오기 && 페이징
   const getChannels = async (lastChannelId?: string) => {
-
     let result: resp;   
     const getchannelparams = {
       lastChannelId : lastChannelId,
