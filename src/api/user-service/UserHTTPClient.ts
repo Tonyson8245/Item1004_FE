@@ -1,6 +1,7 @@
 import type { TokenDto } from "@/domain/auth";
 import type { user } from "@/domain/user/user.interface";
 import { useLocalStorage } from "@vueuse/core";
+
 import axios from "axios";
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_USER_TEST;
@@ -50,11 +51,11 @@ instance.interceptors.response.use(
             console.log("재발급 실패");
           });
 
-        var data: any;
+        var rsponse: any;
 
         await axios(originalRequest)
-          .then((response) => {
-            data = response;
+          .then((res) => {
+            rsponse = res;
           })
           .catch((err) => {
             console.log("api 재 요청 실패");
@@ -62,7 +63,7 @@ instance.interceptors.response.use(
           });
       }
       // module 별로 다름 위에 참고
-      return data;
+      return rsponse;
     } else return Promise.reject(error);
     return Promise.reject(error.response.data.meta);
   }

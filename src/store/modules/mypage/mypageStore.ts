@@ -4,17 +4,14 @@ import * as authApi from "@/api/auth-service/index";
 import type mileageOveriewResponseDto from "@/domain/payment/mileageOverviewReponseDTO.interface";
 import { putBankAccountBody } from "@/domain/auth";
 import * as contractInfo from "@/domain/payment/contractPostDetailDto.interaface";
-import {
-  IsNotEmpty,
-  IsNotEmptyObject,
-  isNotEmptyObject,
-  isObject,
-} from "class-validator";
+import { isNotEmptyObject } from "class-validator";
 import { withdrawMileageResult } from "@/domain/payment/withdrawMileage.interface";
 import {
   contractPostListBody,
   card,
 } from "@/domain/payment/contracPostListDto.interface";
+import type { userInfowithScopeResult } from "@/domain/user/userInfowithScopeDto";
+import type { userInfoOverviewResult } from "@/domain/user/userInfoOverview";
 
 export const usemypageStore = defineStore("mypageStore", {
   state: () => ({
@@ -38,6 +35,12 @@ export const usemypageStore = defineStore("mypageStore", {
     storeContractListTotalPage: 0,
     storeContractList: [] as card[],
     storepage: 1,
+
+    //Scope 해서 가져온 유저 정보 - 마일리지 출금에서 사용
+    storeUserInfowithScope: {} as userInfowithScopeResult,
+
+    //overview 회원 정보 수정에서 사용
+    storeUserInfoOverview: {} as userInfoOverviewResult,
   }),
 
   getters: {
@@ -129,6 +132,34 @@ export const usemypageStore = defineStore("mypageStore", {
     },
   },
   actions: {
+    resetUserInfoOverview() {
+      this.storeUserInfoOverview = {} as userInfoOverviewResult;
+    },
+    getUserInfoOverview() {
+      authApi
+        .getMyInfoOverview()
+        .then((res) => {
+          console.log(res);
+          this.storeUserInfoOverview = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    resetUserInfoScope() {
+      this.storeUserInfowithScope = {} as userInfowithScopeResult;
+    },
+    getUserInfoScope(payload: string) {
+      authApi
+        .getMyInfoswithScope(payload)
+        .then((res) => {
+          console.log(res);
+          this.storeUserInfowithScope = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     setContractTake() {
       paymentApi
         .putContractTake(this.storeordNm)

@@ -6,7 +6,7 @@ import type * as auth from "@/domain/auth/index";
 export async function putBankAccount<T>(
   payload: auth.putBankAccountBody
 ): Promise<meta> {
-  const url = "/my/account";
+  const url = "/my/infos/account";
   var token = "";
   var accessTokenData = localStorage.getItem("accessToken");
 

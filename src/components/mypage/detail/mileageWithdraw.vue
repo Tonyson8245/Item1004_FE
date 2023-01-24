@@ -1,6 +1,6 @@
 <template>
   <div @click="setshowMileageGuide(false)">
-    <ModalMypage
+    <mypageModal
       :propsShowModal="showModal"
       :propsType="type"
       @update:propsShowModal="setShowModal(false)"
@@ -20,11 +20,11 @@
           <div class="m:pb-4 sm:flex-1">
             <div
               v-if="accountCondition"
-              class="space-x-1 md:space-x-4 pb-2 md:pb-0"
+              class="space-x-1 md:space-x-2 pb-2 md:pb-0"
             >
-              <span>신한은행</span>
-              <span>110-403-902006</span>
-              <span>(예금주 : 오지윤)</span>
+              <span>{{ storeUserInfowithScope.bankName }}</span>
+              <span>{{ storeUserInfowithScope.bankAccount }}6</span>
+              <span>(예금주 : {{ storeUserInfowithScope.name }})</span>
             </div>
             <div class="flex text-everly-dark_grey text-xs items-center" v-else>
               <div>
@@ -80,7 +80,7 @@
             </div>
             <div>47,250원</div>
             <div
-              class="hidden md:block w-[20.75rem] h-[6.7rem] border border-everly-mid_grey bg-everly-white rounded-lg absolute top-5"
+              class="hidden md:block w-[20.75rem] h-[6.7rem] border border-everly-mid_grey bg-everly-white rounded-lg absolute top-5 z-10"
               v-if="showMilageGuide"
             >
               <img src="@/assets/img/mileage_logic.svg" alt="" class="p-3" />
@@ -195,11 +195,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import InputwithCurreny from "@/components/common/inputwithCurreny.vue";
 import commonFunction from "@/common";
-import ModalMypage from "../components/modalMypage.vue";
+import mypageModal from "../components/modalMypage.vue";
 import { useRouter } from "vue-router";
 import { useMediaQuery } from "@vueuse/core";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
@@ -209,10 +208,22 @@ const router = useRouter();
 const mypageStore = usemypageStore();
 const showMilageGuide = ref(false);
 const accountCondition = ref(true);
+const { storeUserInfowithScope } = storeToRefs(mypageStore);
 
+//값 날림
+onMounted(() => {
+  mypageStore.getUserInfoScope("bankName,name,bankAccount"); //은행명, 실명, 은행 계좌 가져오기
+});
+//값 가져옴
+onUnmounted(() => {
+  mypageStore.resetUserInfoScope();
+});
+
+// 마일리지 출급 값 변경
 function changeValue(value: string) {
   mypageStore.setstorewithdrawAmt(parseInt(commonFunction.uncomma(value)));
 }
+//마일리지 가이드 띄우기
 function setshowMileageGuide(status: boolean) {
   showMilageGuide.value = status;
 }

@@ -52,11 +52,11 @@ instance.interceptors.response.use(
             console.log("재발급 실패");
           });
 
-        var data: any;
+        var response: any;
 
         await axios(originalRequest)
-          .then((response) => {
-            data = response;
+          .then((res) => {
+            response = res;
           })
           .catch((err) => {
             console.log("api 재 요청 실패");
@@ -64,7 +64,7 @@ instance.interceptors.response.use(
           });
       }
       // module 별로 다름 위에 참고
-      return data.data.result;
+      return response.data.result;
     } else return Promise.reject(error.response.data.meta);
     return Promise.reject(error.response.data.meta);
   }

@@ -54,7 +54,7 @@
         <div
           class="w-full p-3 rounded-lg bg-everly-light_grey text-everly-dark_grey text-sm"
         >
-          예금주명 : {{ userName }}
+          예금주명 : {{ storeUserInfoOverview.name }}
         </div>
       </div>
       <div class="space-y-2">
@@ -87,13 +87,14 @@
         <img
           src="@/assets/icon/check_circle_green_full.svg"
           alt=""
-          class="w-8 md:w-10 w-8 md:h-10 mt-20 sm:mt-14 mb-10 md:mt-3 md:mb-8"
+          class="w-8 md:w-10 md:h-10 mt-20 sm:mt-14 mb-10 md:mt-3 md:mb-8"
         />
         <div class="text-xl font-bold mb-4 md:mb-7">
           계좌 인증에 성공하였습니다.
         </div>
         <div>
-          {{ bankName }} {{ bankAccountNumber }} (예금주 {{ userName }})
+          {{ bankName }} {{ bankAccountNumber }} (예금주
+          {{ storeUserInfoOverview.name }})
         </div>
       </div>
 
@@ -162,27 +163,34 @@ onMounted(() => {
 onUnmounted(() => {
   mypageStore.setstorePuBankAccountStore("");
 });
-//인증 진행 상태
-const { storePutBankAccountStatus } = storeToRefs(mypageStore);
+//인증 진행 상태//유저 정보
+const { storePutBankAccountStatus, storeUserInfoOverview } =
+  storeToRefs(mypageStore);
 
 //은행 명들
 const list = [
-  "KB 국민은행",
+  "기업은행",
+  "국민은행",
+  "수협중앙회",
+  "농협중앙회",
+  "농협회원조합",
+  "우리은행",
   "SC제일은행",
-  "신한은행",
-  "KDB산업은행",
-  "경남은행",
+  "한국시티은행",
+  "대구은행",
+  "부산은행",
   "광주은행",
   "제주은행",
   "전북은행",
-  "우리은행",
-  "NH농협",
+  "경남은행",
+  "새마을금고연합회",
+  "신협중앙회",
   "하나은행",
-  "수협은행",
+  "신한은행",
+  "우체국",
+  "케이뱅크",
+  "카카오뱅크",
 ];
-
-//유저 정보
-const userName = ref("김철수");
 
 //사이즈 확인
 const minSize = computed(() => {

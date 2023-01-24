@@ -15,16 +15,16 @@
       <div class="w-full md:w-[39.25rem] space-y-2 md:space-y-5">
         <div class="flex text-sm md:text-base">
           <div class="font-bold w-[5.5rem] md:w-[10rem]">이름</div>
-          <div class="md:w-[25rem]">김철수</div>
+          <div class="md:w-[25rem]">{{ storeUserInfoOverview.name }}</div>
         </div>
         <div class="flex text-sm md:text-base">
           <div class="font-bold w-[5.5rem] md:w-[10rem]">아이디</div>
-          <div class="md:w-[25rem]">item1004</div>
+          <div class="md:w-[25rem]">{{ storeUserInfoOverview.id }}</div>
         </div>
         <div class="flex text-sm md:text-base">
           <div class="font-bold w-[5.5rem] md:w-[10rem]">추천인코드</div>
           <div class="flex md:w-[25rem]">
-            #A2379F56GH
+            #{{ storeUserInfoOverview.code }}
             <img
               src="@/assets/icon/copy_grey.svg"
               alt=""
@@ -51,7 +51,7 @@
           프로필 설정
         </div>
         <div
-          class="flex text-everly-dark_grey text-xs space-x-2 items-center hidden md:flex"
+          class="text-everly-dark_grey text-xs space-x-2 items-center hidden md:flex"
         >
           <img
             src="@/assets/icon/exclamation_circle_grey.svg"
@@ -67,8 +67,10 @@
         </div>
         <div class="flex-1 md:w-[25rem]">
           <div
-            class="bg-everly-mid_grey rounded-lg w-16 h-16 md:w-16 md:h-16"
-          ></div>
+            class="bg-everly-mid_grey rounded-lg w-16 h-16 md:w-16 md:h-16 overflow-hidden"
+          >
+            <img :src="`/assets/img/${storeUserInfoOverview.image}`" alt="" />
+          </div>
         </div>
         <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
@@ -93,7 +95,7 @@
           내 인증 현황
         </div>
         <div
-          class="flex text-everly-dark_grey text-xs space-x-2 items-center hidden md:flex"
+          class="text-everly-dark_grey text-xs space-x-2 items-center hidden md:flex"
         >
           <img
             src="@/assets/icon/exclamation_circle_grey.svg"
@@ -110,7 +112,7 @@
           핸드폰번호
         </div>
         <div class="flex-1 md:w-[25rem] flex items-center">
-          010-1234-5678
+          {{ storeUserInfoOverview.phone }}
           <img
             src="@/assets/icon/check_circle_blue.svg"
             alt=""
@@ -128,18 +130,18 @@
           이메일
         </div>
         <div class="flex-1 md:w-[25rem] flex items-center">
-          {{ contentEmail }}
+          {{ emailContent(storeUserInfoOverview.email) }}
           <img
             src="@/assets/icon/check_circle_blue.svg"
             alt=""
             class="w-4 ml-2"
-            v-if="storeverifiedEmail"
+            v-if="storeUserInfoOverview.email != ''"
           />
         </div>
         <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
         >
-          {{ buttonContent(storeverifiedEmail) }}
+          {{ buttonContent(storeUserInfoOverview.email != "") }}
         </div>
       </div>
       <div class="flex items-center text-sm md:text-base">
@@ -149,13 +151,17 @@
         <div class="flex-1 md:w-[25rem] flex items-center">
           <div
             class="bg-everly-main rounded-lg text-everly-white text-xs md:text-sm p-0.5 px-1 mr-2"
-            v-if="storeverifiedBankAccount"
+            v-if="storeUserInfoOverview.bankAccount != ''"
           >
-            우리은행
+            {{ storeUserInfoOverview.bankName }}
           </div>
           <div class="md:flex">
-            <div class="pr-2">{{ contentBankAccount }}</div>
-            <span v-if="!storeverifiedBankAccount" class="text-everly-dark_grey"
+            <div class="pr-2">
+              {{ bankaccountContent(storeUserInfoOverview.bankAccount) }}
+            </div>
+            <span
+              v-if="storeUserInfoOverview.bankAccount == ''"
+              class="text-everly-dark_grey"
               >(본인계좌 등록만 가능)</span
             >
           </div>
@@ -163,14 +169,14 @@
             src="@/assets/icon/check_circle_blue.svg"
             alt=""
             class="w-4 ml-2"
-            v-if="storeverifiedBankAccount"
+            v-if="storeUserInfoOverview.bankAccount != ''"
           />
         </div>
         <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
           @click="clickButton('putBankAccount', true)"
         >
-          {{ buttonContent(storeverifiedBankAccount) }}
+          {{ buttonContent(storeUserInfoOverview.bankAccount != "") }}
         </div>
       </div>
     </div>
@@ -185,25 +191,38 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import { useClipboard, useMediaQuery, useToggle } from "@vueuse/core";
 import { useauthStore } from "@/store/modules/auth/authStore";
 import { useRouter } from "vue-router";
 import ModalMypage from "@/components/mypage/components/modalMypage.vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
+
+const mypageStore = usemypageStore();
+const { storeUserInfoOverview } = storeToRefs(mypageStore);
+
+//OnMounted()
+onMounted(() => {
+  mypageStore.getUserInfoOverview();
+});
+onUnmounted(() => {
+  mypageStore.resetUserInfoOverview();
+});
 
 const { copy } = useClipboard({});
 
 const storeverifiedEmail = ref(false);
 const storeverifiedBankAccount = ref(false);
 
-const contentEmail = computed(() => {
-  if (!storeverifiedEmail.value) return `이메일 인증을 해주세요.`;
+const emailContent = (string: string) => {
+  if (string == "") return `이메일 인증을 해주세요.`;
   else return `item1004@naver.com`;
-});
-const contentBankAccount = computed(() => {
-  if (!storeverifiedBankAccount.value) return `출금계좌 인증을 해주세요.`;
+};
+const bankaccountContent = (string: string) => {
+  if (string == "") return `출금계좌 인증을 해주세요.`;
   else return `120502-161-093136`;
-});
+};
 
 const buttonContent = (status: boolean) => {
   if (status) return `수정`;
