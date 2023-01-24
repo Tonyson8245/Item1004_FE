@@ -542,8 +542,7 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import commonFunction from "@/common";
 import type { user } from "@/domain/user/user.interface";
-import { payment } from "@/api/payment-module";
-import { usePaymentStore } from "@/store/modules/home/paymentStore";
+import router from "@/router";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
@@ -585,8 +584,18 @@ function setshowMore(status: boolean) {
 
 //인수 인계 버튼
 function putContractStatus(status: string) {
-  if (status == "물품인계") mypageStore.setContractTakeover();
-  else mypageStore.setContractTake();
+  if (status == "물품인계")
+    mypageStore.setContractTakeover().then((res) => {
+      if (res) alert(status + "가 완료됬습니다.");
+      else alert(status + "가 실패했습니다.");
+    });
+  else
+    mypageStore.setContractTake().then((res) => {
+      if (res) alert(status + "가 완료됬습니다.");
+      else alert(status + "가 실패했습니다.");
+    });
+
+  router.go(-1);
 }
 </script>
 

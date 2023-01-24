@@ -53,8 +53,6 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log("재발급 실패");
-            alert("다시 로그인해주세요");
-            router.push("/account/login");
           });
 
         var response: any;

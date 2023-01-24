@@ -202,6 +202,14 @@ import { storeToRefs } from "pinia";
 const mypageStore = usemypageStore();
 const { storeUserInfoOverview } = storeToRefs(mypageStore);
 
+//OnMounted()
+onMounted(() => {
+  mypageStore.getUserInfoOverview();
+});
+onUnmounted(() => {
+  mypageStore.resetUserInfoOverview();
+});
+
 const { copy } = useClipboard({});
 
 const emailContent = (string: string) => {

@@ -22,9 +22,9 @@
               v-if="accountCondition"
               class="space-x-1 md:space-x-2 pb-2 md:pb-0"
             >
-              <span>{{ storeUserInfowithScope.bankName }}</span>
-              <span>{{ storeUserInfowithScope.bankAccount }}6</span>
-              <span>(예금주 : {{ storeUserInfowithScope.name }})</span>
+              <span>{{ storeUserInfo.bankName }}</span>
+              <span>{{ storeUserInfo.bankAccount }}6</span>
+              <span>(예금주 : {{ storeUserInfo.name }})</span>
             </div>
             <div class="flex text-everly-dark_grey text-xs items-center" v-else>
               <div>
@@ -208,16 +208,7 @@ const router = useRouter();
 const mypageStore = usemypageStore();
 const showMilageGuide = ref(false);
 const accountCondition = ref(true);
-const { storeUserInfowithScope } = storeToRefs(mypageStore);
-
-//값 날림
-onMounted(() => {
-  mypageStore.getUserInfoScope("bankName,name,bankAccount"); //은행명, 실명, 은행 계좌 가져오기
-});
-//값 가져옴
-onUnmounted(() => {
-  mypageStore.resetUserInfoScope();
-});
+const { storeUserInfo } = storeToRefs(mypageStore);
 
 // 마일리지 출급 값 변경
 function changeValue(value: string) {

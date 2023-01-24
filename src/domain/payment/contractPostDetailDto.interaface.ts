@@ -16,6 +16,7 @@ export class post {
   }
 }
 export class otherUser {
+  idx: number;
   image: string;
   nickname: string;
   isVerified: boolean;
@@ -26,6 +27,7 @@ export class otherUser {
   contractLevelName: string;
 
   constructor() {
+    this.idx = 0;
     this.image = "@/asset/img/profile_green.jpeg";
     this.nickname = "닉네임";
     this.isVerified = false;

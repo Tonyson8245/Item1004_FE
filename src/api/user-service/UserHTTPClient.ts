@@ -51,9 +51,7 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
-            console.log("재발급 실패");
             alert("다시 로그인해주세요");
-            router.push("/account/login");
           });
         var rsponse: any;
 

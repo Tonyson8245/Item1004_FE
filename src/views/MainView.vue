@@ -108,7 +108,7 @@ onMounted(() => {
   const token =
     localData == null ? `` : (JSON.parse(localData) as TokenDto).token;
   if (token != "") {
-    mypageStore.getUserInfoOverview();
+    mypageStore.getUserInfo();
   }
 });
 

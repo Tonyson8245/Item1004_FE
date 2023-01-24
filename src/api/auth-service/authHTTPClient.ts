@@ -1,10 +1,8 @@
 import type { TokenDto } from "@/domain/auth";
 import type { user } from "@/domain/user/user.interface";
+import router from "@/router";
 import { useLocalStorage } from "@vueuse/core";
 import axios, { AxiosError } from "axios";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_AUTH_TEST;
 
@@ -34,6 +32,7 @@ instance.interceptors.response.use(
         var token = (JSON.parse(refreshToken) as TokenDto).token;
         var userIdx = (JSON.parse(user) as user).idx;
 
+        var response: any;
         // token refresh 요청
         await axios
           .put(
@@ -50,28 +49,23 @@ instance.interceptors.response.use(
 
             originalRequest.headers.accessToken =
               res.data.result.accessToken.token;
+
+            axios(originalRequest)
+              .then((res) => {
+                response = res;
+              })
+              .catch((err) => {
+                console.log("api재 요청 실패");
+                return Promise.reject(error.response.data.meta);
+              });
           })
           .catch((err) => {
             console.log("재발급 실패");
-            alert("다시 로그인해주세요");
-            router.push("/account/login");
           });
-
-        var response: any;
-
-        await axios(originalRequest)
-          .then((res) => {
-            response = res;
-          })
-          .catch((err) => {
-            console.log("api 재 요청 실패");
-            return Promise.reject(err);
-          });
-      }
+      } else return Promise.reject(error.response.data.meta);
       // module 별로 다름 위에 참고
       return response.data.result;
-    } else return Promise.reject(error);
-    return Promise.reject(error.response.data.meta);
+    } else return Promise.reject(error.response.data.meta);
   }
 );
 

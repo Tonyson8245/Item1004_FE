@@ -1,6 +1,6 @@
 <template>
   <div class="md:pl-6">
-    <div class="hidden md:block text-xl font-bold">판매내역</div>
+    <div class="hidden md:block text-xl font-bold">구매내역</div>
     <div
       class="md:pl-0 p-3 bg-everly-light_grey font-bold text-everly-white md:text-everly-dark_grey text-sm md:text-lg md:bg-transparent"
     >
@@ -14,14 +14,15 @@
             @click="changeTab('입금완료')"
           >
             <span>입금완료</span>
-            <div class="flex">
+            <!-- TODO 출시 때 뺴둠 -->
+            <!-- <div class="flex">
               <span>10</span><span class="hidden md:block">건</span>
               <img
                 src="@/assets/icon/arrow_down.svg"
                 alt=""
                 class="pl-3 hidden md:block w-5"
               />
-            </div>
+            </div> -->
           </div>
           <div
             class="flex justify-between p-3 md:px-5 flex-grow bg-white items-center cursor-pointer"
@@ -29,14 +30,15 @@
             @click="changeTab('인수대기')"
           >
             <span>인수대기</span>
-            <div class="flex">
+            <!-- TODO 출시 때 뺴둠 -->
+            <!-- <div class="flex">
               <span>10</span><span class="hidden md:block">건</span>
               <img
                 src="@/assets/icon/arrow_down.svg"
                 alt=""
                 class="pl-3 hidden md:block w-5"
               />
-            </div>
+            </div> -->
           </div>
           <div
             class="flex justify-between p-3 md:px-5 flex-grow bg-white items-center cursor-pointer"
@@ -44,14 +46,15 @@
             @click="changeTab('거래종료')"
           >
             <span>거래종료</span>
-            <div class="flex">
+            <!-- TODO 출시 때 뺴둠 -->
+            <!-- <div class="flex">
               <span>10</span><span class="hidden md:block">건</span>
               <img
                 src="@/assets/icon/arrow_down.svg"
                 alt=""
                 class="pl-3 hidden md:block w-5"
               />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -104,16 +107,18 @@ const route = useRoute();
 
 //페이지 로드 될때 데이터 가져오기
 onMounted(() => {
-  console.log(route.query.page);
-  //페이지 값이 있을때
-  if (route.query.page != undefined) {
-    // 이미 가져온 데이터가 다를때만 가져온다.
-    if (parseInt(route.query.page.toString()) != storepage.value)
-      mypageStore.getContractList(storepage.value, 2, "buy");
-  }
-  //값이 없는 경우 1페이지 부터 다시 가져옴
-  else mypageStore.getContractList(1, 2, "buy");
-  console.log(`onMounted :: 위의 데이터 가져오기`);
+  // TODO 깜빡임 없애기 진행중, 나중엔 탭 종류도 쿼리 스트링으로 넣어서 페이지처럼 비교해서 처리 할것
+  // //페이지 값이 있을때
+  // if (route.query.page != undefined) {
+  //   // 이미 가져온 데이터가 다를때만 가져온다.
+  //   if (parseInt(route.query.page.toString()) != storepage.value)
+  //     mypageStore.getContractList(storepage.value, 2, "buy");
+  // }
+  // //값이 없는 경우 1페이지 부터 다시 가져옴
+  // else {
+  //   mypageStore.getContractList(1, 2, "buy");
+  // }
+  mypageStore.getContractList(1, 2, "buy");
 });
 
 //페이징

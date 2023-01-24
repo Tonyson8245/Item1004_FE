@@ -49,8 +49,10 @@
                 class="pr-2"
               />판매/구매내역
             </div>
-            <div>판매내역</div>
-            <div>구매내역</div>
+            <div @click="router.push('/mypage/contractList/sell')">
+              판매내역
+            </div>
+            <div @click="router.push('/mypage/contractList/buy')">구매내역</div>
             <div>취소내역</div>
           </div>
           <div class="space-y-2">

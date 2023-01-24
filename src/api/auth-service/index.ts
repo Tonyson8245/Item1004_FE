@@ -5,3 +5,4 @@ export * from "./my/putBankAccount";
 export * from "./my/getPersonalData";
 export * from "./my/getMyInfoswithScope";
 export * from "./my/getMyInfoOverview";
+export * from "./my/getUserInfo";

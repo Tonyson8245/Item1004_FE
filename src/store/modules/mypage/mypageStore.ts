@@ -12,6 +12,7 @@ import {
 } from "@/domain/payment/contracPostListDto.interface";
 import type { userInfowithScopeResult } from "@/domain/user/userInfowithScopeDto";
 import type { userInfoOverviewResult } from "@/domain/user/userInfoOverview";
+import type { userInfoResult } from "@/domain/user/userInfoDto";
 
 export const usemypageStore = defineStore("mypageStore", {
   state: () => ({
@@ -39,7 +40,7 @@ export const usemypageStore = defineStore("mypageStore", {
     //Scope 해서 가져온 유저 정보 - 마일리지 출금에서 사용
     storeUserInfowithScope: {} as userInfowithScopeResult,
 
-    //overview 회원 정보 수정에서 사용
+    storeUserInfo: {} as userInfoResult,
     storeUserInfoOverview: {} as userInfoOverviewResult,
   }),
 
@@ -95,7 +96,6 @@ export const usemypageStore = defineStore("mypageStore", {
       if (isNotEmptyObject(status)) {
         var process = status.contract.contractStageStatus;
         switch (process) {
-          case "입금":
           case "인계중":
             return "take_ongoing";
           case "인수중":
@@ -132,8 +132,22 @@ export const usemypageStore = defineStore("mypageStore", {
     },
   },
   actions: {
+    resetUserInfo() {
+      this.storeUserInfo = {} as userInfoResult;
+    },
+    getUserInfo() {
+      authApi
+        .getUserInfo()
+        .then((res) => {
+          console.log(res);
+          this.storeUserInfo = res;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     resetUserInfoOverview() {
-      this.storeUserInfoOverview = {} as userInfoOverviewResult;
+      this.storeUserInfo = {} as userInfoResult;
     },
     getUserInfoOverview() {
       authApi
@@ -146,39 +160,34 @@ export const usemypageStore = defineStore("mypageStore", {
           console.log(err);
         });
     },
-    resetUserInfoScope() {
-      this.storeUserInfowithScope = {} as userInfowithScopeResult;
-    },
-    getUserInfoScope(payload: string) {
-      authApi
-        .getMyInfoswithScope(payload)
+    async setContractTake() {
+      var result = false;
+      await paymentApi
+        .putContractTake(
+          this.storeordNm,
+          this.storeContractDetail.otherUser.idx
+        )
         .then((res) => {
           console.log(res);
-          this.storeUserInfowithScope = res;
+          result = true;
         })
         .catch((err) => {
           console.log(err);
         });
+      return result;
     },
-    setContractTake() {
-      paymentApi
-        .putContractTake(this.storeordNm)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    setContractTakeover() {
+    async setContractTakeover() {
+      var result = false;
       paymentApi
         .putContractTakeover(this.storeordNm)
         .then((res) => {
           console.log(res);
+          result = true;
         })
         .catch((err) => {
           console.log(err);
         });
+      return result;
     },
     setstorepage(page: number) {
       this.storepage = page;

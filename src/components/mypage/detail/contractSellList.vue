@@ -14,14 +14,16 @@
             @click="changeTab('인계필요')"
           >
             <span>인계필요</span>
-            <div class="flex">
+
+            <!-- TODO 출시 때 뺴둠 -->
+            <!-- <div class="flex">
               <span>10</span><span class="hidden md:block">건</span>
               <img
                 src="@/assets/icon/arrow_down.svg"
                 alt=""
                 class="pl-3 hidden md:block w-5"
               />
-            </div>
+            </div> -->
           </div>
           <div
             class="flex justify-between p-3 md:px-5 flex-grow bg-white items-center cursor-pointer"
@@ -29,14 +31,16 @@
             @click="changeTab('인계완료')"
           >
             <span>인계완료</span>
-            <div class="flex">
+
+            <!-- TODO 출시 때 뺴둠 -->
+            <!-- <div class="flex">
               <span>10</span><span class="hidden md:block">건</span>
               <img
                 src="@/assets/icon/arrow_down.svg"
                 alt=""
                 class="pl-3 hidden md:block w-5"
               />
-            </div>
+            </div> -->
           </div>
           <div
             class="flex justify-between p-3 md:px-5 flex-grow bg-white items-center cursor-pointer"
@@ -44,14 +48,16 @@
             @click="changeTab('거래종료')"
           >
             <span>거래종료</span>
-            <div class="flex">
+
+            <!-- TODO 출시 때 뺴둠 -->
+            <!-- <div class="flex">
               <span>10</span><span class="hidden md:block">건</span>
               <img
                 src="@/assets/icon/arrow_down.svg"
                 alt=""
                 class="pl-3 hidden md:block w-5"
               />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
