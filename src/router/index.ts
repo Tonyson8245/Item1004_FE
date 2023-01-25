@@ -338,6 +338,12 @@ const router = createRouter({
     {
       path: "/logout",
       component: components.logout,
+      meta: {
+        name: `logout`,
+        navbar: false,
+        needLogin: false,
+        needCheckAdult: false,
+      },
     },
 
     {
@@ -367,10 +373,13 @@ router.beforeEach((to, from) => {
   const refreshTokenData = localStorage.getItem("refreshToken");
 
   if (refreshTokenData != null && isEmpty(storeUserInfo.value.idx)) {
-    console.log(">>>onMounted :: getUserInfo");
-    mypageStore.getUserInfo().then(() => {
-      check();
-    });
+    if (to.meta.name != "logout") {
+      console.log(">>>onMounted :: getUserInfo", to.meta.name);
+
+      mypageStore.getUserInfo().then(() => {
+        check();
+      });
+    }
   } else check();
 
   const userNickname =

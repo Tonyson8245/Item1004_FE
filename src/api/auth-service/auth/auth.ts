@@ -38,6 +38,10 @@ export async function deleteToken<T>(): Promise<logoutResponseDto | undefined> {
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
 
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+
     try {
       const result: logoutResponseDto = await http.delete(url, {
         headers: {
