@@ -1,7 +1,8 @@
 <template>
   <!-- <Test /> -->
   <BannerWeb class="hidden md:block" />
-  <BannerMobile class="block md:hidden" />
+  <BannerTablet class="hidden sm:block md:hidden" />
+  <BannerMobile class="block sm:hidden" />
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>
     <div
@@ -57,41 +58,63 @@
         class="md:mt-12 mt-2"
         v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
       >
+        <!-- 웹 -->
         <div class="grid-cols-3 gap-4 flex-grow w-full hidden md:grid">
           <div
-            class="bg-green-100 w-[373px] h-[140px] flex justify-center items-center h-full"
+            class="bg-green-100 w-[373px] flex justify-center items-center h-full"
           >
-            <img src="@/assets/img/bottomBanner_web1.jpeg" alt="" />
+            <img src="@/assets/img/banners/bottom_1_desktop.jpeg" alt="" />
           </div>
           <div
-            class="bg-yellow-100 w-[373px] h-[140px] flex justify-center items-center h-full"
+            class="bg-yellow-100 w-[373px] flex justify-center items-center h-full"
           >
-            <img src="@/assets/img/bottomBanner_web2.jpg" alt="" />
+            <img src="@/assets/img/banners/bottom_2_desktop.jpeg" alt="" />
           </div>
           <div
-            class="bg-red-100 w-[373px] h-[140px] flex justify-center items-center h-full"
+            class="bg-red-100 w-[373px] flex justify-center items-center h-full"
           >
-            <img src="@/assets/img/bottomBanner_web3.jpg" alt="" />
+            <img src="@/assets/img/banners/bottom_3_desktop.jpeg" alt="" />
           </div>
         </div>
-        <div class="grid md:hidden grid-cols-1 gap-0 flex-grow w-full">
+        <!-- 태블릿 -->
+        <div
+          class="grid-cols-3 gap-0 flex-grow w-full hidden sm:grid md:hidden"
+        >
+          <div
+            class="bg-green-100 flex justify-center items-center h-full flex-grow"
+          >
+            <img src="@/assets/img/banners/bottom_1_tablet.jpeg" alt="" />
+          </div>
+          <div
+            class="bg-yellow-100 flex justify-center items-center h-full flex-grow"
+          >
+            <img src="@/assets/img/banners/bottom_2_tablet.jpeg" alt="" />
+          </div>
+          <div
+            class="bg-red-100 flex justify-center items-center h-full flex-grow"
+          >
+            <img src="@/assets/img/banners/bottom_3_tablet.jpeg" alt="" />
+          </div>
+        </div>
+        <!-- 모바일 -->
+        <div class="grid sm:hidden grid-cols-1 gap-0 flex-grow w-full">
           <div class="flex justify-center items-center h-full w-full">
             <img
-              src="@/assets/img/banner_footer_mobile1.jpg"
+              src="@/assets/img/banners/bottom_1_mobile.jpeg"
               alt=""
               class="w-full"
             />
           </div>
           <div class="flex justify-center items-center h-full w-full">
             <img
-              src="@/assets/img/banner_footer_mobile2.jpg"
+              src="@/assets/img/banners/bottom_2_mobile.jpeg"
               alt=""
               class="w-full"
             />
           </div>
           <div class="flex justify-center items-center h-full w-full">
             <img
-              src="@/assets/img/banner_footer_mobile3.jpg"
+              src="@/assets/img/banners/bottom_3_mobile.jpeg"
               alt=""
               class="w-full"
             />
@@ -191,6 +214,7 @@ import { useRouter } from "vue-router";
 import { onMounted, watch } from "vue";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import { useSearchStore } from "@/store/modules/home/searchStore";
+import BannerTablet from "./components/banner/bannerTablet.vue";
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
@@ -230,8 +254,6 @@ function toggleInfiniteStatus(status: boolean) {
 
 // 무한 스크롤 동작
 function load({ loaded }: LoadAction) {
-  
-  
   if (storeinfiniteStatus.value) {
     //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때

@@ -1,6 +1,7 @@
 <template>
-  <div class="w-full">
-    <img src="@/assets/img/banners/top_1_desktop.jpeg" alt="" />
+  <div class="w-full mt-[106px]">
+    <img src="@/assets/img/banners/top_1_tablet.jpeg" alt="" />
+
     <!-- class="h-[440px] w-[1920px] overflow" -->
   </div>
 </template>

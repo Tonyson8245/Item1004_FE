@@ -45,7 +45,7 @@
         <div
           class="text-white font-bold truncate"
           @click="
-            if (userNickname != '') moveLink('/mypage');
+            if (userNickname != '로그인하기') moveLink('/mypage');
             else moveLink('/account/login');
           "
         >
