@@ -28,16 +28,17 @@
           >
             <div class="none flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/profile_grey.svg" class="pr-2" alt="" />
-              <div>이름 : {{ storeUserInfoOverview.name }}</div>
+              <div>이름 : {{ storeUserInfo.name }}</div>
             </div>
             <div class="grow flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/phone_grey.svg" class="pr-2" alt="" />
-              <div>핸드폰번호 : {{ storeUserInfoOverview.phone }}</div>
+              <div>핸드폰번호 : {{ storeUserInfo.phone }}</div>
             </div>
-            <div class="none flex md:justify-center items-center w-full py-1">
+            <!-- TODO 안심번호 추가할 때 넣기 -->
+            <!-- <div class="none flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/safephone_grey.svg" class="pr-2" alt="" />
               <div>안심번호 사용 중</div>
-            </div>
+            </div> -->
           </div>
           <hr class="h-px bg-everly-drak_grey border-px" />
           <div
@@ -100,6 +101,6 @@ function create() {
 
 //유저 정보 가져오기
 const mypageStore = usemypageStore();
-const { storeUserInfoOverview } = storeToRefs(mypageStore);
+const { storeUserInfo } = storeToRefs(mypageStore);
 </script>
 <style scoped></style>

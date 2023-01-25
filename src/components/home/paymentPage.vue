@@ -52,14 +52,15 @@
                 </div>
                 <div class="grow md:text-lg flex space-x-4">
                   <div>{{ storeUserInfoOverview.phone }}</div>
-                  <div class="flex space-x-1 items-center">
+                  <!-- TODO 안심번호 추가할때 넣기 -->
+                  <!-- <div class="flex space-x-1 items-center">
                     <img
                       src="@/assets/icon/safephone_grey.svg"
                       alt=""
                       class="w-3 md:w-4"
                     />
                     <div>안심번호 사용 중</div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="flex items-center">

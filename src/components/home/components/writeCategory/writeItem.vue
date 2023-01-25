@@ -419,21 +419,7 @@ const failedType = ref("");
 function failedModaloff(status: boolean) {
   showFailedModal.value = status;
 }
-// 상태에 따라 버튼색 다르게 하기
-// watch(
-//   [
-//     storeminAmount,
-//     storemaxAmount,
-//     storesaleUnit,
-//     storepricePerUnit,
-//     storetitle,
-//   ],
-//   () => {
-//     if (checkPost())
-//       buttonClass.value = "text-everly-white bg-everly-main cursor-pointer";
-//     else buttonClass.value = "text-everly-white bg-everly-mid_grey";
-//   }
-// );
+
 //나갈때 초기화
 onUnmounted(() => {
   writeStore.$reset();

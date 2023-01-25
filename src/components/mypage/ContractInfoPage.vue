@@ -269,7 +269,9 @@
                 </div>
                 <div class="flex">
                   <div>0502-1234-5789</div>
-                  <div class="flex items-center ml-2">
+
+                  <!-- TODO 안심번호 추가할 때 넣기 -->
+                  <!-- <div class="flex items-center ml-2">
                     <div>
                       <img
                         src="@/assets/icon/safephone_grey.svg"
@@ -278,7 +280,7 @@
                       />
                     </div>
                     <div class="text-xs pl-1">안심번호사용중</div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="flex items-center">
@@ -426,7 +428,8 @@
                 </div>
                 <div class="flex">
                   <div>0502-1234-5789</div>
-                  <div class="flex items-center ml-2">
+                  <!-- TODO 안심번호 추가할 때 넣기 -->
+                  <!-- <div class="flex items-center ml-2">
                     <div>
                       <img
                         src="@/assets/icon/safephone_grey.svg"
@@ -435,7 +438,7 @@
                       />
                     </div>
                     <div class="text-xs pl-1">안심번호사용중</div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
