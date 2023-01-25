@@ -19,14 +19,15 @@
           <input
             placeholder="아이디"
             class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm"
-            v-model="userId"
+            v-model.trim="userId"
             @click="duplicationCheckShowtoogle(false)"
             @blur="
               checkUserid(userId);
               duplicationCheckShowtoogle(true);
             "
+            @keypress="isNotSpace"
             @input="(event: Event) => {
-  checkRegexUserId((event.target as HTMLInputElement).value);
+    checkRegexUserId((event.target as HTMLInputElement).value);
             }"
           />
           <img
@@ -53,6 +54,7 @@
             placeholder="비밀번호"
             :type="typepasswordInput"
             class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm pr-10"
+            @keypress="isNotSpace"
             @input="(event: Event) => {
   checkRegexPassword((event.target as HTMLInputElement).value);
             }"
@@ -70,6 +72,7 @@
             placeholder="비밀번호 확인"
             :type="typepasswordCheckInput"
             class="flex-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm pr-10"
+            @keypress="isNotSpace"
             @input="(event: Event) => {
   checkPassword((event.target as HTMLInputElement).value);
             }"
@@ -105,6 +108,7 @@
             placeholder="추천인 유저 코드"
             class="mr-1 rounded-lg border border-everly-mid_grey bg-white py-3 px-4 text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md text-xs md:text-sm w-4/5"
             v-model="recommendidx"
+            @keypress="isNotSpace"
             @input="resetPublicidx()"
           />
           <button
@@ -193,6 +197,17 @@ const route = useRoute();
 const router = useRouter();
 const { storesameUserIdisExist, storeuserCodeisExist, storevalidServiceTerm } =
   storeToRefs(authStore);
+
+//space 제거
+function isNotSpace(evt: any) {
+  evt = evt ? evt : window.event;
+  var charCode = evt.which ? evt.which : evt.keyCode;
+  if (charCode == 32) {
+    evt.preventDefault();
+  } else {
+    return true;
+  }
+}
 
 //약관
 //약관 가져오기
