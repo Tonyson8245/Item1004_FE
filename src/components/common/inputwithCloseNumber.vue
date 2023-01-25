@@ -2,10 +2,10 @@
   <div class="flex relative w-full">
     <input
       type="text"
-      v-model="content"
+      :value="commonFunction.comma(content)"
+      @input="(event: Event) => {  changeValue(event); }"
       @keypress="isNumber"
       :placeholder="props.propsPlaceholder"
-      @input="(event: Event) => {  emit('getModel', (event.target as HTMLInputElement).value); }"
       class="border rounded-lg focus:border-[#3f52fc] border-everly-mid_grey placeholder:text-sm"
       :class="props.propsClass"
     />
@@ -20,7 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref } from "vue";
+import commonFunction from "@/common";
 
 const emit = defineEmits(["getModel", "clearContent"]);
 const props = defineProps({
@@ -29,7 +30,14 @@ const props = defineProps({
   modelValue: String,
 });
 
-let content = ref("");
+const content = ref("");
+
+function changeValue(event: Event) {
+  var value = event.target as HTMLInputElement;
+  commonFunction.inputNumberFormat(event.target as HTMLInputElement);
+  content.value = value.value;
+  emit("getModel", commonFunction.uncomma(value.value));
+}
 
 function refresh() {
   content.value = "";
