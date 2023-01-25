@@ -89,6 +89,9 @@ async function sendMessage (channelId:string | undefined) {
     await chatStore.sendMessage(text.value , channelId as string) 
         text.value = ""    
         scrollToBottom();
+
+    console.log("보낼때 클라이언트 밸류",client.value);
+    
 }
 
 

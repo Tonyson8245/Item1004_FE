@@ -24,10 +24,15 @@
         ref="scroll">  
             <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
         </div> 
-
+        <Navbar
+        class="block md:hidden text-center w-full fixed bottom-0"
+        style="z-index: 5"
+        v-if="route.meta.navbar"
+        />
 </template>
 
 <script setup lang="ts">
+import Navbar from "@/components/footer/NavbarMobile.vue";
 
 import channel from './channel.vue';
 import { storeToRefs } from "pinia";

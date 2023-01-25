@@ -3,14 +3,17 @@
     <div
       class="text-center text-xs sm:text-sm text-everly-dark_grey cursor-pointr w-full h-14 sm:h-16 grid grid-cols-3 border-t bg-everly-white"
     >
-      <div class="flex flex-col justify-center items-center">
+      <div 
+        class="flex flex-col justify-center items-center"
+        :class="chatBackground"
+        @click="router.push('/chat')"
+      >
         <img
-          src="@/assets/icon/chat_mobile.svg"
+          :src="`/assets/icon/${chatIcon}.svg`"
           class="mt-1"
           alt=""
-          @click="router.push('/chat')"
         />
-        <div>채팅</div>
+        <div :class="chatClass">채팅</div>
       </div>
       <div
         class="flex flex-col justify-center items-center"
@@ -66,6 +69,21 @@ const mypageIcon = computed(() => {
 });
 const mypageBackground = computed(() => {
   if (route.meta.name == "mypage") return "bg-everly-light_blue";
+  else return "bg-everly-white";
+});
+
+
+//채팅 버튼 색 변경
+const chatClass = computed(() => {
+  if (route.meta.name == "chat") return "text-everly-main";
+  else return "text-everly-black";
+});
+const chatIcon = computed(() => {
+  if (route.meta.name == "chat") return "chat_mobile_blue";
+  else return "chat_mobile";
+});
+const chatBackground = computed(() => {
+  if (route.meta.name == "chat") return "bg-everly-light_blue";
   else return "bg-everly-white";
 });
 </script>
