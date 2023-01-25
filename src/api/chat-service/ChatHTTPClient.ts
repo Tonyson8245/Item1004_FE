@@ -6,7 +6,6 @@ import axios, { AxiosError } from "axios";
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_CHAT_TEST;
 
-
 const instance = axios.create({
   baseURL: baseurl_test, // baseUrl 설정
   timeout: 10000, // timeout 설정
@@ -58,6 +57,7 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log(namespace, "재발급 실패");
+            return Promise.reject(error.response.data.meta);
           });
 
         await axios(originalRequest)
@@ -79,11 +79,8 @@ instance.interceptors.response.use(
         // module 별로 다름 위에 참고
         return response.data.result;
       } else return Promise.reject(error.response.data.meta);
-    } else  {
-      
+    } else {
       return Promise.reject(error);
-    
-    
     }
   }
 );

@@ -57,6 +57,7 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log(namespace, "재발급 실패");
+            return Promise.reject(error.response.data.meta);
           });
 
         await axios(originalRequest)
