@@ -113,7 +113,10 @@ const setTempKeyword = debounce((keyword: string | null) => {
     //게임 검색일경우
     if (props.type == "game") {
       //기존값과 신규값이 다를 때만 갱신하도록 한다.
-      if (commonStoreGameKeyword.value != storeTempGameKeyword.value) {
+      if (
+        commonStoreGameKeyword.value != storeTempGameKeyword.value ||
+        commonStoreGameKeyword.value == ""
+      ) {
         //값이 다르면 해당 키워드를 대입
         inputKeyword.value = keyword;
         commonStore.setstoreTempGameKeyword(keyword);
@@ -123,7 +126,10 @@ const setTempKeyword = debounce((keyword: string | null) => {
     //서버 검색일 경우
     else {
       //기존값과 신규값이 다를 때만 갱신하도록 한다.
-      if (commonStoreServerKeyword.value != storeTempServerKeyword.value) {
+      if (
+        commonStoreServerKeyword.value != storeTempServerKeyword.value ||
+        commonStoreServerKeyword.value == ""
+      ) {
         //값이 다르면 해당 키워드를 대입
         inputKeyword.value = keyword;
         commonStore.setstoreTempServerKeyword(keyword);
