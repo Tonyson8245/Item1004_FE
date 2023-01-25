@@ -79,6 +79,7 @@
       </div>
       <div class="w-full mt-5 mb-1 md:mt-12">
         <div
+          v-show="false"
           class="inline-flex justify-center items-center w-full"
           @click="alertMSG()"
         >
@@ -96,6 +97,7 @@
 
       <div
         class="grid grid-cols-4 gap-3 w-full px-10 text-center text-xs md:text-sm md:px-30"
+        v-show="false"
       >
         <div>
           <img

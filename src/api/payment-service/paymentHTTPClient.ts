@@ -55,7 +55,7 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
-            console.log(namespace, "재발급 실패");
+            console.log(namespace, "재발급 실패 >>> PAYMENT");
             return Promise.reject("재발급 실패 error");
           });
 

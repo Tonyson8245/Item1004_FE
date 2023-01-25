@@ -8,6 +8,7 @@ const router = useRouter();
 import axios from "axios";
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_USER_TEST;
+const tokenUrl = import.meta.env.VITE_BASE_URL_USER_TEST;
 
 const instance = axios.create({
   baseURL: baseurl_test, // baseUrl 설정
@@ -38,7 +39,7 @@ instance.interceptors.response.use(
         // token refresh 요청
         await axios
           .put(
-            baseurl_test + `/auth/tokens`, // token refresh api
+            tokenUrl + `/auth/tokens`, // token refresh api
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
@@ -54,7 +55,7 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
-            console.log(namespace, "재발급 실패");
+            console.log(namespace, "재발급 실패 >>> USER");
             return Promise.reject(error.response.data.meta);
           });
 

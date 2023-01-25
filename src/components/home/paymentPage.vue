@@ -473,6 +473,10 @@ function goPayment() {
     }
     //포인트 + 일반 결제일 경우
     else {
+      if (storeFinalPrice.value < 100) {
+        alert("100원 이하는 결제가 진행이 불가능합니다.");
+        return;
+      }
       payment(
         router,
         "contract", // 결제
