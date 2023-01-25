@@ -36,11 +36,12 @@
         <div class="flex text-sm md:text-base items-center">
           <div class="font-bold w-[5.5rem] md:w-[10rem]">새 비밀번호</div>
           <div class="flex-1 md:w-[25rem]">• • • • • • • • •</div>
-          <div
+          <!-- TODO 1차 출시 주석 2023-01-26 01:48:24 -->
+          <!-- <div
             class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
           >
             수정
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -72,20 +73,26 @@
             <img :src="`/assets/img/${storeUserInfoOverview.image}`" alt="" />
           </div>
         </div>
-        <div
+
+        <!-- TODO 1차 출시 주석 2023-01-26 01:48:24 -->
+        <!-- <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
         >
           수정
-        </div>
+        </div> -->
       </div>
       <div class="flex items-center text-sm md:text-base">
         <div class="font-bold w-[5.5rem] md:w-[10rem]">닉네임</div>
-        <div class="flex-1 md:w-[25rem]">아이템천사7654</div>
-        <div
+        <div class="flex-1 md:w-[25rem]">
+          {{ storeUserInfoOverview.nickname }}
+        </div>
+
+        <!-- TODO 1차 출시 주석 2023-01-26 01:48:24 -->
+        <!-- <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
         >
           수정
-        </div>
+        </div> -->
       </div>
     </div>
     <hr class="border-everly-light_grey my-4 md:my-8" />
@@ -119,11 +126,13 @@
             class="w-4 ml-2"
           />
         </div>
-        <div
+
+        <!-- TODO 1차 출시 주석 2023-01-26 01:48:24 -->
+        <!-- <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
         >
           수정
-        </div>
+        </div> -->
       </div>
       <div class="flex items-center text-sm md:text-base">
         <div class="font-bold hidden sm:w-[5.5rem] md:w-[10rem] sm:block">
@@ -138,11 +147,13 @@
             v-if="storeUserInfoOverview.email != ''"
           />
         </div>
-        <div
+
+        <!-- TODO 1차 출시 주석 2023-01-26 01:48:24 -->
+        <!-- <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
         >
           {{ buttonContent(storeUserInfoOverview.email != "") }}
-        </div>
+        </div> -->
       </div>
       <div class="flex items-center text-sm md:text-base">
         <div class="font-bold hidden sm:w-[5.5rem] md:w-[10rem] sm:block">

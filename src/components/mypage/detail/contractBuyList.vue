@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onUpdated, onUnmounted } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import contractListComponent from "../components/contractListComponent.vue";
 import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
@@ -119,6 +119,10 @@ onMounted(() => {
   //   mypageStore.getContractList(1, 2, "buy");
   // }
   mypageStore.getContractList(1, 1000, "buy");
+});
+
+onUnmounted(() => {
+  mypageStore.resetContractList();
 });
 
 //페이징

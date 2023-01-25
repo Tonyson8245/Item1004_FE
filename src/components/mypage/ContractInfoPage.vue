@@ -275,25 +275,26 @@
               class="text-xs md:text-base bg-everly-wbg_grey md:bg-everly-white p-3 space-y-3 border-t md:pl-[4.3rem]"
               v-if="showbuyerInfo"
             >
-              <div class="flex">
+              <div class="flex items-center">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   거래등급
                 </div>
-                <div>거래등급 아이콘</div>
+                <img
+                  :src="`/assets/icon/contractInfoLevel/${getterContractDetail.otherUser.contractLevelName}.svg`"
+                  alt=""
+                />
               </div>
-              <div class="flex">
+              <!-- TODO 안심번호 추가할 때 넣기 -->
+              <!-- <div class="flex">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   핸드폰번호
                 </div>
                 <div class="flex">
-                  <div>0502-1234-5789</div>
-
-                  <!-- TODO 안심번호 추가할 때 넣기 -->
-                  <!-- <div class="flex items-center ml-2">
+                  <div class="flex items-center ml-2">
                     <div>
                       <img
                         src="@/assets/icon/safephone_grey.svg"
@@ -302,9 +303,9 @@
                       />
                     </div>
                     <div class="text-xs pl-1">안심번호사용중</div>
-                  </div> -->
+                  </div>
                 </div>
-              </div>
+              </div> -->
               <div class="flex items-center">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
@@ -433,13 +434,16 @@
               class="text-xs md:text-base bg-everly-wbg_grey md:bg-everly-white p-3 space-y-3 border-t md:pl-[4.3rem]"
               v-if="showuserInfo"
             >
-              <div class="flex">
+              <div class="flex items-center">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
                 >
                   거래등급
                 </div>
-                <div>거래등급아이콘</div>
+                <img
+                  :src="`/assets/icon/contractInfoLevel/${getterContractDetail.my.contractLevelName}.svg`"
+                  alt=""
+                />
               </div>
               <div class="flex">
                 <!-- TODO 인수인계 : 초기에 핸드폰 빠짐 -->
@@ -449,7 +453,7 @@
                   핸드폰번호
                 </div>
                 <div class="flex">
-                  <div>0502-1234-5789</div>
+                  <div>{{ getterContractDetail.my.phone }}</div>
                   <!-- TODO 안심번호 추가할 때 넣기 -->
                   <!-- <div class="flex items-center ml-2">
                     <div>
@@ -594,8 +598,6 @@ import type { user } from "@/domain/user/user.interface";
 import router from "@/router";
 import { alertMSG } from "@/common";
 import { useRoute } from "vue-router";
-import { post } from "@/domain/payment/contractPostDetailDto.interaface";
-import { isEmpty } from "class-validator";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
@@ -657,12 +659,12 @@ function putContractStatus(status: string) {
   if (ordNm != undefined) {
     if (status == "물품인계")
       mypageStore.setContractTakeover(ordNm).then((res) => {
-        if (res) alert(status + "가 완료됬습니다.");
+        if (res) alert(status + "가 완료됐습니다.");
         else alert(status + "가 실패했습니다.");
       });
     else
       mypageStore.setContractTake(ordNm).then((res) => {
-        if (res) alert(status + "가 완료됬습니다.");
+        if (res) alert(status + "가 완료됐습니다.");
         else alert(status + "가 실패했습니다.");
       });
     mypageStore.resetContractList();

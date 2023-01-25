@@ -18,10 +18,11 @@
           <span>상호명 : (주) 지엠소프트</span>
           <span>사업장소재지 : 경기도 구리시 건원대로 3층386호(인창동)</span>
           <span>사업자등록번호 : 284-81—02740</span>
-          <!-- <span>통신판매업신고 : 2022-서울마포-00000</span> -->
+          <span>통신판매업신고 : 2023-경기구리-0037</span>
         </div>
         <div class="flex space-x-3 mt-1 text-everly-dark_grey text-sm">
           <span>전화번호 : 02-704-2694</span>
+          <span>고객센터 : 1833-2585</span>
           <span>대표 : 신동우</span>
           <!-- <span
             >아이템1004는 통신판매중개자이며 통신판매의 당사자가 아닙니다.

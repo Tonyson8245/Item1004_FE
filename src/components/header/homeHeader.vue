@@ -442,7 +442,7 @@
         </div> -->
         <div class="flex space-x-1 w-[66px]" @click="alertMSG()">
           <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-          <span class="text-everly-dark_grey">팔래요</span>
+          <span class="text-everly-dark_grey">살래요</span>
         </div>
       </div>
     </div>
