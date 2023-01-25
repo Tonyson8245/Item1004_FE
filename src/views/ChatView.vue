@@ -147,7 +147,11 @@ onUnmounted(() => {
   chatStore.resetPostItem()
 })
 
-
+onMounted(() => {
+  console.log(navigator.userAgent.toLowerCase());
+  //  if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+  //  }
+});
 
 // const chatView = ref(false);
 // const channelsView = ref(false);
