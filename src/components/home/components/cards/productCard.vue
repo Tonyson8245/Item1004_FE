@@ -177,11 +177,6 @@ const maxQty = computed(() => {
 });
 
 function movePost() {
-  var userinfo = localStorage.getItem("user");
-  if (userinfo == null) {
-    router.push("/account/login");
-    return;
-  }
   router.push("/post?postId=" + props.card?.post.idx);
 }
 

@@ -1,6 +1,13 @@
+import type { TokenDto } from "@/domain/auth";
+import type { user } from "@/domain/user/user.interface";
+import { useLocalStorage } from "@vueuse/core";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const baseurl_test = import.meta.env.VITE_BASE_URL_PAYMENT_TEST;
+const tokenUrl = import.meta.env.VITE_BASE_URL_USER_TEST;
 
 const instance = axios.create({
   baseURL: baseurl_test, // baseUrl 설정
@@ -17,7 +24,51 @@ instance.interceptors.response.use(
       config,
       response: { status },
     } = error;
-    //실패 할 경우 meta값을 돌려보냄
+    if (status === 401) {
+      const originalRequest = config;
+
+      var refreshToken = localStorage.getItem("refreshToken");
+      var user = localStorage.getItem("user");
+
+      if (refreshToken != null && user != null) {
+        var token = (JSON.parse(refreshToken) as TokenDto).token;
+        var userIdx = (JSON.parse(user) as user).idx;
+
+        // token refresh 요청
+        await axios
+          .put(
+            tokenUrl + `/auth/tokens`, // token refresh api
+            { refreshToken: `${token}`, userIdx: userIdx }
+          )
+          .then((res: any) => {
+            console.log("재발급 성공");
+            // 새로운 토큰 저장
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            useLocalStorage("accessToken", res.data.result.accessToken);
+            useLocalStorage("refreshToken", res.data.result.refreshToken);
+
+            originalRequest.headers.accessToken =
+              res.data.result.accessToken.token;
+          })
+          .catch((err) => {
+            console.log("재발급 실패");
+          });
+
+        var response: any;
+
+        await axios(originalRequest)
+          .then((res) => {
+            response = res;
+          })
+          .catch((err) => {
+            console.log("api 재 요청 실패");
+            return Promise.reject(err);
+          });
+      }
+      // module 별로 다름 위에 참고
+      return response.data.result;
+    } else return Promise.reject(error.response.data.meta);
     return Promise.reject(error.response.data.meta);
   }
 );

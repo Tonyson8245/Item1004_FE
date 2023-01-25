@@ -54,7 +54,7 @@
         <div
           class="w-full p-3 rounded-lg bg-everly-light_grey text-everly-dark_grey text-sm"
         >
-          예금주명 : {{ userName }}
+          예금주명 : {{ storeUserInfowithScope.name }}
         </div>
       </div>
       <div class="space-y-2">
@@ -93,7 +93,8 @@
           계좌 인증에 성공하였습니다.
         </div>
         <div>
-          {{ bankName }} {{ bankAccountNumber }} (예금주 {{ userName }})
+          {{ bankName }} {{ bankAccountNumber }} (예금주
+          {{ storeUserInfowithScope.name }})
         </div>
       </div>
 
@@ -182,7 +183,7 @@ const list = [
 ];
 
 //유저 정보
-const userName = ref("김철수");
+const { storeUserInfowithScope } = storeToRefs(mypageStore);
 
 //사이즈 확인
 const minSize = computed(() => {

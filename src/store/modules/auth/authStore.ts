@@ -22,7 +22,6 @@ export const useauthStore = defineStore("authStore", {
     storeCheckSMSisSuccess: false,
 
     storeuserID: "",
-    storeUserPersonalData: {} as userPersonalDataResult,
   }),
 
   getters: {},
@@ -203,18 +202,6 @@ export const useauthStore = defineStore("authStore", {
         .deleteToken()
         .then((res) => {
           console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-
-    getUserPersonlData() {
-      authApi
-        .getPersoncalData()
-        .then((res) => {
-          console.log(res);
-          this.storeUserPersonalData = res;
         })
         .catch((err) => {
           console.log(err);

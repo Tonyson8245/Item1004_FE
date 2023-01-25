@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import * as homeApi from "@/api/home-service/index";
+import * as userApi from "@/api/user-service/index";
 import type { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import type { GamePostSummaryDto } from "@/domain/home/posts/GamePostSummaryDto";
 
@@ -16,12 +17,19 @@ export const useMainStore = defineStore("mainStore", {
     storeLoad: false,
     //서버로부터 페이지를 가져왔는지 확인
     storeGetdone: true,
+
+    //성인인지 확인
   }),
 
   getters: {},
   actions: {
     setstoreLoad(state: boolean) {
       this.storeLoad = state;
+    },
+    //성인인지 확인
+    async isAdult() {
+      var result;
+      // await userApi.isAdult().
     },
     async setstoreProductCard(payload: getProductCardBodyDto) {
       // this.storeProductCard.push.apply(this.storeProductCard, dummyCard);

@@ -2,6 +2,7 @@ import axios from "axios";
 import type * as cardDto from "@/domain/payment/card-PointandContractDto.interface";
 import { UUID } from "uuid-generator-ts";
 import * as getFormData from "./getFormData";
+import http from "../paymentmoduletHTTPClient";
 //ip 얻기
 async function getIp() {
   var result;
@@ -216,7 +217,7 @@ async function setFormControl(
 ) {
   var requestUrl = import.meta.env.VITE_BASE_URL_PAYMENT_TEST + FormControlurl;
 
-  await axios
+  await http
     .post(
       requestUrl,
       {
@@ -266,7 +267,7 @@ async function goPayment(url: string, payPrice: string, ordNm: string) {
     import.meta.env.VITE_BASE_URL_PAYMENT_TEST + url + "?goodsAmt=" + payPrice;
 
   // paytus-set-parameter-****.php
-  await axios
+  await http
     .get(requestUrl, {
       headers: { "Content-Type": "multipart/form-data" },
     })

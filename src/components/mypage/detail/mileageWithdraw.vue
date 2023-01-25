@@ -1,6 +1,6 @@
 <template>
   <div @click="setshowMileageGuide(false)">
-    <ModalMypage
+    <mypageModal
       :propsShowModal="showModal"
       :propsType="type"
       @update:propsShowModal="setShowModal(false)"
@@ -12,7 +12,7 @@
           <span class="bg-everly-light_blue px-1 rounded font-normal mr-1"
             >1</span
           >
-          출금 계좌 확인{{ type }}
+          출금 계좌 확인
         </div>
         <div
           class="sm:flex md:ml-6 justify-between items-center md:pr-96 text-xs md:text-base"
@@ -20,11 +20,11 @@
           <div class="m:pb-4 sm:flex-1">
             <div
               v-if="accountCondition"
-              class="space-x-1 md:space-x-4 pb-2 md:pb-0"
+              class="space-x-1 md:space-x-2 pb-2 md:pb-0"
             >
-              <span>신한은행</span>
-              <span>110-403-902006</span>
-              <span>(예금주 : 오지윤)</span>
+              <span>{{ storeUserInfo.bankName }}</span>
+              <span>{{ storeUserInfo.bankAccount }}6</span>
+              <span>(예금주 : {{ storeUserInfo.name }})</span>
             </div>
             <div class="flex text-everly-dark_grey text-xs items-center" v-else>
               <div>
@@ -67,7 +67,7 @@
             <div class="md:w-[8.6rem]">총 마일리지</div>
             <div>100,250원</div>
           </div>
-          <div class="flex justify-between relative z-10">
+          <div class="flex justify-between relative">
             <div class="md:w-[8.6rem] flex item-center">
               출금 가능 마일리지
               <img
@@ -80,7 +80,7 @@
             </div>
             <div>47,250원</div>
             <div
-              class="hidden md:block w-[20.75rem] h-[6.7rem] border border-everly-mid_grey bg-everly-white rounded-lg absolute top-5"
+              class="hidden md:block w-[20.75rem] h-[6.7rem] border border-everly-mid_grey bg-everly-white rounded-lg absolute top-5 z-10"
               v-if="showMilageGuide"
             >
               <img src="@/assets/img/mileage_logic.svg" alt="" class="p-3" />
@@ -195,22 +195,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+import { ref, computed, watch, onMounted, onUnmounted } from "vue";
 import InputwithCurreny from "@/components/common/inputwithCurreny.vue";
 import commonFunction from "@/common";
-import ModalMypage from "../components/modalMypage.vue";
+import mypageModal from "../components/modalMypage.vue";
 import { useRouter } from "vue-router";
 import { useMediaQuery } from "@vueuse/core";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
 
 const router = useRouter();
-const withdrawAmt = ref("");
+const mypageStore = usemypageStore();
 const showMilageGuide = ref(false);
 const accountCondition = ref(true);
+const { storeUserInfo } = storeToRefs(mypageStore);
 
+// 마일리지 출급 값 변경
 function changeValue(value: string) {
-  withdrawAmt.value = commonFunction.uncomma(value);
+  mypageStore.setstorewithdrawAmt(parseInt(commonFunction.uncomma(value)));
 }
+//마일리지 가이드 띄우기
 function setshowMileageGuide(status: boolean) {
   showMilageGuide.value = status;
 }

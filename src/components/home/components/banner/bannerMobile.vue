@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full bg-green-300 mt-[106px]">
-    <img src="@/assets/img/banner_mobile.jpg" class="w-full" alt="" />
+  <div class="w-full mt-[106px]">
+    <img src="@/assets/img/banners/top_1_mobile.jpeg" class="w-full" alt="" />
   </div>
 </template>
 

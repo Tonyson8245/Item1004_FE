@@ -214,8 +214,8 @@
               <div class="flex-1">
                 <div class="flex justify-between items-center font-bold">
                   <div class="flex items-center">
-                    <div>{{ getterContractDetail.other.nickname }}</div>
-                    <div v-if="getterContractDetail.other.isVerified">
+                    <div>{{ getterContractDetail.otherUser.nickname }}</div>
+                    <div v-if="getterContractDetail.otherUser.isVerified">
                       <img
                         src="@/assets/icon/check_circle_blue.svg"
                         alt=""
@@ -232,7 +232,7 @@
                   </div>
                 </div>
                 <div class="flex justify-between items-center">
-                  <div>#{{ getterContractDetail.other.code }}</div>
+                  <div>#{{ getterContractDetail.otherUser.code }}</div>
                   <div @click="toggleshowbuyerInfo()" class="md:hidden">
                     <img
                       src="@/assets/icon/arrow_up_card.svg"
@@ -290,7 +290,7 @@
                 <div class="flex space-x-1">
                   <div
                     class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
-                    v-if="getterContractDetail.other.isPhoneValid"
+                    v-if="getterContractDetail.otherUser.isPhoneValid"
                   >
                     휴대폰
                   </div>
@@ -302,7 +302,7 @@
                   </div>
                   <div
                     class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
-                    v-if="getterContractDetail.other.isEmailValid"
+                    v-if="getterContractDetail.otherUser.isEmailValid"
                   >
                     이메일
                   </div>
@@ -314,7 +314,7 @@
                   </div>
                   <div
                     class="border-everly-main px-2 md:px-4 py-1 rounded-lg md:text-xs text-everly-main border"
-                    v-if="getterContractDetail.other.isAccountValid"
+                    v-if="getterContractDetail.otherUser.isAccountValid"
                   >
                     출금계좌
                   </div>
@@ -525,6 +525,7 @@
         </div>
         <div
           class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold"
+          @click="putContractStatus(getterButtonContent)"
         >
           {{ getterButtonContent }}
         </div>
@@ -541,6 +542,7 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import commonFunction from "@/common";
 import type { user } from "@/domain/user/user.interface";
+import router from "@/router";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
@@ -571,13 +573,33 @@ onMounted(() => {
 
 //localstorage 가져오기
 const localData = localStorage.getItem("user");
+const refreshTokenData = localStorage.getItem("refreshToken");
+
 const userNickname =
-  localData == null ? `로그인하기` : (JSON.parse(localData) as user).nickname;
+  refreshTokenData == null || localData == null
+    ? `로그인하기`
+    : (JSON.parse(localData) as user).nickname;
 
 //사기조회 채팅하기 신고하기
 const showMore = ref(false);
 function setshowMore(status: boolean) {
   showMore.value = status;
+}
+
+//인수 인계 버튼
+function putContractStatus(status: string) {
+  if (status == "물품인계")
+    mypageStore.setContractTakeover().then((res) => {
+      if (res) alert(status + "가 완료됬습니다.");
+      else alert(status + "가 실패했습니다.");
+    });
+  else
+    mypageStore.setContractTake().then((res) => {
+      if (res) alert(status + "가 완료됬습니다.");
+      else alert(status + "가 실패했습니다.");
+    });
+
+  router.go(-1);
 }
 </script>
 

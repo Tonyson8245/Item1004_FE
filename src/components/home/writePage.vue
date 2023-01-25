@@ -549,7 +549,9 @@ import writeGamemoney from "./components/writeCategory/writeGamemoney.vue";
 import writeItem from "./components/writeCategory/writeItem.vue";
 import WriteCharacter from "./components/writeCategory/writeCharacter.vue";
 import WriteEtc from "./components/writeCategory/writeEtc.vue";
-import { onUnmounted } from "vue";
+import { onUnmounted, onMounted } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { useRouter } from "vue-router";
 
 const commonStore = useCommonStore();
 const {
@@ -562,6 +564,9 @@ const {
   commonStoreGameKeyword,
   commonStoreServerKeyword,
 } = storeToRefs(commonStore);
+const mypageStore = usemypageStore();
+const { storeUserInfo } = storeToRefs(mypageStore);
+const router = useRouter();
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
@@ -581,6 +586,17 @@ function setCategory(Category: string) {
 //   commonStore.reset();
 //   console.log(`초기화`);
 // });
+onMounted(() => {
+  //미성년자 사용 불가능하게 하는 코드
+  var userInfo = storeUserInfo;
+  console.log(!userInfo.value.isAdult);
+
+  if (!userInfo.value.isAdult) {
+    alert("미성년자는 사용이 불가능합니다.");
+    router.go(-1);
+  }
+});
+
 onUnmounted(() => {
   commonStore.reset();
   console.log(`초기화`);

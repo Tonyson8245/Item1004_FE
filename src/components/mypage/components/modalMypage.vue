@@ -21,11 +21,15 @@
               >
                 <div class="text-sm md:text-lg">
                   <div class="text-everly-main font-bold">
-                    {{ amt.toLocaleString() }} 원
+                    {{ storewithdrawAmt.toLocaleString() }} 원
                   </div>
                   출금하시겠습니까?
                 </div>
-                <div>(신한) 110-403-9029006 (예금주 오지윤)</div>
+                <div>
+                  ({{ storeUserInfowithScope.bankName }})
+                  {{ storeUserInfowithScope.bankAccount }} (예금주
+                  {{ storeUserInfowithScope.name }})
+                </div>
                 <hr class="border border-everly-mid_grey" />
                 <div>
                   위 내용을 확인 후 <span>출금하기</span> 버튼을 눌러주세요
@@ -39,8 +43,9 @@
                   </div>
                   <div
                     class="flex-1 rounded-lg bg-everly-main text-everly-white py-2 cursor-pointer"
+                    @click="withdraw()"
                   >
-                    출금하기
+                    확인완료
                   </div>
                 </div>
               </div>
@@ -65,14 +70,34 @@ import putBankAccount from "../modaldetail/putBankAccount.vue";
 import putBankAccountWithdraw from "../modaldetail/putBankAccountInWithdraw.vue";
 import { useVModel } from "@vueuse/core";
 import { ref } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const props = defineProps<{
   propsShowModal: boolean;
   propsType: string;
 }>();
 
-const amt = ref(40000);
 const emit = defineEmits(["update:propsShowModal"]);
 const propsShowModal = useVModel(props, "propsShowModal", emit);
+
+const mypageStore = usemypageStore();
+const { storewithdrawAmt, storeUserInfowithScope } = storeToRefs(mypageStore);
+
+function withdraw() {
+  mypageStore.postWithdrawMileage().then((res) => {
+    console.log(res);
+
+    if (res) router.push("/mypage/mileage/withdraw/result");
+    else {
+      alert("출금 신청이 실패되었습니다.");
+      router.push("/mypage/mileage/withdraw");
+    }
+
+    mypageStore.setstorewithdrawAmt(0);
+  });
+}
 </script>
 <style scoped></style>

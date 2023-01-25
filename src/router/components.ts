@@ -33,8 +33,12 @@ import putBankAccount from "@/components/mypage/modaldetail/putBankAccount.vue";
 import mileageWithdraw from "@/components/mypage/detail/mileageWithdraw.vue";
 import milageWithdrawResult from "@/components/mypage/WithdrawResultPage.vue";
 import contractInfo from "@/components/mypage/ContractInfoPage.vue";
+import contractListSell from "@/components/mypage/detail/contractSellList.vue";
+import contractListBuy from "@/components/mypage/detail/contractBuyList.vue";
 
 export default {
+  contractListBuy,
+  contractListSell,
   contractInfo,
   milageWithdrawResult,
   mileageWithdraw,
@@ -70,5 +74,4 @@ export default {
   infoSet,
   signUpComfirm,
   MainView,
-  
 };

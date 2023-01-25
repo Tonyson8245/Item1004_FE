@@ -45,13 +45,13 @@
             class="text-everly-white w-[64px] md:w-[68px] text-center text-sm md:text-base"
           >
             <div
-              class="bg-everly-main rounded-md py-1 w-full"
-              v-if="storeSellBuy == `sell`"
+              class="bg-everly-red rounded-md py-1 w-full"
+              v-if="storeSellBuy == `buy`"
             >
-              팔래요
-            </div>
-            <div class="bg-everly-red rounded-md py-1 w-full" v-else>
               살래요
+            </div>
+            <div class="bg-everly-main rounded-md py-1 w-full" v-else>
+              팔래요
             </div>
           </div>
           <div class="text-lg md:text-xl md:px-4 px-2">
@@ -186,7 +186,7 @@
                 class="flex-none md:w-32 md:h-9"
               />
               <div class="flex-1 text-right">
-                {{ TotalQty }}{{ storeProductunit }}
+                {{ parseInt(TotalQty) * storeSaleUnit }} {{ storeProductunit }}
               </div>
             </div>
             <div>
@@ -199,8 +199,9 @@
               <div class="font-bold">총 결제금액</div>
               <div class="flex space-x-4 items-center">
                 <div class="text-everly-dark_grey text-base">
-                  총수량 ({{ storeqty }}{{ storeProductunit }}) / {{ TotalQty
-                  }}{{ storeProductunit }}
+                  총수량 ({{ storeqty }} 개) /
+                  {{ parseInt(TotalQty) * storeSaleUnit }}
+                  {{ storeProductunit }}
                 </div>
                 <div class="flex text-2xl font-bold items-center">
                   {{ ProductPrice
@@ -514,13 +515,13 @@ import { useRoute, useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
 import commonFunction from "@/common";
 import { useChatStore } from "@/store/modules/chat/chatStore";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 
 const chatStore = useChatStore();
 const postStore = usePostStore();
 const paymentStore = usePaymentStore();
 const router = useRouter();
 const route = useRoute();
-
 const {
   storecreatAt,
   storePostIdx,
@@ -554,8 +555,6 @@ const {
 
   storecharacterName,
   storeregistration,
-  storehasInGamePaymentHistory,
-  storeisDuplicatedSync,
   storeSellBuy,
 
   storeCharacterlevel,
@@ -577,6 +576,7 @@ onMounted(() => {
     postStore.setStorePostData(idx.toString());
   } else router.push("/");
 });
+//페이지 나갈때 기존 데이터 지우기
 onUnmounted(() => {
   postStore.resetStorePostData();
 });
@@ -629,13 +629,6 @@ watch([showBuy, storeShowManagePost], () => {
     overflowControl.value = "";
   }
 });
-
-//시연옹
-function getRandomInt(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
-}
 
 //payment page로 보내기
 function goPaymentPage() {

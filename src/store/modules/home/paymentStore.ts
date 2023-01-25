@@ -58,24 +58,11 @@ export const usePaymentStore = defineStore("paymentStore", {
   }),
 
   getters: {
-    productInfo: (state) => {
-      if (state.storeContractResult.pricePerUnit != null) {
-        return (
-          numberToKorean(state.storeContractResult.saleUnit) +
-          " " +
-          "메소" +
-          " " +
-          state.storeContractResult.pricePerUnit.toLocaleString() +
-          `원 / ` +
-          state.storeContractResult.countPricePerUnit.toLocaleString() +
-          "개 (" +
-          numberToKorean(state.storeContractResult.multiPricePerUnit) +
-          " " +
-          "메소" +
-          ")"
-        );
-      } else return "";
+    storeProductunit: (state) => {
+      if (state.storeCategory == "gameMoney") return "게임머니";
+      else return "개";
     },
+
     chargeTotalPrice: (state) => {
       var value = state.storeChargeResult.totalPrice;
       if (value != undefined) return value.toLocaleString();
