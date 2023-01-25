@@ -1,5 +1,5 @@
 <template>
-<div class="">
+<div class=" md:mt-12">
     <div class="flex md:py-10">
         <div class="flex-grow">
         </div>

@@ -172,8 +172,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       // console.log("가져온 결과 ",result);
       messages.value = [...result.messages?.reverse() as message[], ...messages.value ]
       messagesHasNext.value = result.hasNext
-      //메세지 읽음 처리
-      await messageRead(channelId);
+      // //메세지 읽음 처리
+      // await messageRead(channelId);
     }
   }
 
@@ -222,19 +222,34 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const setSelectedChannel =  async (clickedChannel: channel) => {
     selectedChannel.value = clickedChannel;
     // console.log(selectedChannel.value);     
+
+    // console.log("selectedChannel.value 세팅 : ",selectedChannel.value);
+    
     await getMessages(selectedChannel.value.id);
     await getUnreadCount();
+
+    // selectedChannel.value.unreadCount = 0;
   }
 
 
   // 채팅방 id로 불러오기 
-  const getSelectedChannel = async (channelId:string | string[]) =>{
+  const getSelectedChannel = async (channelId:string | string[]) => {
+    
     const result = await client.value.getChannel({
       channelId: channelId,
     });
-    selectedChannel.value = result.channel;   
-    await getMessages(result.channel.id);
-    await getUnreadCount();
+    // selectedChannel.value = result.channel;   
+
+    setSelectedChannel(result.channel)
+    // console.log("로그요 : ",selectedChannel.value);
+    
+    // await getMessages(result.channel.id);
+    // await getUnreadCount();
+  }
+
+
+  const resetSelectedChannel = () => {
+    selectedChannel.value=undefined
   }
 
   
@@ -256,11 +271,12 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   const setPostItem = async (postid: any) => {
     // postItem.value = postid
+    // console.log("전송하는 포스트 아이디 : ", postid);
     
     await chatapi.getPost(postid).then((res) => {    
       postItem.value = res.data.result;
       // console.log('요청성공 : ', res);      
-      console.log('post는 : ', postItem.value);      
+      // console.log('post는 : ', postItem.value);      
     }).catch((err) => {      
       console.log('에러 : ', err);      
       resetPostItem()
@@ -268,9 +284,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     })
   }
 
-  const resetPostItem = () =>{
-    postItem.value = undefined
-   
+  const resetPostItem = () => {    
+    postItem.value = undefined   
   }
 
   // 메세지를 메세지 리스트에 넣기
@@ -335,7 +350,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
 
   const isMobile = () => {
-    return window.innerWidth < 640
+    return window.innerWidth < 768
   }
 
   // 채팅룸 존재 여부 확인
@@ -423,5 +438,5 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   //   console.log(result);    
   // }
 
-  return { client, setClientNull, isNewChat, messagesHasNext,pagingMessages, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, resetPostItem,unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, getMessages,setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, postItem,setPostItem,setIsNewChat,createNewRoom}
+  return { client, setClientNull, isNewChat, messagesHasNext,pagingMessages, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, resetPostItem,unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, resetSelectedChannel, messages, getMessages,setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, postItem,setPostItem,setIsNewChat,createNewRoom}
 });

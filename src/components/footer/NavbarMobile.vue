@@ -6,7 +6,7 @@
       <div 
         class="flex flex-col justify-center items-center"
         :class="chatBackground"
-        @click="router.push('/chat')"
+        @click="goChatPage"
       >
         <img
           :src="`/assets/icon/${chatIcon}.svg`"
@@ -40,10 +40,18 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useChatStore } from "@/store/modules/chat/chatStore";
+import { usePostStore } from "@/store/modules/home/postStore";
+import { storeToRefs } from "pinia";
+
+import type { user } from "@/domain/user/user.interface";
+const chatStore = useChatStore();
+const postStore = usePostStore();
+
 //라우터 생성
 const router = useRouter();
 const route = useRoute();
-
+const { storeUserIdx } = storeToRefs(postStore);
 //홈버튼 색 변경
 const homeClass = computed(() => {
   if (route.meta.name == "home") return "text-everly-main";
@@ -86,6 +94,23 @@ const chatBackground = computed(() => {
   if (route.meta.name == "chat") return "bg-everly-light_blue";
   else return "bg-everly-white";
 });
+
+
+
+function goChatPage() {
+
+  const localData = localStorage.getItem("user");
+  if (localData != null) {
+    const userData = JSON.parse(localData) as user;      
+    if (userData.idx === storeUserIdx.value)  router.push('/chat');
+    
+    else  {
+      if (typeof route.query.postId === 'string') {
+        chatStore.isRoomExist(route.query.postId); 
+      }         
+    }
+  }
+}
 </script>
 
 <style scoped></style>

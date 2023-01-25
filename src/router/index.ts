@@ -342,7 +342,7 @@ const router = createRouter({
 });
 
 const isMobile = () => {
-  return window.innerWidth < 640;
+  return window.innerWidth < 768;
 };
 
 router.beforeEach((to, from) => {

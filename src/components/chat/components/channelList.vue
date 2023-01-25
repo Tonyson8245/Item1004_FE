@@ -23,7 +23,24 @@
         class="flex-grow overflow-scroll overflow-x-hidden"            
         ref="scroll">  
             <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
+            
+            
+            
+            <div class=" md:hidden w-full mt-12   flex flex-col justify-center" v-if="channels.length===0 && !route.query.postId">
+                <div class="flex flex-col items-center ">
+                    <img
+                    src="/assets/icon/chat_mobile.svg"
+                    class=" w-24 mb-3"
+                    alt=""
+                    />
+                    <p class=" font-bold text-lg">아직 대화 내역이 없습니다</p>
+                    <p>채팅으로 더 빠르고 편리하게 거래를 해보세요</p>
+                </div>
+            </div>
+        
         </div> 
+
+        
         <Navbar
         class="block md:hidden text-center w-full fixed bottom-0"
         style="z-index: 5"
@@ -45,7 +62,7 @@ import { vScroll } from '@vueuse/components'
 import { useRoute } from "vue-router";
 
 const chatStore = useChatStore();
-const { client, channels, unreadCount, selectedChannel } = storeToRefs(chatStore);
+const { client, channels, unreadCount, selectedChannel ,messages} = storeToRefs(chatStore);
 
 const route = useRoute();
 const channelId  = route.params.channelId;
