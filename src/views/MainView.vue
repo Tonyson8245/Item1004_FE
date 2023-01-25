@@ -28,6 +28,10 @@
       @goPay="goPay()"
     /> -->
     <!-- 결제 테스트 안할시 사용-->
+    <ContractInfobar
+      class="block md:hidden text-center w-full fixed bottom-0"
+      v-else-if="route.meta.name == `contractInfo`"
+    />
     <PaymentbarMobile
       class="block md:hidden text-center w-full fixed bottom-0"
       v-else-if="route.meta.name == `payment`"
@@ -37,14 +41,19 @@
       v-else-if="route.meta.name == `paymentResult`"
     />
     <Navbar
-      class="block md:hidden text-center w-full fixed bottom-0 z-20"
+      class="block md:hidden text-center w-full fixed bottom-0"
+      style="z-index: 5"
       v-else-if="route.meta.navbar"
     />
 
     <FooterWeb
-      class="hidden md:block absolute w-full"
-      v-if="!storeinfiniteStatus && route.meta.name != `paymentResult`"
+      class="hidden md:block w-full bottom-0"
+      v-if="
+        !(storeinfiniteStatus && route.meta.name == 'home') &&
+        route.meta.name != `paymentResult`
+      "
     />
+
     <!-- 스마트로 결제 / 결제 테스트 시 사용-->
     <!-- <smartroVue ref="childComponentRef" /> -->
   </div>
@@ -62,6 +71,7 @@ import { useCommonStore } from "@/store/modules/common/commonStore";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
 import FooterLogin from "@/components/footer/footerLogin.vue";
+import ContractInfobar from "@/components/footer/ContractInfobarMobile.vue";
 // import smartroVue from "@/components/payment/smartro.vue";
 import { ref } from "vue";
 

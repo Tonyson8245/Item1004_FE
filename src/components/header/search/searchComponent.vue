@@ -142,16 +142,36 @@ function changeSellBuy(type: string) {
   else searchStore.setstoreSellBuy("sell");
 }
 
-const { storeShowFilter_web } = storeToRefs(filterStore);
+const {
+  storeShowFilter_web,
+  filterStoreGameKeyword,
+  filterStoreGameKeywordIdx,
+  filterStoreServerKeyword,
+  filterStoreServerKeywordIdx,
+} = storeToRefs(filterStore);
 
 function toggleFilter_web() {
+  //활성화 할때, 기존 필터와 변경될 필터 값과 비교하기 위해서 저장해둠
   if (!storeShowFilter_web.value) {
-    filterStore.setstoreTempfilter();
-    commonStore.setstoreTempfilter();
+    var gameKeyword = filterStoreGameKeyword.value;
+    var gameKeywordIdx = filterStoreGameKeywordIdx.value;
+    var serverKeyword = filterStoreServerKeyword.value;
+    var serverKeywordIdx = filterStoreServerKeywordIdx.value;
+
+    filterStore.setstoreTempfilter(); //  필터 정보를 저장해둠
+    filterStore.setstoreTempfilter(); // 필터 정보를 불러옴
+    commonStore.setstoreGameServerFilter(
+      gameKeyword,
+      serverKeyword,
+      gameKeywordIdx,
+      serverKeywordIdx
+    ); // 필터 정보를 불러옴
+
+    //commonStore에 게임, 서버 필터 값 넣어두기
   } else filterStore.cancelstoreFilter();
 
-  filterStore.setstoreShowFilter_web(!storeShowFilter_web.value);
-  searchStore.setstoreShowSearch_web(false);
+  searchStore.setstoreShowSearch_web(false); //  검색 컴포넌트 끄기
+  filterStore.setstoreShowFilter_web(!storeShowFilter_web.value); // 필터 컴포넌트 켜기
 }
 </script>
 

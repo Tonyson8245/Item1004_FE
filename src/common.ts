@@ -14,12 +14,12 @@ function inputNumberFormatWithLimit(
   else obj.value = comma(uncomma(obj.value));
 }
 
-function comma(str: string) {
+function comma(str: string | number) {
   str = String(str);
   return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
 }
 
-function uncomma(str: string) {
+function uncomma(str: string | number) {
   str = String(str);
   return str.replace(/[^\d]+/g, "");
 }
@@ -48,6 +48,42 @@ export function numberToKorean(number: number) {
 
   return resultString;
 }
+function timeForToday(value: string | Date) {
+  const today = new Date();
+  const timeValue = new Date(value);
+
+  const betweenTime = Math.floor(
+    (today.getTime() - timeValue.getTime()) / 1000 / 60
+  );
+  if (betweenTime < 1) return "방금전";
+  if (betweenTime < 60) {
+    return `${betweenTime}분전`;
+  }
+
+  const betweenTimeHour = Math.floor(betweenTime / 60);
+  if (betweenTimeHour < 24) {
+    return `${betweenTimeHour} 시간전`;
+  }
+
+  const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+  if (betweenTimeDay < 365) {
+    return `${betweenTimeDay} 일전`;
+  }
+
+  return `${Math.floor(betweenTimeDay / 365)}년전`;
+}
+//특수 문자 유무 체크 정규식
+function checkTitle(title: string) {
+  var regExp = /^[a-zA-Z0-9ㄱ-힣()\[\]'",./\s]+$/;
+
+  return !regExp.test(title); // 형식에 맞는 경우 true 리턴
+}
+
+//최대 최소 확인 정규식
+function checkMinMax(min: string, max: string) {
+  if (parseInt(max) < parseInt(min)) return true;
+  else return false;
+}
 
 export default {
   inputNumberFormat,
@@ -55,4 +91,7 @@ export default {
   uncomma,
   comma,
   numberToKorean,
+  timeForToday,
+  checkMinMax,
+  checkTitle,
 };

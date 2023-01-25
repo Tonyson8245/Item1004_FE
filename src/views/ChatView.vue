@@ -34,14 +34,13 @@ import { useRouter, useRoute } from "vue-router";
 
 
 const route = useRoute();
-const channelId = route.params.channelId;
 
 const chatStore = useChatStore();
 
 // TalkPlus 초기화 실행 
 const chatClient = chatStore.init();
 
-const { client, channels, selectedChannel } = storeToRefs(chatStore);
+const { client, channels, selectedChannel, isNewChat } = storeToRefs(chatStore);
 
 // TalkPlus api 로그인
 const login = async () => await chatStore.login()
@@ -50,31 +49,92 @@ const login = async () => await chatStore.login()
 const getChannels = async () => await chatStore.getChannels(); 
 
 
+// watch(route, ()=>{
+//   console.log(route);  
+// })
 // 로그인을 한번 실행
-login().then( async (data)=>{
-  getChannels();
+login().then( async (data)=>{  
+  // console.log(data); 
   
-  // 뷰에서 inChat에서 사용될 채팅 내용들을 여기서 로드
-  if (channelId) {
-  await  chatStore.getSelectedChannel(channelId)
-  }
+  // 전체 채팅방 목록 세팅
+  getChannels()  
+  // 선택된 채널 세팅
+  await setSelectedChannel();
+  // 새로운 채팅 여부 세팅
+  setNewChat();
+  // 채팅화면 거래글 postId 세팅
+  setPostItem();
+
+  
+  console.log(client.value);
+
 
   client.value.on('event', async (data) => {
-    if (data.type === 'message') {          
+    // console.log("이벤트 발생", data);
+    if (data.type === 'message') {   
+      console.log("받은 메세지", data);
+     
+     
+      console.log(client.value);
+      // console.log(  client.value);             
         // console.log("받은 데이터", data);
+        // console.log("받는데이");        
       await onReceiveMessage(data)
     }
   })  
 });
+// console.log(route.query.postId);
+
+
+
+// url 변경에 따른 채널&메세지, 새 채팅방 여부,관련판매글id 변경
+watch(route, async()=> {  
+  // 선택된 채널 세팅
+  await setSelectedChannel()  
+  // 새로운 채팅 여부 세팅
+  setNewChat();
+  // 채팅화면 거래글 postId 세팅
+  setPostItem();
+
+})
+
+// 새로운 채팅 여부 파악
+async function setNewChat() {
+  // route.query.postId가 있다 == url = new?postId == 새 게시글
+  if (route.query.postId) chatStore.setIsNewChat(true);
+  else chatStore.setIsNewChat(false);  
+}
+
+// 채팅 관련 거래 게시글 
+// function setPostId() {
+//   if (route.query.postId) chatStore.setPostId(route.query.postId);
+//   else chatStore.setPostId(selectedChannel.value?.data.postIdx);
+// }
+
+// 채팅 관련 거래 게시글 
+function setPostItem() {
+  if (route.query.postId) chatStore.setPostItem(route.query.postId);
+  else chatStore.setPostItem(selectedChannel.value?.data.postIdx);
+}
+
+// 선택된 채널 세팅
+async function setSelectedChannel() {    
+  // url이 새로운 방 생성인 new?postId일 수 있음
+  if (!route.query.postId && route.params.channelId) await chatStore.getSelectedChannel(route.params.channelId)
+}
+
 
 
 
 // 받은 메세지 처리기
-async function onReceiveMessage(data:any){
-    let channel  = data.channel   
+async function onReceiveMessage(data:any) {
+    let channel = data.channel   
+    // console.log("메세지 받음");
+
     if (data.message.channelId === selectedChannel.value?.id) {      
       const getChannel = await chatStore.messageRead(data.message.channelId);   
-      channel = getChannel.channel
+      channel = getChannel.channel    
+        
       chatStore.setMessages(data.message)
     }
     chatStore.setChannels(channel);
@@ -83,6 +143,8 @@ async function onReceiveMessage(data:any){
 
 onUnmounted(() => {
   chatStore.resetChannels()
+  chatStore.resetMessages()
+
 })
 
 

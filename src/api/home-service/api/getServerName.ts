@@ -1,7 +1,7 @@
 import type { GameServerDto } from "@/domain/home/gameServerDto";
 import http from "../HomeHTTPClient";
 
-export default async function getServerName<T>(
+export async function getServerName<T>(
   gameIdx: number,
   keyword: string
 ): Promise<GameServerDto[]> {

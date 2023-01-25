@@ -18,10 +18,10 @@
         </div>
                          
         <!-- 채널 목록 카드   @scroll="handleListScroll"-->
+        <!-- v-scroll="onScroll" -->
         <div 
-        class="flex-grow overflow-scroll overflow-x-hidden"
-        @scroll="handleListScroll"
-        ref="trigger">  
+        class="flex-grow overflow-scroll overflow-x-hidden"            
+        ref="scroll">  
             <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
         </div> 
 
@@ -32,7 +32,10 @@
 import channel from './channel.vue';
 import { storeToRefs } from "pinia";
 import { useChatStore } from "@/store/modules/chat/chatStore";
-import { ref, computed, onMounted  } from "vue";
+import { ref, toRefs ,watch  } from "vue";
+import type { UseScrollReturn } from '@vueuse/core'
+import { useScroll  } from '@vueuse/core';
+import { vScroll } from '@vueuse/components'
 // import { useRoute } from "vue-router";
 import { useRoute } from "vue-router";
 
@@ -43,28 +46,23 @@ const route = useRoute();
 const channelId  = route.params.channelId;
 
 
-// client.value.on('event', (data) => {
-//     if (data.type === 'message') {
-//         console.log("받은 데이터", data);
-//         chatStore.setChannels(data.channel);
-//         chatStore.getUnreadCount()
-//     }
-// })
+const scroll = ref<HTMLElement | null>(null);
+
+const {arrivedState, directions} = useScroll(scroll);
+const { left, right, top, bottom } = toRefs(arrivedState)
+// const { left: toLeft, right: toRight, top: toTop, bottom: toBottom } = toRefs(directions)
 
 
-// console.log(route.params);
+// function onScroll(state: UseScrollReturn) {
+//   console.log(state) // {x, y, isScrolling, arrivedState, directions}
+// }
 
-
-// 무한 스크롤
-const handleListScroll = (e: any) => {
-    // console.log("페이징 노 실행");    
-    const { scrollHeight, scrollTop, clientHeight } = e.target;    
-    const isAtTheBottom = scrollHeight <= scrollTop + clientHeight;  
-    const bottom = scrollHeight - (scrollTop + clientHeight) 
-    if (isAtTheBottom) {
-        chatStore.pagingChannels()
+watch(bottom, ()=> {  
+    if (bottom.value) {               
+         chatStore.pagingChannels()
     }
-}
+})
+
 
 
 </script>

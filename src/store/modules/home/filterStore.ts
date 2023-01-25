@@ -11,13 +11,41 @@ export const useFilterStore = defineStore("filterStore", {
     storeCategoryCharacter: false,
     storeCategoryEtc: false,
 
-    //기존 필터 값ㅅ
+    //기존 필터 값
     storeTempCategory: [false, false, false, false],
-    storeTempKeyword: "",
+    storeTempGameKeyword: "",
+    storeTempServerKeyword: "",
+
+    //게임 및 서버 설정
+    filterStoreGameKeyword: "",
+    filterStoreServerKeyword: "",
+
+    filterStoreGameKeywordIdx: 0,
+    filterStoreServerKeywordIdx: 0,
   }),
 
   getters: {
     //서버로 부터 가져오는 로직 나중에 axios 붙힐때 연동할 생각할 것
+    getCategorys: (state) => {
+      var result = "";
+      if (state.storeCategoryCharacter) result += "character,";
+      if (state.storeCategoryGamemoney) result += "gameMoney,";
+      if (state.storeCategoryItem) result += "item,";
+      if (state.storeCategoryEtc) result += "etc,";
+      result = result.slice(0, -1);
+
+      return result;
+    },
+    //서버로 부터 가져오는 로직 나중에 axios 붙힐때 연동할 생각할 것
+    //게임 서버 뱃지
+    storeGameServerBadge: (state) => {
+      var gameName = state.filterStoreGameKeyword;
+      var serverName = state.filterStoreServerKeyword;
+      if (gameName != "" && serverName != "")
+        return gameName + "-" + serverName;
+      else if (gameName != "") return gameName + "-전체서버";
+      else return "";
+    },
   },
   actions: {
     setstoreShowFilter_mobile(status: boolean) {
@@ -55,6 +83,11 @@ export const useFilterStore = defineStore("filterStore", {
     },
     refresh() {
       this.setCategory([false, false, false, false]);
+      this.filterStoreGameKeyword = "";
+      this.filterStoreServerKeyword = "";
+
+      this.filterStoreGameKeywordIdx = 0;
+      this.filterStoreServerKeywordIdx = 0;
     },
     // 기존 필터 저장해두는 곳
     setstoreTempfilter() {
@@ -64,6 +97,9 @@ export const useFilterStore = defineStore("filterStore", {
         this.storeCategoryCharacter,
         this.storeCategoryEtc,
       ];
+
+      this.storeTempGameKeyword = this.filterStoreGameKeyword;
+      this.storeTempServerKeyword = this.filterStoreServerKeyword;
     },
     //취소할경우 기존 필터를 다시 넣음
     cancelstoreFilter() {
@@ -71,6 +107,26 @@ export const useFilterStore = defineStore("filterStore", {
       this.storeCategoryItem = this.storeTempCategory[1];
       this.storeCategoryCharacter = this.storeTempCategory[2];
       this.storeCategoryEtc = this.storeTempCategory[3];
+    },
+
+    refreshSearchGameServer() {
+      this.filterStoreGameKeywordIdx = 0;
+      this.filterStoreServerKeyword = "";
+      this.filterStoreServerKeywordIdx = 0;
+      this.filterStoreGameKeyword = "";
+    },
+
+    //
+    setstoreGameServerFilter(
+      game: string,
+      server: string,
+      gameIdx: number,
+      serverIdx: number
+    ) {
+      this.filterStoreGameKeyword = game;
+      this.filterStoreServerKeyword = server;
+      this.filterStoreGameKeywordIdx = gameIdx;
+      this.filterStoreServerKeywordIdx = serverIdx;
     },
   },
 });

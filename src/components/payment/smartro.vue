@@ -342,12 +342,13 @@ function goPay() {
                 //handle success
                 console.log(response);
                 var result = response.data.result;
-                paymentStore.setResult(
-                  result.Tid,
-                  result.Amt,
-                  result.PayMethod,
-                  result.AuthDate
-                );
+                // TODO 스마트로 쓸거면 처리하셈
+                // paymentStore.setResult(
+                //   result.Tid,
+                //   result.Amt,
+                //   result.PayMethod,
+                //   result.AuthDate
+                // );
                 router.push("/payment/result");
               })
               .catch(function (response) {
