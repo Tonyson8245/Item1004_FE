@@ -230,13 +230,8 @@
                 <div>찜하기</div>
               </div>
               <div
-<<<<<<< HEAD
-                class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-mid_grey border cursor-pointer"
-                @click="router.push('/chat')"
-=======
                 class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border cursor-pointer"
                 @click="goChatPage"
->>>>>>> develop
               >
                 <img
                   src="@/assets/icon/chat_mid-grey.svg"
@@ -646,7 +641,6 @@ watch([showBuy, storeShowManagePost], () => {
 
 //payment page로 보내기
 function goPaymentPage() {
-<<<<<<< HEAD
   if (navigator.userAgent.indexOf("Mobi") > -1) {
     alert("모바일 결제는 지원 예정입니다.");
     return;
@@ -698,48 +692,15 @@ watch(storeUserIdx, () => {
     goPaymentbuttonContent.value = "자신이 작성한 글입니다.";
   else goPaymentbuttonContent.value = "구매하기";
 });
-=======
-  var idx = storePostIdx.value;
-  var title = storePostTitle.value;
-  var unit = storeSaleUnit.value;
-  var saleUnitName = storeUnitName.value;
-  var pricePerUnit = storePricePerUnit.value;
-  var orderQty = storeqty.value;
-
-  var GameName = storeGameName.value;
-  var ServerName = storeServerName.value;
-  var Category = storeCategory.value;
-  var saleUnit = storeSaleUnit.value;
-  var SellerIdx = storeUserIdx.value;
-
-  paymentStore.setPostData(
-    idx,
-    title,
-    unit,
-    saleUnit,
-    saleUnitName,
-    pricePerUnit,
-    orderQty,
-    GameName,
-    ServerName,
-    Category,
-    SellerIdx
-  );
-  router.push("/payment");
-}
-
-
 
 // 채팅 페이지로 보내기
 function goChatPage() {
-
   console.log(route.query.postId);
-  
-   chatStore.isRoomExist(route.query.postId);
-    // chatStore.getPost();  
+  //@ts-ignore
+  chatStore.isRoomExist(route.query.postId);
+  // chatStore.getPost();
   // router.push('/chat/'+route.query.postId);
 }
->>>>>>> develop
 </script>
 
 <style scoped>
