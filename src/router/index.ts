@@ -135,10 +135,23 @@ const router = createRouter({
             needLogin: true,
           },
           children: [
+            // TODO 1차 출시 주석 2023-01-25 21:38:24
+            // {
+            //   path: "",
+            //   component: components.main,
+            //   meta: { navbar: true },
+            // },
             {
               path: "",
-              component: components.main,
-              meta: { navbar: true },
+              components: {
+                default: async () => {
+                  if (!isMobile()) {
+                    return components.userinfo;
+                  } else {
+                    return components.mypageMobilepage;
+                  }
+                },
+              },
             },
             {
               path: "main",
@@ -293,19 +306,19 @@ const router = createRouter({
           },
         },
         {
-          path:"/new",
+          path: "/new",
           components: {
-            default: async ()=>{
-                if(!isMobile()){
-                  return  components.chatPage
-                }    else{
-                  return  components.inChat
-                }
-              } ,            
+            default: async () => {
+              if (!isMobile()) {
+                return components.chatPage;
+              } else {
+                return components.inChat;
+              }
+            },
           },
         },
         {
-          path:":channelId",
+          path: ":channelId",
           components: {
             default: async () => {
               if (!isMobile()) {

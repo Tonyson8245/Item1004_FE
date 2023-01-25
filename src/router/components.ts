@@ -35,8 +35,10 @@ import milageWithdrawResult from "@/components/mypage/WithdrawResultPage.vue";
 import contractInfo from "@/components/mypage/ContractInfoPage.vue";
 import contractListSell from "@/components/mypage/detail/contractSellList.vue";
 import contractListBuy from "@/components/mypage/detail/contractBuyList.vue";
+import mypageMobilepage from "@/components/mypage/mypageMobilepage.vue";
 
 export default {
+  mypageMobilepage,
   contractListBuy,
   contractListSell,
   contractInfo,
