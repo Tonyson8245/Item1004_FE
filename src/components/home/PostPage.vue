@@ -522,7 +522,7 @@ import { numberToKorean } from "@/common";
 import commonFunction from "@/common";
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
-
+import type { user } from "@/domain/user/user.interface";
 const chatStore = useChatStore();
 const postStore = usePostStore();
 const paymentStore = usePaymentStore();
@@ -695,11 +695,17 @@ watch(storeUserIdx, () => {
 // 채팅 페이지로 보내기
 function goChatPage() {
 
-  console.log(route.query.postId);
-  
-   chatStore.isRoomExist(route.query.postId);
-    // chatStore.getPost();  
-  // router.push('/chat/'+route.query.postId);
+  const localData = localStorage.getItem("user");
+  if (localData != null) {
+    const userData = JSON.parse(localData) as user;      
+    if (userData.idx === storeUserIdx.value)  router.push('/chat');
+    
+    else  {
+      if (typeof route.query.postId === 'string') {
+        chatStore.isRoomExist(route.query.postId); 
+      }         
+    }
+  }
 }
 </script>
 

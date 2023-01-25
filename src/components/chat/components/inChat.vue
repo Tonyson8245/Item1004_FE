@@ -2,8 +2,6 @@
     <div class="pt-[3rem] md:pt-0 md:h-full">
 <div class="h-[calc(100vh-48px)] md:h-full ">
     
-   
-
     <div class="flex flex-col h-full">
         <postHead v-if="postItem"/>
         <!-- bg-[url('@/assets/img/chat-background.svg')] -->
@@ -11,7 +9,7 @@
         <div id="scroll-view" ref="scrollView" class=" py-1 h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" 
             @scroll="handleListScroll">
             <!-- 채팅 내용 화면 영역 -->        
-            <div  v-for="message in messages">            
+            <div v-for="message in messages">            
                 <message v-if="message.userId !== client.channel.userId"  :message="message"/>
                 <myMessage v-else                                         :message="message"/>
             </div>
@@ -32,15 +30,19 @@
        
 
         <!-- 채팅 입력 영역 -->
-        <div v-if="route.query.postId || messages.length>0" class="mt-auto bg-white border-t rounded-t-lg flex items-center">   
+        <div v-if="route.query.postId || messages.length > 0" class="mt-auto bg-white border-t rounded-t-lg flex items-center">   
             <div class="w-full flex justify-center">
-                <textarea id="messageInputArea"  v-model="text"
+                <textarea v-if="!postItem?.isDeleted"
+                id="messageInputArea"  v-model="text"
                 @keydown.enter.shift.exact.prevent="text += '\n'"
                 @keydown.enter.exact.prevent="sendMessageProcess"            
-                maxlength="8000" class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용을 입력하세요" rows="1" ></textarea>                        
+                maxlength="8000" class="w-full py-1 px-3  text-sm text-everly-dark_grey outline-none  resize-none" placeholder="내용을 입력하세요" rows="1" ></textarea>    
+                
+                <textarea v-else  disabled              
+                class="w-full py-1 px-3  text-sm text-everly-dark_grey opacity-50 outline-none  resize-none" placeholder="삭제된 게시글입니다" rows="1" ></textarea>  
             </div>         
-            
-            <button @click="sendMessageProcess" class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
+            <!-- :class="{'opacity-50 cursor-default': postItem?.isDeleted===true || postItem?.status==='end' }" -->
+            <button :class="{'cursor-not-allowed bg-everly-dark_grey opacity-50': postItem?.isDeleted }" @click="sendMessageProcess" class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
         </div>
     </div>
 

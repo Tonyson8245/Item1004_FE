@@ -256,6 +256,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   const setPostItem = async (postid: any) => {
     // postItem.value = postid
+    console.log("전송하는 포스트 아이디 : ", postid);
     
     await chatapi.getPost(postid).then((res) => {    
       postItem.value = res.data.result;
@@ -269,8 +270,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   }
 
   const resetPostItem = () =>{
-    postItem.value = undefined
-   
+    postItem.value = undefined   
   }
 
   // 메세지를 메세지 리스트에 넣기

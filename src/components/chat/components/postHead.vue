@@ -7,8 +7,8 @@
 
         <itemLogo :postItem="postItem"/>
         <div class="flex flex-col ">
-            <div class="flex">
-                <p class="hidden text-xs">{{ postItem?.gameName }} > {{ postItem?.serverName }} </p>
+            <div class="hidden md:flex">
+                <p class=" text-xs">{{ postItem?.gameName }} > {{ postItem?.serverName }} </p>
             </div>
             <div class="flex md:text-sm">
                 <p v-if="postItem?.isDeleted === true " class="font-bold mr-2">삭제됨</p> 
