@@ -92,6 +92,49 @@ export function alertMSG(string?: string) {
   alert(string);
 }
 
+export function moveExternalLink(
+  value:
+    | "서비스이용약관"
+    | "개인정보처리방침"
+    | "청소년보호정책"
+    | "거래글신고하기"
+    | "유저신고하기"
+    | "문의하기"
+    | "공지사항"
+) {
+  var url;
+  switch (value) {
+    case "서비스이용약관":
+      url =
+        "https://sites.google.com/view/item1004-terms/서비스-이용약관/service-term-20230126";
+      break;
+    case "개인정보처리방침":
+      url =
+        "https://sites.google.com/view/item1004-terms/개인정보-처리방침/개인정보-처리방침-v20230126";
+      break;
+    case "청소년보호정책":
+      url =
+        "https://sites.google.com/view/item1004-terms/youth-protection-policy";
+      break;
+    case "거래글신고하기":
+      url =
+        "https://docs.google.com/forms/d/e/1FAIpQLScHPtBZasALZuXKsYvLtiMyNr1BqgGSIQ072VXn0NRhPMTBmg/viewform";
+      break;
+    case "유저신고하기":
+      url =
+        "https://docs.google.com/forms/d/e/1FAIpQLSe0qobsdPj6sCIe88ssSV2M3j5pZ-lKen45Qu7z72bzgA5yMA/viewform";
+      break;
+    case "문의하기":
+      url =
+        "https://docs.google.com/forms/d/e/1FAIpQLSe0qobsdPj6sCIe88ssSV2M3j5pZ-lKen45Qu7z72bzgA5yMA/viewform";
+      break;
+    case "공지사항":
+      url = "https://blog.naver.com/item1004official";
+      break;
+  }
+  window.open(url);
+}
+
 export default {
   alertMSG,
   inputNumberFormat,

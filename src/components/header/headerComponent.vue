@@ -12,22 +12,25 @@
               src="@/assets/icon/logo.gif"
               alt=""
               @click="moveLink('/home')"
-              class="w-[11rem] h-[3.3rem]"
+              class="w-[11rem] h-[3.3rem] cursor-pointer"
             />
           </div>
           <div class="hidden md:block">
             <div class="flex space-x-4 items-center">
               <img
+                class="cursor-pointer"
                 src="@/assets/icon/chat_mid-grey.svg"
                 alt=""
                 @click="moveLink('/chat')"
               />
               <img
+                class="cursor-pointer"
                 src="@/assets/icon/notify_mid-grey.svg"
                 alt=""
                 @click="alertMSG()"
               />
               <img
+                class="cursor-pointer"
                 src="@/assets/icon/profile_mid-grey.svg"
                 @click="moveLink('/mypage')"
                 alt=""
@@ -56,6 +59,7 @@
         <div class="md:hidden">
           <div class="flex space-x-4">
             <img
+              class="cursor-pointer"
               src="@/assets/icon/filter_white.svg"
               alt=""
               @click="toggleFilter_mobile()"
@@ -67,12 +71,14 @@
               @click="moveLink('/search')"
             /> -->
             <img
+              class="cursor-pointer"
               src="@/assets/icon/search_white.svg"
               alt=""
               @click="alertMSG()"
             />
 
             <img
+              class="cursor-pointer"
               src="@/assets/icon/notify_white.svg"
               alt=""
               @click="alertMSG()"

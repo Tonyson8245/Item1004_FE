@@ -59,7 +59,7 @@
     </div>
     <div
       class="flex justify-between px-5 py-4"
-      @click="router.push('https://blog.naver.com/item1004official')"
+      @click="moveExternalLink('공지사항')"
     >
       <div class="flex">
         <img src="@/assets/icon/notice_black.svg" alt="" class="pr-3" />
@@ -67,7 +67,10 @@
       </div>
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
-    <div class="flex justify-between px-5 py-4" @click="router.push('')">
+    <div
+      class="flex justify-between px-5 py-4"
+      @click="moveExternalLink('문의하기')"
+    >
       <div class="flex">
         <img src="@/assets/icon/customercenter_black.svg" alt="" class="pr-3" />
         고객센터
@@ -78,6 +81,7 @@
 </template>
 
 <script setup lang="ts">
+import { moveExternalLink } from "@/common";
 import { useRouter } from "vue-router";
 
 const router = useRouter();

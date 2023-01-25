@@ -86,7 +86,7 @@
             </div>
             <!-- TODO 1차 출시 주석 2023-01-25 21:43:32 -->
             <!-- <div>쿠폰내역</div> -->
-            <div @click="logout()">로그아웃</div>
+            <div @click="logout()" class="cursor-pointer">로그아웃</div>
           </div>
         </div>
         <div class="w-full md:py-16 md:w-[61.88rem] md:bg-[#fafafa]">
