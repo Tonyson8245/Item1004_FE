@@ -13,6 +13,8 @@ import {
 import type { userInfowithScopeResult } from "@/domain/user/userInfowithScopeDto";
 import type { userInfoOverviewResult } from "@/domain/user/userInfoOverview";
 import type { userInfoResult } from "@/domain/user/userInfoDto";
+import { checkwithdrawPointDtoResult } from "@/domain/payment/checkwithdrawPointDto.interface";
+import type { user } from "@/domain/user/user.interface";
 
 export const usemypageStore = defineStore("mypageStore", {
   state: () => ({
@@ -40,6 +42,8 @@ export const usemypageStore = defineStore("mypageStore", {
 
     storeUserInfo: {} as userInfoResult,
     storeUserInfoOverview: {} as userInfoOverviewResult,
+    storecheckwithdrawPoint: {} as checkwithdrawPointDtoResult,
+    storecheckuseablePoint: "",
   }),
 
   getters: {
@@ -119,6 +123,42 @@ export const usemypageStore = defineStore("mypageStore", {
     },
   },
   actions: {
+    checkuseablePoint() {
+      var userData = localStorage.getItem("user");
+      if (userData == null) {
+        alert("다시 로그인 후 시도해주세요");
+        this.router.push("/logout");
+        return;
+      }
+      var userIdx = (JSON.parse(userData) as user).idx;
+      paymentApi
+        .chechUseablePoint(userIdx.toString())
+        .then((res) => {
+          console.log(res);
+
+          this.storecheckuseablePoint = res;
+        })
+        .catch((err) => {
+          this.storecheckuseablePoint = "0";
+        });
+    },
+    checkwithdrawPoint() {
+      var userData = localStorage.getItem("user");
+      if (userData == null) {
+        alert("다시 로그인 후 시도해주세요");
+        this.router.push("/logout");
+        return;
+      }
+      var userIdx = (JSON.parse(userData) as user).idx;
+      paymentApi
+        .checkwithdrawPoint(userIdx.toString())
+        .then((res) => {
+          this.storecheckwithdrawPoint = res;
+        })
+        .catch((err) => {
+          this.storecheckwithdrawPoint = new checkwithdrawPointDtoResult(0, 0);
+        });
+    },
     resetUserInfo() {
       this.storeUserInfo = {} as userInfoResult;
     },

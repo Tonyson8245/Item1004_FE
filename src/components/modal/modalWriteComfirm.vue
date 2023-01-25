@@ -93,10 +93,7 @@ const props = defineProps({
 const writeStore = useWriteStore();
 const router = useRouter();
 function create() {
-  if (props.postType != undefined)
-    writeStore.createPost(props.postType).then((res) => {
-      router.replace("/post?postId=" + res);
-    });
+  if (props.postType != undefined) writeStore.createPost(props.postType);
 }
 
 //유저 정보 가져오기

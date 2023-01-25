@@ -65,7 +65,13 @@
         <div class="md:pr-96 space-y-3">
           <div class="flex justify-between">
             <div class="md:w-[8.6rem]">총 마일리지</div>
-            <div>100,250원</div>
+            <div>
+              {{
+                commonFunction.comma(
+                  storecheckwithdrawPoint.currentEntirePoint
+                )
+              }}원
+            </div>
           </div>
           <div class="flex justify-between relative">
             <div class="md:w-[8.6rem] flex item-center">
@@ -78,7 +84,13 @@
                 @click="setshowMileageGuide(true)"
               />
             </div>
-            <div>47,250원</div>
+            <div>
+              {{
+                commonFunction.comma(
+                  storecheckwithdrawPoint.currentWithdrawalPoint
+                )
+              }}원
+            </div>
             <div
               class="hidden md:block w-[20.75rem] h-[6.7rem] border border-everly-mid_grey bg-everly-white rounded-lg absolute top-5 z-10"
               v-if="showMilageGuide"
@@ -97,7 +109,7 @@
             :propsClass="'w-full '"
             :propsTextClass="''"
             :minLimit="0"
-            :maxLimit="100000"
+            :maxLimit="storecheckwithdrawPoint.currentEntirePoint"
             @change-value="changeValue($event)"
           />
           <div
@@ -208,7 +220,12 @@ const router = useRouter();
 const mypageStore = usemypageStore();
 const showMilageGuide = ref(false);
 const accountCondition = ref(true);
-const { storeUserInfo } = storeToRefs(mypageStore);
+const { storeUserInfo, storecheckwithdrawPoint } = storeToRefs(mypageStore);
+
+//마일리지 값 가져오기
+onMounted(() => {
+  mypageStore.checkwithdrawPoint();
+});
 
 // 마일리지 출급 값 변경
 function changeValue(value: string) {

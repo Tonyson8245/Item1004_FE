@@ -6,5 +6,6 @@ export * from "./contract/getContractPostDetail";
 export * from "./contract/getContractPostList";
 export * from "./mileage/withdrawMileage";
 export * from "./mileage/chechUseablePoint";
+export * from "./mileage/checkwithdrawPoint";
 export * from "./contract/putContractTakeover";
 export * from "./contract/putContractTake";

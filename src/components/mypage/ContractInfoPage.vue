@@ -14,7 +14,7 @@
           />
           <span class="font-bold text-sm md:text-lg">거래진행단계 </span>
         </div>
-        <div class="w-full flex justify-center pb-8">
+        <div class="w-full flex justify-center pb-8 h-[102px] md:h-[111px]">
           <div v-if="!getterContractDetail.my.isSeller">
             <img
               :src="`/assets/img/contractProcess/take_${getterContractStageStatus}.svg`"
@@ -114,7 +114,10 @@
                 <span>{{ getterContractDetail.contract.createdAt }}</span>
               </div>
             </div>
-            <div class="hidden md:flex items-center space-x-2">
+            <div
+              class="hidden md:flex items-center space-x-2 cursor-pointer"
+              @click="moveExternalLink('거래글신고하기')"
+            >
               <div><img src="@/assets/icon/report_grey.svg" alt="" /></div>
               <div class="text-everly-dark_grey">신고하기</div>
             </div>
@@ -171,12 +174,17 @@
         <!-- 남의정보 -->
         <div class="p-4 md:px-0 text-sm md:text-base sm:flex-1 relative">
           <div
-            class="border bg-everly-white absolute right-4 md:right-3 top-[1rem] md:top-[4rem] w-[6rem] md:w-[10rem] text-center divide-y rounded-lg text-xs md:text-sm text-everly-dark_grey"
+            class="border bg-everly-white absolute right-4 md:right-3 top-[1rem] md:top-[4rem] w-[6rem] md:w-[10rem] text-center divide-y rounded-lg text-xs md:text-sm text-everly-dark_grey cursor-pointer"
             v-if="showMore"
           >
             <!-- TODO 1차 출시 주석 2023-01-25 20:31:17 -->
             <div class="px-4 py-2" @click="alertMSG()">사기조회</div>
-            <div class="px-4 py-2" @click="alertMSG()">신고하기</div>
+            <div
+              class="px-4 py-2 cursor-pointer"
+              @click="moveExternalLink('유저신고하기')"
+            >
+              신고하기
+            </div>
             <div class="px-4 py-2">채팅하기</div>
           </div>
           <!-- 헤더 -->
@@ -208,7 +216,7 @@
               <div class="font-bold md:text-lg" v-else>구매자정보</div>
             </div>
             <div
-              class="md:hidden w-3 flex justify-end"
+              class="md:hidden w-3 flex justify-end cursor-pointer"
               @click="setshowMore(true)"
               @click.stop=""
             >
@@ -354,10 +362,13 @@
               <div class="flex">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
+                  v-if="
+                    getterContractDetail.otherUser.characterName != undefined
+                  "
                 >
                   캐릭터명
                 </div>
-                <div>캐릭터이름</div>
+                <div>{{ getterContractDetail.otherUser.characterName }}</div>
               </div>
             </div>
           </div>
@@ -403,7 +414,7 @@
                 <div class="flex items-center justify-between font-bold">
                   <div class="flex items-center">
                     <div>{{ userNickname }}</div>
-                    <div>
+                    <div v-if="getterContractDetail.my.isVerified">
                       <img
                         src="@/assets/icon/check_circle_blue.svg"
                         alt=""
@@ -471,10 +482,11 @@
               <div class="flex">
                 <div
                   class="font-bold text-right w-[3.25rem] md:w-[4.5rem] md:text-left mr-2"
+                  v-if="getterContractDetail.my.characterName != undefined"
                 >
                   캐릭터명
                 </div>
-                <div>캐릭터명</div>
+                <div>{{ getterContractDetail.my.characterName }}</div>
               </div>
             </div>
           </div>
@@ -598,6 +610,8 @@ import type { user } from "@/domain/user/user.interface";
 import router from "@/router";
 import { alertMSG } from "@/common";
 import { useRoute } from "vue-router";
+import { moveExternalLink } from "@/common";
+import { IsEmpty, IsNotEmptyObject } from "class-validator";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);

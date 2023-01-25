@@ -56,8 +56,9 @@
             />
           </div>
           <div class="pr-3 flex">
-            <div class="hidden md:block md:pr-3">
-              {{ unitAmount != "없음" ? unitAmount : "" }} {{ currency }}
+            <div class="flex pr-3">
+              <span>{{ unitAmount != "없음" ? unitAmount : "" }}</span
+              ><span class="hidden md:block pl-3"> {{ currency }}</span>
             </div>
             ~
           </div>
@@ -74,8 +75,9 @@
             />
           </div>
           <div class="flex">
-            <div class="hidden md:block">
-              {{ unitAmount != "없음" ? unitAmount : "" }} {{ currency }}
+            <div class="flex">
+              <span>{{ unitAmount != "없음" ? unitAmount : "" }}</span
+              ><span class="hidden md:block pl-3"> {{ currency }}</span>
             </div>
           </div>
         </div>

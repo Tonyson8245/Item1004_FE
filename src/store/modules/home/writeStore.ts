@@ -63,11 +63,12 @@ export const useWriteStore = defineStore("writeStore", {
         .createPost(post)
         .then((res) => {
           console.log(res);
-          result = res as string;
+          this.router.replace("/post?postId=" + result);
         })
         .catch((err) => {
           console.log(err);
-          result = "";
+          alert("등록에 실패하였습니다.");
+          this.router.replace("/");
         });
       return result;
     },

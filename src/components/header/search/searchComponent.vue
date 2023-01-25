@@ -16,7 +16,7 @@
         /> -->
         <div
           @click="alertMSG()"
-          class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm"
+          class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
         >
           <input
             disabled
@@ -24,13 +24,18 @@
             :class="bottomBorder"
             v-model="storeKeyword"
             @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
-            class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm"
+            class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
           />
         </div>
-        <div class="bg-transparent px-4 py-4" @click="toggleFilter_web()">
+        <div
+          class="bg-transparent px-4 py-4 cursor-pointer"
+          @click="toggleFilter_web()"
+        >
           <img src="@/assets/icon/filter_blue.svg" alt="" />
         </div>
-        <div class="bg-everly-main rounded-r-lg py-[0.5rem] px-1">
+        <div
+          class="bg-everly-main rounded-r-lg py-[0.5rem] px-1 cursor-not-allowed"
+        >
           <img src="@/assets/icon/search_white_large.svg" alt="" />
         </div>
       </div>

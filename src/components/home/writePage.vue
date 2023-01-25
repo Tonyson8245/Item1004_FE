@@ -7,7 +7,7 @@
       >
         <!-- 모바일 팔래요 살래요 -->
         <div
-          class="bg-everly-white cursor-pointer md:hidden z-50 border-b w-full fixed top-[49px]"
+          class="bg-everly-white cursor-pointer md:hidden z-50 border-b w-full fixed top-[48px]"
         >
           <div class="flex w-full space-x-4 border-b p-4">
             <!--팔래요 활성화 -->
@@ -206,7 +206,7 @@
                         src="@/assets/icon/character_active_mobile.svg"
                         class="w-6 h-6 sm:w-20 sm:h-20 m-1 sm:m-2"
                       />
-                      <div>아이템</div>
+                      <div>캐릭터</div>
                     </div>
                   </div>
                 </div>

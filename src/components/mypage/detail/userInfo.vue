@@ -240,7 +240,6 @@ const buttonContent = (status: boolean) => {
 const router = useRouter();
 const authstore = useauthStore();
 function logout() {
-  authstore.deleteToken();
   router.push("/logout");
 }
 

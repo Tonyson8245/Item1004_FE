@@ -5,12 +5,15 @@
       <div class="hidden md:block pb-4 font-bold text-xl">마일리지 충전</div>
       <div class="md:flex">
         <div class="flex text-sm md:text-base items-center pr-1 md:pr-2">
-          <span class="font-bold text-base md:text-xl pr-1 md:pr-2"
-            >띠용떄용</span
+          <span class="font-bold text-base md:text-xl pr-1 md:pr-2">{{
+            storeUserInfo.nickname
+          }}</span
           >님의 사용가능한 마일리지는
         </div>
         <div class="flex text-sm md:text-base items-center">
-          <span class="font-bold text-base md:text-xl pr-1 md:pr-2">20,000</span
+          <span class="font-bold text-base md:text-xl pr-1 md:pr-2">{{
+            commonFunction.comma(storecheckuseablePoint)
+          }}</span
           >원 입니다.
         </div>
       </div>
@@ -242,7 +245,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 import PaymentMethodVue from "../components/paymentMethod.vue";
 import Modal from "../components/chargeLimitInfoModal.vue";
 import { payment } from "@/api/payment-module";
@@ -250,10 +253,19 @@ import { useRouter } from "vue-router";
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { storeToRefs } from "pinia";
 import type { user } from "@/domain/user/user.interface";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import commonFunction from "@/common";
 const router = useRouter();
 
 const paymentMethod = ref("card");
 const paymentStore = usePaymentStore();
+const mypageStore = usemypageStore();
+const { storeUserInfo, storecheckuseablePoint } = storeToRefs(mypageStore);
+
+//마일리지 값 가져오기
+onMounted(() => {
+  mypageStore.checkuseablePoint();
+});
 
 function setpaymentMethod(string: string) {
   if (string != "") paymentMethod.value = string;

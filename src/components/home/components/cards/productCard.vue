@@ -1,13 +1,13 @@
 <template>
-  <div class="relative cursor-default">
+  <div class="relative cursor-pointer">
     <div
       v-if="props.card?.post.status == 'end'"
-      class="absolute w-full h-full bg-white rounded-lg opacity-50 border"
+      class="absolute w-full h-full bg-white rounded-lg opacity-50 border cursor-not-allowed"
       style="z-index: 1"
     ></div>
     <div
       v-if="props.card?.post.status == 'end'"
-      class="absolute w-full h-full backdrop-blur-[1.3px] rounded-lg border flex items-center justify-center"
+      class="absolute w-full h-full backdrop-blur-[1.3px] rounded-lg border flex items-center justify-center cursor-not-allowed"
       style="z-index: 2"
     >
       <div

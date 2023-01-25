@@ -50,10 +50,18 @@
                 class="pr-2"
               />판매/구매내역
             </div>
-            <div @click="router.push('/mypage/contractList/sell')">
+            <div
+              class="cursor-pointer"
+              @click="router.push('/mypage/contractList/sell')"
+            >
               판매내역
             </div>
-            <div @click="router.push('/mypage/contractList/buy')">구매내역</div>
+            <div
+              class="cursor-pointer"
+              @click="router.push('/mypage/contractList/buy')"
+            >
+              구매내역
+            </div>
             <!-- TODO 1차 출시 주석 2023-01-25 21:43:07 -->
             <!-- <div v-show="false">취소내역</div> -->
           </div>
@@ -89,7 +97,9 @@
             <div @click="logout()" class="cursor-pointer">로그아웃</div>
           </div>
         </div>
-        <div class="w-full md:py-16 md:w-[61.88rem] md:bg-[#fafafa]">
+        <div
+          class="w-full md:py-16 md:w-[61.88rem] md:bg-[#fafafa] md:min-h-screen"
+        >
           <router-view></router-view>
         </div>
       </div>
@@ -105,7 +115,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const authstore = useauthStore();
 function logout() {
-  authstore.deleteToken();
   router.push("/logout");
 }
 </script>

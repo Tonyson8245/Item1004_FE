@@ -126,7 +126,7 @@ export function moveExternalLink(
       break;
     case "문의하기":
       url =
-        "https://docs.google.com/forms/d/e/1FAIpQLSe0qobsdPj6sCIe88ssSV2M3j5pZ-lKen45Qu7z72bzgA5yMA/viewform";
+        "https://docs.google.com/forms/d/e/1FAIpQLScy21eszWO_SaUBuZO2WTSdlCpe4D-vTft_Awldalki7v9FXg/viewform?usp=sf_link";
       break;
     case "공지사항":
       url = "https://blog.naver.com/item1004official";

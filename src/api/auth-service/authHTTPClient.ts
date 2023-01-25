@@ -26,8 +26,6 @@ instance.interceptors.response.use(
     } = error;
     console.log(namespace, "http 요청 실패");
 
-    console.log(config);
-
     if (status === 401) {
       const originalRequest = config;
 

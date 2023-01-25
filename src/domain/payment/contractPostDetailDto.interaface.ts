@@ -3,12 +3,14 @@ import type meta from "../common/meta.interface";
 import common from "@/common";
 export class post {
   idx: number;
+  type: string;
   productType: string;
   gameName: string;
   serverName: string;
   title: string;
   constructor() {
     this.idx = 0;
+    this.type = "buy";
     this.productType = "카테고리";
     this.gameName = "게임이름";
     this.serverName = "서버이름";
@@ -17,14 +19,15 @@ export class post {
 }
 export class otherUser {
   idx: number;
-  image: string;
   nickname: string;
-  isVerified: boolean;
   code: string;
+  image: string;
+  isVerified: boolean;
   isEmailValid: boolean;
   isPhoneValid: boolean;
   isAccountValid: boolean;
   contractLevelName: string;
+  characterName: string;
 
   constructor() {
     this.idx = 0;
@@ -36,19 +39,26 @@ export class otherUser {
     this.isPhoneValid = false;
     this.isAccountValid = false;
     this.contractLevelName = "silver";
+    this.characterName = "";
   }
 }
 export class my {
+  idx: number;
   code: string;
   phone: string;
+  isVerified: boolean;
+  contractLevelName: string;
   isSeller: boolean;
+  characterName: string;
   constructor() {
     this.code = "#UAAAAAAA";
     this.phone = "010-1234-5678";
     this.contractLevelName = "silver";
     this.isSeller = false;
+    this.isVerified = false;
+    this.characterName = "";
+    this.idx = 0;
   }
-  contractLevelName: string;
 }
 export class contract {
   ordNm: string;
