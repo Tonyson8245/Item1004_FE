@@ -4,7 +4,6 @@ import * as authApi from "@/api/auth-service/index";
 import type { term } from "@/domain/user/serviceTermList.interface";
 import { useLocalStorage } from "@vueuse/core";
 import type * as authDto from "@/domain/auth/index";
-import type { userPersonalDataResult } from "@/domain/user/userPersonalDataDto";
 
 export const useauthStore = defineStore("authStore", {
   state: () => ({
@@ -201,7 +200,9 @@ export const useauthStore = defineStore("authStore", {
       authApi
         .deleteToken()
         .then((res) => {
-          console.log(res);
+          localStorage.removeItem("user");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
         })
         .catch((err) => {
           console.log(err);

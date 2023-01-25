@@ -4,6 +4,9 @@ import { useCommon } from "../store/modules/ui/common";
 import type { user } from "../domain/user/user.interface";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
+import { userInfoResult } from "@/domain/user/userInfoDto";
+import type { TokenDto } from "@/domain/auth";
+import { isEmpty } from "class-validator";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
@@ -343,29 +346,26 @@ const isMobile = () => {
 };
 
 router.beforeEach((to, from) => {
-  console.log("before");
-
   window.scrollTo({ top: 0, behavior: "auto" });
-  const localData = localStorage.getItem("user");
+
+  // 라우팅 될때 데이터 가져오기
+  const mypageStore = usemypageStore();
+  const { storeUserInfo } = storeToRefs(mypageStore);
+
+  const userData = localStorage.getItem("user");
   const refreshTokenData = localStorage.getItem("refreshToken");
 
+  if (refreshTokenData != null && isEmpty(storeUserInfo.value.idx)) {
+    console.log(">>>onMounted :: getUserInfo");
+    mypageStore.getUserInfo().then(() => {
+      check();
+    });
+  } else check();
+
   const userNickname =
-    refreshTokenData == null || localData == null
+    refreshTokenData == null || userData == null
       ? `로그인하기`
-      : (JSON.parse(localData) as user).nickname;
-
-  //접근 확인 하는 것들
-  // if (to.matched[1] != undefined) {
-  //   if (to.matched[1].path == "/mypage") checkLogin(); //마이페이지의
-  // }
-
-  if (to.meta.needLogin == true) {
-    checkLogin();
-    return;
-  } else if (to.meta.needCheckAdult == true) {
-    checkIsAdult();
-    return;
-  }
+      : (JSON.parse(userData) as user).nickname;
 
   const commonStore = useCommon();
   switch (to.path) {
@@ -400,25 +400,37 @@ router.beforeEach((to, from) => {
       break;
   }
 
+  //로그인 + 성인 확인
+  function check() {
+    if (to.meta.needLogin == true) {
+      console.log("checklogin");
+      checkLogin();
+    } else if (to.meta.needCheckAdult == true) {
+      console.log("checkIsAdult");
+      checkIsAdult();
+    }
+  }
+
   // 로그인 유무 확인
   function checkLogin() {
     var token = localStorage.getItem("refreshToken");
     if (token == null) {
       alert("로그인이 필요합니다.");
       router.replace(from);
-    }
+      return;
+    } else if (to.meta.needCheckAdult == true) checkIsAdult(); //성인도 체크해봐야함
   }
   //성인 여부 확인
   function checkIsAdult() {
     var store = usemypageStore();
     var { storeUserInfo } = storeToRefs(store);
-    //미성년자 사용 불가능하게 하는 코드
-    var userInfo = storeUserInfo;
-    console.log(!userInfo.value.isAdult);
 
-    if (!userInfo.value.isAdult) {
-      alert("미성년자는 사용이 불가능합니다.");
+    //미성년자 사용 불가능하게 하는 코드
+    var userInfo = new userInfoResult(storeUserInfo.value);
+    if (!userInfo.isAdult()) {
+      alert("미성년자는 이용이 불가능한 기능입니다.");
       router.replace(from);
+      return;
     }
   }
 });

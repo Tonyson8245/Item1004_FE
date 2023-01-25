@@ -50,7 +50,6 @@ function changeValue(event: Event) {
     //해당 이벤트의 값을 최대값으로 변경
     if (uncommavalue >= props.maxLimit) value.value = props.maxLimit.toString();
   }
-
   commonFunction.inputNumberFormat(event.target as HTMLInputElement);
 
   emit("changeValue", value.value);

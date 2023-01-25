@@ -19,7 +19,7 @@ export async function getProduct<T>(
           accessToken: token,
         },
       });
-      console.log(`api success`);
+      // console.log(`api success`);
       return result;
     } catch (err) {
       console.log("API error");

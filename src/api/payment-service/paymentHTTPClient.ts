@@ -13,6 +13,7 @@ const instance = axios.create({
   baseURL: baseurl_test, // baseUrl 설정
   timeout: 10000, // timeout 설정
 });
+const namespace = "paymentTTPClient::";
 
 instance.interceptors.response.use(
   (response) => {
@@ -34,14 +35,16 @@ instance.interceptors.response.use(
         var token = (JSON.parse(refreshToken) as TokenDto).token;
         var userIdx = (JSON.parse(user) as user).idx;
 
+        var response: any;
         // token refresh 요청
         await axios
           .put(
-            tokenUrl + `/auth/tokens`, // token refresh api
+            baseurl_test + `/auth/tokens`, // token refresh api
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
-            console.log("재발급 성공");
+            console.log(namespace, res);
+            console.log(namespace, "재발급 성공");
             // 새로운 토큰 저장
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
@@ -52,24 +55,29 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
-            console.log("재발급 실패");
+            console.log(namespace, "재발급 실패");
           });
-
-        var response: any;
 
         await axios(originalRequest)
           .then((res) => {
+            console.log(namespace, "api 재요청 성공", res);
             response = res;
           })
           .catch((err) => {
-            console.log("api 재 요청 실패");
-            return Promise.reject(err);
+            alert("다시 로그인해주세요.");
+            // 기존 정보 지우기
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            location.href = "/account/login";
+
+            return Promise.reject(error.response.data.meta);
           });
-      }
-      // module 별로 다름 위에 참고
-      return response.data.result;
+
+        // module 별로 다름 위에 참고
+        return response.data.result;
+      } else return Promise.reject(error.response.data.meta);
     } else return Promise.reject(error.response.data.meta);
-    return Promise.reject(error.response.data.meta);
   }
 );
 

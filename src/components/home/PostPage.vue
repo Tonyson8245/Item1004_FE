@@ -210,14 +210,17 @@
               </div>
             </div>
             <div
-              class="mt-12 w-full text-center bg-everly-main text-everly-white py-3 rounded-lg"
+              class="mt-12 w-full text-center py-3 rounded-lg font-bold"
+              :class="gopaymentButtonClass"
               @click="goPaymentPage()"
             >
-              구매하기
+              {{ goPaymentbuttonContent }}
             </div>
+
             <div class="mt-3 w-full flex space-x-2 text-base">
               <div
-                class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border"
+                class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-mid_grey border cursor-pointer"
+                @click="alertMSG()"
               >
                 <img
                   src="@/assets/icon/like_mid-grey.svg"
@@ -416,8 +419,10 @@
                 </div>
               </div>
               <div class="p-1 md:pl-10 mt-2">
+                <!-- TODO 1차 출시 주석 2023-01-25 20:31:17 -->
                 <div
-                  class="w-full flex border-everly-main rounded-lg border text-everly-main md:py-3 py-2 justify-center items-center md:text-base text-sm"
+                  class="w-full flex border-everly-main rounded-lg border text-everly-main md:py-3 py-2 justify-center items-center md:text-base text-sm cursor-pointer"
+                  @click="alertMSG()"
                 >
                   <div class="flex space-x-3">
                     <img
@@ -483,14 +488,15 @@
         </div>
       </div>
       <div
-        class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 p-3 rounded-t-lg w-full sm:text-base"
+        class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 rounded-t-lg w-full sm:text-base"
         v-else-if="storeShowManagePost"
       >
-        <div>수정하기</div>
+        <div class="py-4 text-center w-full">수정하기</div>
         <hr
           class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
         />
         <div
+          class="py-4 text-center w-full"
           @click="
             toggleManagePost();
             toggleShowModal();
@@ -516,13 +522,12 @@ import { numberToKorean } from "@/common";
 import commonFunction from "@/common";
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
-import type { user } from "@/domain/user/user.interface";
-
-
 
 const chatStore = useChatStore();
 const postStore = usePostStore();
 const paymentStore = usePaymentStore();
+const mypageStore = usemypageStore();
+const { storeUserInfo } = storeToRefs(mypageStore);
 const router = useRouter();
 const route = useRoute();
 const {
@@ -609,8 +614,8 @@ const ProductPrice = computed(() => {
 //최대 구매 갯수
 const MaxQty = computed(() => {
   //최대 갯수가 없경우 -> 캐릭터의 경우 최대 갯수가 1개
-  console.log(storeMaxValue.value);
-  console.log(storeSaleUnit.value);
+  // console.log(storeMaxValue.value);
+  // console.log(storeSaleUnit.value);
 
   if (storeCategory.value == "character") return 1;
   return Math.floor(storeMaxValue.value / storeSaleUnit.value);
@@ -635,50 +640,66 @@ watch([showBuy, storeShowManagePost], () => {
 
 //payment page로 보내기
 function goPaymentPage() {
-  var idx = storePostIdx.value;
-  var title = storePostTitle.value;
-  var unit = storeSaleUnit.value;
-  var saleUnitName = storeUnitName.value;
-  var pricePerUnit = storePricePerUnit.value;
-  var orderQty = storeqty.value;
+  if (navigator.userAgent.indexOf("Mobi") > -1) {
+    alert("모바일 결제는 지원 예정입니다.");
+    return;
+  }
+  if (storeUserIdx.value != storeUserInfo.value.idx) {
+    var idx = storePostIdx.value;
+    var title = storePostTitle.value;
+    var unit = storeSaleUnit.value;
+    var saleUnitName = storeUnitName.value;
+    var pricePerUnit = storePricePerUnit.value;
+    var orderQty = storeqty.value;
 
-  var GameName = storeGameName.value;
-  var ServerName = storeServerName.value;
-  var Category = storeCategory.value;
-  var saleUnit = storeSaleUnit.value;
-  var SellerIdx = storeUserIdx.value;
+    var GameName = storeGameName.value;
+    var ServerName = storeServerName.value;
+    var Category = storeCategory.value;
+    var saleUnit = storeSaleUnit.value;
+    var SellerIdx = storeUserIdx.value;
 
-  paymentStore.setPostData(
-    idx,
-    title,
-    unit,
-    saleUnit,
-    saleUnitName,
-    pricePerUnit,
-    orderQty,
-    GameName,
-    ServerName,
-    Category,
-    SellerIdx
-  );
-  router.push("/payment");
+    paymentStore.setPostData(
+      idx,
+      title,
+      unit,
+      saleUnit,
+      saleUnitName,
+      pricePerUnit,
+      orderQty,
+      GameName,
+      ServerName,
+      Category,
+      SellerIdx
+    );
+
+    router.push("/payment");
+  }
 }
 
+const gopaymentButtonClass = ref("");
+const goPaymentbuttonContent = ref("");
 
+//값 오는 것에 맞춰서 변하게
+watch(storeUserIdx, () => {
+  if (storeUserIdx.value == storeUserInfo.value.idx)
+    gopaymentButtonClass.value = "bg-everly-light_grey text-everly-dark_grey";
+  else
+    gopaymentButtonClass.value =
+      "bg-everly-main text-everly-white cursor-pointer";
+
+  if (storeUserIdx.value == storeUserInfo.value.idx)
+    goPaymentbuttonContent.value = "자신이 작성한 글입니다.";
+  else goPaymentbuttonContent.value = "구매하기";
+});
 
 // 채팅 페이지로 보내기
 function goChatPage() {
-  const localData = localStorage.getItem("user");
-  if (localData != null) {
-    const userData = JSON.parse(localData) as user;      
-    if (userData.idx === storeUserIdx.value)  router.push('/chat');
-    
-    else  {
-      if (typeof route.query.postId === 'string') {
-        chatStore.isRoomExist(route.query.postId); 
-      }         
-    }
-  }
+
+  console.log(route.query.postId);
+  
+   chatStore.isRoomExist(route.query.postId);
+    // chatStore.getPost();  
+  // router.push('/chat/'+route.query.postId);
 }
 </script>
 

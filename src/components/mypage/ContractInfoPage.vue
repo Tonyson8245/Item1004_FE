@@ -153,8 +153,9 @@
             class="border bg-everly-white absolute right-4 md:right-3 top-[1rem] md:top-[4rem] w-[6rem] md:w-[10rem] text-center divide-y rounded-lg text-xs md:text-sm text-everly-dark_grey"
             v-if="showMore"
           >
-            <div class="px-4 py-2">사기조회</div>
-            <div class="px-4 py-2">신고하기</div>
+            <!-- TODO 1차 출시 주석 2023-01-25 20:31:17 -->
+            <div class="px-4 py-2" @click="alertMSG()">사기조회</div>
+            <div class="px-4 py-2" @click="alertMSG()">신고하기</div>
             <div class="px-4 py-2">채팅하기</div>
           </div>
           <!-- 헤더 -->
@@ -269,7 +270,9 @@
                 </div>
                 <div class="flex">
                   <div>0502-1234-5789</div>
-                  <div class="flex items-center ml-2">
+
+                  <!-- TODO 안심번호 추가할 때 넣기 -->
+                  <!-- <div class="flex items-center ml-2">
                     <div>
                       <img
                         src="@/assets/icon/safephone_grey.svg"
@@ -278,7 +281,7 @@
                       />
                     </div>
                     <div class="text-xs pl-1">안심번호사용중</div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
               <div class="flex items-center">
@@ -426,7 +429,8 @@
                 </div>
                 <div class="flex">
                   <div>0502-1234-5789</div>
-                  <div class="flex items-center ml-2">
+                  <!-- TODO 안심번호 추가할 때 넣기 -->
+                  <!-- <div class="flex items-center ml-2">
                     <div>
                       <img
                         src="@/assets/icon/safephone_grey.svg"
@@ -435,7 +439,7 @@
                       />
                     </div>
                     <div class="text-xs pl-1">안심번호사용중</div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -543,6 +547,7 @@ import { storeToRefs } from "pinia";
 import commonFunction from "@/common";
 import type { user } from "@/domain/user/user.interface";
 import router from "@/router";
+import { alertMSG } from "@/common";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);

@@ -56,12 +56,14 @@
         <div class="grid place-items-center w-full mt-2 px-0 cursor-default">
           <div class="flex divide-x divide-[#707070]">
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm" @click="moveLink('findid')">
-                아이디 찾기
-              </button>
+              <!-- TODO 1차 출시 주석 2023-01-25 20:52:35 -->
+              <!-- <button class="text-sm" @click="moveLink('findid')"> -->
+              <button class="text-sm" @click="alertMSG()">아이디 찾기</button>
             </div>
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm" @click="moveLink('changepassword')">
+              <!-- TODO 1차 출시 주석 2023-01-25 20:52:53 -->
+              <!-- <button class="text-sm" @click="moveLink('changepassword')"> -->
+              <button class="text-sm" @click="alertMSG()">
                 비밀번호 재설정
               </button>
             </div>
@@ -74,7 +76,10 @@
         </div>
       </div>
       <div class="w-full mt-5 mb-1 md:mt-12">
-        <div class="inline-flex justify-center items-center w-full">
+        <div
+          class="inline-flex justify-center items-center w-full"
+          @click="alertMSG()"
+        >
           <hr class="md:invisible w-11/12 h-px bg-everly-mid_grey border-0" />
           <span
             class="invisible md:visible absolute left-1/2 px-3 text-sm text-everly-dark_grey -translate-x-1/2 bg-white md:bg-[#fafafa]"
@@ -128,6 +133,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useauthStore } from "@/store/modules/auth/authStore";
+import { alertMSG } from "@/common";
 
 const router = useRouter();
 const authStore = useauthStore();

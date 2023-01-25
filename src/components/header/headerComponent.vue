@@ -1,9 +1,7 @@
 <template>
   <div>
     <!-- 웹 메인 헤더  -->
-    <div
-      class="flex cursor-default bg-[#fafafa] inline-block top-0 z-50 hidden md:flex"
-    >
+    <div class="flex cursor-default bg-[#fafafa] top-0 z-50 md:flex">
       <div class="flex-1 hidden md:block border-b"></div>
       <div class="flex-none hidden md:block border-b">
         <div
@@ -24,7 +22,11 @@
                 alt=""
                 @click="moveLink('/chat')"
               />
-              <img src="@/assets/icon/notify_mid-grey.svg" alt="" />
+              <img
+                src="@/assets/icon/notify_mid-grey.svg"
+                alt=""
+                @click="alertMSG()"
+              />
               <img
                 src="@/assets/icon/profile_mid-grey.svg"
                 @click="moveLink('/mypage')"
@@ -58,13 +60,23 @@
               alt=""
               @click="toggleFilter_mobile()"
             />
-            <img
+            <!--  TODO 1차 출시 주석 2023-01-25 20:23:22 -->
+            <!-- <img
               src="@/assets/icon/search_white.svg"
               alt=""
               @click="moveLink('/search')"
+            /> -->
+            <img
+              src="@/assets/icon/search_white.svg"
+              alt=""
+              @click="alertMSG()"
             />
 
-            <img src="@/assets/icon/notify_white.svg" alt="" />
+            <img
+              src="@/assets/icon/notify_white.svg"
+              alt=""
+              @click="alertMSG()"
+            />
           </div>
         </div>
       </div>
@@ -90,6 +102,7 @@ import { useFilterStore } from "@/store/modules/home/filterStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { storeToRefs } from "pinia";
 import type { user } from "@/domain/user/user.interface";
+import { alertMSG } from "@/common";
 
 //localstorage 가져오기
 const localData = localStorage.getItem("user");

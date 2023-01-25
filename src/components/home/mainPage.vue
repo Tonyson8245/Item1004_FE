@@ -1,8 +1,8 @@
 <template>
   <!-- <Test /> -->
-  <BannerWeb class="hidden md:block" />
-  <BannerTablet class="hidden sm:block md:hidden" />
-  <BannerMobile class="block sm:hidden" />
+  <BannerWeb class="hidden md:flex" />
+  <BannerTablet class="hidden sm:flex md:hidden" />
+  <BannerMobile class="flex sm:hidden" />
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>
     <div
@@ -78,7 +78,7 @@
         </div>
         <!-- 태블릿 -->
         <div
-          class="grid-cols-3 gap-0 flex-grow w-full hidden sm:grid md:hidden"
+          class="grid-cols-1 gap-0 flex-grow w-full hidden sm:grid md:hidden"
         >
           <div
             class="bg-green-100 flex justify-center items-center h-full flex-grow"
@@ -242,7 +242,6 @@ const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 
 //처음 페이지 로드 될때 동작
 onMounted(() => {
-  console.log("mainPage :: onMount");
   mainStore.$reset();
   getProductList(6);
 });

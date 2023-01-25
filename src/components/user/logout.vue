@@ -10,8 +10,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const mypageStore = usemypageStore();
 
-const localData = localStorage.getItem("refreshtoken");
-mypageStore.resetUserInfoOverview();
+mypageStore.$reset();
 
 router.push("/");
 setTimeout(() => {

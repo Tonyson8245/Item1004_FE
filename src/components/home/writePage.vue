@@ -586,16 +586,6 @@ function setCategory(Category: string) {
 //   commonStore.reset();
 //   console.log(`초기화`);
 // });
-onMounted(() => {
-  //미성년자 사용 불가능하게 하는 코드
-  var userInfo = storeUserInfo;
-  console.log(!userInfo.value.isAdult);
-
-  if (!userInfo.value.isAdult) {
-    alert("미성년자는 사용이 불가능합니다.");
-    router.go(-1);
-  }
-});
 
 onUnmounted(() => {
   commonStore.reset();
