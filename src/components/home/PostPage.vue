@@ -548,6 +548,7 @@ import commonFunction from "@/common";
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { alertMSG } from "@/common";
+import { isEmpty } from "class-validator";
 
 const chatStore = useChatStore();
 const postStore = usePostStore();
@@ -606,7 +607,7 @@ function updateQty(event: number) {
 onMounted(() => {
   var idx = route.query.postId;
 
-  if (idx?.toString() != null) {
+  if (!isEmpty(idx?.toString()) && idx != null) {
     postStore.setStorePostData(idx.toString());
   } else router.push("/");
 });

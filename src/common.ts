@@ -101,6 +101,9 @@ export function moveExternalLink(
     | "유저신고하기"
     | "문의하기"
     | "공지사항"
+    | "유튜브"
+    | "인스타"
+    | "카페"
 ) {
   var url;
   switch (value) {
@@ -130,6 +133,15 @@ export function moveExternalLink(
       break;
     case "공지사항":
       url = "https://blog.naver.com/item1004official";
+      break;
+    case "유튜브":
+      url = "https://www.youtube.com/channel/UC59eHlk7amIV45Bti3hoRWA";
+      break;
+    case "인스타":
+      url = "https://www.instagram.com/itemangel1004/";
+      break;
+    case "카페":
+      url = "https://cafe.naver.com/0item1004";
       break;
   }
   window.open(url);

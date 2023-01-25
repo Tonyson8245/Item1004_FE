@@ -63,7 +63,7 @@ export const useWriteStore = defineStore("writeStore", {
         .createPost(post)
         .then((res) => {
           console.log(res);
-          this.router.replace("/post?postId=" + result);
+          this.router.replace("/post?postId=" + res);
         })
         .catch((err) => {
           console.log(err);

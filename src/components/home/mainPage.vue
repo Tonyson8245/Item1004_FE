@@ -63,17 +63,29 @@
           <div
             class="bg-green-100 w-[373px] flex justify-center items-center h-full"
           >
-            <img src="@/assets/img/banners/bottom_1_desktop.jpeg" alt="" />
+            <img
+              src="@/assets/img/banners/bottom_1_desktop.jpeg"
+              alt=""
+              @click="moveExternalLink('유튜브')"
+            />
           </div>
           <div
             class="bg-yellow-100 w-[373px] flex justify-center items-center h-full"
           >
-            <img src="@/assets/img/banners/bottom_2_desktop.jpeg" alt="" />
+            <img
+              src="@/assets/img/banners/bottom_2_desktop.jpeg"
+              alt=""
+              @click="moveExternalLink('인스타')"
+            />
           </div>
           <div
             class="bg-red-100 w-[373px] flex justify-center items-center h-full"
           >
-            <img src="@/assets/img/banners/bottom_3_desktop.jpeg" alt="" />
+            <img
+              src="@/assets/img/banners/bottom_3_desktop.jpeg"
+              alt=""
+              @click="moveExternalLink('카페')"
+            />
           </div>
         </div>
         <!-- 태블릿 -->
@@ -83,36 +95,57 @@
           <div
             class="bg-green-100 flex justify-center items-center h-full flex-grow"
           >
-            <img src="@/assets/img/banners/bottom_1_tablet.jpeg" alt="" />
+            <img
+              src="@/assets/img/banners/bottom_1_tablet.jpeg"
+              alt=""
+              @click="moveExternalLink('유튜브')"
+            />
           </div>
           <div
             class="bg-yellow-100 flex justify-center items-center h-full flex-grow"
           >
-            <img src="@/assets/img/banners/bottom_2_tablet.jpeg" alt="" />
+            <img
+              src="@/assets/img/banners/bottom_2_tablet.jpeg"
+              alt=""
+              @click="moveExternalLink('인스타')"
+            />
           </div>
           <div
             class="bg-red-100 flex justify-center items-center h-full flex-grow"
           >
-            <img src="@/assets/img/banners/bottom_3_tablet.jpeg" alt="" />
+            <img
+              src="@/assets/img/banners/bottom_3_tablet.jpeg"
+              alt=""
+              @click="moveExternalLink('카페')"
+            />
           </div>
         </div>
         <!-- 모바일 -->
         <div class="grid sm:hidden grid-cols-1 gap-0 flex-grow w-full">
-          <div class="flex justify-center items-center h-full w-full">
+          <div
+            class="flex justify-center items-center h-full w-full"
+            @click="moveExternalLink('유튜브')"
+          >
             <img
               src="@/assets/img/banners/bottom_1_mobile.jpeg"
               alt=""
               class="w-full"
             />
           </div>
-          <div class="flex justify-center items-center h-full w-full">
+          <div
+            class="flex justify-center items-center h-full w-full"
+            @click="moveExternalLink('인스타')"
+          >
             <img
               src="@/assets/img/banners/bottom_2_mobile.jpeg"
               alt=""
               class="w-full"
             />
           </div>
-          <div class="flex justify-center items-center h-full w-full">
+          <div
+            class="flex justify-center items-center h-full w-full"
+            @click="moveExternalLink('카페')"
+          >
             <img
               src="@/assets/img/banners/bottom_3_mobile.jpeg"
               alt=""
@@ -215,6 +248,7 @@ import { onMounted, watch } from "vue";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import BannerTablet from "./components/banner/bannerTablet.vue";
+import { moveExternalLink } from "@/common";
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
