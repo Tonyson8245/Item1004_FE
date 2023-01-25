@@ -128,7 +128,7 @@ export const usePostStore = defineStore("postStore", {
       homeApi
         .getProduct(idx)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           var idxInt = parseInt(idx);
           //본인 꺼면 이거 켜야됨
           // this.storeShowManagePost = data.ShowManagePost;

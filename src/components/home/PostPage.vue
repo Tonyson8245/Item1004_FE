@@ -604,8 +604,8 @@ const ProductPrice = computed(() => {
 //최대 구매 갯수
 const MaxQty = computed(() => {
   //최대 갯수가 없경우 -> 캐릭터의 경우 최대 갯수가 1개
-  console.log(storeMaxValue.value);
-  console.log(storeSaleUnit.value);
+  // console.log(storeMaxValue.value);
+  // console.log(storeSaleUnit.value);
 
   if (storeCategory.value == "character") return 1;
   return Math.floor(storeMaxValue.value / storeSaleUnit.value);

@@ -53,6 +53,13 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log("재발급 실패");
+            alert("다시 로그인 해주세요.");
+
+            // 기존 정보 지우기
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            location.href = "/account/login";
           });
 
         var response: any;

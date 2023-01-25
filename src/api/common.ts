@@ -11,7 +11,11 @@ export function checkTokenStatus() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("user");
     alert("다시 로그인 해주세요.");
-    return false;
+    // 기존 정보 지우기
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    location.href = "/account/login";
   }
   //accessToken 값만 없을 경우
   else if (accessTokenData == null) {

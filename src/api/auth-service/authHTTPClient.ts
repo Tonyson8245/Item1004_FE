@@ -52,15 +52,20 @@ instance.interceptors.response.use(
             axios(originalRequest)
               .then((res) => {
                 response = res;
+                console.log("재발급 성공");
               })
               .catch((err) => {
-                console.log("api재 요청 실패");
+                alert("다시 로그인해주세요.");
+                // 기존 정보 지우기
+                localStorage.removeItem("user");
+                localStorage.removeItem("accessToken");
+                localStorage.removeItem("refreshToken");
+                location.href = "/account/login";
+
                 return Promise.reject(error.response.data.meta);
               });
           })
-          .catch((err) => {
-            console.log("재발급 실패");
-          });
+          .catch((err) => {});
       } else return Promise.reject(error.response.data.meta);
       // module 별로 다름 위에 참고
       return response.data.result;

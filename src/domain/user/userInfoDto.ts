@@ -17,8 +17,26 @@ export class userInfoResult {
   isEmailValid: boolean;
   isPhoneValid: boolean;
   isAccountValid: boolean;
+  constructor(payload: userInfoResult) {
+    this.idx = payload.idx;
+    this.code = payload.code;
+    this.name = payload.name;
+    this.nickname = payload.nickname;
+    this.phone = payload.phone;
+    this.email = payload.email;
+    this.birth = payload.birth;
+    this.gender = payload.gender;
+    this.image = payload.image;
+    this.bankName = payload.bankName;
+    this.bankAccount = payload.bankAccount;
+    this.contractLevelName = payload.contractLevelName;
+    this.isVerified = payload.isVerified;
+    this.isEmailValid = payload.isEmailValid;
+    this.isPhoneValid = payload.isPhoneValid;
+    this.isAccountValid = payload.isAccountValid;
+  }
 
-  isAdult() {
+  public isAdult(): boolean {
     {
       const birthdate = new Date(
         this.birth.toString().replace(/^(\d{4})(\d{2})(\d{2})$/, `$1-$2-$3`)
@@ -33,8 +51,8 @@ export class userInfoResult {
 
       const age = yearDiff + (isBeforeBirthDay ? -1 : 0);
 
-      // if (age < 19) return false;
-      return false;
+      if (age < 19) return false;
+      return true;
     }
   }
 }

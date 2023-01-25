@@ -26,11 +26,6 @@ export const useMainStore = defineStore("mainStore", {
     setstoreLoad(state: boolean) {
       this.storeLoad = state;
     },
-    //성인인지 확인
-    async isAdult() {
-      var result;
-      // await userApi.isAdult().
-    },
     async setstoreProductCard(payload: getProductCardBodyDto) {
       // this.storeProductCard.push.apply(this.storeProductCard, dummyCard);
       var result;

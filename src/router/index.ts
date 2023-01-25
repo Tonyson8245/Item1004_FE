@@ -4,6 +4,7 @@ import { useCommon } from "../store/modules/ui/common";
 import type { user } from "../domain/user/user.interface";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
+import { userInfoResult } from "@/domain/user/userInfoDto";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
@@ -343,12 +344,21 @@ router.beforeEach((to, from) => {
   //   if (to.matched[1].path == "/mypage") checkLogin(); //마이페이지의
   // }
 
+  console.log(
+    "needCheckAdult:" +
+      to.meta.needCheckAdult +
+      " needlogin:" +
+      to.meta.needLogin
+  );
+
   if (to.meta.needLogin == true) {
+    console.log("checklogin");
     checkLogin();
-    return;
-  } else if (to.meta.needCheckAdult == true) {
+  }
+
+  if (to.meta.needCheckAdult == true) {
+    console.log("checkIsAdult");
     checkIsAdult();
-    return;
   }
 
   const commonStore = useCommon();
@@ -390,19 +400,19 @@ router.beforeEach((to, from) => {
     if (token == null) {
       alert("로그인이 필요합니다.");
       router.replace(from);
+      return;
     }
   }
   //성인 여부 확인
   function checkIsAdult() {
     var store = usemypageStore();
     var { storeUserInfo } = storeToRefs(store);
-    //미성년자 사용 불가능하게 하는 코드
-    var userInfo = storeUserInfo;
-    console.log(!userInfo.value.isAdult);
 
-    if (!userInfo.value.isAdult) {
-      alert("미성년자는 사용이 불가능합니다.");
+    //미성년자 사용 불가능하게 하는 코드
+    var userInfo = new userInfoResult(storeUserInfo.value);
+    if (!userInfo.isAdult()) {
       router.replace(from);
+      return;
     }
   }
 });

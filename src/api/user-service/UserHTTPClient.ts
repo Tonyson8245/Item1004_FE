@@ -40,7 +40,7 @@ instance.interceptors.response.use(
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
-            console.log(res);
+            console.log("재발급 성공");
             // 새로운 토큰 저장
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
@@ -52,6 +52,11 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             alert("다시 로그인해주세요");
+            // 기존 정보 지우기
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            location.href = "/account/login";
           });
         var rsponse: any;
 
@@ -66,8 +71,7 @@ instance.interceptors.response.use(
       }
       // module 별로 다름 위에 참고
       return rsponse;
-    } else return Promise.reject(error);
-    return Promise.reject(error.response.data.meta);
+    } else return Promise.reject(error.response.data.meta);
   }
 );
 

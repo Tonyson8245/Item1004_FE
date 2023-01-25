@@ -4,7 +4,6 @@ import * as authApi from "@/api/auth-service/index";
 import type { term } from "@/domain/user/serviceTermList.interface";
 import { useLocalStorage } from "@vueuse/core";
 import type * as authDto from "@/domain/auth/index";
-import type { userPersonalDataResult } from "@/domain/user/userPersonalDataDto";
 
 export const useauthStore = defineStore("authStore", {
   state: () => ({
