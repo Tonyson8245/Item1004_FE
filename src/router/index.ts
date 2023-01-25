@@ -411,6 +411,7 @@ router.beforeEach((to, from) => {
     //미성년자 사용 불가능하게 하는 코드
     var userInfo = new userInfoResult(storeUserInfo.value);
     if (!userInfo.isAdult()) {
+      alert("미성년자는 이용이 불가능한 기능니다.");
       router.replace(from);
       return;
     }

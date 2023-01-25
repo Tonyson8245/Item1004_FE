@@ -11,6 +11,8 @@ const instance = axios.create({
   timeout: 10000, // timeout 설정
 });
 
+const namespace = "authHTTPClient::";
+
 instance.interceptors.response.use(
   (response) => {
     //성공 시에는 result 값만 돌려보넴
@@ -39,7 +41,8 @@ instance.interceptors.response.use(
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
-            console.log(res);
+            console.log(namespace, res);
+            console.log(namespace, "재발급 성공");
             // 새로운 토큰 저장
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
@@ -48,27 +51,30 @@ instance.interceptors.response.use(
 
             originalRequest.headers.accessToken =
               res.data.result.accessToken.token;
-
-            axios(originalRequest)
-              .then((res) => {
-                response = res;
-                console.log("재발급 성공");
-              })
-              .catch((err) => {
-                alert("다시 로그인해주세요.");
-                // 기존 정보 지우기
-                localStorage.removeItem("user");
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
-                location.href = "/account/login";
-
-                return Promise.reject(error.response.data.meta);
-              });
           })
-          .catch((err) => {});
+          .catch((err) => {
+            console.log(namespace, "재발급 실패");
+          });
+
+        await axios(originalRequest)
+          .then((res) => {
+            console.log(namespace, "api 재요청 성공", res);
+            response = res;
+          })
+          .catch((err) => {
+            alert("다시 로그인해주세요.");
+            // 기존 정보 지우기
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            location.href = "/account/login";
+
+            return Promise.reject(error.response.data.meta);
+          });
+
+        // module 별로 다름 위에 참고
+        return response.data.result;
       } else return Promise.reject(error.response.data.meta);
-      // module 별로 다름 위에 참고
-      return response.data.result;
     } else return Promise.reject(error.response.data.meta);
   }
 );
