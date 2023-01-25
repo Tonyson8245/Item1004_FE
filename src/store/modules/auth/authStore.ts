@@ -200,7 +200,9 @@ export const useauthStore = defineStore("authStore", {
       authApi
         .deleteToken()
         .then((res) => {
-          console.log(res);
+          localStorage.removeItem("user");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
         })
         .catch((err) => {
           console.log(err);

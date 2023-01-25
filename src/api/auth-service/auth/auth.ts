@@ -51,5 +51,5 @@ export async function deleteToken<T>(): Promise<logoutResponseDto | undefined> {
       console.log(`api failed`);
       return Promise.reject(err);
     }
-  }
+  } else console.log("token error");
 }

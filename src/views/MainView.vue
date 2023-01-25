@@ -102,18 +102,6 @@ function toggleSearchWeb() {
   }
 }
 
-//OnMounted()
-onMounted(() => {
-  // const localData = localStorage.getItem("refreshToken");
-  // const token =
-  //   localData == null ? `` : (JSON.parse(localData) as TokenDto).token;
-  // if (token != "") {
-
-  // }
-  console.log(">>>onMounted :: getUserInfo");
-  mypageStore.getUserInfo();
-});
-
 //웹 필터 검색창 비활성화
 function toggleSearch() {
   commonStore.setstoreShowGameSimilar(false);

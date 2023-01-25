@@ -4,6 +4,7 @@ import { useLocalStorage } from "@vueuse/core";
 export function checkTokenStatus() {
   var refreshTokenData = localStorage.getItem("refreshToken");
   var accessTokenData = localStorage.getItem("accessToken");
+
   //refreshToken 이 존재 하지 않는 경우
   if (refreshTokenData == null) {
     // 전체 토큰 정보지우기

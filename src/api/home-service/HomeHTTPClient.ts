@@ -44,7 +44,6 @@ instance.interceptors.response.use(
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
-            console.log(namespace, res);
             console.log(namespace, "재발급 성공");
             // 새로운 토큰 저장
             localStorage.removeItem("accessToken");
@@ -61,7 +60,7 @@ instance.interceptors.response.use(
 
         await axios(originalRequest)
           .then((res) => {
-            console.log(namespace, "api 재요청 성공", res);
+            console.log(namespace, "api 재요청 성공");
             response = res;
           })
           .catch((err) => {

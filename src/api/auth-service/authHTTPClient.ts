@@ -16,6 +16,7 @@ const namespace = "authHTTPClient::";
 instance.interceptors.response.use(
   (response) => {
     //성공 시에는 result 값만 돌려보넴
+    console.log(namespace, "http 요청 성공");
     return response.data.result;
   },
   async (error) => {
@@ -23,6 +24,8 @@ instance.interceptors.response.use(
       config,
       response: { status },
     } = error;
+    console.log(namespace, "http 요청 실패");
+
     if (status === 401) {
       const originalRequest = config;
 
@@ -41,7 +44,7 @@ instance.interceptors.response.use(
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
-            console.log(namespace, res);
+            console.log(namespace);
             console.log(namespace, "재발급 성공");
             // 새로운 토큰 저장
             localStorage.removeItem("accessToken");
@@ -58,7 +61,7 @@ instance.interceptors.response.use(
 
         await axios(originalRequest)
           .then((res) => {
-            console.log(namespace, "api 재요청 성공", res);
+            console.log(namespace, "api 재요청 성공");
             response = res;
           })
           .catch((err) => {

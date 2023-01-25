@@ -135,8 +135,8 @@ export const usemypageStore = defineStore("mypageStore", {
     resetUserInfo() {
       this.storeUserInfo = {} as userInfoResult;
     },
-    getUserInfo() {
-      authApi
+    async getUserInfo() {
+      await authApi
         .getUserInfo()
         .then((res) => {
           this.storeUserInfo = res;
