@@ -20,4 +20,4 @@ store.use(({ store }) => {
   store.router = markRaw(router);
 });
 
-app.use(vueDebounce).use(router).use(store).mount("#app");
+app.use(store).use(vueDebounce).use(router).mount("#app");

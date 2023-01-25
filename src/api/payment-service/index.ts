@@ -1,2 +1,10 @@
 export * from "./mileage/mileage";
-export * as paymentApi from "./payment/payment";
+export * from "./payment/payment";
+export * from "./result/getcontractResult";
+export * from "./result/getchargeResult";
+export * from "./contract/getContractPostDetail";
+export * from "./contract/getContractPostList";
+export * from "./mileage/withdrawMileage";
+export * from "./mileage/chechUseablePoint";
+export * from "./contract/putContractTakeover";
+export * from "./contract/putContractTake";

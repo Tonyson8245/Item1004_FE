@@ -11,35 +11,39 @@
         >
           <div class="flex w-full space-x-4 border-b p-4">
             <!--팔래요 활성화 -->
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+            <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'sell'"
+              @click="toggleSellBuy('sell')"
+            >
               <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
-              <span
-                class="text-everly-main font-bold"
-                @click="toggleSellBuy('sell')"
-                >팔래요</span
-              >
+              <span class="text-everly-main font-bold">팔래요</span>
             </div>
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+            <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'sell'"
+              @click="toggleSellBuy('buy')"
+            >
               <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-              <span class="text-everly-dark_grey" @click="toggleSellBuy('buy')"
-                >살래요</span
-              >
+              <span class="text-everly-dark_grey">살래요</span>
             </div>
 
             <!--살래요 활성화 -->
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+            <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'buy'"
+              @click="toggleSellBuy('sell')"
+            >
               <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-              <span class="text-everly-dark_grey" @click="toggleSellBuy('sell')"
-                >팔래요</span
-              >
+              <span class="text-everly-dark_grey">팔래요</span>
             </div>
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+            <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'buy'"
+              @click="toggleSellBuy('buy')"
+            >
               <img src="@/assets/icon/check_mobile_red.svg" alt="" />
-              <span
-                class="text-everly-red font-bold"
-                @click="toggleSellBuy('buy')"
-                >살래요</span
-              >
+              <span class="text-everly-red font-bold">살래요</span>
             </div>
           </div>
         </div>
@@ -51,7 +55,7 @@
             <div class="col-span-9">
               <div class="flex space-x-28 text-xl cursor-pointer">
                 <!-- 팔래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <div class="flex space-x-2" v-if="storepostType == 'sell'">
                   <img
                     src="@/assets/icon/check_web_blue.svg"
                     alt=""
@@ -63,7 +67,7 @@
                     >팔래요</span
                   >
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <div class="flex space-x-2" v-if="storepostType == 'sell'">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
@@ -77,7 +81,7 @@
                 </div>
 
                 <!-- 살래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <div class="flex space-x-2" v-if="storepostType == 'buy'">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
@@ -89,7 +93,7 @@
                     >팔래요</span
                   >
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <div class="flex space-x-2" v-if="storepostType == 'buy'">
                   <img
                     src="@/assets/icon/check_web_red.svg"
                     alt=""
@@ -437,8 +441,14 @@
             </div>
           </div>
 
-          <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1">
+          <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1 pt-0">
             <!-- 모바일 게임/서버 검색-->
+            <div
+              class="text-xs text-everly-dark_grey col-span-9 flex md:hidden"
+            >
+              <img src="@/assets/icon/info_grey.svg" alt="" class="w-3 pr-1" />
+              원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+            </div>
             <div class="col-span-2 block md:hidden">게임명</div>
             <div class="col-span-9 block md:hidden">
               <div class="flex">
@@ -476,6 +486,14 @@
             </div>
             <div class="col-span-1 hidden md:block"></div>
             <div class="col-span-9 hidden md:block">
+              <div class="text-xs text-everly-dark_grey hidden md:flex">
+                <img
+                  src="@/assets/icon/info_grey.svg"
+                  alt=""
+                  class="w-4 pr-1"
+                />
+                원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+              </div>
               <div class="flex">
                 <div class="flex w-1/2">
                   <div class="flex-none py-2">게임검색</div>
@@ -506,7 +524,7 @@
         </div>
         <!-- 키워드가 있고 선택하는 것에 따라 내용이 달라짐 -->
         <div
-          v-if="storeGameKeyword != '' && storeServerKeyword != ''"
+          v-if="commonStoreGameKeyword != '' && commonStoreServerKeyword != ''"
           class="p-5"
         >
           <div v-if="storeCategory == 'gameMoney'"><writeGamemoney /></div>
@@ -532,10 +550,10 @@ import writeItem from "./components/writeCategory/writeItem.vue";
 import WriteCharacter from "./components/writeCategory/writeCharacter.vue";
 import WriteEtc from "./components/writeCategory/writeEtc.vue";
 import { onUnmounted, onMounted } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { useRouter } from "vue-router";
 
-const writeStore = useWriteStore();
 const commonStore = useCommonStore();
-const { storeSellBuy } = storeToRefs(writeStore);
 const {
   storeGameSimilar,
   storeShowGameSimilar,
@@ -543,31 +561,49 @@ const {
   storeServerSimilar,
   storeShowServerSimilar,
   storeCategory,
-  storeGameKeyword,
-  storeServerKeyword,
+  commonStoreGameKeyword,
+  commonStoreServerKeyword,
 } = storeToRefs(commonStore);
+const mypageStore = usemypageStore();
+const { storeUserInfo } = storeToRefs(mypageStore);
+const router = useRouter();
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
 function goPay() {}
 
 function toggleSellBuy(status: string) {
-  writeStore.setstoreSellBuy(status);
+  writeStore.setstorepostType(status);
 }
 
 function setCategory(Category: string) {
   commonStore.setstoreCategory(Category);
+  writeStore.setstoreCategory(Category);
 }
 
 // 생명주기, 들어가고 나갈때 초기화
+// onMounted(() => {
+//   commonStore.reset();
+//   console.log(`초기화`);
+// });
 onMounted(() => {
-  commonStore.reset();
-  console.log(`초기화`);
+  //미성년자 사용 불가능하게 하는 코드
+  var userInfo = storeUserInfo;
+  console.log(!userInfo.value.isAdult);
+
+  if (!userInfo.value.isAdult) {
+    alert("미성년자는 사용이 불가능합니다.");
+    router.go(-1);
+  }
 });
+
 onUnmounted(() => {
   commonStore.reset();
   console.log(`초기화`);
 });
+
+const writeStore = useWriteStore();
+const { storepostType } = storeToRefs(writeStore);
 </script>
 
 <style scoped></style>

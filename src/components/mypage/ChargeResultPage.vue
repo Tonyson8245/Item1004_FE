@@ -32,40 +32,40 @@
         >
           <div class="md:text-xl text-sm space-y-3 md:space-y-8">
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">충전금액</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">충전금액</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>{{ chargeAmount.toLocaleString() }} 원</div>
+                <div>{{ chargeTotalPrice }} 원</div>
               </div>
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">충전마일리지</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">충전마일리지</div>
               <div class="grow text-right md:text-left space-y-2">
-                <div>{{ chargeMileagAmount.toLocaleString() }} 원</div>
+                <div>{{ chargeChargePoint }} 원</div>
               </div>
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">결제번호</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">결제번호</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
-                  <div>{{ paymentId }}</div>
+                  <div>{{ data.tid }}</div>
                 </div>
               </div>
             </div>
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">결제상태</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">결제상태</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
-                  <div>{{ paymentStatus }}</div>
+                  <div>결제완료</div>
                 </div>
               </div>
             </div>
             <div class="flex">
-              <div class="font-bold w-14 md:w-[10.5rem]">결제방법</div>
+              <div class="font-bold w-20 md:w-[10.5rem]">결제방법</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
-                  <div>{{ paymentMethod }}</div>
+                  <div>{{ data.payMethod }}</div>
                 </div>
               </div>
             </div>
@@ -88,20 +88,20 @@
             <div class="flex">
               <div class="font-bold md:w-[10.5rem]">충전 후 마일리지</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ mileagefterCharge.toLocaleString() }} 원
+                {{ chargeafterChargePoint }} 원
               </div>
             </div>
             <div class="flex">
               <div class="font-bold md:w-[10.5rem]">출금가능 마일리지</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ milageWithdrawlable.toLocaleString() }} 원
+                {{ chargewithdrawalPoint }} 원
               </div>
             </div>
 
             <div class="flex">
               <div class="font-bold md:w-[10.5rem]">구매전용 마일리지</div>
               <div class="col-span-3 grow text-right md:text-left">
-                {{ mileageOnlyforBuy.toLocaleString() }} 원
+                {{ chargepurchasePoint }} 원
               </div>
             </div>
           </div>
@@ -135,61 +135,53 @@
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { numberToKorean } from "@/common";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
+import { chargeCompleteBody } from "@/domain/payment/chargeCompleteDto";
 const router = useRouter();
 const route = useRoute();
 const paymentStore = usePaymentStore();
 
 const {
-  storeTotalQty,
-  storePostTitle,
-  storeProductPrice,
-  storePricePerUnit,
-  storeMinValue,
-  storeUnitName,
-  storeOrderQty,
-  storeDiscountCoupon,
-  storeDiscountMileage,
-  storeResultAmt,
-  storeResultTid,
-  storeResultPayDate,
-  storeResultPayMethod,
-
-  storeGameName,
-  storeServerName,
-  storeCategory,
+  storeChargeResult,
+  chargeTotalPrice,
+  chargeChargePoint,
+  chargeafterChargePoint,
+  chargewithdrawalPoint,
+  chargepurchasePoint,
 } = storeToRefs(paymentStore);
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
 function goPay() {}
 
-const productInfo = computed(() => {
-  return (
-    numberToKorean(storeMinValue.value) +
-    " " +
-    storeUnitName.value +
-    " " +
-    storePricePerUnit.value.toLocaleString() +
-    `원 / ` +
-    storeOrderQty.value +
-    "개 (" +
-    numberToKorean(storeTotalQty.value) +
-    " " +
-    storeUnitName.value +
-    ")"
-  );
-});
+const data = storeChargeResult;
 
-const chargeAmount = ref(50000);
-const chargeMileagAmount = ref(47250);
-const paymentId = ref("A1234-67890");
-const paymentStatus = ref("결제완료");
-const paymentMethod = ref("신용카드");
-const mileagefterCharge = ref(10250);
-const milageWithdrawlable = ref(47250);
-const mileageOnlyforBuy = ref(53000);
+const tid = ref("");
+const amt = ref("");
+const payMehod = ref("");
+const ediDate = ref("");
+const userIdx = ref("");
+
+onMounted(() => {
+  var querytid = route.query.tid?.toString();
+  var queryamt = route.query.amt?.toString();
+  var querypayMehod = route.query.payMethod?.toString();
+  var queryediDate = route.query.ediDate?.toString();
+  var queryuserIdx = route.query.userIdx?.toString();
+
+  tid.value = querytid == undefined ? "" : querytid;
+  amt.value = queryamt == undefined ? "" : queryamt;
+  payMehod.value = querypayMehod == undefined ? "" : querypayMehod;
+  ediDate.value = queryediDate == undefined ? "" : queryediDate;
+  userIdx.value = queryuserIdx == undefined ? "" : queryuserIdx;
+
+  var payload = new chargeCompleteBody(
+    tid.value,
+    payMehod.value,
+    parseInt(userIdx.value)
+  );
+  paymentStore.getChargeCompleteResult(payload);
+});
 </script>
 
 <style scoped></style>

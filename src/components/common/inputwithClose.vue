@@ -21,16 +21,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const emit = defineEmits(["getModel"]);
+const emit = defineEmits(["getModel", "clearContent"]);
 const props = defineProps({
   propsPlaceholder: String,
   propsClass: String,
+  modelValue: null,
 });
 
 let content = ref("");
 
 function refresh() {
   content.value = "";
+  emit("clearContent");
 }
 </script>
 

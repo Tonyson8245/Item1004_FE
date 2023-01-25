@@ -3,9 +3,15 @@
 </template>
 
 <script setup lang="ts">
+import type { TokenDto } from "@/domain/auth";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+const mypageStore = usemypageStore();
+
+const localData = localStorage.getItem("refreshtoken");
+mypageStore.resetUserInfoOverview();
 
 router.push("/");
 setTimeout(() => {

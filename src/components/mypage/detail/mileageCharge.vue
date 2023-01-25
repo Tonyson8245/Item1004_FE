@@ -152,7 +152,7 @@
               충전 금액 선택
             </div>
             <div
-              class="grid grid-cols-3 md:flex gap-2 text-sm md:text-base text-everly-dark_grey"
+              class="grid grid-cols-3 sm:grid-cols-6 md:flex gap-2 text-sm md:text-base text-everly-dark_grey"
             >
               <div
                 v-for="(item, index) in amountlist"
@@ -180,8 +180,8 @@
                   type="radio"
                   name="radio"
                   :id="`직접입력`"
-                  v-model="amount"
                   :value="`직접입력`"
+                  v-model="amount"
                 />
                 <span />
               </label>
@@ -225,6 +225,7 @@
           <div
             class="flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-white"
             :class="chargeButtonClass"
+            @click="charge()"
           >
             충전하기
           </div>
@@ -244,9 +245,15 @@
 import { ref, watch } from "vue";
 import PaymentMethodVue from "../components/paymentMethod.vue";
 import Modal from "../components/chargeLimitInfoModal.vue";
-import InputwithClose from "@/components/common/inputwithClose.vue";
+import { payment } from "@/api/payment-module";
+import { useRouter } from "vue-router";
+import { usePaymentStore } from "@/store/modules/home/paymentStore";
+import { storeToRefs } from "pinia";
+import type { user } from "@/domain/user/user.interface";
+const router = useRouter();
 
-const paymentMethod = ref("");
+const paymentMethod = ref("card");
+const paymentStore = usePaymentStore();
 
 function setpaymentMethod(string: string) {
   if (string != "") paymentMethod.value = string;
@@ -262,27 +269,62 @@ const amountlist = [
 ];
 
 // 가격 정보
-const amount = ref("");
+const amount = ref("0");
 //직접입력
 const amountInput = ref("");
 function getamountInput(input: string) {
-  if (amount.value == "직접입력") amountInput.value = input;
-  else amountInput.value = "";
+  if (amount.value == "직접입력") {
+    if (input != "") {
+      amountInput.value = input;
+    }
+  } else amountInput.value = "";
 }
 
-// 최종가겨
+// 최종가격
 const finalamount = ref(0);
 watch([amount, amountInput], () => {
-  if (amountInput.value != "") finalamount.value = parseInt(amountInput.value);
-  else finalamount.value = parseInt(amount.value);
+  if (amount.value == "직접입력") {
+    if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
+    else finalamount.value = parseInt(amountInput.value) * 0.95;
+  } else finalamount.value = parseInt(amount.value) * 0.95;
 });
 
-// 충전하기 번튼 활서오하
+// 충전하기 번튼 활성하
 const chargeButtonClass = ref("bg-everly-mid_grey");
 watch(finalamount, () => {
   if (finalamount.value > 0) chargeButtonClass.value = `bg-everly-main`;
   else chargeButtonClass.value = `bg-everly-mid_grey`;
+
+  paymentStore.chargestoreProductPrice(finalamount.value);
+  paymentStore.chargestoreFinalPrice(finalamount.value);
+  paymentStore.setPostTitle("마일리지충전");
 });
+
+//충전(결제)
+// const fee = ref(0.1);
+// const
+const { storefeePrice, storeFinalPrice, storeProductPrice } =
+  storeToRefs(paymentStore);
+
+function charge() {
+  //유저 정보 가져오기
+  const localData = localStorage.getItem("user");
+  if (localData != null) {
+    const userIdx = (JSON.parse(localData) as user).idx;
+
+    // payment(router, "contract", "card", 1, 10, 100, 110, 0, 1, 2); // 거래 (신용카드)
+    payment(
+      router,
+      "chargePoint",
+      "card",
+      userIdx,
+      storefeePrice.value,
+      storeProductPrice.value,
+      storeFinalPrice.value
+    ); // 충전 (신용카드)
+    // payment(router, "onlyPoint", "card", 1, 10, 100, 110, 110, 1, 2); // 마일리지만 사용
+  } else console.log("유저 정보가 없습니다.");
+}
 </script>
 
 <style scoped>
@@ -326,6 +368,7 @@ label span:after {
   height: 20px;
   position: absolute;
   left: 0px;
+  bottom: 0px;
   background-size: cover;
   opacity: 0;
   vertical-align: middle;

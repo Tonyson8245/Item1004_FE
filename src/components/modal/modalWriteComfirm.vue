@@ -17,7 +17,7 @@
           🤚 잠깐 이 정보가 맞나요?
         </div>
         <div
-          class="p-5 text-everly-dark_grey md:p-14 md:pb-5 lg:text-base lg:pt-9"
+          class="p-5 text-everly-dark_grey md:p-10 md:pb-5 lg:text-base lg:pt-9"
         >
           <div class="lg:text-center text-left">
             거래 등록 시 회원정보 페이지에 등록된 휴대폰 번호, 이메일 주소를
@@ -28,11 +28,11 @@
           >
             <div class="none flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/profile_grey.svg" class="pr-2" alt="" />
-              <div>아이디 item1004</div>
+              <div>이름 : {{ storeUserInfoOverview.name }}</div>
             </div>
             <div class="grow flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/phone_grey.svg" class="pr-2" alt="" />
-              <div>핸드폰번호 010-1234-56**</div>
+              <div>핸드폰번호 : {{ storeUserInfoOverview.phone }}</div>
             </div>
             <div class="none flex md:justify-center items-center w-full py-1">
               <img src="@/assets/icon/safephone_grey.svg" class="pr-2" alt="" />
@@ -63,7 +63,10 @@
           </div>
           <div
             class="flex-1 rounded-lg py-2 bg-everly-main cursor-pointer"
-            @click="emit('select', `comfirm`)"
+            @click="
+              create();
+              emit('select', `comfirm`);
+            "
           >
             확인완료
           </div>
@@ -74,11 +77,29 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { useauthStore } from "@/store/modules/auth/authStore";
+import { useWriteStore } from "@/store/modules/home/writeStore";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 
 const emit = defineEmits(["select"]);
 const props = defineProps({
   showModal: Boolean,
+  postType: String,
 });
+const writeStore = useWriteStore();
+const router = useRouter();
+function create() {
+  if (props.postType != undefined)
+    writeStore.createPost(props.postType).then((res) => {
+      router.replace("/post?postId=" + res);
+    });
+}
+
+//유저 정보 가져오기
+const mypageStore = usemypageStore();
+const { storeUserInfoOverview } = storeToRefs(mypageStore);
 </script>
 <style scoped></style>

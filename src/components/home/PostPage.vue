@@ -15,7 +15,7 @@
         <div
           class="flex justify-between items-center md:justify-end gap-8 text-everly-dark_grey text-sm md:text-base"
         >
-          <span class="">10분전 올림</span>
+          <span class="">{{ commonFunction.timeForToday(storecreatAt) }}</span>
           <div class="hidden md:flex gap-5">
             <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
@@ -45,13 +45,13 @@
             class="text-everly-white w-[64px] md:w-[68px] text-center text-sm md:text-base"
           >
             <div
-              class="bg-everly-main rounded-md py-1 w-full"
-              v-if="SellBuy == `sell`"
+              class="bg-everly-red rounded-md py-1 w-full"
+              v-if="storeSellBuy == `buy`"
             >
-              팔래요
-            </div>
-            <div class="bg-everly-red rounded-md py-1 w-full" v-else>
               살래요
+            </div>
+            <div class="bg-everly-main rounded-md py-1 w-full" v-else>
+              팔래요
             </div>
           </div>
           <div class="text-lg md:text-xl md:px-4 px-2">
@@ -69,15 +69,15 @@
           >
             <div class="flex md:pt-[0.5rem]">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25rem] md:w-[7rem] flex-none font-bold text-right md:text-left pr-2 md:pr-0"
               >
                 카테고리
               </div>
-              <div class="grow md:text-xl">게임머니</div>
+              <div class="grow md:text-xl">{{ storeCategoryName }}</div>
             </div>
             <div class="flex md:pt-[0.5rem]">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25rem] md:w-[7rem] flex-none font-bold text-right md:text-left pr-2 md:pr-0"
               >
                 게임명
               </div>
@@ -85,37 +85,95 @@
             </div>
             <div class="flex md:pt-[0.5rem]">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25rem] md:w-[7rem] flex-none font-bold text-right md:text-left pr-2 md:pr-0"
               >
                 서버명
               </div>
               <div class="grow md:text-xl">{{ storeServerName }}</div>
             </div>
-            <div class="flex md:pt-[1.5rem]">
+            <div
+              class="block md:text-lg md:space-y-9"
+              v-if="storeCharacterlevel != 0"
+            >
+              <div class="md:flex space-y-2 md:space-y-0">
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    직업
+                  </div>
+                  <div class="md:w-[13.5rem]">{{ storeCharacterRoleName }}</div>
+                </div>
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[3.5rem] font-bold text-right md:text-left pr-2 md:pr-0"
+                  >
+                    레벨
+                  </div>
+                  <div>{{ storeCharacterlevel }}</div>
+                </div>
+              </div>
+              <div class="md:flex space-y-2 md:space-y-0 mt-2 md:mt-0">
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    계정종류
+                  </div>
+                  <div class="md:w-[5.2rem]">{{ storeregistration }}</div>
+                </div>
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    <span class="md:hidden">결제내역</span>
+                    <span class="hidden md:block">결제내역유무</span>
+                  </div>
+                  <div class="md:w-[4.1rem]">
+                    {{ storehasInGamePaymentHistoryOX }}
+                  </div>
+                </div>
+                <div class="flex">
+                  <div
+                    class="w-[4.25rem] md:w-[7rem] font-bold text-right pr-2 md:pr-0 md:text-left"
+                  >
+                    <span class="md:hidden">이중연동</span>
+                    <span class="hidden md:block">이중연동유무</span>
+                  </div>
+                  <div class="">{{ storeisDuplicatedSyncOX }}</div>
+                </div>
+              </div>
+            </div>
+            <div class="flex" v-else-if="storeCharacterlevel == 0">
               <div
-                class="w-[60px] md:w-[63px] mr-2 md:mr-6 flex-none font-bold text-right"
+                class="w-[4.25] md:w-[7rem] mr-2 md:mr-0 flex-none font-bold text-right md:text-left"
               >
                 판매정보
               </div>
               <div class="grow md:text-xl">
                 <div class="flex flex-wrap pb-3 gap-x-10">
                   <div class="">
-                    최소구매수량 {{ numberToKorean(storeMinValue) }} 게임머니
+                    최소구매수량 {{ numberToKorean(storeMinValue) }}
+                    {{ storeProductunit }}
                   </div>
                   <div>
-                    최대구매수량 {{ numberToKorean(storeMaxValue) }} 게임머니
+                    최대구매수량 {{ numberToKorean(storeMaxValue) }}
+                    {{ storeProductunit }}
                   </div>
                 </div>
                 <div
                   class="font-bold space-x-5 md:block hidden text-lg md:text-xl"
                 >
-                  <span>{{ numberToKorean(storeUnitValue) }} 게임머니당</span
+                  <span
+                    >{{ numberToKorean(storeSaleUnit) }}
+                    {{ storeProductunit }}당</span
                   ><span class=""
                     >{{ storePricePerUnit.toLocaleString() }}원</span
                   >
                 </div>
               </div>
             </div>
+            <div v-else></div>
           </div>
           <!-- 웹 결제 페이지 -->
           <div class="flex-1 text-lg pl-20 hidden md:block">
@@ -123,11 +181,13 @@
               <div class="flex-1 font-bold">수량</div>
               <counter
                 @getValue="updateQty($event)"
-                :qty="qty"
+                :qty="storeqty"
                 :maxQty="MaxQty"
                 class="flex-none md:w-32 md:h-9"
               />
-              <div class="flex-1 text-right">{{ TotalQty }}</div>
+              <div class="flex-1 text-right">
+                {{ parseInt(TotalQty) * storeSaleUnit }} {{ storeProductunit }}
+              </div>
             </div>
             <div>
               <div class="text-everly-dark_grey text-xs py-3 px-2">
@@ -139,7 +199,9 @@
               <div class="font-bold">총 결제금액</div>
               <div class="flex space-x-4 items-center">
                 <div class="text-everly-dark_grey text-base">
-                  총수량 ({{ qty }}개) / {{ TotalQty }}
+                  총수량 ({{ storeqty }} 개) /
+                  {{ parseInt(TotalQty) * storeSaleUnit }}
+                  {{ storeProductunit }}
                 </div>
                 <div class="flex text-2xl font-bold items-center">
                   {{ ProductPrice
@@ -149,7 +211,7 @@
             </div>
             <div
               class="mt-12 w-full text-center bg-everly-main text-everly-white py-3 rounded-lg"
-              @click="router.push('/payment')"
+              @click="goPaymentPage()"
             >
               구매하기
             </div>
@@ -166,7 +228,7 @@
               </div>
               <div
                 class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border cursor-pointer"
-                @click="router.push('/chat')"
+                @click="goChatPage"
               >
                 <img
                   src="@/assets/icon/chat_mid-grey.svg"
@@ -185,8 +247,12 @@
         <!-- 모바일용 단위가격당 가겨 -->
         <div class="block md:hidden">
           <div class="font-bold space-x-5 flex justify-between py-3">
-            <span>8억메소당</span
-            ><span class="text-lg md:text-xl">26,046 원</span>
+            <span>
+              {{ numberToKorean(storeSaleUnit) }}
+              {{ storeProductunit }}당</span
+            ><span class="text-lg md:text-xl"
+              >{{ storePricePerUnit.toLocaleString() }}원</span
+            >
           </div>
           <hr
             class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
@@ -198,7 +264,7 @@
           <div
             class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem]"
           >
-            각종 게임 머니 판매 합니다! 구매 후 채팅 주시면 바로 보내드립니다
+            {{ storeContent }}
           </div>
         </div>
         <!-- 웹 안전 확인 -->
@@ -250,20 +316,7 @@
             >
               <div class="rounded-lg overflow-hidden">
                 <img
-                  v-if="storeUserIdx % 3 == 0"
-                  src="@/assets/img/profile_red.jpeg"
-                  alt=""
-                  class="w-12 md:w-28 rounded-lg"
-                />
-                <img
-                  v-else-if="storeUserIdx % 3 == 1"
-                  src="@/assets/img/profile_yellow.jpeg"
-                  alt=""
-                  class="w-12 md:w-28 rounded-lg"
-                />
-                <img
-                  v-else
-                  src="@/assets/img/profile_green.jpeg"
+                  :src="'/assets/img/' + storeUserImg"
                   alt=""
                   class="w-12 md:w-28 rounded-lg"
                 />
@@ -278,29 +331,34 @@
                       src="@/assets/icon/check_circle_blue.svg"
                       alt=""
                       class="px-1 w-5 md:w-6 mt-1"
+                      v-if="storeUserIsVerfied"
                     />
                   </div>
                 </div>
-                <div class="text-sm md:text-base">{{ storeUserCode }}</div>
-                <div
-                  class="text-sm md:text-base flex space-x-1 space-x-2 items-center"
-                >
+                <div class="flex">
+                  <div class="hidden md:block mr-2">유저코드</div>
+                  <div class="text-sm md:text-base">#{{ storeUserCode }}</div>
+                </div>
+                <div class="text-sm md:text-base flex space-x-2 items-center">
                   <div class="hidden md:block">인증상태</div>
                   <div
                     class="flex text-[0.625rem] md:text-xs justify-center items-center space-x-1"
                   >
                     <div
-                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
+                      class="border rounded-lg px-3 md:py-1"
+                      :class="storephoneVerifyClass"
                     >
                       휴대폰
                     </div>
                     <div
-                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
+                      class="border rounded-lg px-3 md:py-1"
+                      :class="storeemailVerifyClass"
                     >
                       이메일
                     </div>
                     <div
-                      class="border-everly-main border rounded-lg px-3 md:py-1 text-everly-main"
+                      class="border rounded-lg px-3 md:py-1"
+                      :class="storebankaccountlVerifyClass"
                     >
                       계좌번호
                     </div>
@@ -312,20 +370,7 @@
               >
                 <div class="h-6 w-6 md:h-14 md:w-14">
                   <img
-                    v-if="storeUserIdx % 3 == 0"
-                    src="@/assets/icon/class_bronze.svg"
-                    alt=""
-                    class="w-full"
-                  />
-                  <img
-                    v-else-if="storeUserIdx % 3 == 1"
-                    src="@/assets/icon/class_silber.svg"
-                    alt=""
-                    class="w-full"
-                  />
-                  <img
-                    v-else
-                    src="@/assets/icon/class_gold.svg"
+                    :src="'/assets/icon/' + storelevelBadge + '.svg'"
                     alt=""
                     class="w-full"
                   />
@@ -349,12 +394,12 @@
                   />
                   <div class="flex grow">
                     <div class="flex-1 flex md:gap-10">
-                      <div>판매글</div>
-                      <div>10개</div>
+                      <div class="pr-1">판매글</div>
+                      <div>{{ storeUsersellPostCount }}개</div>
                     </div>
                     <div class="flex-1 flex md:gap-10">
-                      <div>구매글</div>
-                      <div>10개</div>
+                      <div class="pr-1">구매글</div>
+                      <div>{{ storeUserbuyPostCount }}개</div>
                     </div>
                   </div>
                 </div>
@@ -364,9 +409,9 @@
                     alt=""
                     class="md:w-5 w-4"
                   />
-                  <div class="flex md:gap-10">
-                    <div>친절 평가</div>
-                    <div>1개</div>
+                  <div class="flex md:gap-10 justify-center">
+                    <div class="pr-1">친절 평가</div>
+                    <div>{{ storeUserreviewCount }}개</div>
                   </div>
                 </div>
               </div>
@@ -401,7 +446,7 @@
     </transition>
     <transition name="slide-down" move="out-in">
       <div
-        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[4rem]"
+        class="flex-1 text-sm absolute md:hidden bg-everly-white z-30 p-3 rounded-t-lg w-full sm:text-base bottom-[3.9rem]"
         v-if="showBuy"
       >
         <div class="w-full flex justify-center pb-4 items-center">
@@ -413,7 +458,8 @@
           <div class="grow font-bold text-center">수량</div>
           <counter
             @getValue="updateQty($event)"
-            :qty="qty"
+            :qty="storeqty"
+            :maxQty="MaxQty"
             class="grow max-w-[6.875rem]"
           />
           <div class="text-everly-dark_grey w-1/2 text-right">
@@ -427,7 +473,8 @@
         <div class="flex justify-between items-center pb-8">
           <div class="font-bold px-2">총 결제금액</div>
           <div class="text-everly-dark_grey">
-            총수량 ({{ qty }}개) / {{ TotalQty }}
+            총수량 ({{ storeqty }}{{ storeProductunit }}) / {{ TotalQty }}
+            {{ storeProductunit }}
           </div>
         </div>
         <div class="flex text-2xl font-bold items-center justify-end">
@@ -466,45 +513,75 @@ import { storeToRefs } from "pinia";
 import { ref, watch, onUnmounted, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { numberToKorean } from "@/common";
+import commonFunction from "@/common";
+import { useChatStore } from "@/store/modules/chat/chatStore";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import type { user } from "@/domain/user/user.interface";
 
+
+
+const chatStore = useChatStore();
 const postStore = usePostStore();
 const paymentStore = usePaymentStore();
 const router = useRouter();
 const route = useRoute();
-
 const {
+  storecreatAt,
+  storePostIdx,
   storeShowBuy,
   storePostTitle,
-  storeUnitValue,
+  storeSaleUnit,
   storeMinValue,
   storeMaxValue,
   storeUnitName,
   storePricePerUnit,
 
+  storeProductunit,
+  storehasInGamePaymentHistoryOX,
+  storeisDuplicatedSyncOX,
+  storeCategoryName,
   storeGameName,
   storeServerName,
   storeCategory,
   storeUserCode,
   storeUserIdx,
   storeUserNickname,
+  storeemailVerifyClass,
+  storephoneVerifyClass,
+  storebankaccountlVerifyClass,
+  storeUserImg,
+  storeUserIsVerfied,
+  storelevelBadge,
+  storeUsersellPostCount,
+  storeUserbuyPostCount,
+  storeUserreviewCount,
+
+  storecharacterName,
+  storeregistration,
+  storeSellBuy,
+
+  storeCharacterlevel,
+  storeCharacterRoleName,
+  storeContent,
+  storeqty,
 } = storeToRefs(postStore);
 
 let SellBuy = "sell";
-const qty = ref(1);
 function updateQty(event: number) {
-  qty.value = event;
+  postStore.setstoreQty(event);
 }
 
 //처음 페이지 들어갈때 데이터 가져오기
 onMounted(() => {
   var idx = route.query.postId;
+
   if (idx?.toString() != null) {
-    if (parseInt(idx.toString()) >= 3) {
-      router.push("/");
-      return;
-    }
     postStore.setStorePostData(idx.toString());
   } else router.push("/");
+});
+//페이지 나갈때 기존 데이터 지우기
+onUnmounted(() => {
+  postStore.resetStorePostData();
 });
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
@@ -521,49 +598,28 @@ function toggleShowbuy(status: boolean) {
 
 //전체 갯수
 const TotalQty = computed(() => {
-  return numberToKorean(qty.value * storeUnitValue.value) + ` 게임머니`;
+  return numberToKorean(storeqty.value);
 });
 
 //물품 가격
 const ProductPrice = computed(() => {
-  return (qty.value * storePricePerUnit.value).toLocaleString();
+  return (storeqty.value * storePricePerUnit.value).toLocaleString();
 });
 
 //최대 구매 갯수
 const MaxQty = computed(() => {
-  return Math.floor(storeMaxValue.value / storeUnitValue.value);
-});
+  //최대 갯수가 없경우 -> 캐릭터의 경우 최대 갯수가 1개
+  console.log(storeMaxValue.value);
+  console.log(storeSaleUnit.value);
 
-//구매하기쪽으로 데이터 보내기
-// 생명주기, 들어가고 나갈때 초기화
-onUnmounted(() => {
-  var title = storePostTitle.value;
-  var unit = storeUnitValue.value;
-  var unitName = storeUnitName.value;
-  var pricePerUnit = storePricePerUnit.value;
-  var orderQty = qty.value;
-
-  var GameName = storeGameName.value;
-  var ServerName = storeServerName.value;
-  var Category = storeCategory.value;
-
-  paymentStore.setPostData(
-    title,
-    unit,
-    unitName,
-    pricePerUnit,
-    orderQty,
-    GameName,
-    ServerName,
-    Category
-  );
+  if (storeCategory.value == "character") return 1;
+  return Math.floor(storeMaxValue.value / storeSaleUnit.value);
 });
 
 //  글 삭제 관련 로직
 const deleteStatus = ref("delete");
 const showModal = ref(false);
 const toggleShowModal = useToggle(showModal);
-const bottomClass = ref("");
 
 const { storeShowManagePost } = storeToRefs(postStore);
 const toggleManagePost = useToggle(storeShowManagePost);
@@ -577,11 +633,52 @@ watch([showBuy, storeShowManagePost], () => {
   }
 });
 
-//시연옹
-function getRandomInt(min: number, max: number) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //최댓값은 제외, 최솟값은 포함
+//payment page로 보내기
+function goPaymentPage() {
+  var idx = storePostIdx.value;
+  var title = storePostTitle.value;
+  var unit = storeSaleUnit.value;
+  var saleUnitName = storeUnitName.value;
+  var pricePerUnit = storePricePerUnit.value;
+  var orderQty = storeqty.value;
+
+  var GameName = storeGameName.value;
+  var ServerName = storeServerName.value;
+  var Category = storeCategory.value;
+  var saleUnit = storeSaleUnit.value;
+  var SellerIdx = storeUserIdx.value;
+
+  paymentStore.setPostData(
+    idx,
+    title,
+    unit,
+    saleUnit,
+    saleUnitName,
+    pricePerUnit,
+    orderQty,
+    GameName,
+    ServerName,
+    Category,
+    SellerIdx
+  );
+  router.push("/payment");
+}
+
+
+
+// 채팅 페이지로 보내기
+function goChatPage() {
+  const localData = localStorage.getItem("user");
+  if (localData != null) {
+    const userData = JSON.parse(localData) as user;      
+    if (userData.idx === storeUserIdx.value)  router.push('/chat');
+    
+    else  {
+      if (typeof route.query.postId === 'string') {
+        chatStore.isRoomExist(route.query.postId); 
+      }         
+    }
+  }
 }
 </script>
 
@@ -603,7 +700,7 @@ function getRandomInt(min: number, max: number) {
 }
 
 .slide-down-leave-active {
-  transition: all 0.3s ease-in;
+  transition: all 0s ease-in;
 }
 
 .slide-down-enter-from,

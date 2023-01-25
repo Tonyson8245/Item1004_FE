@@ -1,8 +1,15 @@
 import { defineStore } from "pinia";
-import { paymentApi } from "@/api/payment-service/index";
+import * as paymentApi from "@/api/payment-service";
 import type * as contractcheckDto from "@/domain/payment/contractCheckDto.interface";
 export const usepaymentStore = defineStore("usepaymentStore", {
-  state: () => ({}),
+  state: () => ({
+    storepaymethod: "",
+    storegoodsNm: "",
+    storegoodsAmt: "",
+    storeordNm: "",
+    storeordTel: "",
+    storeordEmail: "",
+  }),
 
   getters: {},
   actions: {
@@ -20,5 +27,7 @@ export const usepaymentStore = defineStore("usepaymentStore", {
         });
       return result;
     },
+
+    setPaymentInfo(payMethod: string, GoodsNm: string, GoodsAmt: string) {},
   },
 });

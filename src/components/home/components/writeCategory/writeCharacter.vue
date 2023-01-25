@@ -1,5 +1,14 @@
 <template>
-  <ModalWriteComfirm :showModal="showModal" @select="select($event)" />
+  <ModalWriteComfirm
+    :showModal="showModal"
+    @select="select($event)"
+    :postType="`character`"
+  />
+  <ModalWriteFailed
+    :showModal="showFailedModal"
+    :failedType="failedType"
+    @select="failedModaloff($event)"
+  />
   <div>
     <div
       class="grid w-full md:grid-cols-12 grid-cols-1 gap-2 md:gap-y-20 md:pt-10 text-sm md:text-base"
@@ -15,11 +24,11 @@
       <div class="col-span-9 md:pr-80">
         <div class="flex items-center justify-center">
           <div class="flex-1">
-            <inputwithClose
+            <inputwithCloseNumber
               :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
               :propsPlaceholder="pricePlaceholder"
-              :modelValue="price"
-              @getModel="price = $event"
+              :modelValue="storepricePerUnit"
+              @getModel="storepricePerUnit = $event"
             />
           </div>
           <div class="px-2">원</div>
@@ -36,8 +45,8 @@
         <inputwithClose
           :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
           :propsPlaceholder="titlePlaceholder"
-          :modelValue="title"
-          @getModel="title = $event"
+          :modelValue="storetitle"
+          @getModel="storetitle = $event"
         />
         <div class="pl-3 md:pl-5 md:text-sm text-xs pt-1 text-everly-dark_grey">
           *거래제목은 한글,영어 숫자로만 작성이 가능합니다.
@@ -67,8 +76,10 @@
           <textarea
             id="message"
             rows="6"
-            class="block p-3 w-full text-sm md:text-base rounded-lg border resize-none md:resize-y border-everly_dark_grey focus:border-[#3f52fc] h-full"
+            class="block p-3 w-full text-sm md:text-base rounded-lg border resize-none md:resize-y border-everly-mid_grey focus:border-[#3f52fc] h-full"
             :Placeholder="descriptionPlaceholder"
+            v-model="storecontent"
+            @input="(event: Event) => { storecontent = (event.target as HTMLInputElement).value }"
           ></textarea>
         </div>
       </div>
@@ -80,17 +91,17 @@
       <div class="col-span-9">
         <dropdown
           class="md:hidden block"
-          :propsList="['a', 'b', 'c']"
+          :propsRoleList="storeRoleList"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="role = $event"
+          @getValue="storeroleIdx = $event"
         />
         <dropdown
           class="hidden md:block"
-          :propsList="['a', 'b', 'c']"
+          :propsRoleList="storeRoleList"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="role = $event"
+          @getValue="storeroleIdx = $event"
         />
       </div>
 
@@ -101,11 +112,11 @@
       <div class="col-span-1 hidden md:block"></div>
       <div class="col-span-9 md:pr-[370px]">
         <div class="flex items-center justify-center">
-          <inputwithClose
+          <inputwithCloseNumber
             :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
             :propsPlaceholder="`캐릭터 레벨을 입력하세요`"
-            :modelValue="level"
-            @getModel="level = $event"
+            :modelValue="storelevel.toString()"
+            @getModel="storelevel = parseInt($event)"
           />
         </div>
       </div>
@@ -117,17 +128,33 @@
       <div class="col-span-9">
         <dropdown
           class="md:hidden block"
-          :propsList="['a', 'b', 'c']"
+          :propsList="[
+            '구글',
+            '게임사',
+            '페이스북',
+            '카카오',
+            '네이버',
+            '핸드폰',
+            '기타',
+          ]"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="accountType = $event"
+          @getValue="storeregistration = changeregistraion($event)"
         />
         <dropdown
           class="hidden md:block"
-          :propsList="['a', 'b', 'c']"
+          :propsList="[
+            '구글',
+            '게임사',
+            '페이스북',
+            '카카오',
+            '네이버',
+            '핸드폰',
+            '기타',
+          ]"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="accountType = $event"
+          @getValue="storeregistration = changeregistraion($event)"
         />
       </div>
       <!-- 결제내역 유무 -->
@@ -138,17 +165,17 @@
       <div class="col-span-9">
         <dropdown
           class="md:hidden block"
-          :propsList="['a', 'b', 'c']"
+          :propsList="['O', 'X']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="cashed = $event"
+          @getValue="storehasPaymentHistory = $event == 'O' ? true : false"
         />
         <dropdown
           class="hidden md:block"
-          :propsList="['a', 'b', 'c']"
+          :propsList="['O', 'X']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="cashed = $event"
+          @getValue="storehasPaymentHistory = $event == 'O' ? true : false"
         />
       </div>
       <!-- 이중연동 유무를-->
@@ -159,25 +186,26 @@
       <div class="col-span-9">
         <dropdown
           class="md:hidden block"
-          :propsList="['a', 'b', 'c']"
+          :propsList="['O', 'X']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="doublesync = $event"
+          @getValue="storeisDuplicatedSync = $event == 'O' ? true : false"
         />
         <dropdown
           class="hidden md:block"
-          :propsList="['a', 'b', 'c']"
+          :propsList="['O', 'X']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="doublesync = $event"
+          @getValue="storeisDuplicatedSync = $event == 'O' ? true : false"
         />
       </div>
     </div>
 
     <div class="flex justify-center items-center w-full pb-3 pt-7 md:py-20">
       <div
-        class="md:text-xl text-base border md:py-3 py-2 border-everly-mid_grey rounded-lg bg-everly-mid_grey font-bold text-everly-white w-full md:w-[490px] text-center cursor-pointer"
-        @click="showModal = true"
+        class="md:text-xl text-base border md:py-3 py-2 border-everly-mid_grey rounded-lg font-bold w-full md:w-[490px] text-center"
+        :class="buttonClass"
+        @click="createPost()"
       >
         거래 등록하기
       </div>
@@ -187,20 +215,22 @@
 
 <script setup lang="ts">
 import inputwithClose from "@/components/common/inputwithClose.vue";
+import inputwithCloseNumber from "@/components/common/inputwithCloseNumber.vue";
 import dropdown from "@/components/common/dropdown.vue";
 import { useWriteStore } from "@/store/modules/home/writeStore";
 import { storeToRefs } from "pinia";
-import { watch, ref } from "vue";
+import { watch, ref, onMounted, onUnmounted } from "vue";
 import ModalWriteComfirm from "@/components/modal/modalWriteComfirm.vue";
+import ModalWriteFailed from "@/components/modal/modalWriteFailed.vue";
+import commonFunction from "@/common";
 
-const currency = "메소";
 const writeStore = useWriteStore();
-const { storeSellBuy } = storeToRefs(writeStore);
+const { storepostType, storeRoleList } = storeToRefs(writeStore);
 
 let SellBuy = ref("판매");
 
-watch(storeSellBuy, () => {
-  if (storeSellBuy.value == "buy") {
+watch(storepostType, () => {
+  if (storepostType.value == "buy") {
     SellBuy.value = "구매";
   } else {
     SellBuy.value = "판매";
@@ -211,21 +241,111 @@ let pricePlaceholder = "금액을 입력해주세요.";
 let titlePlaceholder = "거래 제목을 입력해주세요";
 let descriptionPlaceholder = "거래 상세정보를 입력해주세요";
 
-let price = ref("");
-let title = ref("");
-let description = ref("");
-let level = ref("");
-let role = ref("");
-let cashed = ref("");
-let doublesync = ref("");
-let accountType = ref("");
-
 //등록 확인 모달
 const showModal = ref(false);
 function select(value: string) {
   console.log(value);
   showModal.value = false;
 }
+
+//글작성
+const {
+  storetitle,
+  storecontent,
+  storepricePerUnit,
+  storeregistration,
+  storelevel,
+  storehasPaymentHistory,
+  storeisDuplicatedSync,
+  storeroleIdx,
+} = storeToRefs(writeStore);
+
+onMounted(() => {
+  console.log("onMounter");
+  writeStore.getGameRole();
+});
+onUnmounted(() => {
+  writeStore.$reset();
+});
+
+//계정 종류 변환기
+function changeregistraion(text: string) {
+  switch (text) {
+    case "구글":
+      return "google";
+    case "게임사":
+      return "local";
+    case "페이스북":
+      return "facebook";
+    case "카카오":
+      return "kakao";
+    case "네이버":
+      return "naver";
+    case "핸드폰":
+      return "phone";
+    case "기타":
+      return "etc";
+    default:
+      return "etc";
+  }
+}
+
+///거래등록
+const buttonClass = ref("text-everly-white bg-everly-main cursor-pointer");
+function createPost() {
+  //판매등록
+  if (checkPost()) showModal.value = true;
+}
+
+function checkPost() {
+  var roleIdx = storeroleIdx.value;
+  var level = storelevel.value;
+  var registration = storeregistration.value;
+  var hasPaymentHistory = storehasPaymentHistory.value;
+  var isDuplcationSync = storeisDuplicatedSync.value;
+  var title = storetitle.value;
+
+  if (commonFunction.checkTitle(title)) {
+    failedType.value = "title";
+    showFailedModal.value = true;
+    return false;
+  }
+  if (
+    roleIdx == 0 ||
+    level == 0 ||
+    registration == "" ||
+    hasPaymentHistory == null ||
+    isDuplcationSync == null ||
+    title == ""
+  ) {
+    failedType.value = "mandatory";
+    showFailedModal.value = true;
+    return false;
+  }
+  return true;
+}
+
+const showFailedModal = ref(false);
+const failedType = ref("");
+
+function failedModaloff(status: boolean) {
+  showFailedModal.value = status;
+}
+// 상태에 따라 버튼색 다르게 하기
+// watch(
+//   [
+//     storeminAmount,
+//     storemaxAmount,
+//     storesaleUnit,
+//     storepricePerUnit,
+//     storetitle,
+//   ],
+//   () => {
+//     if (checkPost())
+//       buttonClass.value = "text-everly-white bg-everly-main cursor-pointer";
+//     else buttonClass.value = "text-everly-white bg-everly-mid_grey";
+//   }
+// );
 </script>
 
 <style scoped></style>
