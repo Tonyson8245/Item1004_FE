@@ -13,7 +13,6 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   (response) => {
-    console.log(`http success`);
     //성공 시에는 result 값만 돌려보넴
     return response.data.result;
   },

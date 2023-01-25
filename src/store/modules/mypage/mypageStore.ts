@@ -139,7 +139,6 @@ export const usemypageStore = defineStore("mypageStore", {
       authApi
         .getUserInfo()
         .then((res) => {
-          console.log(res);
           this.storeUserInfo = res;
         })
         .catch((err) => {

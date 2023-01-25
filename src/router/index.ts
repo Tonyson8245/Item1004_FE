@@ -329,8 +329,6 @@ const isMobile = () => {
 };
 
 router.beforeEach((to, from) => {
-  console.log("before");
-
   window.scrollTo({ top: 0, behavior: "auto" });
   const localData = localStorage.getItem("user");
   const refreshTokenData = localStorage.getItem("refreshToken");

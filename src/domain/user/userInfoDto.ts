@@ -33,8 +33,8 @@ export class userInfoResult {
 
       const age = yearDiff + (isBeforeBirthDay ? -1 : 0);
 
-      if (age < 19) return false;
-      else return true;
+      // if (age < 19) return false;
+      return false;
     }
   }
 }
