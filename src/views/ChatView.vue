@@ -64,15 +64,24 @@ login().then( async (data)=>{
   setNewChat();
   // 채팅화면 거래글 postId 세팅
   setPostItem();
+
   
+  console.log(client.value);
+
 
   client.value.on('event', async (data) => {
-    if (data.type === 'message') {          
+    // console.log("이벤트 발생", data);
+    if (data.type === 'message') {   
+      console.log("받은 메세지", data);
+     
+     
+      console.log(client.value);
+      // console.log(  client.value);             
         // console.log("받은 데이터", data);
+        // console.log("받는데이");        
       await onReceiveMessage(data)
     }
   })  
-  
 });
 // console.log(route.query.postId);
 
@@ -87,8 +96,6 @@ watch(route, async()=> {
   // 채팅화면 거래글 postId 세팅
   setPostItem();
 
-  console.log("ㄴㅇㄹㄴㅇㄹㄴㅇ");
-  
 })
 
 // 새로운 채팅 여부 파악
@@ -113,7 +120,7 @@ function setPostItem() {
 // 선택된 채널 세팅
 async function setSelectedChannel() {    
   // url이 새로운 방 생성인 new?postId일 수 있음
-  if (!route.query.postId) await chatStore.getSelectedChannel(route.params.channelId)
+  if (!route.query.postId && route.params.channelId) await chatStore.getSelectedChannel(route.params.channelId)
 }
 
 
@@ -122,10 +129,11 @@ async function setSelectedChannel() {
 // 받은 메세지 처리기
 async function onReceiveMessage(data:any) {
     let channel = data.channel   
+    // console.log("메세지 받음");
+
     if (data.message.channelId === selectedChannel.value?.id) {      
       const getChannel = await chatStore.messageRead(data.message.channelId);   
       channel = getChannel.channel    
-      console.log("메세지 받음");
         
       chatStore.setMessages(data.message)
     }
@@ -136,6 +144,7 @@ async function onReceiveMessage(data:any) {
 onUnmounted(() => {
   chatStore.resetChannels()
   chatStore.resetMessages()
+
 })
 
 

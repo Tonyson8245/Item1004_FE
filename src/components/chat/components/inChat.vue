@@ -42,7 +42,7 @@ import { useScroll } from '@vueuse/core';
 import { useRouter, useRoute } from "vue-router";
 
 const chatStore = useChatStore();
-const { messages, client, isNewChat,channels, selectedChannel, } = storeToRefs(chatStore);
+const { messages, client, isNewChat, channels, selectedChannel, messagesHasNext } = storeToRefs(chatStore);
 const scrollView = ref<HTMLElement | null>(null);
 const {arrivedState,directions} = useScroll(scrollView);
 const { left, right, top, bottom } = toRefs(arrivedState)
@@ -63,13 +63,13 @@ const text = ref("");
 
 async function sendMessageProcess(e:any) {
     if (text.value !='') {
-        console.log("isNewChat ? ",isNewChat.value);
+        // console.log("isNewChat ? ",isNewChat.value);
         
         if (isNewChat.value) {
             // 새로운 챗이면 새로 방 만드는 API 쏘고 완료된 결과를 받아서 방 생성이 완성되면은 텍스트를 쏴주도록 합니다.
             const result = await chatStore.createNewRoom(String(route.query.postId))
             if (result) {
-                console.log("리절트 확인 : " ,result);  
+                // console.log("리절트 확인 : " ,result);  
                 await sendMessage(result)  
                 // 여기서 replace 해주면 chatview에서 라우터에 반응해서 방추가 자동으로 해준다
                 router.replace('/chat/'+result)
@@ -78,8 +78,7 @@ async function sendMessageProcess(e:any) {
             //방을 channels에 꽂아주고, 
             //selectedChannel에 현재 방 꽂아주고, 
             //메세지 보내고 메세지 보낸걸 messages에 꽂아주고, 
-            //lastMessage를 channels의 해당 channel에 꽂아주고,
-            
+            //lastMessage를 channels의 해당 channel에 꽂아주고,            
         }
         else await sendMessage(selectedChannel.value?.id)        
     }
@@ -113,6 +112,14 @@ onMounted(()=>{
     // chatStore.getPost();
 })
 
+watch(top, ()=>{
+    if (top.value) {
+        console.log("변경됨", messagesHasNext);
+        // 불러올 메세지가 더 있으면 추가로 불러온다.
+        chatStore.pagingMessages(selectedChannel.value?.id as string)
+    }
+})
+
 
 const scrollToBottom = () => {
     scrollView.value.scrollTop = scrollView.value.scrollHeight
@@ -135,6 +142,7 @@ const handleListScroll = (e: any) => {
     // console.log("화면에 보이는 길이 : ",clientHeight);
 
 
+   
   
 }
 
