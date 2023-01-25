@@ -17,7 +17,7 @@
                 
             <div class="flex w-full items-baseline">
                 <p class="text-lg font-medium">{{ chatTargetUserName() }}</p>
-                <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-3 ml-1"/>
+                <!-- <img src="/src/assets/icon/check_circle_blue.svg" alt="" class="w-3 ml-1"/> -->
                 <p class="text-xs ml-auto text-everly-dark_grey">{{lastMessageTime()}} </p>
             </div>
                 
@@ -84,7 +84,10 @@ const selectChannel = (e: MouseEvent) => {
 const chatTargetUserName = () =>{
     // 채팅방의 유저리스트에서 내가 아닌 상대방의 유저 이름을 가지고 온다.
     // client.value.userId 와 채팅방에 참여 유저 리스트에서 내가 아닌 다른 유저의 객체를 가지고 와서 그 유저의 닉네임을 리턴해준다.
-    return props.channel.members.filter(x => x.id !==client.value.userId)[0].username  
+        
+    if(props.channel.members.length==1) return null
+    return props.channel.members.filter(x => x.id !==client.value.userId)[0].username
+    
 }
 
 

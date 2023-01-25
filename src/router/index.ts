@@ -282,7 +282,9 @@ const router = createRouter({
       children: [
         {
           path: "",
+          meta:{transition: "", name: "chat", title: "채팅", navbar: true , needLogin: true },
           components: {
+            
             default: async () => {
               if (!isMobile()) {
                 return components.chatPage;

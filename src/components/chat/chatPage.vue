@@ -1,15 +1,15 @@
 <template>
-<div class="pt-[3rem]">
+<div class="">
     <div class="flex md:py-10">
         <div class="flex-grow">
         </div>
-        <div class="h-[calc(100vh-48px)] flex-grow-0 w-full md:w-[73.750rem] md:h-[80vh] flex gap-5">
+        <div class="h-[calc(100vh-48px)]  flex-grow-0 w-full md:w-[73.750rem] md:h-[80vh] flex gap-5">
             <!-- 채팅방 목록 div -->
-            <div class=" hidden md:flex flex-col w-full  h-full md:w-[25rem] md:border border-solid border-everly-mid_grey ">
+            <div class=" hidden md:flex flex-col w-full  md:h-full md:w-[25rem] md:border border-solid border-everly-mid_grey ">
                 <channelList/>
             </div>
             <!-- 채팅 내용 div -->
-            <div class=" w-full  md:w-[47.5rem] md:border h-full border-everly-mid_grey  rounded-b-lg overflow-hidden">
+            <div class=" w-full   md:w-[47.5rem] md:border md:h-full border-everly-mid_grey  rounded-b-lg overflow-hidden">
                <inChatView/>
             </div>
         </div>

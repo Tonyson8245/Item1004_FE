@@ -12,8 +12,9 @@
       <div
         class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-light_blue text-everly-dark_grey border text-sm sm:text-base cursor-pointer"
       >
-        <div class="text-everly-main" @click="router.push('/chat')">
-          채팅하기({{ storeChatCount }})
+        <div class="text-everly-main" @click="goChatPage">
+          채팅하기
+          <!-- ({{ storeChatCount }}) -->
         </div>
       </div>
       <div
@@ -57,6 +58,10 @@ import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useChatStore } from "@/store/modules/chat/chatStore";
+import type { user } from "@/domain/user/user.interface";
+
+const chatStore = useChatStore();
 
 const postStore = usePostStore();
 
@@ -87,6 +92,7 @@ const mypageStore = usemypageStore();
 const { storeUserInfo } = storeToRefs(mypageStore);
 
 const router = useRouter();
+const route = useRoute();
 
 //payment page로 보내기
 function goPaymentPage() {
@@ -122,6 +128,20 @@ function goPaymentPage() {
   );
 
   router.push("/payment");
+}
+
+// 채팅 페이지로 보내기
+function goChatPage() {
+  const localData = localStorage.getItem("user");
+  if (localData != null) {
+    const userData = JSON.parse(localData) as user;      
+    if (userData.idx === storeUserIdx.value)  router.push('/chat');    
+    else  {
+      console.log("이동 하는거 맞네");
+      
+      if (typeof route.query.postId === 'string') chatStore.isRoomExist(route.query.postId);             
+    }
+  }
 }
 </script>
 

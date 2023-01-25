@@ -34,12 +34,20 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   // 현재 채팅방에 관련된 postItem
   const postItem = ref<postResult>();
 
-  const init = () => {
+  const init = async () => {
       // TODO: client.value가 null이면 새로 생성한다.  
-      //@ts-ignore
-      return client.value = new TalkPlus.Client({appId: import.meta.env.VITE_TALK_PLUS_API_KEY});      
+      // if (client.value.sessionId) {
+        
+      // }
+
   } 
+
+  const setClientNull = () => {
+    client.value=Object(null)    
+  }
   const login = async () => {
+    client.value = await new TalkPlus.Client({appId: import.meta.env.VITE_TALK_PLUS_API_KEY});    
+
     if (!client.value.isLoggedIn()) {
       const localData = localStorage.getItem("user");
       const userData = JSON.parse(localData) as user;     
@@ -53,9 +61,11 @@ export const useChatStore = defineStore("chatStore", ()=>  {
             userId: `${userData.idx}`, // unique userId
             // userId: uerid
             // profileImageUrl: "https://archeage.nexon.com/characters/dbf279b5-20ff-4fba-8e6a-c1301fb97657/profileImage",
-            // username: userData.nickname
+            username: userData.nickname
             // loginToken: "$2a$06$Q4WYHQa16ChPTJTy2IWVNuQzxgEFAe2Up.SuikpS8WYMeqy.3Qk4S"
           });          
+          // console.log("로그인 아이디 : ",user.value);
+          
       } catch (error) {
         console.log("error : ", error);
       }
@@ -67,7 +77,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const setChannels = (channel:channel ) =>{ 
     // 리스트 안에 내가 받은 채널과 같은아이디 가지고 있는 채널이 있냐?
     // yes : 리스트 안에서 내가 받은 채널과 같은 아이디 가지고 잇는 채널 찾아서 지워라 
-       
+      
     const pickChannel = findChannel(channel.id)
     // console.log("채널 : ", pickChannel);    
     // console.log("채널 정보",pickChannel);
@@ -127,7 +137,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       result = await client.value.getMessages({
           channelId: channelId,
           order: 'latest', // default: 'latest'. Use 'oldest' to order by oldest messages first
-          limit: 10, // how many messages to fetch, default: 20, max: 50
+          limit: 20, // how many messages to fetch, default: 20, max: 50
       });      
     } catch (error) {
       console.log('에러 : ', error);     
@@ -143,9 +153,9 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   const pagingMessages = async (channelId:string) =>{
     if (messagesHasNext.value) {
-      console.log("페이징 실행합니다");      
+      // console.log("페이징 실행합니다");      
       // getChannels()
-      const lastMessageId:string = messages.value[messages.value.length-1].id;
+      const lastMessageId:string = messages.value[0].id;
       let result: resp;   
       try {
         //@ts-ignore
@@ -159,8 +169,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
         console.log('에러 : ', error);     
         return
       }   
-      console.log("가져온 결과 ",result);
-      messages.value = [...result.messages as message[], ...messages.value ]
+      // console.log("가져온 결과 ",result);
+      messages.value = [...result.messages?.reverse() as message[], ...messages.value ]
       messagesHasNext.value = result.hasNext
       //메세지 읽음 처리
       await messageRead(channelId);
@@ -246,18 +256,25 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   const setPostItem = async (postid: any) => {
     // postItem.value = postid
+    
     await chatapi.getPost(postid).then((res) => {    
       postItem.value = res.data.result;
       // console.log('요청성공 : ', res);      
-      // console.log('post는 : ', postItem.value);      
+      console.log('post는 : ', postItem.value);      
     }).catch((err) => {      
       console.log('에러 : ', err);      
+      resetPostItem()
+
     })
+  }
+
+  const resetPostItem = () =>{
+    postItem.value = undefined
+   
   }
 
   // 메세지를 메세지 리스트에 넣기
   const messageIntoMessages =  (message: message) => {
-    console.log("메세지 들어가쥬");  
      messages.value.push(message);   
   }
 
@@ -406,5 +423,5 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   //   console.log(result);    
   // }
 
-  return { client,  isNewChat, messagesHasNext,pagingMessages, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, getMessages,setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, postItem,setPostItem,setIsNewChat,createNewRoom}
+  return { client, setClientNull, isNewChat, messagesHasNext,pagingMessages, user, init, login, getChannels, channels, setChannels, resetChannels, pagingChannels, resetMessages, resetPostItem,unreadCount, getUnreadCount, selectedChannel, setSelectedChannel, getSelectedChannel, messages, getMessages,setMessages,sendMessage, messageRead, messagesIntoChannel, isRoomExist, getPost, postItem,setPostItem,setIsNewChat,createNewRoom}
 });

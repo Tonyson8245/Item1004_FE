@@ -1,5 +1,6 @@
 <template>
-<div class="h-full flex flex-col">
+    <div class="pt-[3rem] md:pt-0 md:h-full">
+<div class="h-[calc(100vh-48px)] md:h-full flex flex-col">
 
 
     <postHead/>
@@ -26,7 +27,7 @@
         <button @click="sendMessageProcess" class="text-white bg-everly-main rounded-r-lg w-20 py-3">전송</button>
     </div>
 </div>
-
+</div>
 
 </template>
 
@@ -89,6 +90,9 @@ async function sendMessage (channelId:string | undefined) {
     await chatStore.sendMessage(text.value , channelId as string) 
         text.value = ""    
         scrollToBottom();
+
+    console.log("보낼때 클라이언트 밸류",client.value);
+    
 }
 
 
@@ -107,7 +111,6 @@ onMounted(()=>{
     }
     // 감시 시작
     observer.observe(scrollView.value, config);
-
     // chatStore.isRoomExit();
     // chatStore.getPost();
 })

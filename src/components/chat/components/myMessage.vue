@@ -11,13 +11,13 @@
             </div>
             
              <!-- 프로필 사진 -->
-             <div class="rounded-lg overflow-hidden mr-3 min-w-[2.5rem]">                           
+             <!-- <div class="rounded-lg overflow-hidden mr-3 min-w-[2.5rem]">                           
                  <img
                      src="@/assets/img/profile_green.jpeg"
                      alt=""
                      class="w-14 rounded-lg "
                  />
-             </div>
+             </div> -->
          </div>
      </div> 
  </template>
