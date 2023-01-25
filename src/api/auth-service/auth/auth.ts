@@ -38,6 +38,7 @@ export async function deleteToken<T>(): Promise<logoutResponseDto | undefined> {
   if (accessTokenData != null) {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
 
+    //  담아놓고 다 지워버림
     localStorage.removeItem("user");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");

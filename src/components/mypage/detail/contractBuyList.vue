@@ -125,7 +125,7 @@ onMounted(() => {
 
 function updateHandler(value: number) {
   mypageStore.setstorepage(value);
-  mypageStore.getContractList(value, 2, "buy");
+  mypageStore.getContractList(value, 1000, "buy");
   router.replace({ path: route.path, query: { page: value } });
 }
 
@@ -150,7 +150,7 @@ function changeTab(tab: string) {
   mypageStore.resetContractList(); //store 리스트 초기화
   router.replace({ path: route.path, query: { page: 1 } }); // 페이지 변경
   mypageStore.setstoreContractListTabType(value); //탭변경
-  mypageStore.getContractList(1, 2, "buy"); //다시 가져오기
+  mypageStore.getContractList(1, 1000, "buy"); //다시 가져오기
 }
 
 // 탭 상태 class

@@ -57,7 +57,8 @@
             <!-- TODO 1차 출시 주석 2023-01-25 21:43:07 -->
             <!-- <div v-show="false">취소내역</div> -->
           </div>
-          <div class="space-y-2">
+          <!-- TODO 1차 출시 주석 2023-01-25 21:43:20 -->
+          <!-- <div class="space-y-2">
             <div class="text-everly-main font-bold text-xl flex">
               <img
                 src="@/assets/icon/store_blue.svg"
@@ -67,9 +68,8 @@
             </div>
             <div>판매글</div>
             <div>구매글</div>
-            <!-- TODO 1차 출시 주석 2023-01-25 21:43:20 -->
-            <!-- <div>찜한목록</div> -->
-          </div>
+            <div>찜한목록</div>
+          </div> -->
           <div class="space-y-2">
             <div class="text-everly-main font-bold text-xl flex">
               <img

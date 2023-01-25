@@ -1,6 +1,6 @@
 <template>
   <div
-    class="md:w-[60rem] md:border-everly-dark_grey md:border-b"
+    class="md:w-[60rem] md:border-everly-dark_grey md:border-b cursor-pointer"
     @click="moveToCard"
   >
     <div
@@ -137,8 +137,7 @@ function moveToCard() {
   var postIdx = props.card?.post.idx;
   var ordNm = props.card?.contract.ordNm;
   if (postIdx != undefined && ordNm != undefined) {
-    mypageStore.setContractordNmAndPostIdx(postIdx, ordNm);
-    router.push("/mypage/contractInfo");
+    router.push("/mypage/contractInfo?ordNm=" + ordNm + "&postIdx=" + postIdx);
   } else {
     alert("정보가 올바르지 않습니다.");
   }

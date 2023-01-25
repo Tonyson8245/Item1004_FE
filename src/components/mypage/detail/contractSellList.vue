@@ -11,9 +11,9 @@
           <div
             class="flex justify-between p-3 md:px-5 flex-grow bg-white items-center cursor-pointer"
             :class="needTabClass"
-            @click="changeTab('인계필요')"
+            @click="changeTab('입금완료')"
           >
-            <span>인계필요</span>
+            <span>입금완료</span>
 
             <!-- TODO 출시 때 뺴둠 -->
             <!-- <div class="flex">
@@ -107,7 +107,7 @@ const router = useRouter();
 const route = useRoute();
 //페이지 로드 될때 데이터 가져오기
 onMounted(() => {
-  mypageStore.getContractList(1, 2, "sell");
+  mypageStore.getContractList(1, 1000, "sell");
   console.log(`onMounted :: 위의 데이터 가져오기`);
 });
 
@@ -116,7 +116,7 @@ const page = ref(1);
 
 function updateHandler(value: number) {
   page.value = value;
-  mypageStore.getContractList(value, 2, "sell");
+  mypageStore.getContractList(value, 1000, "sell");
   router.replace({ path: route.path, query: { page: value } });
 }
 
@@ -124,7 +124,7 @@ function updateHandler(value: number) {
 function changeTab(tab: string) {
   var value;
   switch (tab) {
-    case "인계필요":
+    case "입금완료":
       value = 0;
       break;
     case "인계완료":

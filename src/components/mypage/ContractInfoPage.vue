@@ -5,10 +5,7 @@
   >
     <div class="flex-1"></div>
     <div class="flex-none w-full md:w-[73.75rem] md:mt-10 spy-2 md:space-y-4">
-      <div
-        class="p-4 md:px-0 space-y-5"
-        v-if="getterContractStageStatus != 'cancel'"
-      >
+      <div class="p-4 md:px-0 space-y-5" v-if="getterContractStageStatus != 3">
         <div class="flex space-x-2">
           <img
             src="@/assets/icon/check_special_blue.svg"
@@ -482,9 +479,9 @@
       <div
         class="p-4 md:p-0"
         v-if="
-          getterContractStageStatus != 'takeover_complete' &&
-          getterContractStageStatus != 'take_complete' &&
-          getterContractStageStatus != 'cancel'
+          getterContractStageStatus != 2 &&
+          getterContractStageStatus != 2 &&
+          getterContractStageStatus != 3
         "
       >
         <div
@@ -522,11 +519,47 @@
           </div>
         </div>
       </div>
+      <!-- 거래취소 + 인계/인수 -->
+      <div
+        class="hidden md:flex w-full px-48 space-x-5 py-24"
+        v-if="
+          (getterContractDetail.my.isSeller &&
+            getterContractStageStatus == 0) ||
+          (!getterContractDetail.my.isSeller && getterContractStageStatus == 1)
+        "
+      >
+        <div
+          class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+        >
+          거래취소
+        </div>
+        <div
+          class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          @click="putContractStatus(getterButtonContent)"
+        >
+          {{ getterButtonContent }}
+        </div>
+      </div>
+      <!-- 거래 취소만 -->
       <div
         class="hidden md:flex w-full px-72 space-x-5 py-24"
-        v-if="
-          getterContractStageStatus == 'take_complete' ||
-          getterContractStageStatus == 'takeover_complete'
+        v-else-if="
+          (getterContractDetail.my.isSeller &&
+            getterContractStageStatus == 1) ||
+          (!getterContractDetail.my.isSeller && getterContractStageStatus == 0)
+        "
+      >
+        <div
+          class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+        >
+          거래취소
+        </div>
+      </div>
+      <!-- 거래 종료 -->
+      <div
+        class="hidden md:flex w-full px-72 space-x-5 py-24"
+        v-else-if="
+          getterContractStageStatus == 2 || getterContractStageStatus == 2
         "
       >
         <div
@@ -535,27 +568,15 @@
           종료된 거래입니다
         </div>
       </div>
+      <!-- 거래 취소 -->
       <div
         class="hidden md:flex w-full px-72 space-x-5 py-24"
-        v-else-if="getterContractStageStatus == 'cancel'"
+        v-else-if="getterContractStageStatus == 3"
       >
         <div
           class="bg-everly-mid_grey text-everly-white flex-1 text-center rounded-lg py-3 font-bold"
         >
           취소된 거래입니다
-        </div>
-      </div>
-      <div class="hidden md:flex w-full px-48 space-x-5 py-24" v-else>
-        <div
-          class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold"
-        >
-          거래취소
-        </div>
-        <div
-          class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold"
-          @click="putContractStatus(getterButtonContent)"
-        >
-          {{ getterButtonContent }}
         </div>
       </div>
     </div>
@@ -572,6 +593,9 @@ import commonFunction from "@/common";
 import type { user } from "@/domain/user/user.interface";
 import router from "@/router";
 import { alertMSG } from "@/common";
+import { useRoute } from "vue-router";
+import { post } from "@/domain/payment/contractPostDetailDto.interaface";
+import { isEmpty } from "class-validator";
 
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
@@ -579,9 +603,17 @@ const mypageStore = usemypageStore();
 const { getterContractDetail, getterContractStageStatus, getterButtonContent } =
   storeToRefs(mypageStore);
 
+const route = useRoute();
+
+//불러오기 위한 postidx 와 ordNm
+const postIdx = route.query.postIdx?.toString();
+const ordNm = route.query.ordNm?.toString();
+
+//상세 내용 크고 끼기
 const toggleshowbuyerInfo = useToggle(showbuyerInfo);
 const toggleshowuserInfo = useToggle(showuserInfo);
 
+//브라우저 크기 변화시 따라가기 위한 코드
 const minSize = computed(() => {
   return useMediaQuery("(min-width: 640px)");
 });
@@ -597,7 +629,12 @@ watch(minSize.value, () => {
 });
 
 onMounted(() => {
-  mypageStore.getContractPostDetail();
+  //데이터 불러오기
+  console.log(postIdx, ordNm);
+
+  if (postIdx != undefined && ordNm != undefined)
+    mypageStore.getContractPostDetail(parseInt(postIdx), ordNm);
+  else router.go(-1);
 });
 
 //localstorage 가져오기
@@ -617,17 +654,19 @@ function setshowMore(status: boolean) {
 
 //인수 인계 버튼
 function putContractStatus(status: string) {
-  if (status == "물품인계")
-    mypageStore.setContractTakeover().then((res) => {
-      if (res) alert(status + "가 완료됬습니다.");
-      else alert(status + "가 실패했습니다.");
-    });
-  else
-    mypageStore.setContractTake().then((res) => {
-      if (res) alert(status + "가 완료됬습니다.");
-      else alert(status + "가 실패했습니다.");
-    });
-
+  if (ordNm != undefined) {
+    if (status == "물품인계")
+      mypageStore.setContractTakeover(ordNm).then((res) => {
+        if (res) alert(status + "가 완료됬습니다.");
+        else alert(status + "가 실패했습니다.");
+      });
+    else
+      mypageStore.setContractTake(ordNm).then((res) => {
+        if (res) alert(status + "가 완료됬습니다.");
+        else alert(status + "가 실패했습니다.");
+      });
+    mypageStore.resetContractList();
+  }
   router.go(-1);
 }
 </script>

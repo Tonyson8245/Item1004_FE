@@ -39,7 +39,7 @@ instance.interceptors.response.use(
         // token refresh 요청
         await axios
           .put(
-            baseurl_test + `/auth/tokens`, // token refresh api
+            tokenUrl + `/auth/tokens`, // token refresh api
             { refreshToken: `${token}`, userIdx: userIdx }
           )
           .then((res: any) => {
@@ -56,6 +56,7 @@ instance.interceptors.response.use(
           })
           .catch((err) => {
             console.log(namespace, "재발급 실패");
+            return Promise.reject("재발급 실패 error");
           });
 
         await axios(originalRequest)

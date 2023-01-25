@@ -22,8 +22,6 @@ export const usemypageStore = defineStore("mypageStore", {
 
     //거래 내역 관련
     //거래 내역 상세
-    storepostIdx: 1,
-    storeordNm: "23465cda-448b-48bc-8da6-be331910531e",
 
     storeContractDetail: {} as contractInfo.contractPostDetailResult,
 
@@ -95,19 +93,8 @@ export const usemypageStore = defineStore("mypageStore", {
       var status = state.storeContractDetail;
       if (isNotEmptyObject(status)) {
         var process = status.contract.contractStageStatus;
-        switch (process) {
-          case "인계중":
-            return "take_ongoing";
-          case "인수중":
-            return "takeover_ongoing";
-          case "인계완료":
-            return "takeover_complete";
-          case "인수완료":
-            return "take_complete";
-          case "거래취소":
-            return "cancel";
-        }
-      } else return "";
+        return parseInt(process);
+      } else return 0;
     },
     getterContractDetail: (state) => {
       if (isNotEmptyObject(state.storeContractDetail)) {
@@ -159,13 +146,10 @@ export const usemypageStore = defineStore("mypageStore", {
           console.log(err);
         });
     },
-    async setContractTake() {
+    async setContractTake(ordNm: string) {
       var result = false;
       await paymentApi
-        .putContractTake(
-          this.storeordNm,
-          this.storeContractDetail.otherUser.idx
-        )
+        .putContractTake(ordNm, this.storeContractDetail.otherUser.idx)
         .then((res) => {
           console.log(res);
           result = true;
@@ -175,27 +159,25 @@ export const usemypageStore = defineStore("mypageStore", {
         });
       return result;
     },
-    async setContractTakeover() {
+    async setContractTakeover(ordNm: string) {
       var result = false;
-      paymentApi
-        .putContractTakeover(this.storeordNm)
+      await paymentApi
+        .putContractTakeover(ordNm)
         .then((res) => {
           console.log(res);
           result = true;
         })
         .catch((err) => {
           console.log(err);
+
+          result = false;
         });
       return result;
     },
     setstorepage(page: number) {
       this.storepage = page;
     },
-    // 거래내역을 가져오기 위한 데이터 설정
-    setContractordNmAndPostIdx(postIdx: number, ordNm: string) {
-      this.storepostIdx = postIdx;
-      this.storeordNm = ordNm;
-    },
+
     resetContractList() {
       this.storeContractListTabType = 0;
       this.storeContractListTotalPage = 0;
@@ -268,11 +250,8 @@ export const usemypageStore = defineStore("mypageStore", {
     setstorePuBankAccountStore(status: string) {
       this.storePutBankAccountStatus = status;
     },
-    getContractPostDetail() {
-      var payload = new contractInfo.contractPostDetailBody(
-        this.storepostIdx,
-        this.storeordNm
-      );
+    getContractPostDetail(postIdx: number, ordNm: string) {
+      var payload = new contractInfo.contractPostDetailBody(postIdx, ordNm);
 
       paymentApi
         .getcontractPostDetail(payload)
