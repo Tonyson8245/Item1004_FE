@@ -11,7 +11,7 @@
               <div class="flex space-x-4 text-xl pt-4">
                 <!-- 팔래요 활성화 -->
                 <div
-                  class="flex space-x-2"
+                  class="flex space-x-2 cursor-pointer"
                   v-if="storeSellBuy == 'sell'"
                   @click="toggleSellBuy('sell')"
                 >
@@ -22,11 +22,13 @@
                   />
                   <span class="text-everly-main font-bold w-13">팔래요</span>
                 </div>
-                <div
+                <!-- TODO 1차 출시 주석 2023-01-25 20:02:14-->
+                <!-- <div
                   class="flex space-x-2"
                   v-if="storeSellBuy == 'sell'"
                   @click="toggleSellBuy('buy')"
-                >
+                > -->
+                <div class="flex space-x-2 cursor-pointer" @click="alertMSG()">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
@@ -402,33 +404,45 @@
     >
       <div class="flex w-full space-x-4 border-b p-4">
         <!--팔래요 활성화 -->
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+        <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'sell'"
+          @click="toggleSellBuy('sell')"
+        >
           <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
-          <span
-            class="text-everly-main font-bold"
-            @click="toggleSellBuy('sell')"
-            >팔래요</span
-          >
+          <span class="text-everly-main font-bold">팔래요</span>
         </div>
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+        <!-- TODO 1차 출시 주석 2023-01-25 20:26:49 -->
+        <!-- <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'sell'"
+          @click="toggleSellBuy('buy')"
+        >
           <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-          <span class="text-everly-dark_grey" @click="toggleSellBuy('buy')"
-            >살래요</span
-          >
-        </div>
+          <span class="text-everly-dark_grey">살래요</span>
+        </div> -->
 
         <!--살래요 활성화 -->
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+        <!-- TODO 1차 출시 주석 2023-01-25 20:25:35  -->
+        <!-- <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'buy'"
+          @click="toggleSellBuy('sell')"
+        >
           <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-          <span class="text-everly-dark_grey" @click="toggleSellBuy('sell')"
-            >팔래요</span
-          >
+          <span class="text-everly-dark_grey">팔래요</span>
         </div>
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+        <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'buy'"
+          @click="toggleSellBuy('buy')"
+        >
           <img src="@/assets/icon/check_mobile_red.svg" alt="" />
-          <span class="text-everly-red font-bold" @click="toggleSellBuy('buy')"
-            >살래요</span
-          >
+          <span class="text-everly-red font-bold">살래요</span>
+        </div> -->
+        <div class="flex space-x-1 w-[66px]" @click="alertMSG()">
+          <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
+          <span class="text-everly-dark_grey">팔래요</span>
         </div>
       </div>
     </div>
@@ -734,6 +748,7 @@ import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { useMainStore } from "@/store/modules/home/mainStore";
+import { alertMSG } from "@/common";
 
 const router = useRouter();
 //검색 store 가져오기

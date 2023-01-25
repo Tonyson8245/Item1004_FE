@@ -1,7 +1,11 @@
 <template>
   <div class="text-center w-full fixed bottom-0 z-40 py-2 px-4 bg-everly-white">
     <div class="w-full flex space-x-2">
-      <div class="w-1/6 flex justify-center items-center">
+      <!-- TODO 1차 출시 주석 2023-01-25 20:30:12 -->
+      <div
+        class="w-1/6 flex justify-center items-center cursor-pointer"
+        @click="alertMSG()"
+      >
         <img src="@/assets/icon/like_mid-grey.svg" alt="" class="pr-1" />
         <div class="text-sm">{{ storeWishCount }}</div>
       </div>
@@ -18,7 +22,7 @@
         <div
           class="font-bold text-everly-white"
           @click="togglestoreShowManagePost()"
-          v-if="owner"
+          v-if="storeUserIdx == storeUserInfo.idx"
         >
           글 관리
         </div>
@@ -45,8 +49,10 @@
 </template>
 
 <script setup lang="ts">
+import { alertMSG } from "@/common";
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { usePostStore } from "@/store/modules/home/postStore";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
@@ -73,15 +79,21 @@ const {
 } = storeToRefs(postStore);
 
 const toggle = useToggle(storeShowBuy);
-const owner = ref(false);
 
 const togglestoreShowManagePost = useToggle(storeShowManagePost);
 
 const paymentStore = usePaymentStore();
+const mypageStore = usemypageStore();
+const { storeUserInfo } = storeToRefs(mypageStore);
+
 const router = useRouter();
 
 //payment page로 보내기
 function goPaymentPage() {
+  if (navigator.userAgent.indexOf("Mobi") > -1) {
+    alert("모바일 결제는 지원 예정입니다.");
+    return;
+  }
   var idx = storePostIdx.value;
   var title = storePostTitle.value;
   var unit = storeSaleUnit.value;

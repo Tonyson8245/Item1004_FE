@@ -1,3 +1,5 @@
+import { isEmpty } from "class-validator";
+
 function inputNumberFormat(obj: HTMLInputElement) {
   obj.value = comma(uncomma(obj.value));
 }
@@ -85,7 +87,13 @@ function checkMinMax(min: string, max: string) {
   else return false;
 }
 
+export function alertMSG(string?: string) {
+  if (isEmpty(string)) string = "준비중입니다.";
+  alert(string);
+}
+
 export default {
+  alertMSG,
   inputNumberFormat,
   inputNumberFormatWithLimit,
   uncomma,

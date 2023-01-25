@@ -47,8 +47,8 @@
 <script lang="ts" setup>
 import modalSmall from "@/components/modal/modalSmall.vue";
 import { useauthStore } from "@/store/modules/auth/authStore";
+import { computed, watch, ref, onMounted } from "vue";
 import { useMediaQuery, useToggle } from "@vueuse/core";
-import { computed, watch, ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 
@@ -82,14 +82,23 @@ const authStore = useauthStore();
 const { storeredirect } = storeToRefs(authStore);
 const encData = ref("");
 function getNiceEncData() {
-  authStore.getNiceEncData("register").then((res) => {
-    if (res?.encryptionData) {
-      encData.value = res?.encryptionData;
-      setTimeout(() => {
-        fnPopup();
-      }, 100);
-    } else console.log("올바르지 않은 암호화 값 입력");
-  });
+  var agent = navigator.userAgent.toLowerCase();
+
+  if (agent.indexOf("version") > -1) {
+    alert(
+      "아이폰 또는 사파리 브라우저에서의 회원가입은 지원 예정입니다.\n안드로이드 폰이나 PC를 이용해주세요.\n위 경우 외에 오류가 발생할 시, 고객센터에 문의해주세요."
+    );
+    router.push("/account/login");
+  } else {
+    authStore.getNiceEncData("register").then((res) => {
+      if (res?.encryptionData) {
+        encData.value = res?.encryptionData;
+        setTimeout(() => {
+          fnPopup();
+        }, 100);
+      } else console.log("올바르지 않은 암호화 값 입력");
+    });
+  }
 }
 
 watch(storeredirect, () => {

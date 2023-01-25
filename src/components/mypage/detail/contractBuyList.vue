@@ -118,7 +118,7 @@ onMounted(() => {
   // else {
   //   mypageStore.getContractList(1, 2, "buy");
   // }
-  mypageStore.getContractList(1, 2, "buy");
+  mypageStore.getContractList(1, 1000, "buy");
 });
 
 //페이징

@@ -11,6 +11,7 @@ import type {
   chargeCompleteResult,
 } from "@/domain/payment/chargeCompleteDto";
 import type { user } from "@/domain/user/user.interface";
+import { isEmpty } from "class-validator";
 
 export const usePaymentStore = defineStore("paymentStore", {
   state: () => ({
@@ -86,6 +87,29 @@ export const usePaymentStore = defineStore("paymentStore", {
     chargepurchasePoint: (state) => {
       var value = state.storeChargeResult.purchasePoint;
       if (value != undefined) return value.toLocaleString();
+      else return "";
+    },
+    productInfo: (state) => {
+      var saleUnit = state.storeContractResult.saleUnit;
+      var pricePerUnit = state.storeContractResult.pricePerUnit;
+      var count = state.storeContractResult.countPricePerUnit;
+      var multiPrice = state.storeContractResult.multiPricePerUnit;
+      if (
+        !isEmpty(saleUnit) &&
+        !isEmpty(pricePerUnit) &&
+        !isEmpty(count) &&
+        !isEmpty(multiPrice)
+      )
+        return (
+          numberToKorean(saleUnit) +
+          "당 " +
+          pricePerUnit +
+          "/" +
+          numberToKorean(count) +
+          "(" +
+          multiPrice +
+          ")"
+        );
       else return "";
     },
   },

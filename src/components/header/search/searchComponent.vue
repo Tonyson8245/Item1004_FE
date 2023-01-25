@@ -1,19 +1,33 @@
 <template>
   <div>
     <div
-      class="dropdown-wrapper w-full border border-everly-main rounded-xl overflow-hidden"
+      class="dropdown-wrapper w-full border border-everly-main rounded-xl overflow-hidden bg-everly-white"
     >
       <div class="flex items-center h-[3.6rem]">
         <sellbuyBadge class="pl-4 py-3" :type="storeSellBuy" />
-        <input
+        <!-- TODO 1차 출시 주석 2023-01-25 20:34:19 -->
+        <!-- <input
           @click="toggleSearch()"
           placeholder="게임명 또는 서버명을 입력해주세요."
           :class="bottomBorder"
           v-model="storeKeyword"
           @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
           class="w-full rounded-l-lg bg-white py-4 px-0 text-[#6B7280] outline-none text-sm"
-        />
-        <div class="bg-white px-4 py-4" @click="toggleFilter_web()">
+        /> -->
+        <div
+          @click="alertMSG()"
+          class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm"
+        >
+          <input
+            disabled
+            placeholder="검색 기능은 준비 중입니다. 필터를 이용해주세요"
+            :class="bottomBorder"
+            v-model="storeKeyword"
+            @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
+            class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm"
+          />
+        </div>
+        <div class="bg-transparent px-4 py-4" @click="toggleFilter_web()">
           <img src="@/assets/icon/filter_blue.svg" alt="" />
         </div>
         <div class="bg-everly-main rounded-r-lg py-[0.5rem] px-1">
@@ -82,6 +96,7 @@ import { useFilterStore } from "../../../store/modules/home/filterStore";
 import { useCommonStore } from "../../../store/modules/common/commonStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
+import { alertMSG } from "@/common";
 
 //팔래요/살래요 , 검색창 값, 최근 검색어 가져오기
 const searchStore = useSearchStore(); // 검색 store 가져오기

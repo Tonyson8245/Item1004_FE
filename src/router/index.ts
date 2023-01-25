@@ -404,7 +404,7 @@ router.beforeEach((to, from) => {
       alert("로그인이 필요합니다.");
       router.replace(from);
       return;
-    } else checkIsAdult(); //성인도 체크해봐야함
+    } else if (to.meta.needCheckAdult == true) checkIsAdult(); //성인도 체크해봐야함
   }
   //성인 여부 확인
   function checkIsAdult() {

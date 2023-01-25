@@ -35,7 +35,7 @@
               <div class="flex">
                 <div class="w-14 md:w-[8rem] md:text-base font-bold">이름</div>
                 <div class="grow md:text-lg">
-                  {{ storeUserInfoOverview.name }}
+                  {{ storeUserInfo.name }}
                 </div>
               </div>
               <div class="flex">
@@ -43,7 +43,7 @@
                   닉네임
                 </div>
                 <div class="grow md:text-lg">
-                  {{ storeUserInfoOverview.nickname }}
+                  {{ storeUserInfo.nickname }}
                 </div>
               </div>
               <div class="flex">
@@ -51,7 +51,7 @@
                   연락처
                 </div>
                 <div class="grow md:text-lg flex space-x-4">
-                  <div>{{ storeUserInfoOverview.phone }}</div>
+                  <div>{{ storeUserInfo.phone }}</div>
                   <!-- TODO 안심번호 추가할때 넣기 -->
                   <!-- <div class="flex space-x-1 items-center">
                     <img
@@ -112,11 +112,11 @@
                 <div class="grow">
                   <div class="flex">
                     <div class="flex grow justify-between items-center pr-4">
-                      <div>보유</div>
+                      <div class="md:w-[6rem]">보유</div>
                       <div>{{ storeTotalMileage.toLocaleString() }} 원</div>
                     </div>
                     <div
-                      class="border-everly-main border rounded-lg text-everly-main flex justify-center items-center py-2 px-3 md:px-6 hover:bg-[#3f52fc] hover:text-[#ffffff]"
+                      class="border-everly-main border rounded-lg text-everly-main flex justify-center items-center py-2 px-3 md:px-6 hover:bg-[#3f52fc] hover:text-[#ffffff] cursor-pointer"
                     >
                       <div @click="router.push('/mypage/mileage/charge')">
                         충전하기
@@ -127,7 +127,7 @@
                     <div
                       class="flex grow items-center space-x-2 md:space-x-10 mr-2 relative"
                     >
-                      <div class="whitespace-nowrap">사용</div>
+                      <div class="md:w-[6rem]">사용</div>
                       <input
                         type="text"
                         placeholder="0"
@@ -141,7 +141,7 @@
                       <div class="absolute right-4 md:right-2">원</div>
                     </div>
                     <div
-                      class="border-everly-main border rounded-lg text-everly-main flex justify-center items-center py-2 px-3 md:px-6 hover:bg-[#3f52fc] hover:text-[#ffffff]"
+                      class="border-everly-main border rounded-lg text-everly-main flex justify-center items-center py-2 px-3 md:px-6 hover:bg-[#3f52fc] hover:text-[#ffffff] cursor-pointer"
                     >
                       <div @click="setMileage(storeTotalMileage.toString())">
                         전액사용
@@ -474,7 +474,7 @@ const {
   storefeePrice,
   storeCharaterName,
 } = storeToRefs(paymentStore);
-const { storeUserInfoOverview } = storeToRefs(mypageStore);
+const { storeUserInfo } = storeToRefs(mypageStore);
 
 //페이지 들어올때 계산 먼저함
 onMounted(() => {
