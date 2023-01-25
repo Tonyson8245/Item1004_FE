@@ -168,7 +168,8 @@
             >
               신용 / 체크카드
             </div>
-            <div
+            <!-- TODO 1차 출시 주석 2023-01-25 22:14:29-->
+            <!-- <div
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
               :class="setColorPaymentMethod(`BANK`)"
               @click="clickPaymentMethod(`BANK`)"
@@ -235,6 +236,56 @@
               class="border-everly-mid_grey border text-everly-dark_grey text-center py-3 cursor-pointer"
               :class="setColorPaymentMethod(`tmoney`)"
               @click="clickPaymentMethod(`tmoney`)"
+            >
+              티머니
+            </div> -->
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              계좌이체
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              가상계좌
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              휴대폰결제
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              네이버페이
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              카카오페이
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              페이코페이
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              엘페이
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              핀페이
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
+            >
+              문화상품권
+            </div>
+            <div
+              class="border-everly-mid_grey border text-everly-white text-center py-3 cursor-not-allowed bg-everly-mid_grey"
             >
               티머니
             </div>

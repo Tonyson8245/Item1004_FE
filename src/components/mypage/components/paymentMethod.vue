@@ -10,7 +10,7 @@
       <span> {{ props.title }}</span>
     </div>
     <div
-      class="bg-[#fafafa]/70 md:bg-[#f0f0f0]/70 md:bg absolute w-full h-full flex items-center justify-center"
+      class="bg-[#fafafa]/70 md:bg-[#f0f0f0]/70 md:bg absolute w-full h-full flex items-center justify-center cursor-not-allowed"
       style="z-index: 1"
       v-if="!props.active"
     ></div>

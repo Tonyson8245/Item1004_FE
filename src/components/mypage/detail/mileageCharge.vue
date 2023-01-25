@@ -35,14 +35,14 @@
               @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`가상계좌`"
-              :active="true"
+              :active="false"
               :img-url="`/assets/icon/virtualAccontwithblue_black.svg`"
             />
             <PaymentMethodVue
               @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`계좌이체`"
-              :active="true"
+              :active="false"
               :img-url="`/assets/icon/accountRealtimewithblue_black.svg`"
             />
             <PaymentMethodVue

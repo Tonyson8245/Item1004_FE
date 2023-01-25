@@ -230,7 +230,7 @@
                 <div>찜하기</div>
               </div>
               <div
-                class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-dark_grey border cursor-pointer"
+                class="flex-1 flex py-3 rounded-lg justify-center items-center bg-everly-white text-everly-dark_grey border-everly-mid_grey border cursor-pointer"
                 @click="goChatPage"
               >
                 <img

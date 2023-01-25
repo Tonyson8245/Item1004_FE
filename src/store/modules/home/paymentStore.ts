@@ -94,6 +94,10 @@ export const usePaymentStore = defineStore("paymentStore", {
       var pricePerUnit = state.storeContractResult.pricePerUnit;
       var count = state.storeContractResult.countPricePerUnit;
       var multiPrice = state.storeContractResult.multiPricePerUnit;
+      var unitName = "개";
+      if (state.storeCategory == "gameMoney") unitName = "게임머니";
+      else unitName = "개";
+
       if (
         !isEmpty(saleUnit) &&
         !isEmpty(pricePerUnit) &&
@@ -102,6 +106,7 @@ export const usePaymentStore = defineStore("paymentStore", {
       )
         return (
           numberToKorean(saleUnit) +
+          unitName +
           "당 " +
           pricePerUnit +
           "/" +

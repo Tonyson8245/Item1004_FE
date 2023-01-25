@@ -32,7 +32,7 @@
         >
           <div class="md:text-xl text-sm space-y-3 md:space-y-8">
             <div class="flex">
-              <div class="font-bold w-14 md:w-[6.9rem]">거래물품</div>
+              <div class="font-bold w-14 md:w-[9.6rem]">거래물품</div>
               <div class="grow text-right md:text-left space-y-2">
                 <div>{{ data.title }}</div>
                 <div class="md:text-base">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[6.9rem]">결제금액</div>
+              <div class="font-bold w-14 md:w-[9.6rem]">결제금액</div>
               <div class="grow text-right md:text-left space-y-2">
                 <div>{{ commonFunction.comma(data.totalPrice) }} 원</div>
                 <div class="md:text-base">{{ productInfo }}</div>
@@ -51,7 +51,7 @@
             </div>
 
             <div class="flex">
-              <div class="font-bold w-14 md:w-[6.9rem]">할인금액</div>
+              <div class="font-bold w-14 md:w-[9.6rem]">할인금액</div>
               <div class="grow text-right md:text-left">
                 <div class="flex justify-end md:justify-between space-x-3">
                   <div class="md:text-base text-everly-dark_grey">(쿠폰)</div>
@@ -69,10 +69,12 @@
             </div>
 
             <div class="flex">
-              <div class="font-bold w-13 md:w-[6.9rem] text-right md:text-left">
+              <div class="font-bold w-13 md:w-[9.6rem] text-right md:text-left">
                 최종결제<br class="md:hidden" />금액
               </div>
-              <div class="grow text-right md:justify-end md:flex md:items-end">
+              <div
+                class="grow text-right md:justify-start md:flex md:items-end"
+              >
                 <div class="text-base font-bold md:text-xl">
                   {{ commonFunction.comma(data.totalPrice) }} 원
                 </div>
@@ -98,7 +100,7 @@
         >
           <div class="p-5 pb-0 md:px-0 md:py-[2.215rem] space-y-2 md:space-y-4">
             <div class="flex md:space-x-11">
-              <div class="font-bold md:w-[5rem]">결제번호</div>
+              <div class="font-bold md:w-[6.8rem]">결제번호</div>
               <div
                 class="col-span-3 text-right flex-1 md:flex-none md:text-left"
               >
@@ -106,7 +108,7 @@
               </div>
             </div>
             <div class="flex md:space-x-11">
-              <div class="font-bold md:w-[5rem]">결제일시</div>
+              <div class="font-bold md:w-[6.8rem]">결제일시</div>
               <div
                 class="col-span-3 text-right flex-1 md:flex-none md:text-left"
               >
@@ -115,7 +117,7 @@
             </div>
 
             <div class="flex md:space-x-11">
-              <div class="font-bold md:w-[5rem]">결제방법</div>
+              <div class="font-bold md:w-[6.8rem]">결제방법</div>
               <div
                 class="col-span-3 text-right flex-1 md:flex-none md:text-left"
               >
@@ -124,7 +126,7 @@
             </div>
 
             <div class="flex md:space-x-11">
-              <div class="font-bold md:w-[5rem]">거래상태</div>
+              <div class="font-bold md:w-[6.8rem]">거래상태</div>
               <div
                 class="col-span-3 text-right flex-1 md:flex-none md:text-left"
               >

@@ -17,8 +17,32 @@
           />
           <span class="font-bold text-sm md:text-lg">거래진행단계 </span>
         </div>
-        <div class="w-full flex justify-center">
-          <div v-if="getterContractStageStatus == 'takeover_complete'">
+        <div class="w-full flex justify-center pb-8">
+          <div v-if="!getterContractDetail.my.isSeller">
+            <img
+              :src="`/assets/img/contractProcess/take_${getterContractStageStatus}.svg`"
+              class="hidden md:block"
+              alt=""
+            />
+            <img
+              :src="`/assets/img/contractProcess/take_mobile_${getterContractStageStatus}.svg`"
+              class="md:hidden"
+              alt=""
+            />
+          </div>
+          <div v-else>
+            <img
+              :src="`/assets/img/contractProcess/takeover_${getterContractStageStatus}.svg`"
+              class="hidden md:block"
+              alt=""
+            />
+            <img
+              :src="`/assets/img/contractProcess/takeover_mobile_${getterContractStageStatus}.svg`"
+              class="md:hidden"
+              alt=""
+            />
+          </div>
+          <!-- <div v-if="getterContractStageStatus == 'takeover_complete'">
             <img
               src="@/assets/img/contractProcess_complete_mobile.svg"
               alt=""
@@ -53,7 +77,7 @@
               class="md:hidden"
               alt=""
             />
-          </div>
+          </div> -->
         </div>
       </div>
       <!-- 판매정보 -->

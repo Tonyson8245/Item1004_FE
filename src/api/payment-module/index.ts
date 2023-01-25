@@ -102,7 +102,7 @@ async function payment(
         buyerIdx,
         point,
         pricePerUnit,
-        point,
+        postIdx,
         totalPrice,
         pricePerUnit,
         salesUnit,
@@ -116,6 +116,7 @@ async function payment(
           // TODO 결제 완료 페이지 보내기 구현 필요
           // alert("포인트로만 결제 성공");
           console.log(res);
+
           var payMethod = res.payMethod;
           var tid = res.tid;
           var userIdx = res.userIdx;
