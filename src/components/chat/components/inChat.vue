@@ -138,7 +138,7 @@ onMounted(()=>{
 
 watch(top, ()=>{
     if (top.value) {
-        console.log("변경됨", messagesHasNext);
+        // console.log("변경됨", messagesHasNext);
         // 불러올 메세지가 더 있으면 추가로 불러온다.
         chatStore.pagingMessages(selectedChannel.value?.id as string)
     }

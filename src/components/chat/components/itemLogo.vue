@@ -46,7 +46,7 @@ const chatStore = useChatStore();
 const { postItem } = storeToRefs(chatStore);
 
 const isMobile = () => {
-  return window.innerWidth < 640;
+  return window.innerWidth < 768;
 };
 </script>
 

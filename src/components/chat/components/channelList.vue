@@ -26,7 +26,7 @@
             
             
             
-            <div class=" md:hidden w-full mt-12   flex flex-col justify-center" v-if="messages.length===0 && !route.query.postId">
+            <div class=" md:hidden w-full mt-12   flex flex-col justify-center" v-if="channels.length===0 && !route.query.postId">
                 <div class="flex flex-col items-center ">
                     <img
                     src="/assets/icon/chat_mobile.svg"

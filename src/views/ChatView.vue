@@ -40,7 +40,7 @@ const chatStore = useChatStore();
 
 // TalkPlus 초기화 실행 
 // const chatClient = 
-const { client, channels, selectedChannel, isNewChat } = storeToRefs(chatStore);
+const { client, channels, selectedChannel, isNewChat, postItem } = storeToRefs(chatStore);
 
 
 const init = async () => await chatStore.init();
@@ -66,9 +66,9 @@ login().then( async (data)=>{
   // 선택된 채널 세팅
   await setSelectedChannel();
   // 새로운 채팅 여부 세팅
-  setNewChat();
+  await setNewChat();
   // 채팅화면 거래글 postId 세팅
-  setPostItem();
+  await setPostItem();
 
   
   // console.log(client.value);
@@ -89,9 +89,9 @@ watch(route, async()=> {
   // 선택된 채널 세팅
   await setSelectedChannel()  
   // 새로운 채팅 여부 세팅
-  setNewChat();
+  await setNewChat();
   // 채팅화면 거래글 postId 세팅
-  setPostItem();
+  await setPostItem();
 
 })
 
@@ -109,10 +109,12 @@ async function setNewChat() {
 // }
 
 // 채팅 관련 거래 게시글 
-function setPostItem() {
-  if (route.query.postId) chatStore.setPostItem(route.query.postId);
+async function setPostItem() {
+
+  
+  if (route.query.postId) await chatStore.setPostItem(route.query.postId);
   else if(selectedChannel.value?.data.postIdx === undefined && route.query.postId===undefined) return
-  else chatStore.setPostItem(selectedChannel.value?.data.postIdx);
+  else await chatStore.setPostItem(selectedChannel.value?.data.postIdx);
 }
 
 // 선택된 채널 세팅
@@ -120,8 +122,6 @@ async function setSelectedChannel() {
   // url이 새로운 방 생성인 new?postId일 수 있음
   if (!route.query.postId && route.params.channelId) await chatStore.getSelectedChannel(route.params.channelId)
 }
-
-
 
 
 // 받은 메세지 처리기
@@ -145,12 +145,12 @@ onUnmounted(() => {
   chatStore.resetMessages()
   chatStore.setClientNull()
   chatStore.resetPostItem()
+  chatStore.resetSelectedChannel()
 })
 
 onMounted(() => {
-  console.log(navigator.userAgent.toLowerCase());
   //  if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
-  //  }
+  //  }  
 });
 
 // const chatView = ref(false);
