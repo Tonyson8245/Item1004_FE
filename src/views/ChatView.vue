@@ -20,6 +20,7 @@
     
     </div>
     
+  
   </div>
 
 </template>
@@ -38,9 +39,11 @@ const route = useRoute();
 const chatStore = useChatStore();
 
 // TalkPlus 초기화 실행 
-const chatClient = chatStore.init();
+// const chatClient = 
+const { client, channels, selectedChannel, isNewChat, postItem } = storeToRefs(chatStore);
 
-const { client, channels, selectedChannel, isNewChat } = storeToRefs(chatStore);
+
+const init = async () => await chatStore.init();
 
 // TalkPlus api 로그인
 const login = async () => await chatStore.login()
@@ -48,6 +51,7 @@ const login = async () => await chatStore.login()
 // 채널(=채팅방) 목록 불러오기
 const getChannels = async () => await chatStore.getChannels(); 
 
+init();
 
 // watch(route, ()=>{
 //   console.log(route);  
@@ -56,45 +60,38 @@ const getChannels = async () => await chatStore.getChannels();
 login().then( async (data)=>{  
   // console.log(data); 
   
+
   // 전체 채팅방 목록 세팅
   getChannels()  
   // 선택된 채널 세팅
   await setSelectedChannel();
   // 새로운 채팅 여부 세팅
-  setNewChat();
+  await setNewChat();
   // 채팅화면 거래글 postId 세팅
-  setPostItem();
+  await setPostItem();
 
   
-  console.log(client.value);
+  // console.log(client.value);
 
 
   client.value.on('event', async (data) => {
     // console.log("이벤트 발생", data);
-    if (data.type === 'message') {   
-      console.log("받은 메세지", data);
-     
-     
-      console.log(client.value);
-      // console.log(  client.value);             
-        // console.log("받은 데이터", data);
-        // console.log("받는데이");        
-      await onReceiveMessage(data)
+    if (data.type === 'message') {
+        //TODO: 현재 메세지 받는 이벤트가 이 페이지에 오면 여러개가 생성이 되서 문제 발생하고 있음.
+      if(data.message.userId !== client.value.userId)   await onReceiveMessage(data)
     }
   })  
 });
 // console.log(route.query.postId);
-
-
 
 // url 변경에 따른 채널&메세지, 새 채팅방 여부,관련판매글id 변경
 watch(route, async()=> {  
   // 선택된 채널 세팅
   await setSelectedChannel()  
   // 새로운 채팅 여부 세팅
-  setNewChat();
+  await setNewChat();
   // 채팅화면 거래글 postId 세팅
-  setPostItem();
+  await setPostItem();
 
 })
 
@@ -112,9 +109,12 @@ async function setNewChat() {
 // }
 
 // 채팅 관련 거래 게시글 
-function setPostItem() {
-  if (route.query.postId) chatStore.setPostItem(route.query.postId);
-  else chatStore.setPostItem(selectedChannel.value?.data.postIdx);
+async function setPostItem() {
+
+  
+  if (route.query.postId) await chatStore.setPostItem(route.query.postId);
+  else if(selectedChannel.value?.data.postIdx === undefined && route.query.postId===undefined) return
+  else await chatStore.setPostItem(selectedChannel.value?.data.postIdx);
 }
 
 // 선택된 채널 세팅
@@ -124,10 +124,9 @@ async function setSelectedChannel() {
 }
 
 
-
-
 // 받은 메세지 처리기
 async function onReceiveMessage(data:any) {
+  
     let channel = data.channel   
     // console.log("메세지 받음");
 
@@ -144,10 +143,15 @@ async function onReceiveMessage(data:any) {
 onUnmounted(() => {
   chatStore.resetChannels()
   chatStore.resetMessages()
-
+  chatStore.setClientNull()
+  chatStore.resetPostItem()
+  chatStore.resetSelectedChannel()
 })
 
-
+onMounted(() => {
+  //  if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+  //  }  
+});
 
 // const chatView = ref(false);
 // const channelsView = ref(false);

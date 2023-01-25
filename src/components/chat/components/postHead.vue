@@ -6,16 +6,16 @@
         <!-- <input :value="bottom" /> -->
 
         <itemLogo :postItem="postItem"/>
-        <div class="flex flex-col gap-1">
-            <div class="flex">
-                <p class=" text-xs text-bck">{{ postItem?.gameName }} > {{ postItem?.serverName }} </p>
+        <div class="flex flex-col ">
+            <div class="hidden md:flex">
+                <p class=" text-xs">{{ postItem?.gameName }} > {{ postItem?.serverName }} </p>
             </div>
-            <div class="flex text-sm">
+            <div class="flex md:text-sm">
                 <p v-if="postItem?.isDeleted === true " class="font-bold mr-2">삭제됨</p> 
                 <p v-if="postItem?.status === 'end' " class="font-bold mr-2">거래완료</p> 
                 <p>{{postItem?.title}}</p>
             </div>
-            <div class="flex text-xs flex-grow text-everly-dark_grey">
+            <div class="flex text-xs flex-grow md:text-everly-dark_grey">
                 <p class="">{{numberToKorean(postItem?.saleUnit)}}</p>
                 
                 <p v-if="postItem?.productType ==='gameMoney'" class="mr-1 ml-2">게임머니당</p>
@@ -41,10 +41,8 @@ import { numberToKorean } from "@/common";
 import itemLogo from "./itemLogo.vue"
 import router from "@/router";
 
-
 const chatStore = useChatStore();
 const { postItem } = storeToRefs(chatStore);
-
 
 function goPostPage(postIdx:number) {
     if(!postItem.value?.isDeleted) router.push('/post?postId='+postIdx);
@@ -57,7 +55,6 @@ function goPostPage(postIdx:number) {
 .chat-bg{
     background-color: rgba(233, 233, 253, 0.23);
 }
-
 
 </style>
         

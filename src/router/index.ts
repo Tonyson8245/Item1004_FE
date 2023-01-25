@@ -295,7 +295,9 @@ const router = createRouter({
       children: [
         {
           path: "",
+          meta:{transition: "", name: "chat", title: "채팅", navbar: true , needLogin: true },
           components: {
+            
             default: async () => {
               if (!isMobile()) {
                 return components.chatPage;
@@ -359,7 +361,7 @@ const router = createRouter({
 });
 
 const isMobile = () => {
-  return window.innerWidth < 640;
+  return window.innerWidth < 768;
 };
 
 router.beforeEach((to, from) => {
