@@ -293,7 +293,19 @@ const router = createRouter({
           },
         },
         {
-          path: ":channelId",
+          path:"/new",
+          components: {
+            default: async ()=>{
+                if(!isMobile()){
+                  return  components.chatPage
+                }    else{
+                  return  components.inChat
+                }
+              } ,            
+          },
+        },
+        {
+          path:":channelId",
           components: {
             default: async () => {
               if (!isMobile()) {
