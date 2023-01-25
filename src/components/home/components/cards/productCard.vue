@@ -100,23 +100,24 @@
         >
           {{ props.card?.post.title }}
         </div>
-        <div class="justify-start items-center space-x-1 hidden md:flex">
-          <div
-            class="text-xs"
-            v-if="props.card?.post.productType != `character`"
-          >
-            최소구매수량
-          </div>
-          <div
-            class="text-sm pr-3"
-            v-if="props.card?.post.productType != `character`"
-          >
-            {{ minQty }} 개
-          </div>
+        <div
+          class="justify-start items-center space-x-1 hidden md:flex"
+          v-if="props.card?.post.productType != 'character'"
+        >
+          <div class="text-xs">최소구매수량</div>
+          <div class="text-sm pr-3">{{ minQty }} 개</div>
           <div class="text-xs">최대구매수량</div>
           <div class="text-sm">{{ maxQty }} 개</div>
         </div>
-        <div class="flex justify-between mt-3 md:mt-0">
+        <div class="justify-start items-center space-x-1 hidden md:flex" v-else>
+          <div class="text-xs">직업</div>
+          <div class="text-sm pr-3">
+            {{ props.card.post.roleName }}
+          </div>
+          <div class="text-xs">레벨</div>
+          <div class="text-sm">{{ props.card.post.level }} 개</div>
+        </div>
+        <div class="flex justify-between mt-3 md:mt-0 items-center">
           <div class="flex justify-start items-center mt-1 space-x-1 font-bold">
             <span class="text-xs sm:text-sm pr-2"
               >{{ saleUnit }} {{ currency }}당</span
