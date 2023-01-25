@@ -9,6 +9,7 @@ import vueDebounce from "vue-debounce";
 import router from "./router/index";
 import type { Router } from "vue-router";
 import * as Sentry from "@sentry/vue";
+import { VueCookieNext } from "vue-cookie-next";
 
 declare module "pinia" {
   export interface PiniaCustomProperties {
@@ -17,6 +18,12 @@ declare module "pinia" {
 }
 
 const app = createApp(App);
+app.use(VueCookieNext);
+
+// set default config
+VueCookieNext.config({ expire: "1d" });
+
+// set global cookie
 
 Sentry.init({
   app,

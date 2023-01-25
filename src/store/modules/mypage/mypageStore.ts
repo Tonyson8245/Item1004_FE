@@ -163,6 +163,8 @@ export const usemypageStore = defineStore("mypageStore", {
       this.storeUserInfo = {} as userInfoResult;
     },
     async getUserInfo() {
+      console.log("실행!!");
+
       await authApi
         .getUserInfo()
         .then((res) => {
@@ -173,7 +175,7 @@ export const usemypageStore = defineStore("mypageStore", {
         });
     },
     resetUserInfoOverview() {
-      this.storeUserInfo = {} as userInfoResult;
+      this.storeUserInfoOverview = {} as userInfoOverviewResult;
     },
     getUserInfoOverview() {
       authApi

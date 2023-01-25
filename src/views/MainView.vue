@@ -72,9 +72,7 @@ import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
 import FooterLogin from "@/components/footer/footerLogin.vue";
 import ContractInfobar from "@/components/footer/ContractInfobarMobile.vue";
-import { onMounted, onUnmounted } from "vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
-import type { TokenDto } from "@/domain/auth";
 
 // import smartroVue from "@/components/payment/smartro.vue";
 

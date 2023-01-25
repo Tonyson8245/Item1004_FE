@@ -7,6 +7,8 @@ const delay = (ms: number) => {
 export const useComponentStore = defineStore("componentStore", {
   state: () => ({
     closeDropdown: false,
+
+    scrollLock: false,
   }),
 
   getters: {
@@ -17,6 +19,9 @@ export const useComponentStore = defineStore("componentStore", {
       this.closeDropdown = status;
 
       await delay(1);
+    },
+    setscrollLock(status: boolean) {
+      this.scrollLock = status;
     },
   },
 });

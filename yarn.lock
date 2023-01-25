@@ -180,6 +180,11 @@
   resolved "https://registry.npmjs.org/@ts-pro/vue-eternal-loading/-/vue-eternal-loading-1.3.0.tgz"
   integrity sha512-uA+Z2DezhVfE9V+4QyY48gaNHMBTI1Qw5pXWdJJR0PVdivttWQS5xneQot3T8YkYjJr2gl7YbwmG2pFJQTZctQ==
 
+"@types/cookie@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.npmjs.org/@types/cookie/-/cookie-0.3.3.tgz"
+  integrity sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==
+
 "@types/dotenv@^8.2.0":
   version "8.2.0"
   resolved "https://registry.npmjs.org/@types/dotenv/-/dotenv-8.2.0.tgz"
@@ -671,6 +676,16 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
+
+cookie@^0.4.0:
+  version "0.4.2"
+  resolved "https://registry.npmjs.org/cookie/-/cookie-0.4.2.tgz"
+  integrity sha512-aSWTXFzaKWkvHO1Ny/s+ePFpvKsPnjc551iI41v3ny/ow6tBG5Vd+FuqGNhh1LxOmVzOlGUriIlOaokOvhaStA==
+
+cookies-ts@^1.0.4:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/cookies-ts/-/cookies-ts-1.0.5.tgz"
+  integrity sha512-WpfZCpgrkbo1L39ZHCSvSV2xSERuzlCdGFyIT8QFFmmyPe6UWrNaq8DCIyluo9VmLLlXb1v7go2xrxcYNSCxBg==
 
 cross-spawn@^6.0.5:
   version "6.0.5"
@@ -2285,6 +2300,14 @@ unbox-primitive@^1.0.2:
     has-symbols "^1.0.3"
     which-boxed-primitive "^1.0.2"
 
+universal-cookie@*:
+  version "4.0.4"
+  resolved "https://registry.npmjs.org/universal-cookie/-/universal-cookie-4.0.4.tgz"
+  integrity sha512-lbRVHoOMtItjWbM7TwDLdl8wug7izB0tq3/YVKhT/ahB4VDvWMyvnADfnJI8y6fSvsjh51Ix7lTGC6Tn4rMPhw==
+  dependencies:
+    "@types/cookie" "^0.3.3"
+    cookie "^0.4.0"
+
 update-browserslist-db@^1.0.9:
   version "1.0.10"
   resolved "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.0.10.tgz"
@@ -2339,6 +2362,18 @@ vue-class-component@^6.0.0, vue-class-component@^6.2.0:
   version "6.3.2"
   resolved "https://registry.npmjs.org/vue-class-component/-/vue-class-component-6.3.2.tgz"
   integrity sha512-cH208IoM+jgZyEf/g7mnFyofwPDJTM/QvBNhYMjqGB8fCsRyTf68rH2ISw/G20tJv+5mIThQ3upKwoL4jLTr1A==
+
+vue-cookie-next@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/vue-cookie-next/-/vue-cookie-next-1.3.0.tgz"
+  integrity sha512-+EinbhSf0c0M8cijCXRVgcvYBIm0lmu3/WKeFUokU93R1J3DxkkBHn5wOc9IyJj9ugAPI0d9EnhcOiOFNA/YVQ==
+
+vue-cookies-ts@^1.5.19:
+  version "1.5.19"
+  resolved "https://registry.npmjs.org/vue-cookies-ts/-/vue-cookies-ts-1.5.19.tgz"
+  integrity sha512-vG9NOoB1okEwCP6PrlpJWfhizRbbOCqcQHuHBr2jnc44cdUEAWS00byDrmRSAEZyzxapL4Vl8fzjoO7ponttUg==
+  dependencies:
+    cookies-ts "^1.0.4"
 
 vue-debounce@^4.0.0:
   version "4.0.0"
@@ -2428,7 +2463,7 @@ vue@^2.5.22:
     "@vue/compiler-sfc" "2.7.14"
     csstype "^3.1.0"
 
-"vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, "vue@>= 2.0.0", "vue@2.x || 3.x", vue@3.2.45:
+"vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.5, vue@^3.1.4, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, "vue@>= 2.0.0", "vue@2.x || 3.x", vue@3.2.45:
   version "3.2.45"
   resolved "https://registry.npmjs.org/vue/-/vue-3.2.45.tgz"
   integrity sha512-9Nx/Mg2b2xWlXykmCwiTUCWHbWIj53bnkizBxKai1g61f2Xit700A1ljowpTIM11e3uipOeiPcSqnmBg6gyiaA==
