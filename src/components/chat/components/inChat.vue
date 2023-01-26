@@ -9,7 +9,8 @@
         <div id="scroll-view" ref="scrollView" class=" py-1 h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll" 
             @scroll="handleListScroll">
             <!-- 채팅 내용 화면 영역 -->        
-            <div v-for="message in messages">            
+            <div v-for="message in messages">        
+                  
                 <message v-if="message.userId !== client.channel.userId"  :message="message"/>
                 <myMessage v-else                                         :message="message"/>
             </div>
@@ -131,6 +132,7 @@ onMounted(()=>{
         childList: true, 
     }
     // 감시 시작
+     //@ts-ignore
     observer.observe(scrollView.value, config);
     // chatStore.isRoomExit();
     // chatStore.getPost();
@@ -150,6 +152,7 @@ watch(top, ()=>{
 
 
 const scrollToBottom = () => {
+     //@ts-ignore
     scrollView.value.scrollTop = scrollView.value.scrollHeight
 }
 
