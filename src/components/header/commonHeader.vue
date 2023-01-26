@@ -21,7 +21,7 @@
           src="@/assets/icon/contruction_white.svg"
           alt=""
           v-if="route.meta.title == `마일리지`"
-          class="w-6"
+          class="w-6 md:hidden"
           @click="router.push('./guide')"
         />
       </div>

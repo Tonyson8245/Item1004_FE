@@ -89,6 +89,21 @@ export const usePaymentStore = defineStore("paymentStore", {
       if (value != undefined) return value.toLocaleString();
       else return "";
     },
+    getProductType: (state) => {
+      var res = state.storeContractResult.productType;
+      if (res != undefined) {
+        switch (res) {
+          case "gameMoney":
+            return "게임머니";
+          case "character":
+            return "캐릭터";
+          case "item":
+            return "아이템";
+          case "etc":
+            return "기타";
+        }
+      }
+    },
     productInfo: (state) => {
       var saleUnit = state.storeContractResult.saleUnit;
       var pricePerUnit = state.storeContractResult.pricePerUnit;
@@ -98,12 +113,16 @@ export const usePaymentStore = defineStore("paymentStore", {
       if (state.storeCategory == "gameMoney") unitName = "게임머니";
       else unitName = "개";
 
+      console.log(saleUnit, pricePerUnit, count, multiPrice, unitName);
+
       if (
         !isEmpty(saleUnit) &&
         !isEmpty(pricePerUnit) &&
         !isEmpty(count) &&
         !isEmpty(multiPrice)
-      )
+      ) {
+        console.log("공백임");
+
         return (
           numberToKorean(saleUnit) +
           unitName +
@@ -115,7 +134,7 @@ export const usePaymentStore = defineStore("paymentStore", {
           multiPrice +
           ")"
         );
-      else return "";
+      } else return "";
     },
   },
   actions: {

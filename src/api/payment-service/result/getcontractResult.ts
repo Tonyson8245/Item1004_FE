@@ -30,6 +30,9 @@ export async function getcontractResult<T>(
         postIdx: payload.postIdx,
         userIdx: payload.userIdx,
       },
+      headers: {
+        accesstoken: token,
+      },
     });
     return result;
   } catch (err) {
