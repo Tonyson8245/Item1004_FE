@@ -34,6 +34,7 @@ import type message from '@/domain/chat/message.interface';
 const props = defineProps<{ message: message}>();
 
 const lastMessageTime = () => {    
+    // @ts-ignore
     return  new Intl.DateTimeFormat("ko", { timeStyle: 'short' }).format(new Date(props.message.createdAt))
 }
 

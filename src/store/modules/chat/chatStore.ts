@@ -17,7 +17,7 @@ import router from "@/router";
 
 export const useChatStore = defineStore("chatStore", ()=>  {
     
-  const client = ref(Object)
+  const client = ref<any>(Object)
   const user = ref(Object)
   const channels = ref<channel[] >([])
   const channelsHasNext = ref(false);
@@ -65,7 +65,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
        
     
     if (!isLogin) {
-      console.log();
+      console.log("로그인 진행");
       
       const localData = localStorage.getItem("user");
             //@ts-ignore
@@ -86,7 +86,8 @@ export const useChatStore = defineStore("chatStore", ()=>  {
             // loginToken: "$2a$06$Q4WYHQa16ChPTJTy2IWVNuQzxgEFAe2Up.SuikpS8WYMeqy.3Qk4S"
           });          
           // console.log("로그인 아이디 : ",user.value);
-          
+          console.log("user.value : ",user.value);
+
       } catch (error) {
         console.log("error : ", error);
       }
@@ -95,10 +96,11 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   }
 
   // 채팅방 목록 갱신
-  const setChannels = (channel:channel ) =>{ 
+  const setChannels = (channel:channel) =>{ 
     // 리스트 안에 내가 받은 채널과 같은아이디 가지고 있는 채널이 있냐?
     // yes : 리스트 안에서 내가 받은 채널과 같은 아이디 가지고 잇는 채널 찾아서 지워라 
-      
+    console.log("setChannels 실행");
+    
     const pickChannel = findChannel(channel.id)
     // console.log("채널 : ", pickChannel);    
     // console.log("채널 정보",pickChannel);
@@ -144,7 +146,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       channels.value.push(...result.channels);
       channelsHasNext.value = result.hasNext;
 
-    // console.log(result);
+    console.log("getChannels sucess",result);
     } catch (error) {
       console.log("error : ",error);        
       return
@@ -248,8 +250,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     selectedChannel.value = clickedChannel;
     // console.log(selectedChannel.value);     
 
-    // console.log("selectedChannel.value 세팅 : ",selectedChannel.value);
-    
+    // console.log("selectedChannel.value 세팅 : ",selectedChannel.value);    
     await getMessages(selectedChannel.value.id);
     await getUnreadCount();
 

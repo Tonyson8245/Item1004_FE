@@ -60,7 +60,8 @@ init();
 login().then( async (data)=>{  
   // console.log(data); 
   
-
+  console.log("로그인 됏으므로 채널 가지고 오기 실행");
+  
   // 전체 채팅방 목록 세팅
   getChannels()  
   // 선택된 채널 세팅
@@ -70,6 +71,8 @@ login().then( async (data)=>{
   // 채팅화면 거래글 postId 세팅
   await setPostItem();
 
+  console.log("로그인 후 로그");
+  
   
   // console.log(client.value);
 
@@ -98,9 +101,7 @@ watch(route, async()=> {
     chatStore.resetPostItem()
     chatStore.resetMessages()
     chatStore.resetSelectedChannel()
-
   }
-
 })
 
 // 새로운 채팅 여부 파악
@@ -132,6 +133,8 @@ async function setPostItem() {
 // 선택된 채널 세팅
 async function setSelectedChannel() {    
   // url이 새로운 방 생성인 new?postId일 수 있음
+  console.log("setSelectedChannel");
+  
   if (!route.query.postId && route.params.channelId) await chatStore.getSelectedChannel(route.params.channelId)
 }
 

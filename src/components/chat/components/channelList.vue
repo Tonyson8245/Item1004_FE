@@ -22,9 +22,7 @@
         <div 
         class="flex-grow overflow-scroll overflow-x-hidden"            
         ref="scroll">  
-            <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
-            
-            
+            <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>           
             
             <div class=" md:hidden w-full mt-12   flex flex-col justify-center" v-if="channels.length===0 && !route.query.postId">
                 <div class="flex flex-col items-center ">
@@ -79,7 +77,13 @@ const { left, right, top, bottom } = toRefs(arrivedState)
 //   console.log(state) // {x, y, isScrolling, arrivedState, directions}
 // }
 
+watch(channels, ()=>{
+    console.log("channels 변경 : ",channels.value);    
+})
+
 watch(bottom, ()=> {  
+    console.log("bottom 변경 : ",bottom);
+    
     if (bottom.value) {               
          chatStore.pagingChannels()
     }
