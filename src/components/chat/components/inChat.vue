@@ -46,8 +46,8 @@
               v-if="!postItem?.isDeleted"
               id="messageInputArea"
               v-model="text"
-              @keydown.enter.shift.exact.prevent="text += '\n'"
-              @keydown.enter.exact.prevent="sendMessageProcess"
+              @keypress.enter.shift.exact.prevent="text += '\n'"
+              @keypress.enter.exact.prevent="sendMessageProcess"
               maxlength="8000"
               class="w-full py-1 px-3 text-sm text-everly-dark_grey outline-none resize-none"
               placeholder="내용을 입력하세요"
@@ -142,7 +142,7 @@ async function sendMessage(channelId: string | undefined) {
   text.value = "";
   scrollToBottom();
 
-  console.log("보낼때 클라이언트 밸류", client.value);
+  // console.log("보낼때 클라이언트 밸류", client.value);
 }
 
 onMounted(() => {
@@ -164,7 +164,6 @@ onMounted(() => {
   // chatStore.isRoomExit();
   // chatStore.getPost();
 
-  console.log("라우트 패스 : ", route.path);
 });
 
 watch(top, () => {
