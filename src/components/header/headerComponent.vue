@@ -21,7 +21,7 @@
                 class="cursor-pointer"
                 src="@/assets/icon/noti_grey.svg"
                 alt=""
-                @click="moveExternalLink('블로그')"
+                @click="moveExternalLink('공지사항')"
               />
               <img
                 class="cursor-pointer"

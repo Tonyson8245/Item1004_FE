@@ -155,7 +155,7 @@
                   >
                     계정종류
                   </div>
-                  <div class="md:w-[5.2rem]">{{ storeregistration }}</div>
+                  <div class="md:w-[5.2rem]">{{ getterregistration }}</div>
                 </div>
                 <div class="flex">
                   <div
@@ -297,7 +297,10 @@
           />
         </div>
 
-        <div class="md:mt-[2.848rem] mt-[1.8rem] space-y-4">
+        <div
+          class="md:mt-[2.848rem] mt-[1.8rem] space-y-4"
+          v-if="storeContent != ''"
+        >
           <div class="hidden md:block text-lg">상세설명</div>
           <div
             class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem]"
@@ -575,6 +578,8 @@ const { storeUserInfo } = storeToRefs(mypageStore);
 const router = useRouter();
 const route = useRoute();
 const {
+  getterregistration,
+
   storecreatAt,
   storePostIdx,
   storeShowBuy,

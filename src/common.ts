@@ -17,11 +17,13 @@ function inputNumberFormatWithLimit(
 }
 
 function comma(str: string | number) {
+  if (str == undefined) str = 0;
   str = String(str);
   return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, "$1,");
 }
 
 function uncomma(str: string | number) {
+  if (str == undefined) str = 0;
   str = String(str);
   return str.replace(/[^\d]+/g, "");
 }
@@ -134,7 +136,7 @@ export function moveExternalLink(
         "https://docs.google.com/forms/d/e/1FAIpQLScy21eszWO_SaUBuZO2WTSdlCpe4D-vTft_Awldalki7v9FXg/viewform?usp=sf_link";
       break;
     case "공지사항":
-      url = "https://blog.naver.com/item1004official";
+      url = "https://cafe.naver.com/0item1004";
       break;
     case "유튜브":
       url = "https://www.youtube.com/channel/UC59eHlk7amIV45Bti3hoRWA";

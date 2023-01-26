@@ -54,6 +54,27 @@ export const usePostStore = defineStore("postStore", {
   }),
 
   getters: {
+    getterregistration: (state) => {
+      if (state.storeregistration != undefined) {
+        var res = state.storeregistration;
+        switch (res) {
+          case "google":
+            return "구글";
+          case "local":
+            return "게임사";
+          case "facebook":
+            return "페이스북";
+          case "kakao":
+            return "카카오";
+          case "naver":
+            return "네이버";
+          case "phone":
+            return "전화번호";
+          case "etc":
+            return "기타";
+        }
+      }
+    },
     storeemailVerifyClass: (state) => {
       if (state.storeemailVerify) return "border-everly-main text-everly-main";
       else return "border-everly-dark-grey text-everly-dark_grey";

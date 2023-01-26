@@ -49,7 +49,7 @@
               @click="scrollToTop"
               src="@/assets/icon/button_goup.svg"
               alt=""
-              class="w-[55px] h-[55px] inline-block"
+              class="w-[55px] h-[55px] inline-block cursor-pointer"
             />
           </div>
         </div>
@@ -361,7 +361,7 @@ watch(storehasnextPage, () => {
 //carousel
 const settings = {
   itemsToShow: 3,
-  snapAlign: "center",
+  snapAlign: "start",
   autoplay: "2000",
 };
 const breakpoints = {

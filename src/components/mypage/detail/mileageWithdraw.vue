@@ -19,11 +19,11 @@
         >
           <div class="m:pb-4 sm:flex-1">
             <div
-              v-if="accountCondition"
+              v-if="storeUserInfo.bankAccount != ''"
               class="space-x-1 md:space-x-2 pb-2 md:pb-0"
             >
               <span>{{ storeUserInfo.bankName }}</span>
-              <span>{{ storeUserInfo.bankAccount }}6</span>
+              <span>{{ storeUserInfo.bankAccount }}</span>
               <span>(예금주 : {{ storeUserInfo.name }})</span>
             </div>
             <div class="flex text-everly-dark_grey text-xs items-center" v-else>
@@ -52,7 +52,10 @@
       </div>
     </div>
 
-    <div class="px-4 md:py-0 md:px-0 md:pl-8" v-if="accountCondition">
+    <div
+      class="px-4 md:py-0 md:px-0 md:pl-8"
+      v-if="storeUserInfo.bankAccount != ''"
+    >
       <div class="text-sm md:text-base font-bold py-3 md:pt-3 md:pb-5">
         <span class="bg-everly-light_blue px-1 rounded font-normal mr-1"
           >2</span
@@ -67,10 +70,9 @@
             <div class="md:w-[8.6rem]">총 마일리지</div>
             <div>
               {{
-                commonFunction.comma(
-                  storecheckwithdrawPoint.currentEntirePoint
-                )
-              }}원
+                commonFunction.comma(storecheckwithdrawPoint.currentEntirePoint)
+              }}
+              원
             </div>
           </div>
           <div class="flex justify-between relative">
@@ -89,7 +91,8 @@
                 commonFunction.comma(
                   storecheckwithdrawPoint.currentWithdrawalPoint
                 )
-              }}원
+              }}
+              원
             </div>
             <div
               class="hidden md:block w-[20.75rem] h-[6.7rem] border border-everly-mid_grey bg-everly-white rounded-lg absolute top-5 z-10"
@@ -191,7 +194,7 @@
       </div>
       <div
         class="rounded-lg bg-everly-main text-everly-white w-full py-2 md:py-3 px-5 text-center cursor-pointer"
-        v-if="accountCondition && storewithdrawAmt >= 2000"
+        v-if="storeUserInfo.bankAccount != '' && storewithdrawAmt >= 2000"
         @click="clickButton('withdrawCheck', true)"
       >
         출금하기
@@ -219,7 +222,6 @@ import { storeToRefs } from "pinia";
 const router = useRouter();
 const mypageStore = usemypageStore();
 const showMilageGuide = ref(false);
-const accountCondition = ref(true);
 const { storeUserInfo, storecheckwithdrawPoint, storewithdrawAmt } =
   storeToRefs(mypageStore);
 
@@ -253,7 +255,7 @@ function clickButton(typeName: string, status: boolean) {
   //확인
   if (typeName == "withdrawCheck") {
     type.value = "withdrawCheck";
-    mypageStore.setstorewithdrawAmt(storewithdrawAmt.value - 1000);
+    mypageStore.setstorewithdrawAmt(storewithdrawAmt.value);
     setShowModal(status);
   }
   //게좌 등록

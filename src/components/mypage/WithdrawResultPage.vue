@@ -118,12 +118,25 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import commonFunction from "@/common";
+import { onMounted, onUnmounted } from "vue";
+import { isEmpty, isNotEmptyObject } from "class-validator";
 const router = useRouter();
 const route = useRoute();
 const mypageStore = usemypageStore();
 
-const { getterstorewithdrawResult, getterwithdrawResultBankname } =
-  storeToRefs(mypageStore);
+const {
+  getterstorewithdrawResult,
+  getterwithdrawResultBankname,
+  storewithdrawResult,
+} = storeToRefs(mypageStore);
+
+onMounted(() => {
+  if (!isNotEmptyObject(storewithdrawResult.value)) router.go(-1);
+});
+
+onUnmounted(() => {
+  mypageStore.resetstorewithdrawResult();
+});
 
 const data = getterstorewithdrawResult;
 </script>
