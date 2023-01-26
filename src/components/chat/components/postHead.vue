@@ -24,7 +24,10 @@
                 <p>{{ numberToKorean(postItem?.pricePerUnit) }}  원</p>    
                          
             </div>
-        </div>                    
+        </div>        
+        <div class=" ml-auto mr-8 opacity-50" @click="moveExternalLink('유저신고하기')">
+            신고
+        </div>            
     </div>
     
 
@@ -40,6 +43,8 @@ import { ref,onUpdated,onMounted, toRefs, watch  } from 'vue';
 import { numberToKorean } from "@/common";
 import itemLogo from "./itemLogo.vue"
 import router from "@/router";
+import { moveExternalLink } from "@/common"; 
+
 
 const chatStore = useChatStore();
 const { postItem } = storeToRefs(chatStore);
