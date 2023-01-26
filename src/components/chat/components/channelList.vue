@@ -22,7 +22,7 @@
         <div 
         class="flex-grow overflow-scroll overflow-x-hidden"            
         ref="scroll">  
-            <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>           
+            <channel v-for="(channel) in channels"  :channel="channel"/>           
             
             <div class=" md:hidden w-full mt-12   flex flex-col justify-center" v-if="channels.length===0 && !route.query.postId">
                 <div class="flex flex-col items-center ">
