@@ -22,3 +22,27 @@ export class withdrawMileageResponese {
   meta: meta;
   result: withdrawMileageResult;
 }
+
+export class withdrawalMileageBody {
+  withdrawalPoint: number;
+  bankName: string;
+  accountNumber: string;
+  userIdx: number;
+  userName: string;
+  userTel: string;
+  constructor(
+    withdrawalPoint: number,
+    bankName: string,
+    accountNumber: string,
+    userIdx: number,
+    userName: string,
+    userTel: string
+  ) {
+    this.withdrawalPoint = withdrawalPoint;
+    this.bankName = bankName;
+    this.accountNumber = accountNumber;
+    this.userIdx = userIdx;
+    this.userName = userName;
+    this.userTel = userTel;
+  }
+}

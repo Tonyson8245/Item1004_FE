@@ -109,13 +109,13 @@
             :propsClass="'w-full '"
             :propsTextClass="''"
             :minLimit="0"
-            :maxLimit="storecheckwithdrawPoint.currentEntirePoint"
+            :maxLimit="storecheckwithdrawPoint.currentWithdrawalPoint"
             @change-value="changeValue($event)"
           />
           <div
             class="hidden md:block text-sm text-everly-dark_grey md:w-[15.4rem] whitespace-nowrap md:pl-2 flex-none"
           >
-            출금 수수료 : 1000원 / 무료 출금 잔여 0 원
+            출금 수수료 : 1,000원 / 최소 출금 마일리지 : 2,000원
           </div>
         </div>
         <div class="md:hidden">
@@ -185,19 +185,19 @@
       class="w-full px-3 py-8 md:mr-3 md:px-72 md:py-32 sm:flex sm:space-x-3 text-sm md:text-base space-y-2 sm:space-y-0"
     >
       <div
-        class="rounded-lg bg-everly-light_blue text-everly-main w-full py-2 md:py-3 px-5 text-center"
+        class="rounded-lg bg-everly-light_blue text-everly-main w-full py-2 md:py-3 px-5 text-center cursor-pointer"
       >
         취소
       </div>
       <div
-        class="rounded-lg bg-everly-main text-everly-white w-full py-2 md:py-3 px-5 text-center"
-        v-if="accountCondition"
+        class="rounded-lg bg-everly-main text-everly-white w-full py-2 md:py-3 px-5 text-center cursor-pointer"
+        v-if="accountCondition && storewithdrawAmt >= 2000"
         @click="clickButton('withdrawCheck', true)"
       >
         출금하기
       </div>
       <div
-        class="rounded-lg bg-everly-mid_grey text-everly-white w-full py-2 md:py-3 px-5 text-center"
+        class="rounded-lg bg-everly-mid_grey text-everly-white w-full py-2 md:py-3 px-5 text-center cursor-not-allowed"
         v-else
       >
         출금하기
@@ -220,7 +220,8 @@ const router = useRouter();
 const mypageStore = usemypageStore();
 const showMilageGuide = ref(false);
 const accountCondition = ref(true);
-const { storeUserInfo, storecheckwithdrawPoint } = storeToRefs(mypageStore);
+const { storeUserInfo, storecheckwithdrawPoint, storewithdrawAmt } =
+  storeToRefs(mypageStore);
 
 //마일리지 값 가져오기
 onMounted(() => {
@@ -252,6 +253,7 @@ function clickButton(typeName: string, status: boolean) {
   //확인
   if (typeName == "withdrawCheck") {
     type.value = "withdrawCheck";
+    mypageStore.setstorewithdrawAmt(storewithdrawAmt.value - 1000);
     setShowModal(status);
   }
   //게좌 등록

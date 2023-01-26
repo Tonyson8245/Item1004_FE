@@ -5,7 +5,10 @@ import type mileageOveriewResponseDto from "@/domain/payment/mileageOverviewRepo
 import { putBankAccountBody } from "@/domain/auth";
 import * as contractInfo from "@/domain/payment/contractPostDetailDto.interaface";
 import { isNotEmptyObject } from "class-validator";
-import { withdrawMileageResult } from "@/domain/payment/withdrawMileage.interface";
+import {
+  withdrawMileageResult,
+  withdrawalMileageBody,
+} from "@/domain/payment/withdrawMileage.interface";
 import {
   contractPostListBody,
   card,
@@ -253,9 +256,24 @@ export const usemypageStore = defineStore("mypageStore", {
     },
     async postWithdrawMileage() {
       var amt = this.storewithdrawAmt;
+      var bankName = this.storeUserInfo.bankName;
+      var bankAccount = this.storeUserInfo.bankAccount;
+      var userIdx = this.storeUserInfo.idx;
+      var userName = this.storeUserInfo.name;
+      var userTel = this.storeUserInfo.phone;
+
+      var payload = new withdrawalMileageBody(
+        amt,
+        bankName,
+        bankAccount,
+        userIdx,
+        userName,
+        userTel
+      );
+
       var result = false;
       await paymentApi
-        .withdrawMileage(amt)
+        .withdrawMileage(payload)
         .then((res) => {
           this.storewithdrawResult = res;
           result = true;

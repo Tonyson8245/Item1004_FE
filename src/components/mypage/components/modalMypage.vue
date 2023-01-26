@@ -17,7 +17,7 @@
             />
             <div v-else-if="props.propsType == 'withdrawCheck'">
               <div
-                class="w-11/12 min-w-[18rem] h-[10.9rem] sm:w-[30rem] md:w-[27.5rem] md:h-[15.3rem] p-4 text-xs text-center space-y-2 md:space-y-3.5 pt-5 md:text-base"
+                class="w-11/12 min-w-[18rem] h-[10.9rem] sm:w-[30rem] md:w-[22.5rem] md:h-[18.3rem] p-4 text-xs text-center space-y-2 md:space-y-3.5 pt-5 md:text-base"
               >
                 <div class="text-sm md:text-lg">
                   <div class="text-everly-main font-bold">
@@ -26,9 +26,13 @@
                   출금하시겠습니까?
                 </div>
                 <div>
-                  ({{ storeUserInfowithScope.bankName }})
-                  {{ storeUserInfowithScope.bankAccount }} (예금주
-                  {{ storeUserInfowithScope.name }})
+                  {{ storeUserInfo.bankName }}
+                  {{ storeUserInfo.bankAccount }} (예금주
+                  {{ storeUserInfo.name }})
+                </div>
+                <div class="text-sm">
+                  출금 계좌를 등록 실수로 발생하는 출금 오류는<br />
+                  아이템천사에서 해결이 어려울 수 있습니다
                 </div>
                 <hr class="border border-everly-mid_grey" />
                 <div>
@@ -84,7 +88,7 @@ const emit = defineEmits(["update:propsShowModal"]);
 const propsShowModal = useVModel(props, "propsShowModal", emit);
 
 const mypageStore = usemypageStore();
-const { storewithdrawAmt, storeUserInfowithScope } = storeToRefs(mypageStore);
+const { storewithdrawAmt, storeUserInfo } = storeToRefs(mypageStore);
 
 function withdraw() {
   mypageStore.postWithdrawMileage().then((res) => {
