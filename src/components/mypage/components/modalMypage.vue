@@ -21,7 +21,7 @@
               >
                 <div class="text-sm md:text-lg">
                   <div class="text-everly-main font-bold">
-                    {{ storewithdrawAmt.toLocaleString() }} 원
+                    {{ (storewithdrawAmt - 1000).toLocaleString() }} 원
                   </div>
                   출금하시겠습니까?
                 </div>

@@ -42,6 +42,12 @@ function toggle(value: boolean) {
   showNotify.value = value;
   lock.value = "";
 }
+
+//로그 없애기
+console.log = function () {};
+console.error = function () {};
+console.warn = function () {};
+console.debug = function () {};
 </script>
 
 <style></style>

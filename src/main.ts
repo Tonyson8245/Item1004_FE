@@ -27,7 +27,7 @@ VueCookieNext.config({ expire: "1d" });
 
 Sentry.init({
   app,
-  // dsn: "https://083342a46fde45a992f2dea8f03653f0@o4504565091074048.ingest.sentry.io/4504565233745920",
+  dsn: "https://083342a46fde45a992f2dea8f03653f0@o4504565091074048.ingest.sentry.io/4504565233745920",
   integrations: [
     new BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),

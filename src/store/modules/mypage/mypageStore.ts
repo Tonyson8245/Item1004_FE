@@ -126,6 +126,9 @@ export const usemypageStore = defineStore("mypageStore", {
     },
   },
   actions: {
+    resetstorewithdrawResult() {
+      this.storewithdrawResult = {} as withdrawMileageResult;
+    },
     checkuseablePoint() {
       var userData = localStorage.getItem("user");
       if (userData == null) {
