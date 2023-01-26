@@ -22,7 +22,7 @@
           <div class="md:w-[25rem]">{{ storeUserInfoOverview.id }}</div>
         </div>
         <div class="flex text-sm md:text-base">
-          <div class="font-bold w-[5.5rem] md:w-[10rem]">추천인코드</div>
+          <div class="font-bold w-[5.5rem] md:w-[10rem]">유저코드</div>
           <div class="flex md:w-[25rem]">
             #{{ storeUserInfoOverview.code }}
             <img
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="flex text-sm md:text-base items-center">
-          <div class="font-bold w-[5.5rem] md:w-[10rem]">새 비밀번호</div>
+          <div class="font-bold w-[5.5rem] md:w-[10rem]">비밀번호</div>
           <div class="flex-1 md:w-[25rem]">• • • • • • • • •</div>
           <!-- TODO 1차 출시 주석 2023-01-26 01:48:24 -->
           <!-- <div
