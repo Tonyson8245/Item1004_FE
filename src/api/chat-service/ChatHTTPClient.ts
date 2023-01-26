@@ -36,7 +36,6 @@ instance.interceptors.response.use(
       if (refreshToken != null && user != null) {
         var token = (JSON.parse(refreshToken) as TokenDto).token;
         var userIdx = (JSON.parse(user) as user).idx;
-
         var response: any;
         // token refresh 요청
         await axios
@@ -78,7 +77,7 @@ instance.interceptors.response.use(
           });
 
         // module 별로 다름 위에 참고
-        return response.data.result;
+        return response;
       } else return Promise.reject(error.response.data.meta);
     } else {
       return Promise.reject(error);
