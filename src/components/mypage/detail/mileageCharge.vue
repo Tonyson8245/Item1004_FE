@@ -226,14 +226,14 @@
           class="md:px-72 sm:flex-row-reverse sm:flex gap-2 font-bold text-sm sm:text-base"
         >
           <div
-            class="flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-white"
+            class="flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-white cursor-pointer"
             :class="chargeButtonClass"
             @click="charge()"
           >
             충전하기
           </div>
           <div
-            class="mt-3 sm:mt-0 flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-main bg-everly-light_blue"
+            class="mt-3 sm:mt-0 flex-1 rounded-lg border text-center py-2 sm:py-3 text-everly-main bg-everly-light_blue cursor-pointer"
           >
             취소
           </div>

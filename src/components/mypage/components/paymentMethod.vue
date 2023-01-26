@@ -4,7 +4,7 @@
     :class="borderClass"
     @click="emit('getValue', emitValue)"
   >
-    <div class="p-2 md:p-4 flex flex-col items-center">
+    <div class="p-2 md:p-4 flex flex-col items-center cursor-pointer">
       <div v-if="props.title == `네이버페이`" class="pt-2"></div>
       <img :src="props.imgUrl" alt="" class="pb-1 md:w-28 mt-1" />
       <span> {{ props.title }}</span>

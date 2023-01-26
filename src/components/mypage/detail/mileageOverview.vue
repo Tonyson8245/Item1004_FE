@@ -10,7 +10,7 @@
       />
       <div class="flex-grow">
         <div class="hidden md:block text-lg font-bold">
-          {{ nickName }} 님의 사용가능 마일리지는 총
+          {{ storeUserInfo.nickname }} 님의 사용가능 마일리지는 총
           <span class="text-everly-main"
             >{{ storemileageOverview?.availablePoint.toLocaleString() }}원</span
           >
@@ -19,7 +19,7 @@
         <div class="flex text-everly-white p-5 space-x-3 md:px-0">
           <div class="flex-grow">
             <div
-              class="bg-everly-main py-1.5 md:py-3 text-center rounded-lg flex justify-center text-sm md:text-lg"
+              class="bg-everly-main py-1.5 md:py-3 text-center rounded-lg flex justify-center text-sm md:text-lg cursor-pointer"
               @click="router.push('/mypage/mileage/charge')"
             >
               충전하기
@@ -28,9 +28,10 @@
           </div>
           <div class="flex-grow">
             <div
-              class="bg-everly-main py-1.5 md:py-3 text-center rounded-lg flex justify-center text-sm md:text-lg"
+              class="bg-everly-main py-1.5 md:py-3 text-center rounded-lg flex justify-center text-sm md:text-lg cursor-pointer"
+              @click="router.push('/mypage/mileage/withdraw')"
             >
-              인출하기
+              출금하기
               <img src="@/assets/icon/withdraw_white.svg" alt="" class="pl-2" />
             </div>
           </div>
@@ -155,13 +156,9 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-//프로필 쪽
-const nickName = computed(() => {
-  return "이걸닉네임이라고짓다니말도안돼";
-});
 //마일리지 현황 (전체/사용가능/소멸예정)
 const mypageStore = usemypageStore();
-const { storemileageOverview } = storeToRefs(mypageStore);
+const { storemileageOverview, storeUserInfo } = storeToRefs(mypageStore);
 
 onMounted(() => {
   const localData = localStorage.getItem("user");

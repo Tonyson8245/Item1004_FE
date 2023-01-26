@@ -72,11 +72,7 @@
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-main font-bold w-13"
-                    @click="toggleSellBuy('sell')"
-                    >팔래요</span
-                  >
+                  <span class="text-everly-main font-bold w-13">팔래요</span>
                 </div>
                 <div class="flex space-x-2" @click="alertMSG()">
                   <img
@@ -84,11 +80,7 @@
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-dark-grey w-13"
-                    @click="toggleSellBuy('buy')"
-                    >살래요</span
-                  >
+                  <span class="text-everly-dark-grey w-13">살래요</span>
                 </div>
 
                 <!-- 1차 출시 주석 2023-01-26 10:02:05 -->

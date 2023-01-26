@@ -19,7 +19,7 @@
         >
           <div class="m:pb-4 sm:flex-1">
             <div
-              v-if="storeUserInfo.bankAccount != ''"
+              v-if="isNotEmptyObject(storeUserInfo.bankAccount)"
               class="space-x-1 md:space-x-2 pb-2 md:pb-0"
             >
               <span>{{ storeUserInfo.bankName }}</span>
@@ -218,6 +218,7 @@ import { useRouter } from "vue-router";
 import { useMediaQuery } from "@vueuse/core";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
+import { isNotEmptyObject } from "class-validator";
 
 const router = useRouter();
 const mypageStore = usemypageStore();

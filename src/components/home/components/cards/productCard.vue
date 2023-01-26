@@ -114,7 +114,7 @@
             {{ props.card.post.roleName }}
           </div>
           <div class="text-xs">레벨</div>
-          <div class="text-sm">{{ props.card.post.level }} 개</div>
+          <div class="text-sm">{{ props.card.post.level }}</div>
         </div>
         <div class="flex justify-between mt-3 md:mt-0 items-center">
           <div class="flex justify-start items-center mt-1 space-x-1 font-bold">

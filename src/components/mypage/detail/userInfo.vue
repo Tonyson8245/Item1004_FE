@@ -144,7 +144,7 @@
             src="@/assets/icon/check_circle_blue.svg"
             alt=""
             class="w-4 ml-2"
-            v-if="storeUserInfoOverview.email != ''"
+            v-if="isNotEmptyObject(storeUserInfoOverview.email)"
           />
         </div>
 
@@ -162,7 +162,7 @@
         <div class="flex-1 md:w-[25rem] flex items-center">
           <div
             class="bg-everly-main rounded-lg text-everly-white text-xs md:text-sm p-0.5 px-1 mr-2"
-            v-if="storeUserInfoOverview.bankAccount != ''"
+            v-if="isNotEmptyObject(storeUserInfoOverview.bankAccount)"
           >
             {{ storeUserInfoOverview.bankName }}
           </div>
@@ -171,7 +171,7 @@
               {{ bankaccountContent(storeUserInfoOverview.bankAccount) }}
             </div>
             <span
-              v-if="storeUserInfoOverview.bankAccount == ''"
+              v-if="!isNotEmptyObject(storeUserInfoOverview.bankAccount)"
               class="text-everly-dark_grey"
               >(본인계좌 등록만 가능)</span
             >
@@ -180,7 +180,7 @@
             src="@/assets/icon/check_circle_blue.svg"
             alt=""
             class="w-4 ml-2"
-            v-if="storeUserInfoOverview.bankAccount != ''"
+            v-if="isNotEmptyObject(storeUserInfoOverview.bankAccount)"
           />
         </div>
         <div
@@ -209,6 +209,7 @@ import { useRouter } from "vue-router";
 import ModalMypage from "@/components/mypage/components/modalMypage.vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
+import { isEmpty, isNotEmptyObject } from "class-validator";
 
 const mypageStore = usemypageStore();
 const { storeUserInfoOverview } = storeToRefs(mypageStore);
@@ -224,12 +225,12 @@ onUnmounted(() => {
 const { copy } = useClipboard({});
 
 const emailContent = (string: string) => {
-  if (string == "") return `이메일 인증을 해주세요.`;
-  else return `item1004@naver.com`;
+  if (!isNotEmptyObject(string)) return `이메일 인증을 해주세요.`;
+  else return string;
 };
 const bankaccountContent = (string: string) => {
-  if (string == "") return `출금계좌 인증을 해주세요.`;
-  else return `120502-161-093136`;
+  if (!isNotEmptyObject(string)) return `출금계좌 인증을 해주세요.`;
+  else return string;
 };
 
 const buttonContent = (status: boolean) => {

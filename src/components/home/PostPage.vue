@@ -729,7 +729,7 @@ const gopaymentButtonClass = ref("");
 const goPaymentbuttonContent = ref("");
 
 //값 오는 것에 맞춰서 변하게
-watch(storeUserIdx, () => {
+watch([storeUserIdx, storeUserInfo], () => {
   if (storeUserIdx.value == storeUserInfo.value.idx)
     gopaymentButtonClass.value = "bg-everly-light_grey text-everly-dark_grey";
   else
