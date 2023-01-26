@@ -59,8 +59,7 @@ const props = defineProps<{ channel: channel }>();
 const router = useRouter();
 
 const route = useRoute();
-const { messages, client, user, channels, selectedChannel } =
-  storeToRefs(chatStore);
+const { messages, client, user, channels, selectedChannel } = storeToRefs(chatStore);
 
 // console.log(route.params);
 

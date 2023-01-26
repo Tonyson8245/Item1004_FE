@@ -24,7 +24,7 @@
         <div 
         class="flex-grow overflow-scroll overflow-x-hidden"            
         ref="scroll">  
-            <channel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
+            <chattingChannel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
             
             
             

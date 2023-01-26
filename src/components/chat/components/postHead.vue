@@ -26,7 +26,7 @@
             </div>
         </div>        
         <div class=" ml-auto mr-8 opacity-50" @click="moveExternalLink('유저신고하기')">
-            신고
+            유저신고
         </div>            
     </div>
     
