@@ -38,7 +38,10 @@
         </div>
       </div>
 
-      <div class="hidden md:flex fixed bottom-10" v-else="storeinfiniteStatus">
+      <div
+        class="hidden md:flex fixed bottom-10 z-50"
+        v-else="storeinfiniteStatus"
+      >
         <div class="flex-grow"></div>
         <div class="flex-none w-[1180px]">
           <div class="absolute right-0 bottom-0">

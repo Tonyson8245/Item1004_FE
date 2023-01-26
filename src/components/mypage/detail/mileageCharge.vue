@@ -32,7 +32,7 @@
               :paymentMethod="paymentMethod"
               :title="`신용카드`"
               :active="true"
-              :img-url="`/assets/icon/creditcardwithblue_black.svg`"
+              :img-url="`/assets/icon/creditcardwithBlue_black.svg`"
             />
             <PaymentMethodVue
               @get-value="setpaymentMethod($event)"
@@ -297,8 +297,8 @@ const finalamount = ref(0);
 watch([amount, amountInput], () => {
   if (amount.value == "직접입력") {
     if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
-    else finalamount.value = parseInt(amountInput.value) * 0.95;
-  } else finalamount.value = parseInt(amount.value) * 0.95;
+    else finalamount.value = Math.floor(parseInt(amountInput.value) * 0.95);
+  } else finalamount.value = Math.floor(parseInt(amount.value) * 0.95);
 });
 
 // 충전하기 번튼 활성하

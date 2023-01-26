@@ -19,6 +19,12 @@
             <div class="flex space-x-4 items-center">
               <img
                 class="cursor-pointer"
+                src="@/assets/icon/noti_grey.svg"
+                alt=""
+                @click="moveExternalLink('문의하기')"
+              />
+              <img
+                class="cursor-pointer"
                 src="@/assets/icon/chat_mid-grey.svg"
                 alt=""
                 @click="moveLink('/chat')"
@@ -108,7 +114,7 @@ import { useFilterStore } from "@/store/modules/home/filterStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { storeToRefs } from "pinia";
 import type { user } from "@/domain/user/user.interface";
-import { alertMSG } from "@/common";
+import { alertMSG, moveExternalLink } from "@/common";
 
 //localstorage 가져오기
 const localData = localStorage.getItem("user");
