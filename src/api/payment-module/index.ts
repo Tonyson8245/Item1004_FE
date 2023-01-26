@@ -64,6 +64,8 @@ async function payment(
           postIdx
         );
 
+        console.log(">>>>", pricePerUnit);
+
         // 거래에만 사용됨
         if (type == "contract") {
           payload.point = point;

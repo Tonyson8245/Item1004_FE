@@ -11,40 +11,52 @@
         >
           <div class="flex w-full space-x-4 border-b p-4">
             <!--팔래요 활성화 -->
-            <div
+            <div class="flex space-x-1 w-[66px]">
+              <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
+              <span class="text-everly-main font-bold">팔래요</span>
+            </div>
+            <div class="flex space-x-1 w-[66px]" @click="alertMSG()">
+              <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
+              <span class="text-everly-dark_grey">살래요</span>
+            </div>
+            <!-- 1차 출시 주석  2023-01-26 09:58:55-->
+            <!-- <div
               class="flex space-x-1 w-[66px]"
               v-if="storepostType == 'sell'"
               @click="toggleSellBuy('sell')"
             >
               <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
               <span class="text-everly-main font-bold">팔래요</span>
-            </div>
-            <div
+            </div> -->
+            <!-- 1차 출시 주석  2023-01-26 09:58:55-->
+            <!-- <div
               class="flex space-x-1 w-[66px]"
               v-if="storepostType == 'sell'"
               @click="toggleSellBuy('buy')"
             >
               <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
               <span class="text-everly-dark_grey">살래요</span>
-            </div>
+            </div> -->
 
             <!--살래요 활성화 -->
-            <div
+            <!-- 1차 출시 주석 2023-01-26 09:59:19 -->
+            <!-- <div
               class="flex space-x-1 w-[66px]"
               v-if="storepostType == 'buy'"
               @click="toggleSellBuy('sell')"
             >
               <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
               <span class="text-everly-dark_grey">팔래요</span>
-            </div>
-            <div
+            </div> -->
+            <!-- 1차 출시 주석 2023-01-26 09:58:52 -->
+            <!-- <div
               class="flex space-x-1 w-[66px]"
               v-if="storepostType == 'buy'"
               @click="toggleSellBuy('buy')"
             >
               <img src="@/assets/icon/check_mobile_red.svg" alt="" />
               <span class="text-everly-red font-bold">살래요</span>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- 웹 팔래요 살래요 -->
@@ -54,8 +66,34 @@
             <div class="col-span-1"></div>
             <div class="col-span-9">
               <div class="flex space-x-28 text-xl cursor-pointer">
+                <div class="flex space-x-2">
+                  <img
+                    src="@/assets/icon/check_web_blue.svg"
+                    alt=""
+                    class="w-6"
+                  />
+                  <span
+                    class="text-everly-main font-bold w-13"
+                    @click="toggleSellBuy('sell')"
+                    >팔래요</span
+                  >
+                </div>
+                <div class="flex space-x-2" @click="alertMSG()">
+                  <img
+                    src="@/assets/icon/check_web_grey.svg"
+                    alt=""
+                    class="w-6"
+                  />
+                  <span
+                    class="text-everly-dark-grey w-13"
+                    @click="toggleSellBuy('buy')"
+                    >살래요</span
+                  >
+                </div>
+
+                <!-- 1차 출시 주석 2023-01-26 10:02:05 -->
                 <!-- 팔래요 활성화 -->
-                <div class="flex space-x-2" v-if="storepostType == 'sell'">
+                <!-- <div class="flex space-x-2" v-if="storepostType == 'sell'">
                   <img
                     src="@/assets/icon/check_web_blue.svg"
                     alt=""
@@ -78,10 +116,10 @@
                     @click="toggleSellBuy('buy')"
                     >살래요</span
                   >
-                </div>
+                </div> -->
 
                 <!-- 살래요 활성화 -->
-                <div class="flex space-x-2" v-if="storepostType == 'buy'">
+                <!-- <div class="flex space-x-2" v-if="storepostType == 'buy'">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
@@ -104,7 +142,7 @@
                     @click="toggleSellBuy('buy')"
                     >살래요</span
                   >
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -552,6 +590,7 @@ import WriteEtc from "./components/writeCategory/writeEtc.vue";
 import { onUnmounted, onMounted } from "vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { useRouter } from "vue-router";
+import { alertMSG } from "@/common";
 
 const commonStore = useCommonStore();
 const {
