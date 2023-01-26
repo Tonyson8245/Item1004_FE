@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mt-[106px] flex" @click="moveExternalLink('블로그')">
+  <div class="w-full mt-[106px] flex" @click="moveExternalLink('홍보')">
     <div class="flex-grow bg-[#01acc6]"></div>
     <div class="flex-grow-none">
       <img

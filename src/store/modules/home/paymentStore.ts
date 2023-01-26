@@ -102,7 +102,7 @@ export const usePaymentStore = defineStore("paymentStore", {
           case "etc":
             return "기타";
         }
-      }
+      } else return "";
     },
     productInfo: (state) => {
       var saleUnit = state.storeContractResult.saleUnit;

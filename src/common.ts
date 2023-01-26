@@ -105,6 +105,7 @@ export function moveExternalLink(
     | "인스타"
     | "카페"
     | "블로그"
+    | "홍보"
 ) {
   var url;
   switch (value) {
@@ -146,6 +147,9 @@ export function moveExternalLink(
       break;
     case "블로그":
       url = "https://blog.naver.com/item1004official";
+      break;
+    case "홍보":
+      url = "https://blog.naver.com/item1004official/222994820855";
       break;
   }
   window.open(url);

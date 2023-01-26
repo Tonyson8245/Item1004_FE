@@ -15,9 +15,11 @@
           </button>
         </div>
         <div class="text-center px-2 text-everly-dark_grey">
-          <button class="text-sm" @click="moveExternalLink('문의하기')">
-            고객센터
-          </button>
+          <button
+            class="text-sm"
+            @click="moveExternalLink('문의하기')"
+          ></button>
+          고객센터
         </div>
       </div>
     </div>
