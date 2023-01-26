@@ -791,8 +791,6 @@ const {
   storeGameServerBadge,
   filterStoreGameKeyword,
   filterStoreServerKeyword,
-  filterStoreGameKeywordIdx,
-  filterStoreServerKeywordIdx,
 } = storeToRefs(filterStore);
 
 //필터 초기화(주의!! 닫기 아님)
