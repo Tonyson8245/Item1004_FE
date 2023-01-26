@@ -53,24 +53,24 @@
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
               @click="alertMSG()"
             >
+              <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
+              삭제하기
+            </div>
+          </div>
+          <div class="hidden md:flex gap-5" v-else>
+            <div
+              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
+              @click="moveExternalLink('거래글신고하기')"
+            >
               <img
                 src="@/assets/icon/report_grey.svg"
                 alt=""
                 class="w-3 mr-2"
               />
-              삭제하기
-            </div>
-          </div>
-          <div>
-            <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-              @click="moveExternalLink('거래글신고하기')"
-            >
-              <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
               신고하기
             </div>
           </div>
-          <div class="md:hidden">
+          <div class="md:hidden" @click="moveExternalLink('거래글신고하기')">
             <img src="@/assets/icon/report_grey.svg" alt="" class="w-6" />
           </div>
         </div>
