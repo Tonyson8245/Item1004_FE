@@ -17,32 +17,37 @@
                 <input v-model="searchTargetUser" class="focus:outline-none bg-everly-light_grey" type="text" placeholder="상대방의 닉네임을 입력해주세요">
                 <img class="ml-auto" src="@/assets/icon/search_gray.svg" @click="searchChannel" />
             </div>    -->
-  </div>
+        </div>
+                         
+        <!-- 채널 목록 카드   @scroll="handleListScroll"-->
+        <!-- v-scroll="onScroll" -->
+        <div 
+        class="flex-grow overflow-scroll overflow-x-hidden"            
+        ref="scroll">  
+            <chattingChannel v-for="(channel, i) in channels"  :key="i" :channel="channel"/>
+            
+            
+            
+            <div class=" md:hidden w-full mt-12   flex flex-col justify-center" v-if="channels.length===0 && !route.query.postId">
+                <div class="flex flex-col items-center ">
+                    <img
+                    src="/assets/icon/chat_mobile.svg"
+                    class=" w-24 mb-3"
+                    alt=""
+                    />
+                    <p class=" font-bold text-lg">아직 대화 내역이 없습니다</p>
+                    <p>채팅으로 더 빠르고 편리하게 거래를 해보세요</p>
+                </div>
+            </div>
+        
+        </div> 
 
-  <!-- 채널 목록 카드   @scroll="handleListScroll"-->
-  <!-- v-scroll="onScroll" -->
-  <div class="flex-grow overflow-scroll overflow-x-hidden" ref="scroll">
-    <div v-for="(channel, i) in channels" :key="i">
-      <chattingChannel :channel="channel" />
-    </div>
-
-    <div
-      class="md:hidden w-full mt-12 flex flex-col justify-center"
-      v-if="channels.length === 0 && !route.query.postId"
-    >
-      <div class="flex flex-col items-center">
-        <img src="/assets/icon/chat_mobile.svg" class="w-24 mb-3" alt="" />
-        <p class="font-bold text-lg">아직 대화 내역이 없습니다</p>
-        <p>채팅으로 더 빠르고 편리하게 거래를 해보세요</p>
-      </div>
-    </div>
-  </div>
-
-  <Navbar
-    class="block md:hidden text-center w-full fixed bottom-0"
-    style="z-index: 5"
-    v-if="route.meta.navbar"
-  />
+        
+        <Navbar
+        class="block md:hidden text-center w-full fixed bottom-0"
+        style="z-index: 5"
+        v-if="route.meta.navbar"
+        />
 </template>
 
 <script setup lang="ts">
@@ -75,11 +80,18 @@ const { left, right, top, bottom } = toRefs(arrivedState);
 //   console.log(state) // {x, y, isScrolling, arrivedState, directions}
 // }
 
-watch(bottom, () => {
-  if (bottom.value) {
-    chatStore.pagingChannels();
-  }
-});
+watch(channels, ()=>{
+    console.log("channels 변경 : ",channels.value);    
+})
+
+watch(bottom, ()=> {  
+    if (bottom.value) {               
+         chatStore.pagingChannels()
+    }
+})
+
+
+
 </script>
 
 <style scoped></style>
