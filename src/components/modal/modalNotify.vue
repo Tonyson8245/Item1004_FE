@@ -10,7 +10,11 @@
           class="border-0 shadow-lg relative flex rounded-xl flex-col outline-none focus:outline-none justify-center overflow-hidden w-10/12"
         >
           <div class="relative flex-auto">
-            <img src="@/assets/img/noti.png" alt="" />
+            <img
+              src="@/assets/img/noti.png"
+              alt=""
+              @click="moveExternalLink('공지사항')"
+            />
             <div
               class="w-6 h-6 md:w-8 md:h-8 absolute top-0 right-0"
               @click="close()"
@@ -34,6 +38,7 @@
 import { useVModel } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import { useCookie } from "vue-cookie-next";
+import { moveExternalLink } from "@/common";
 
 const { setCookie } = useCookie();
 
