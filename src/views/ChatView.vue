@@ -93,6 +93,13 @@ watch(route, async()=> {
   // 채팅화면 거래글 postId 세팅
   await setPostItem();
 
+  if (route.path==='/chat') {
+    chatStore.resetPostItem()
+    chatStore.resetMessages()
+    chatStore.resetSelectedChannel()
+
+  }
+
 })
 
 // 새로운 채팅 여부 파악

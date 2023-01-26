@@ -19,10 +19,9 @@
                 <p class="">{{numberToKorean(postItem?.saleUnit)}}</p>
                 
                 <p v-if="postItem?.productType ==='gameMoney'" class="mr-1 ml-2">게임머니당</p>
-                <p v-if="postItem?.productType ==='item' || postItem?.productType ==='etc'" class="mr-1">개당</p>               
+                <p v-if="postItem?.productType ==='item' || postItem?.productType ==='etc'" class="mr-1">개당</p>           
                
-                <p>{{ numberToKorean(postItem?.pricePerUnit) }}  원</p>    
-                         
+                <p>{{ numberToKorean(postItem?.pricePerUnit) }}  원</p>                             
             </div>
         </div>        
         <div class=" ml-auto mr-8 opacity-50" @click="moveExternalLink('유저신고하기')">
