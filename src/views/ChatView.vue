@@ -58,8 +58,7 @@ init();
 // })
 // 로그인을 한번 실행
 login().then( async (data)=>{  
-  // console.log(data); 
-  
+  // console.log(data);   
   
   // 전체 채팅방 목록 세팅
   getChannels()  
@@ -121,7 +120,6 @@ async function setPostItem() {
   
   if (route.query.postId) await chatStore.setPostItem(route.query.postId);
           //@ts-ignore
-
   else if(selectedChannel.value?.data.postIdx === undefined && route.query.postId===undefined) return
           //@ts-ignore
 
