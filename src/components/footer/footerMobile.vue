@@ -10,7 +10,6 @@
           <div>
             <span>사업장소재지 : 경기도 구리시 건원대로 3층386호(인창동)</span>
           </div>
-          <div><span>전화번호 : 02-704-2694</span></div>
           <div><span>고객센터 : 1833-2585</span></div>
         </div>
         <div>

@@ -39,10 +39,6 @@ export async function deleteToken<T>(): Promise<logoutResponseDto | undefined> {
     var token = (JSON.parse(accessTokenData) as TokenDto).token;
 
     //  담아놓고 다 지워버림
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-
     try {
       const result: logoutResponseDto = await http.delete(url, {
         headers: {

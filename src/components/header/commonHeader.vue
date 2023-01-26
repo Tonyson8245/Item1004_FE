@@ -108,7 +108,12 @@ const headermyPageTheme = computed(() => {
     title == "마일리지" ||
     title == "판매/구매내역" ||
     title == "회원정보" ||
-    title == "마일리지 충전"
+    title == "마일리지 충전" ||
+    title == "마일리지 출금" ||
+    title == "마일리지 현황" ||
+    title == "판매내역" ||
+    title == "구매내역" ||
+    title == "회원정보수정"
   )
     return true;
   else return false;
