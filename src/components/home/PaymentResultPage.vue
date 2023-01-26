@@ -37,7 +37,7 @@
                 <div>{{ data.title }}</div>
                 <div class="md:text-base">
                   {{ data.gameName }} > {{ data.serverName }} >
-                  {{ data.productType }}
+                  {{ getProductType }}
                 </div>
               </div>
             </div>
@@ -171,7 +171,8 @@ const router = useRouter();
 const route = useRoute();
 const paymentStore = usePaymentStore();
 
-const { storeContractResult, productInfo } = storeToRefs(paymentStore);
+const { storeContractResult, productInfo, getProductType } =
+  storeToRefs(paymentStore);
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);

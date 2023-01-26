@@ -8,7 +8,6 @@
     <div
       v-if="props.card?.post.status == 'end'"
       class="absolute w-full h-full backdrop-blur-[1.3px] rounded-lg border flex items-center justify-center cursor-not-allowed"
-      style="z-index: 2"
     >
       <div
         class="rounded-full border bg-white text-everly-mid_grey w-20 h-20 flex items-center justify-center font-bold border-2 md:text-lg"

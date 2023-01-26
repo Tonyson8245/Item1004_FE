@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-w-[1180px]">
+  <div class="w-full min-w-[1180px]" @click="moveExternalLink('홍보')">
     <div class="flex-grow bg-[#01acc6]"></div>
     <div class="flex-grow-0">
       <img
@@ -13,6 +13,8 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { moveExternalLink } from "@/common";
+</script>
 
 <style scoped></style>
