@@ -20,6 +20,7 @@ export async function getChatRoom(
       return result.data;
     } catch (err) {
       console.log("API error",err);
+      // @ts-ignore
       return Promise.reject(err.response);
     }
   } else return Promise.reject("token error");

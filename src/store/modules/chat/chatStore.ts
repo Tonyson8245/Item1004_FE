@@ -14,10 +14,12 @@ import { loadRouteLocation } from "vue-router";
 import * as chatapi from "@/api/chat-service/index";
 import router from "@/router";
 
+
 export const useChatStore = defineStore("chatStore", () => {
   const client = ref(Object);
   const user = ref(Object);
   const channels = ref<channel[]>([]);
+
   const channelsHasNext = ref(false);
   const messagesHasNext = ref(false);
   const unreadCount = ref(0);
@@ -114,7 +116,7 @@ export const useChatStore = defineStore("chatStore", () => {
 
   const pagingChannels = async () => {
     if (channelsHasNext.value) {
-      console.log("페이징 실행합니다");
+      // console.log("페이징 실행합니다");
       // getChannels()
       const lastChannelId: string =
         channels.value[channels.value.length - 1].id;
@@ -156,7 +158,7 @@ export const useChatStore = defineStore("chatStore", () => {
         limit: 20, // how many messages to fetch, default: 20, max: 50
       });
     } catch (error) {
-      console.log("에러 : ", error);
+      console.log("error : ", error);
       return;
     }
     // 메세지 리스트에 세팅
@@ -182,7 +184,7 @@ export const useChatStore = defineStore("chatStore", () => {
           limit: 10, // how many messages to fetch, default: 20, max: 50
         });
       } catch (error) {
-        console.log("에러 : ", error);
+        console.log("error : ", error);
         return;
       }
       // console.log("가져온 결과 ",result);
@@ -228,7 +230,7 @@ export const useChatStore = defineStore("chatStore", () => {
       result = await client.value.markAsRead({ channelId: channelId });
       // console.log("읽은 채널 메세지 : ", result);
     } catch (error) {
-      console.log("에러 : ", error);
+      console.log("error : ", error);
       return;
     }
     // 전체 안 읽은 메세지 카운팅
@@ -295,7 +297,7 @@ export const useChatStore = defineStore("chatStore", () => {
         // console.log('post는 : ', postItem.value);
       })
       .catch((err) => {
-        console.log("에러 : ", err);
+        console.log("error : ", err);
         resetPostItem();
       });
   };
@@ -349,7 +351,7 @@ export const useChatStore = defineStore("chatStore", () => {
       // console.log("보낸 메세지에 대한 결과");
       // console.log(result);
     } catch (error) {
-      console.log("에러 : ", error);
+      console.log("error : ", error);
       return;
     }
     messageIntoMessages(result.message);
@@ -372,7 +374,7 @@ export const useChatStore = defineStore("chatStore", () => {
       .getChatRoom(postIdx)
       .then((res) => {
         //성공하면 페이지를 올린다.
-        console.log("요청성공 : ", res);
+        // console.log("sucess : ", res);
         router.push("/chat/" + res.result);
       })
       .catch((err) => {
@@ -391,7 +393,7 @@ export const useChatStore = defineStore("chatStore", () => {
           alert("올바른 요청이 아닙니다");
         } else if (err.status === 200 && err.data.meta.code === "success") {
           // 존재하는 채팅방
-          console.log("요청성공");
+          // console.log("요청성공");
         } else if (err.status === 401) {
           alert("올바른 요청이 아닙니다");
         }
@@ -409,17 +411,17 @@ export const useChatStore = defineStore("chatStore", () => {
     await chatapi
       .createChatRoom(body)
       .then((res) => {
-        console.log("요청성공 : ", res);
+        // console.log("요청성공 : ", res);
         // 요청 성공
         if (res.meta.isSuccess) {
           result = res.result;
         }
       })
       .catch((res) => {
-        console.log("요청실패 : ", res);
+        console.log("error : ", res);
         result = null;
       });
-    console.log("result는 성공인가? ", result);
+    // console.log("result는 성공인가? ", result);
 
     return result;
   };

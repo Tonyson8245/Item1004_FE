@@ -25,7 +25,11 @@ const { getterButtonContent } = storeToRefs(mypageStore);
 
 //인수 인계 버튼
 function putContractStatus(status: string) {
+  //TODO :
+  // @ts-ignore
   if (status == "물품인계") mypageStore.setContractTakeover();
+  //TODO : 
+  // @ts-ignore
   else mypageStore.setContractTake();
 }
 </script>
