@@ -73,11 +73,12 @@ login().then( async (data)=>{
   
   // console.log(client.value);
 
-
+  //@ts-ignore
   client.value.on('event', async (data) => {
     // console.log("이벤트 발생", data);
     if (data.type === 'message') {
         //TODO: 현재 메세지 받는 이벤트가 이 페이지에 오면 여러개가 생성이 되서 문제 발생하고 있음.
+        //@ts-ignore
       if(data.message.userId !== client.value.userId)   await onReceiveMessage(data)
     }
   })  
@@ -120,7 +121,11 @@ async function setPostItem() {
 
   
   if (route.query.postId) await chatStore.setPostItem(route.query.postId);
+          //@ts-ignore
+
   else if(selectedChannel.value?.data.postIdx === undefined && route.query.postId===undefined) return
+          //@ts-ignore
+
   else await chatStore.setPostItem(selectedChannel.value?.data.postIdx);
 }
 

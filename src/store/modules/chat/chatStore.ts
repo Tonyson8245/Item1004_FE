@@ -46,10 +46,14 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     client.value=Object(null)    
   }
   const login = async () => {
-    client.value = await new TalkPlus.Client({appId: import.meta.env.VITE_TALK_PLUS_API_KEY});    
+            //@ts-ignore
 
+    client.value = await new TalkPlus.Client({appId: import.meta.env.VITE_TALK_PLUS_API_KEY});    
+        //@ts-ignore
     if (!client.value.isLoggedIn()) {
       const localData = localStorage.getItem("user");
+            //@ts-ignore
+
       const userData = JSON.parse(localData) as user;     
       
       // let uerid = "5"
@@ -57,6 +61,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       //   uerid = `${userData.idx}`
       // }      
       try {
+         //@ts-ignore
           user.value = await client.value.loginAnonymous({
             userId: `${userData.idx}`, // unique userId
             // userId: uerid
@@ -119,6 +124,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       //@ts-ignore    
       result = await client.value.getChannels(getchannelparams)
       // console.log("인터페이스 확인용", result);
+       //@ts-ignore
       channels.value.push(...result.channels);
       channelsHasNext.value = result.hasNext;
 
@@ -134,6 +140,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const getMessages = async (channelId:string) => {
     let result: resp;   
     try {
+       //@ts-ignore
       result = await client.value.getMessages({
           channelId: channelId,
           order: 'latest', // default: 'latest'. Use 'oldest' to order by oldest messages first
@@ -192,6 +199,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const getUnreadCount = async () => {
     // console.log('전체 메세지 카운팅');    
     try {
+       //@ts-ignore
       const result = await client.value.getUnreadCount();
       unreadCount.value = result.count     
       return
@@ -206,6 +214,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     // console.log("채널 메세지 읽음");   
     let result ; 
     try {
+       //@ts-ignore
       result = await client.value.markAsRead({channelId: channelId}); 
       // console.log("읽은 채널 메세지 : ", result);     
     } catch (error) {
@@ -234,7 +243,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
   // 채팅방 id로 불러오기 
   const getSelectedChannel = async (channelId:string | string[]) => {
-    
+     //@ts-ignore
     const result = await client.value.getChannel({
       channelId: channelId,
     });
@@ -274,6 +283,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
     // console.log("전송하는 포스트 아이디 : ", postid);
     
     await chatapi.getPost(postid).then((res) => {    
+       //@ts-ignore
       postItem.value = res.data.result;
       // console.log('요청성공 : ', res);      
       // console.log('post는 : ', postItem.value);      
@@ -307,6 +317,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
       
 
       try {
+         //@ts-ignore
         const bringChannel =  pickChannel = await client.value.getChannel({
           channelId: channelId,
         });
@@ -318,7 +329,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
 
     }
     // 채널을 채널리스트에 꽂아준다
-
+ //@ts-ignore
     setChannels(pickChannel);
   }
 
@@ -326,6 +337,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const sendMessage = async (text: string, channelId:string) => {
     let result;
     try {
+       //@ts-ignore
       result = await client.value.sendMessage({
           channelId: channelId, 
           type: 'text', 
@@ -415,6 +427,7 @@ export const useChatStore = defineStore("chatStore", ()=>  {
   const getPost = async (postIdx: string | string[]) => {
     var result;
       await chatapi
+       //@ts-ignore
         .getPost(postIdx)
         .then((res) => {
           //성공하면 페이지를 올린다.

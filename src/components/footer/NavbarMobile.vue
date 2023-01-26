@@ -6,7 +6,7 @@
       <div 
         class="flex flex-col justify-center items-center"
         :class="chatBackground"
-        @click="goChatPage"
+        @click=" router.push('/chat');"
       >
         <img
           :src="`/assets/icon/${chatIcon}.svg`"
@@ -97,20 +97,23 @@ const chatBackground = computed(() => {
 
 
 
-function goChatPage() {
+// function goChatPage() {
 
-  const localData = localStorage.getItem("user");
-  if (localData != null) {
-    const userData = JSON.parse(localData) as user;      
-    if (userData.idx === storeUserIdx.value)  router.push('/chat');
+  
+//   const localData = localStorage.getItem("user");
+//   if (localData != null) {
+//     const userData = JSON.parse(localData) as user;   
+//     console.log("모바일 채팅",storeUserIdx.value);
+   
+//     if (userData.idx === storeUserIdx.value)  router.push('/chat');
     
-    else  {
-      if (typeof route.query.postId === 'string') {
-        chatStore.isRoomExist(route.query.postId); 
-      }         
-    }
-  }
-}
+//     else  {
+//       if (typeof route.query.postId === 'string') {
+//         chatStore.isRoomExist(route.query.postId); 
+//       }         
+//     }
+//   }
+// }
 </script>
 
 <style scoped></style>

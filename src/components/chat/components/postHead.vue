@@ -16,6 +16,7 @@
                 <p>{{postItem?.title}}</p>
             </div>
             <div class="flex text-xs flex-grow md:text-everly-dark_grey">
+                
                 <p class="">{{numberToKorean(postItem?.saleUnit)}}</p>
                 
                 <p v-if="postItem?.productType ==='gameMoney'" class="mr-1 ml-2">게임머니당</p>

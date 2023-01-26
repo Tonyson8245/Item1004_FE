@@ -93,6 +93,7 @@ const chatTargetUserName = () => {
     // client.value.userId 와 채팅방에 참여 유저 리스트에서 내가 아닌 다른 유저의 객체를 가지고 와서 그 유저의 닉네임을 리턴해준다.
         
     if(props.channel.members.length==1) return props.channel.name
+     //@ts-ignore
     return props.channel.members.filter(x => x.id !==client.value.userId)[0].username
     
 }
