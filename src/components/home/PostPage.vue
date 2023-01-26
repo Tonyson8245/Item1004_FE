@@ -16,7 +16,10 @@
           class="flex justify-between items-center md:justify-end gap-8 text-everly-dark_grey text-sm md:text-base"
         >
           <span class="">{{ commonFunction.timeForToday(storecreatAt) }}</span>
-          <div class="hidden md:flex gap-5">
+          <div
+            class="hidden md:flex gap-5"
+            v-if="storeUserInfo.idx == storeUserIdx"
+          >
             <!-- TODO 1차 출시 주석 2023-01-25 23:50:36 -->
             <!-- <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
@@ -54,7 +57,20 @@
               삭제하기
             </div>
           </div>
-          <div class="md:hidden">
+          <div class="hidden md:flex gap-5" v-else>
+            <div
+              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
+              @click="moveExternalLink('거래글신고하기')"
+            >
+              <img
+                src="@/assets/icon/report_grey.svg"
+                alt=""
+                class="w-3 mr-2"
+              />
+              신고하기
+            </div>
+          </div>
+          <div class="md:hidden" @click="moveExternalLink('거래글신고하기')">
             <img src="@/assets/icon/report_grey.svg" alt="" class="w-6" />
           </div>
         </div>
@@ -543,7 +559,7 @@ import { useToggle } from "@vueuse/shared";
 import { storeToRefs } from "pinia";
 import { ref, watch, onUnmounted, computed, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { numberToKorean } from "@/common";
+import { moveExternalLink, numberToKorean } from "@/common";
 import commonFunction from "@/common";
 import { useChatStore } from "@/store/modules/chat/chatStore";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
