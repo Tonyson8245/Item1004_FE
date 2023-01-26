@@ -60,7 +60,6 @@ init();
 login().then( async (data)=>{  
   // console.log(data); 
   
-  console.log("로그인 됏으므로 채널 가지고 오기 실행");
   
   // 전체 채팅방 목록 세팅
   getChannels()  
@@ -71,7 +70,6 @@ login().then( async (data)=>{
   // 채팅화면 거래글 postId 세팅
   await setPostItem();
 
-  console.log("로그인 후 로그");
   
   
   // console.log(client.value);
@@ -144,11 +142,9 @@ async function onReceiveMessage(data:any) {
   
     let channel = data.channel   
     // console.log("메세지 받음");
-
     if (data.message.channelId === selectedChannel.value?.id) {      
       const getChannel = await chatStore.messageRead(data.message.channelId);   
-      channel = getChannel.channel    
-        
+      channel = getChannel.channel            
       chatStore.setMessages(data.message)
     }
     chatStore.setChannels(channel);

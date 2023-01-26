@@ -49,16 +49,16 @@ export const useChatStore = defineStore("chatStore", () => {
     client.value = await new TalkPlus.Client({
       appId: import.meta.env.VITE_TALK_PLUS_API_KEY,
     });
-    console.log("톡 플러스 클라이언트 정보 : ", client.value);
+    // console.log("톡 플러스 클라이언트 정보 : ", client.value);
 
     let isLogin = false;
     try {
       //@ts-ignore
       isLogin = await client.value.isLoggedIn();
-      console.log("로그인 결과 : ", isLogin);
+      // console.log("로그인 결과 : ", isLogin);
     } catch (error) {
       isLogin = false;
-      console.log("톡플러스 로그인 중 에러 발생 : ", error);
+      // console.log("톡플러스 로그인 중 에러 발생 : ", error);
     }
 
     if (!isLogin) {
@@ -308,7 +308,11 @@ export const useChatStore = defineStore("chatStore", () => {
 
   // 메세지를 메세지 리스트에 넣기
   const messageIntoMessages = (message: message) => {
-    messages.value.push(message);
+    if (messages.value.find(x => x.id === message.id)) return     
+       else  messages.value.push(message);
+
+      
+    
   };
 
   // 메세지 리스트를 채널에 넣기
