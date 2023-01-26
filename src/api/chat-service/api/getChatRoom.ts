@@ -16,10 +16,10 @@ export async function getChatRoom(
           accessToken: token
         },
       });
-      console.log(`api success`);
+      console.log(`api success`,result);
       return result.data;
     } catch (err) {
-      console.log("API error");
+      console.log("API error",err);
       return Promise.reject(err.response);
     }
   } else return Promise.reject("token error");

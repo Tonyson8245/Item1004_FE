@@ -13,8 +13,8 @@
                 <message v-if="message.userId !== client.channel.userId"  :message="message"/>
                 <myMessage v-else                                         :message="message"/>
             </div>
-
-            <div class="w-full h-full bg-everly-wbg_grey flex flex-col justify-center" v-if="messages.length===0 && !route.query.postId">
+            <!-- v-if="messages.length===0 && !route.query.postId" -->
+            <div class="w-full h-full bg-everly-wbg_grey flex flex-col justify-center" v-if="route.path==='/chat'">
                 <div class="flex flex-col items-center ">
                     <img
                     src="/assets/icon/chat_mobile.svg"
@@ -30,7 +30,7 @@
        
 
         <!-- 채팅 입력 영역 -->
-        <div v-if="route.query.postId || messages.length > 0" class="mt-auto bg-white border-t rounded-t-lg flex items-center">   
+        <div v-if="route.path!=='/chat'" class="mt-auto bg-white border-t rounded-t-lg flex items-center">   
             <div class="w-full flex justify-center">
                 <textarea v-if="!postItem?.isDeleted"
                 id="messageInputArea"  v-model="text"
@@ -134,6 +134,10 @@ onMounted(()=>{
     observer.observe(scrollView.value, config);
     // chatStore.isRoomExit();
     // chatStore.getPost();
+
+    
+    console.log("라우트 패스 : ",route.path);
+    
 })
 
 watch(top, ()=>{
