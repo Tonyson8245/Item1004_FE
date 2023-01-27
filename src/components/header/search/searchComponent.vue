@@ -16,7 +16,7 @@
         /> -->
         <div
           @click="alertMSG()"
-          class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
+          class="flex-grow rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
         >
           <input
             disabled
@@ -28,10 +28,13 @@
           />
         </div>
         <div
-          class="bg-transparent px-4 py-4 cursor-pointer"
+          class="bg-transparent px-4 py-4 cursor-pointer flex items-center"
           @click="toggleFilter_web()"
         >
-          <img src="@/assets/icon/filter_blue.svg" alt="" />
+          <button class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-white" >
+            필터
+          </button>
+          <!-- <img src="@/assets/icon/filter_blue.svg" alt="" /> -->
         </div>
         <div
           class="bg-everly-main rounded-r-lg py-[0.5rem] px-1 cursor-not-allowed"
