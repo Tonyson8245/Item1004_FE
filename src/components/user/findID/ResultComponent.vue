@@ -8,7 +8,9 @@
         class="text-left mt-11 w-full px-6 text-center font-bold text-lg md:text-[28px]"
       >
         <div>고객님의 아이디는</div>
-        <div><span class="text-everly-main">item1004</span> 입니다</div>
+        <div>
+          <span class="text-everly-main">{{ storeuserID }}</span> 입니다
+        </div>
       </div>
       <div class="grid gap-0 place-items-center w-11/12 mt-12">
         <div class="grid gap-2 place-items-center w-full">
@@ -33,7 +35,14 @@
 </template>
 
 <script setup lang="ts">
-import router from "@/router";
+import { useRouter } from "vue-router";
+import { onMounted, onUnmounted } from "vue";
+import { useauthStore } from "@/store/modules/auth/authStore";
+import { storeToRefs } from "pinia";
+
+const authStore = useauthStore();
+const { storeauthId, storeuserID } = storeToRefs(authStore);
+const router = useRouter();
 var link: string;
 
 function moveLink(type: string) {
@@ -47,6 +56,25 @@ function moveLink(type: string) {
   }
   router.push(link);
 }
+
+onMounted(() => {
+  if (storeauthId.value == "") {
+    alert(`만료된 페이지입니다.`);
+    router.go(-1);
+  } else {
+    authStore.getUserId(storeauthId.value).then((res) => {
+      if (!res) {
+        alert(`만료된 페이지입니다.`);
+        router.go(-1);
+      }
+    });
+  }
+});
+
+onUnmounted(() => {
+  //authid 초기화
+  authStore.setstoreauthId("");
+});
 </script>
 
 <style scoped></style>

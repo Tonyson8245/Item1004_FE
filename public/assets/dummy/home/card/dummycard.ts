@@ -31,7 +31,7 @@ export let productCards: productCard[] = [
     minQty: 10000000000,
     maxQty: 30000000000,
     unit: "게임머니",
-    price: 3240,
+    price: 140,
     chatQty: 20,
     likeQty: 5,
   },

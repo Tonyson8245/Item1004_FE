@@ -7,40 +7,56 @@
       >
         <!-- 모바일 팔래요 살래요 -->
         <div
-          class="bg-everly-white cursor-pointer md:hidden z-50 border-b w-full fixed top-[49px]"
+          class="bg-everly-white cursor-pointer md:hidden z-50 border-b w-full fixed top-[48px]"
         >
           <div class="flex w-full space-x-4 border-b p-4">
             <!--팔래요 활성화 -->
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+            <div class="flex space-x-1 w-[66px]">
               <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
-              <span
-                class="text-everly-main font-bold"
-                @click="toggleSellBuy('sell')"
-                >팔래요</span
-              >
+              <span class="text-everly-main font-bold">팔래요</span>
             </div>
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+            <div class="flex space-x-1 w-[66px]" @click="alertMSG()">
               <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-              <span class="text-everly-dark_grey" @click="toggleSellBuy('buy')"
-                >살래요</span
-              >
+              <span class="text-everly-dark_grey">살래요</span>
             </div>
+            <!-- 1차 출시 주석  2023-01-26 09:58:55-->
+            <!-- <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'sell'"
+              @click="toggleSellBuy('sell')"
+            >
+              <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
+              <span class="text-everly-main font-bold">팔래요</span>
+            </div> -->
+            <!-- 1차 출시 주석  2023-01-26 09:58:55-->
+            <!-- <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'sell'"
+              @click="toggleSellBuy('buy')"
+            >
+              <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
+              <span class="text-everly-dark_grey">살래요</span>
+            </div> -->
 
             <!--살래요 활성화 -->
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+            <!-- 1차 출시 주석 2023-01-26 09:59:19 -->
+            <!-- <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'buy'"
+              @click="toggleSellBuy('sell')"
+            >
               <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-              <span class="text-everly-dark_grey" @click="toggleSellBuy('sell')"
-                >팔래요</span
-              >
-            </div>
-            <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+              <span class="text-everly-dark_grey">팔래요</span>
+            </div> -->
+            <!-- 1차 출시 주석 2023-01-26 09:58:52 -->
+            <!-- <div
+              class="flex space-x-1 w-[66px]"
+              v-if="storepostType == 'buy'"
+              @click="toggleSellBuy('buy')"
+            >
               <img src="@/assets/icon/check_mobile_red.svg" alt="" />
-              <span
-                class="text-everly-red font-bold"
-                @click="toggleSellBuy('buy')"
-                >살래요</span
-              >
-            </div>
+              <span class="text-everly-red font-bold">살래요</span>
+            </div> -->
           </div>
         </div>
         <!-- 웹 팔래요 살래요 -->
@@ -50,8 +66,26 @@
             <div class="col-span-1"></div>
             <div class="col-span-9">
               <div class="flex space-x-28 text-xl cursor-pointer">
+                <div class="flex space-x-2">
+                  <img
+                    src="@/assets/icon/check_web_blue.svg"
+                    alt=""
+                    class="w-6"
+                  />
+                  <span class="text-everly-main font-bold w-13">팔래요</span>
+                </div>
+                <div class="flex space-x-2" @click="alertMSG()">
+                  <img
+                    src="@/assets/icon/check_web_grey.svg"
+                    alt=""
+                    class="w-6"
+                  />
+                  <span class="text-everly-dark-grey w-13">살래요</span>
+                </div>
+
+                <!-- 1차 출시 주석 2023-01-26 10:02:05 -->
                 <!-- 팔래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <!-- <div class="flex space-x-2" v-if="storepostType == 'sell'">
                   <img
                     src="@/assets/icon/check_web_blue.svg"
                     alt=""
@@ -63,7 +97,7 @@
                     >팔래요</span
                   >
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <div class="flex space-x-2" v-if="storepostType == 'sell'">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
@@ -74,10 +108,10 @@
                     @click="toggleSellBuy('buy')"
                     >살래요</span
                   >
-                </div>
+                </div> -->
 
                 <!-- 살래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <!-- <div class="flex space-x-2" v-if="storepostType == 'buy'">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
@@ -89,7 +123,7 @@
                     >팔래요</span
                   >
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <div class="flex space-x-2" v-if="storepostType == 'buy'">
                   <img
                     src="@/assets/icon/check_web_red.svg"
                     alt=""
@@ -100,7 +134,7 @@
                     @click="toggleSellBuy('buy')"
                     >살래요</span
                   >
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -202,7 +236,7 @@
                         src="@/assets/icon/character_active_mobile.svg"
                         class="w-6 h-6 sm:w-20 sm:h-20 m-1 sm:m-2"
                       />
-                      <div>아이템</div>
+                      <div>캐릭터</div>
                     </div>
                   </div>
                 </div>
@@ -437,8 +471,14 @@
             </div>
           </div>
 
-          <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1">
+          <div class="grid gap-4 w-full md:grid-cols-12 grid-cols-1 pt-0">
             <!-- 모바일 게임/서버 검색-->
+            <div
+              class="text-xs text-everly-dark_grey col-span-9 flex md:hidden"
+            >
+              <img src="@/assets/icon/info_grey.svg" alt="" class="w-3 pr-1" />
+              원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+            </div>
             <div class="col-span-2 block md:hidden">게임명</div>
             <div class="col-span-9 block md:hidden">
               <div class="flex">
@@ -476,6 +516,14 @@
             </div>
             <div class="col-span-1 hidden md:block"></div>
             <div class="col-span-9 hidden md:block">
+              <div class="text-xs text-everly-dark_grey hidden md:flex">
+                <img
+                  src="@/assets/icon/info_grey.svg"
+                  alt=""
+                  class="w-4 pr-1"
+                />
+                원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+              </div>
               <div class="flex">
                 <div class="flex w-1/2">
                   <div class="flex-none py-2">게임검색</div>
@@ -506,7 +554,7 @@
         </div>
         <!-- 키워드가 있고 선택하는 것에 따라 내용이 달라짐 -->
         <div
-          v-if="storeGameKeyword != '' && storeServerKeyword != ''"
+          v-if="commonStoreGameKeyword != '' && commonStoreServerKeyword != ''"
           class="p-5"
         >
           <div v-if="storeCategory == 'gameMoney'"><writeGamemoney /></div>
@@ -532,10 +580,11 @@ import writeItem from "./components/writeCategory/writeItem.vue";
 import WriteCharacter from "./components/writeCategory/writeCharacter.vue";
 import WriteEtc from "./components/writeCategory/writeEtc.vue";
 import { onUnmounted, onMounted } from "vue";
+import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { useRouter } from "vue-router";
+import { alertMSG } from "@/common";
 
-const writeStore = useWriteStore();
 const commonStore = useCommonStore();
-const { storeSellBuy } = storeToRefs(writeStore);
 const {
   storeGameSimilar,
   storeShowGameSimilar,
@@ -543,31 +592,39 @@ const {
   storeServerSimilar,
   storeShowServerSimilar,
   storeCategory,
-  storeGameKeyword,
-  storeServerKeyword,
+  commonStoreGameKeyword,
+  commonStoreServerKeyword,
 } = storeToRefs(commonStore);
+const mypageStore = usemypageStore();
+const { storeUserInfo } = storeToRefs(mypageStore);
+const router = useRouter();
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
 function goPay() {}
 
 function toggleSellBuy(status: string) {
-  writeStore.setstoreSellBuy(status);
+  writeStore.setstorepostType(status);
 }
 
 function setCategory(Category: string) {
   commonStore.setstoreCategory(Category);
+  writeStore.setstoreCategory(Category);
 }
 
 // 생명주기, 들어가고 나갈때 초기화
-onMounted(() => {
-  commonStore.reset();
-  console.log(`초기화`);
-});
+// onMounted(() => {
+//   commonStore.reset();
+//   console.log(`초기화`);
+// });
+
 onUnmounted(() => {
   commonStore.reset();
   console.log(`초기화`);
 });
+
+const writeStore = useWriteStore();
+const { storepostType } = storeToRefs(writeStore);
 </script>
 
 <style scoped></style>

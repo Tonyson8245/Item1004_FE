@@ -1,15 +1,39 @@
+// {
+//   "extends": "@vue/tsconfig/tsconfig.web.json",
+//   "include": ["env.d.ts", "src/**/*.vue", "src/@types/index.ts"],
+//   "compilerOptions": {
+//     "strictPropertyInitialization": false,
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["./src/*"]
+//     },
+//     "target": "ES6",
+//     "types": ["vite/client"],
+//     "typeRoots": ["./@types", "./node_modules/@types"]
+//   },
+
+//   "references": [
+//     {
+//       "path": "./tsconfig.config.json"
+//     }
+//   ]
+// }
+
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "src/types/index.d.ts"],
   "compilerOptions": {
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "target": "ES6",
+    "types": ["vite/client"],
+    "typeRoots": ["./@types", "./node_modules/@types"]
   },
-
   "references": [
     {
       "path": "./tsconfig.config.json"

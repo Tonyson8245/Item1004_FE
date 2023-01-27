@@ -5,13 +5,21 @@
     >
       <div class="flex divide-xs w-full justify-center">
         <div class="text-center px-2 text-everly-dark_grey">
-          <button class="text-sm">이용약관</button>
+          <button class="text-sm" @click="moveExternalLink('서비스이용약관')">
+            이용약관
+          </button>
         </div>
         <div class="text-center px-2 text-everly-dark_grey">
-          <button class="text-sm">개인정보 처리방침</button>
+          <button class="text-sm" @click="moveExternalLink('개인정보처리방침')">
+            개인정보 처리방침
+          </button>
         </div>
         <div class="text-center px-2 text-everly-dark_grey">
-          <button class="text-sm">고객센터</button>
+          <button
+            class="text-sm"
+            @click="moveExternalLink('문의하기')"
+          ></button>
+          고객센터
         </div>
       </div>
     </div>
@@ -28,6 +36,7 @@
 import { useCommon } from "@/store/modules/ui/common";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { moveExternalLink } from "@/common";
 
 const router = useRouter();
 

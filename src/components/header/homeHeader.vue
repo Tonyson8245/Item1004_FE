@@ -1,70 +1,69 @@
 <template>
-  <div class="bg-[#fafafa]">
+  <div class="bg-[#fafafa] relative">
     <!-- 웹 팔래요/살래요/검색/등록 -->
     <!-- 검색 : 메인 페이지 & 검색 결과 페이지 -->
     <div>
-      <div class="flex cursor-default inline-block">
+      <div class="flex cursor-default">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9 relative">
-            <div class="flex justify-between items-center h-[3.75em]">
-              <div class="flex space-x-4 text-xl">
+          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9">
+            <div class="flex justify-between items-start h-[3.5rem]">
+              <div class="flex space-x-4 text-xl pt-4">
                 <!-- 팔래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <div
+                  class="flex space-x-2 cursor-pointer"
+                  v-if="storeSellBuy == 'sell'"
+                  @click="toggleSellBuy('sell')"
+                >
                   <img
                     src="@/assets/icon/check_web_blue.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-main font-bold w-13"
-                    @click="toggleSellBuy('sell')"
-                    >팔래요</span
-                  >
+                  <span class="text-everly-main font-bold w-13">팔래요</span>
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'sell'">
+                <!-- TODO 1차 출시 주석 2023-01-25 20:02:14-->
+                <!-- <div
+                  class="flex space-x-2"
+                  v-if="storeSellBuy == 'sell'"
+                  @click="toggleSellBuy('buy')"
+                > -->
+                <div class="flex space-x-2 cursor-pointer" @click="alertMSG()">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-dark-grey w-13"
-                    @click="toggleSellBuy('buy')"
-                    >살래요</span
-                  >
+                  <span class="text-everly-dark-grey w-13">살래요</span>
                 </div>
 
                 <!-- 살래요 활성화 -->
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <div
+                  class="flex space-x-2"
+                  v-if="storeSellBuy == 'buy'"
+                  @click="toggleSellBuy('sell')"
+                >
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-dark-grey w-13"
-                    @click="toggleSellBuy('sell')"
-                    >팔래요</span
-                  >
+                  <span class="text-everly-dark-grey w-13">팔래요</span>
                 </div>
-                <div class="flex space-x-2" v-if="storeSellBuy == 'buy'">
+                <div
+                  class="flex space-x-2"
+                  v-if="storeSellBuy == 'buy'"
+                  @click="toggleSellBuy('buy')"
+                >
                   <img
                     src="@/assets/icon/check_web_red.svg"
                     alt=""
                     class="w-6"
                   />
-                  <span
-                    class="text-everly-red font-bold w-13"
-                    @click="toggleSellBuy('buy')"
-                    >살래요</span
-                  >
+                  <span class="text-everly-red font-bold w-13">살래요</span>
                 </div>
               </div>
-              <search
-                class="w-[760px] absolute top-[37px] right-[205px]"
-                @click.stop=""
-              />
+              <search class="w-[760px]" @click.stop="" style="z-index: 5" />
               <button
                 class="hidden md:block w-[180px] rounded-lg border-everly-dark_grey border h-full"
                 @click="router.push(`/write`)"
@@ -130,9 +129,9 @@
                 <!-- 게임/게임서버 베찌-->
                 <div
                   class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default"
-                  v-if="storeServerKeyword != ''"
+                  v-if="storeGameServerBadge != ''"
                 >
-                  <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span
+                  <span>{{ storeGameServerBadge }}</span
                   ><img
                     src="@/assets/icon/close_white.svg"
                     class="w-2"
@@ -143,14 +142,15 @@
               </div>
               <div class="flex-1"></div>
             </div>
+            <div v-else-if="storeShowFilter_web" class=""></div>
             <div v-else class="p-4"></div>
             <div>
               <!-- 웹 필터 -->
               <div
-                class="flex cursor-default fixed w-full bg-[#fafafa] w-full min-w-[1180px] pt-2 left-0 top-[186px] border-b-2"
+                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[6rem] border-b-2"
                 v-if="storeShowFilter_web"
               >
-                <div class="flex-1 hidden md:block"></div>
+                <div class="flex-1 block"></div>
                 <div
                   class="flex-none ml-2 w-[760px] border-everly-main border rounded-lg overflow-hidden bg-everly-white mb-12"
                 >
@@ -390,7 +390,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="flex-1 hidden md:block"></div>
+                <div class="flex-1 block"></div>
               </div>
             </div>
           </div>
@@ -404,33 +404,45 @@
     >
       <div class="flex w-full space-x-4 border-b p-4">
         <!--팔래요 활성화 -->
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+        <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'sell'"
+          @click="toggleSellBuy('sell')"
+        >
           <img src="@/assets/icon/check_mobile_blue.svg" alt="" />
-          <span
-            class="text-everly-main font-bold"
-            @click="toggleSellBuy('sell')"
-            >팔래요</span
-          >
+          <span class="text-everly-main font-bold">팔래요</span>
         </div>
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'sell'">
+        <!-- TODO 1차 출시 주석 2023-01-25 20:26:49 -->
+        <!-- <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'sell'"
+          @click="toggleSellBuy('buy')"
+        >
           <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-          <span class="text-everly-dark_grey" @click="toggleSellBuy('buy')"
-            >살래요</span
-          >
-        </div>
+          <span class="text-everly-dark_grey">살래요</span>
+        </div> -->
 
         <!--살래요 활성화 -->
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+        <!-- TODO 1차 출시 주석 2023-01-25 20:25:35  -->
+        <!-- <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'buy'"
+          @click="toggleSellBuy('sell')"
+        >
           <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
-          <span class="text-everly-dark_grey" @click="toggleSellBuy('sell')"
-            >팔래요</span
-          >
+          <span class="text-everly-dark_grey">팔래요</span>
         </div>
-        <div class="flex space-x-1 w-[66px]" v-if="storeSellBuy == 'buy'">
+        <div
+          class="flex space-x-1 w-[66px]"
+          v-if="storeSellBuy == 'buy'"
+          @click="toggleSellBuy('buy')"
+        >
           <img src="@/assets/icon/check_mobile_red.svg" alt="" />
-          <span class="text-everly-red font-bold" @click="toggleSellBuy('buy')"
-            >살래요</span
-          >
+          <span class="text-everly-red font-bold">살래요</span>
+        </div> -->
+        <div class="flex space-x-1 w-[66px]" @click="alertMSG()">
+          <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
+          <span class="text-everly-dark_grey">살래요</span>
         </div>
       </div>
     </div>
@@ -480,10 +492,10 @@
         <!-- 게임/게임서버 베찌-->
         <div
           class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap pr-4"
-          v-if="storeServerKeyword != '' && storeGameKeyword != ''"
+          v-if="storeGameServerBadge != ''"
           @click="closeFilterBadge(`gameServer`)"
         >
-          <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span
+          <span>{{ storeGameServerBadge }}</span
           ><img src="@/assets/icon/close_white.svg" class="w-2" alt="" />
         </div>
       </div>
@@ -492,7 +504,7 @@
     <!-- 모바일 필터 -->
     <transition name="slide-down" move="out-in">
       <div
-        class="md:hidden sticky fixed w-full bg-everly-white min-h-[700px] h-screen flex flex-col pt-[105px] z-10"
+        class="md:hidden fixed w-full bg-everly-white min-h-[700px] h-screen flex flex-col pt-[105px] z-10"
         v-if="storeShowFilter_mobile"
       >
         <!-- 카테고리 -->
@@ -597,7 +609,7 @@
                       src="@/assets/icon/character_active_mobile.svg"
                       class="w-6 h-6 sm:w-20 sm:h-20 m-1 sm:m-2"
                     />
-                    <div>아이템</div>
+                    <div>캐릭터</div>
                   </div>
                 </div>
               </div>
@@ -719,9 +731,9 @@
     <!-- 필터가 없을때 생기는 공백 -->
 
     <!-- 뱃지가 있을때 -->
-    <div v-if="storeShowFilter_web && conditionBadge" class="p-5"></div>
+    <div v-if="storeShowFilter_web && conditionBadge" class="p-4"></div>
     <!-- 뱃지가 없을때 -->
-    <div v-if="storeShowFilter_web && !conditionBadge" class=""></div>
+    <div v-if="storeShowFilter_web && !conditionBadge" class="p-4"></div>
   </div>
   <div class="absolute bottom-0"></div>
 </template>
@@ -735,6 +747,8 @@ import { useFilterStore } from "../../store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { useMainStore } from "@/store/modules/home/mainStore";
+import { alertMSG } from "@/common";
 
 const router = useRouter();
 //검색 store 가져오기
@@ -746,6 +760,9 @@ const { storeSellBuy } = storeToRefs(searchStore);
 function toggleSellBuy(type: string) {
   if (type == `sell`) searchStore.setstoreSellBuy("sell");
   else searchStore.setstoreSellBuy("buy");
+
+  mainStore.resetsetstoreProductCard();
+  mainStore.setstoreLoad(true);
 }
 
 //필터 store 가져오기
@@ -756,8 +773,10 @@ const {
   storeShowGameSimilar,
   storeShowServerSimilar,
   storeShowServerFilter,
-  storeGameKeyword,
-  storeServerKeyword,
+  commonStoreGameKeyword,
+  commonStoreServerKeyword,
+  commonStoreGameKeywordIdx,
+  commonStoreServerKeywordIdx,
 } = storeToRefs(commonStore);
 
 const filterStore = useFilterStore();
@@ -768,15 +787,28 @@ const {
   storeCategoryCharacter,
   storeCategoryEtc,
   storeShowFilter_mobile,
+  storeTempCategory,
+  storeGameServerBadge,
+  filterStoreGameKeyword,
+  filterStoreServerKeyword,
 } = storeToRefs(filterStore);
 
-//초기화
+//필터 초기화(주의!! 닫기 아님)
 function refresh() {
   filterStore.refresh();
-  commonStore.refreshSearchGameServer();
+  commonStore.reset();
+  filterStore.refreshSearchGameServer();
+  // 초기화 이후 완료를 누르기 전에는 굳이 들어갈 필요가 없음 // TODO 추후 삭제 필요
+  // if (!isSamefilter()) {
+  //   mainStore.setstoreinfiniteStatus(true);
+  //   mainStore.resetsetstoreProductCard();
+  //   loadList();
+  // }
 }
 
 function toggleCategory(category: string) {
+  console.log(category);
+
   switch (category) {
     case "gameMoney":
       filterStore.setCategory([
@@ -812,23 +844,61 @@ function toggleCategory(category: string) {
       break;
   }
 }
-// 필터 닫기
+// 필터 닫기(취소)
 function closeFilter() {
   filterStore.cancelstoreFilter();
   filterStore.setstoreShowFilter_web(false);
-}
 
-// 필터 설정
+  //닫히는 경우, 이후에는 공통 스토어를 초기화시킨다.
+  commonStore.reset();
+}
+// 필터 닫기(설정)
 function setFilter() {
   filterStore.setstoreShowFilter_web(false);
   filterStore.setstoreShowFilter_mobile(false);
-}
+  //바뀌었을 경우만 실행
+  if (!isSamefilter()) {
+    mainStore.setstoreinfiniteStatus(true);
+    mainStore.resetsetstoreProductCard();
+    console.log("filtter 설정");
+    filterStore.setstoreGameServerFilter(
+      commonStoreGameKeyword.value,
+      commonStoreServerKeyword.value,
+      commonStoreGameKeywordIdx.value,
+      commonStoreServerKeywordIdx.value
+    );
 
+    //값을 저장한 이후에는 공통 스토어를 초기화시킨다.
+    loadList();
+  }
+  commonStore.reset();
+}
+//이전 필터와 동일한지 판단하는 로직
+const isSamefilter = () => {
+  var tempCategory = storeTempCategory.value;
+  var nowCategory = [
+    storeCategoryGamemoney.value,
+    storeCategoryItem.value,
+    storeCategoryCharacter.value,
+    storeCategoryEtc.value,
+  ];
+
+  //common 에 저장된 값과 filter에 저장된 값을 비교하는 로직
+  if (
+    tempCategory.toString() == nowCategory.toString() &&
+    commonStoreGameKeyword.value == filterStoreGameKeyword.value &&
+    commonStoreServerKeyword.value == filterStoreServerKeyword.value
+  )
+    return true;
+  else return false;
+};
 //필터 뱃지 설정
 function closeFilterBadge(type: string) {
   if (type == "gameServer") {
-    commonStore.refreshSearchGameServer();
+    filterStore.refreshSearchGameServer();
   } else filterStore.changeCategory(type);
+  mainStore.resetsetstoreProductCard();
+  mainStore.setstoreLoad(true);
 }
 
 //필터가 있을때만 뱃지가 보이는 값
@@ -840,8 +910,7 @@ const conditionBadge_mobile = computed(() => {
     !filterStore.storeCategoryEtc &&
     !filterStore.storeCategoryItem &&
     !filterStore.storeCategoryCharacter &&
-    commonStore.storeGameKeyword == "" &&
-    commonStore.storeServerKeyword == ""
+    filterStore.storeGameServerBadge == ""
   )
     return false;
   else return true;
@@ -853,11 +922,17 @@ const conditionBadge = computed(() => {
     !filterStore.storeTempCategory[1] &&
     !filterStore.storeTempCategory[2] &&
     !filterStore.storeTempCategory[3] &&
-    filterStore.storeTempKeyword == "-"
+    filterStore.storeGameServerBadge == ""
   )
     return false;
   else return true;
 });
+
+///필터로 불러오는 로직
+const mainStore = useMainStore();
+function loadList() {
+  mainStore.setstoreLoad(true);
+}
 </script>
 
 <style scoped>

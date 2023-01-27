@@ -1,4 +1,6 @@
-import getGameName from "./api/getGameName";
-import getServerName from "./api/getServerName";
-
-export default { getGameName, getServerName };
+export * from "./api/getGameName";
+export * from "./api/getServerName";
+export * from "./api/getProductList";
+export * from "./api/getProduct";
+export * from "./api/createPost";
+export * from "./api/getGameRole";

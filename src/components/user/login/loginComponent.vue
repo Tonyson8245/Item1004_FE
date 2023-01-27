@@ -9,12 +9,17 @@
     />
     <div class="grid place-items-center w-full m-auto">
       <div class="">
-        <img src="@/assets/icon/logo_mobile.svg" alt="" />
+        <img
+          src="@/assets/icon/logo_mobile.svg"
+          alt=""
+          @click="router.push('/')"
+        />
       </div>
 
       <div class="grid gap-2 place-items-center w-full mt-8 md:mt-16">
         <input
           placeholder="아이디를 입력하세요"
+          @keypress="isNotSpace"
           class="h-11 lg:h-15 w-11/12 rounded-lg border border-everly-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
           v-model="id"
         />
@@ -22,8 +27,10 @@
           <input
             placeholder="비빌번호를 입력하세요"
             :type="passwordType"
+            @keypress="isNotSpace"
             class="w-full rounded-lg border border-everly-mid_grey bg-white py-3 px-5 text-base text-[#6B7280] outline-none focus:border-everly-dark focus:shadow-md"
             v-model="password"
+            @keyup.enter="clickLoginButton(id, password)"
           />
           <div @click="togglepasswordType" class="w-5 h-5 absolute right-5">
             <img
@@ -35,7 +42,7 @@
               v-else
               src="@/assets/icon/eyes_open.svg"
               alt=""
-              class="pt-[0.1em]"
+              class="pt-[0.1rem]"
             />
           </div>
         </div>
@@ -51,17 +58,19 @@
         <div class="grid place-items-center w-full mt-2 px-0 cursor-default">
           <div class="flex divide-x divide-[#707070]">
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm" @click="moveLink('findid')">
-                아이디 찾기
-              </button>
+              <!-- TODO 1차 출시 주석 2023-01-25 20:52:35 -->
+              <!-- <button class="text-sm" @click="moveLink('findid')"> -->
+              <button class="text-sm" @click="alertMSG()">아이디 찾기</button>
             </div>
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm" @click="moveLink('changepassword')">
+              <!-- TODO 1차 출시 주석 2023-01-25 20:52:53 -->
+              <!-- <button class="text-sm" @click="moveLink('changepassword')"> -->
+              <button class="text-sm" @click="alertMSG()">
                 비밀번호 재설정
               </button>
             </div>
             <div class="text-center px-2 text-everly-dark_grey">
-              <button class="text-sm" @click="moveLink('signin')">
+              <button class="text-sm" @click="moveLink('signUp')">
                 회원가입
               </button>
             </div>
@@ -69,7 +78,11 @@
         </div>
       </div>
       <div class="w-full mt-5 mb-1 md:mt-12">
-        <div class="inline-flex justify-center items-center w-full">
+        <div
+          v-show="false"
+          class="inline-flex justify-center items-center w-full"
+          @click="alertMSG()"
+        >
           <hr class="md:invisible w-11/12 h-px bg-everly-mid_grey border-0" />
           <span
             class="invisible md:visible absolute left-1/2 px-3 text-sm text-everly-dark_grey -translate-x-1/2 bg-white md:bg-[#fafafa]"
@@ -84,6 +97,7 @@
 
       <div
         class="grid grid-cols-4 gap-3 w-full px-10 text-center text-xs md:text-sm md:px-30"
+        v-show="false"
       >
         <div>
           <img
@@ -122,7 +136,8 @@ import modalSmall from "@/components/modal/modalSmall.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { useauthStore } from "@/store/modules/user/authStore";
+import { useauthStore } from "@/store/modules/auth/authStore";
+import { alertMSG } from "@/common";
 
 const router = useRouter();
 const authStore = useauthStore();
@@ -140,8 +155,8 @@ function moveLink(type: string) {
     case "findid":
       link = "/account/findid/confirm";
       break;
-    case "signin":
-      link = "/account/signin/confirm";
+    case "signUp":
+      link = "/account/signUp/confirm";
       break;
   }
   router.push(link);
@@ -167,6 +182,16 @@ const passwordType = ref("password");
 function togglepasswordType() {
   if (passwordType.value == `password`) passwordType.value = `text`;
   else passwordType.value = `password`;
+}
+//space 제거
+function isNotSpace(evt: any) {
+  evt = evt ? evt : window.event;
+  var charCode = evt.which ? evt.which : evt.keyCode;
+  if (charCode == 32) {
+    evt.preventDefault();
+  } else {
+    return true;
+  }
 }
 </script>
 

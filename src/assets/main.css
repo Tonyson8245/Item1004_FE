@@ -61,6 +61,9 @@
   }
 }
 
+
+
+
 /* //백그라운드 색깔 */
 .bg-everly-light_blue {
   background-color: #e9e9fd;
@@ -92,7 +95,9 @@
 .bg-everly-bright_grey {
   background-color: #f0f0f0;
 }
-
+.bg-everly-wbg_grey {
+  background-color: #fafafa;
+}
 /* //폰트 색깔 */
 .text-everly-light_blue {
   color: #e9e9fd;

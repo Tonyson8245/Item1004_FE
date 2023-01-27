@@ -31,7 +31,7 @@ export let productPost = [
     MinValue: 10000000000, // 물품 단위
     MaxValue: 30000000000, // 물품 단위
     UnitName: "게임머니당", // 물품 단위
-    PricePerUnit: 3240, // 물품 단위당 가격
+    PricePerUnit: 240, // 물품 단위당 가격
 
     GameName: "메이플스토리",
     ServerName: "아케인",

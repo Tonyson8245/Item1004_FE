@@ -77,9 +77,12 @@
           <!-- 게임/게임서버 뱃지-->
           <div
             class="flex items-center space-x-2 bg-everly-dark_grey text-everly-white p-2 rounded-xl text-xs font-light cursor-default whitespace-nowrap"
-            v-if="storeServerKeyword != ''"
+            v-if="commonStoreServerKeyword != ''"
           >
-            <span>{{ storeGameKeyword }} - {{ storeServerKeyword }}</span>
+            <span
+              >{{ commonStoreGameKeyword }} -
+              {{ commonStoreServerKeyword }}</span
+            >
           </div>
         </div>
         <div class="flex-1"></div>
@@ -146,7 +149,8 @@ const searchStore = useSearchStore();
 
 const filterStore = useFilterStore();
 
-const { storeServerKeyword, storeGameKeyword } = storeToRefs(commonStore);
+const { commonStoreServerKeyword, commonStoreGameKeyword } =
+  storeToRefs(commonStore);
 
 const {
   storeCategoryCharacter,
@@ -203,7 +207,7 @@ function closeFilterBadge(type: string) {
   if (type == "gameServer") {
     commonStore.setstoreGameKeyword("", 0);
     commonStore.setstoreShowServerFilter(false);
-    commonStore.setstoreServerKeyword("");
+    commonStore.setstoreServerKeyword("", 0);
   } else filterStore.changeCategory(type);
 }
 
@@ -215,8 +219,8 @@ const conditionBadge_mobile = computed(() => {
     !filterStore.storeCategoryEtc &&
     !filterStore.storeCategoryItem &&
     !filterStore.storeCategoryCharacter &&
-    commonStore.storeGameKeyword == "" &&
-    commonStore.storeServerKeyword == ""
+    commonStore.commonStoreGameKeyword == "" &&
+    commonStore.commonStoreServerKeyword == ""
   )
     return false;
   else return true;

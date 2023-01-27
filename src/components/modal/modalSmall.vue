@@ -11,7 +11,7 @@
         >
           <div class="relative p-5 flex-auto">
             <p
-              class="text-everly-main font-bold text-base md:text-lg text-center m-3 md:m-5"
+              class="text-everly-main font-bold text-base md:text-lg text-center m-3 md:m-5 whitespace-pre-wrap"
             >
               {{ propsContentText }}
             </p>

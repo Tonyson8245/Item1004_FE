@@ -1,22 +1,41 @@
 <template>
   <div>
     <div
-      class="dropdown-wrapper w-full border border-everly-main rounded-xl overflow-hidden"
+      class="dropdown-wrapper w-full border border-everly-main rounded-xl overflow-hidden bg-everly-white"
     >
       <div class="flex items-center h-[3.6rem]">
         <sellbuyBadge class="pl-4 py-3" :type="storeSellBuy" />
-        <input
+        <!-- TODO 1차 출시 주석 2023-01-25 20:34:19 -->
+        <!-- <input
           @click="toggleSearch()"
           placeholder="게임명 또는 서버명을 입력해주세요."
           :class="bottomBorder"
           v-model="storeKeyword"
           @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
           class="w-full rounded-l-lg bg-white py-4 px-0 text-[#6B7280] outline-none text-sm"
-        />
-        <div class="bg-white px-4 py-4" @click="toggleFilter_web()">
+        /> -->
+        <div
+          @click="alertMSG()"
+          class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
+        >
+          <input
+            disabled
+            placeholder="검색 기능은 준비 중입니다. 필터를 이용해주세요"
+            :class="bottomBorder"
+            v-model="storeKeyword"
+            @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
+            class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
+          />
+        </div>
+        <div
+          class="bg-transparent px-4 py-4 cursor-pointer"
+          @click="toggleFilter_web()"
+        >
           <img src="@/assets/icon/filter_blue.svg" alt="" />
         </div>
-        <div class="bg-everly-main rounded-r-lg py-[0.5rem] px-1">
+        <div
+          class="bg-everly-main rounded-r-lg py-[0.5rem] px-1 cursor-not-allowed"
+        >
           <img src="@/assets/icon/search_white_large.svg" alt="" />
         </div>
       </div>
@@ -82,6 +101,7 @@ import { useFilterStore } from "../../../store/modules/home/filterStore";
 import { useCommonStore } from "../../../store/modules/common/commonStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
+import { alertMSG } from "@/common";
 
 //팔래요/살래요 , 검색창 값, 최근 검색어 가져오기
 const searchStore = useSearchStore(); // 검색 store 가져오기
@@ -142,16 +162,36 @@ function changeSellBuy(type: string) {
   else searchStore.setstoreSellBuy("sell");
 }
 
-const { storeShowFilter_web } = storeToRefs(filterStore);
+const {
+  storeShowFilter_web,
+  filterStoreGameKeyword,
+  filterStoreGameKeywordIdx,
+  filterStoreServerKeyword,
+  filterStoreServerKeywordIdx,
+} = storeToRefs(filterStore);
 
 function toggleFilter_web() {
+  //활성화 할때, 기존 필터와 변경될 필터 값과 비교하기 위해서 저장해둠
   if (!storeShowFilter_web.value) {
-    filterStore.setstoreTempfilter();
-    commonStore.setstoreTempfilter();
+    var gameKeyword = filterStoreGameKeyword.value;
+    var gameKeywordIdx = filterStoreGameKeywordIdx.value;
+    var serverKeyword = filterStoreServerKeyword.value;
+    var serverKeywordIdx = filterStoreServerKeywordIdx.value;
+
+    filterStore.setstoreTempfilter(); //  필터 정보를 저장해둠
+    filterStore.setstoreTempfilter(); // 필터 정보를 불러옴
+    commonStore.setstoreGameServerFilter(
+      gameKeyword,
+      serverKeyword,
+      gameKeywordIdx,
+      serverKeywordIdx
+    ); // 필터 정보를 불러옴
+
+    //commonStore에 게임, 서버 필터 값 넣어두기
   } else filterStore.cancelstoreFilter();
 
-  filterStore.setstoreShowFilter_web(!storeShowFilter_web.value);
-  searchStore.setstoreShowSearch_web(false);
+  searchStore.setstoreShowSearch_web(false); //  검색 컴포넌트 끄기
+  filterStore.setstoreShowFilter_web(!storeShowFilter_web.value); // 필터 컴포넌트 켜기
 }
 </script>
 
