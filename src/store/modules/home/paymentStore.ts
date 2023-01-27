@@ -50,7 +50,7 @@ export const usePaymentStore = defineStore("paymentStore", {
     storeTerms: false,
     // storeTerms: [false, false],
     //수수료
-    storefeePercent: 20,
+    storefeePercent: 4.8,
     storefeePrice: 0,
 
     ///결과 값 모음
@@ -237,7 +237,7 @@ export const usePaymentStore = defineStore("paymentStore", {
     },
     //최종값과 수수료 값 세팅
     chargestoreFinalPrice(price: number) {
-      this.storeFinalPrice = price / 0.95;
+      this.storeFinalPrice = price / 0.952;
       this.storefeePrice = Math.round(
         this.storeFinalPrice - this.storeProductPrice
       );
