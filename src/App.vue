@@ -44,10 +44,16 @@ function toggle(value: boolean) {
 }
 
 //로그 없애기
-console.log = function () {};
-console.error = function () {};
-console.warn = function () {};
-console.debug = function () {};
+const MODE = import.meta.env.MODE;
+
+console.log(MODE);
+
+if (MODE) {
+  console.log = function () {};
+  console.error = function () {};
+  console.warn = function () {};
+  console.debug = function () {};
+}
 </script>
 
 <style></style>
