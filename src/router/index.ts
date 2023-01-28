@@ -295,9 +295,14 @@ const router = createRouter({
       children: [
         {
           path: "",
-          meta:{transition: "", name: "chat", title: "채팅", navbar: true , needLogin: true },
+          meta: {
+            transition: "",
+            name: "chat",
+            title: "채팅",
+            navbar: true,
+            needLogin: true,
+          },
           components: {
-            
             default: async () => {
               if (!isMobile()) {
                 return components.chatPage;
@@ -374,12 +379,21 @@ router.beforeEach((to, from) => {
   const userData = localStorage.getItem("user");
   const refreshTokenData = localStorage.getItem("refreshToken");
 
-  if (refreshTokenData != null && isEmpty(storeUserInfo.value.idx)) {
+  if (refreshTokenData != null) {
+    //이미 값이 있으면 다시 유저 정보를 로드하지 못하게 하는 방법
     if (to.meta.name != "logout") {
       console.log(">>>onMounted :: getUserInfo", to.meta.name);
 
-      mypageStore.getUserInfo().then(() => {
-        check();
+      mypageStore.getUserInfo().then((res) => {
+        console.log("needlogin", to.meta.needLogin);
+
+        if (!res) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("user");
+        }
+        check(); //서버에서 제대로된 값을 받아왔을 경우, 해당 페이지가 로그인이 필요한 페이지인지 확인
+        // 서버에서 재발급을 실패 했을 경우 로그인 필요한 페이지의 경우 이전 화면으로 돌림
       });
     }
   } else check();
@@ -437,8 +451,13 @@ router.beforeEach((to, from) => {
   function checkLogin() {
     var token = localStorage.getItem("refreshToken");
     if (token == null) {
-      alert("로그인이 필요합니다.");
-      router.replace(from);
+      alert("로그인이 필요합니다");
+
+      if (from.meta.needLogin == true)
+        router.replace(
+          "/"
+        ); //뒤로 갈 페이지가 로그인이 필요한 페이지면 홈으로 보냄
+      else router.replace(from);
       return;
     } else if (to.meta.needCheckAdult == true) checkIsAdult(); //성인도 체크해봐야함
   }
