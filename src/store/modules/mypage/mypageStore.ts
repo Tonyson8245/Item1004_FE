@@ -169,16 +169,19 @@ export const usemypageStore = defineStore("mypageStore", {
       this.storeUserInfo = {} as userInfoResult;
     },
     async getUserInfo() {
+      //값이 성공했는 실패 했는지, 라우터가 판단하기 위한 값
+      var result;
       console.log("실행!!");
-
       await authApi
         .getUserInfo()
         .then((res) => {
           this.storeUserInfo = res;
+          result = true;
         })
         .catch((err) => {
-          console.log(err);
+          result = false;
         });
+      return result;
     },
     resetUserInfoOverview() {
       this.storeUserInfoOverview = {} as userInfoOverviewResult;
