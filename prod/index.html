@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/src/assets/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css"
+    />
+    <meta
+      name="viewport"
+      content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <!-- PC 연동 시 script. 캐시방지를 위해 ?version=today를 추가 -->
+    <!-- 운영 전환 시 "https://pay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=현재일자" 로 변경 -->
+    <!-- <script src="https://tpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=20221219"></script> -->
+
+    <!-- 모바일 연동 시 script. 캐시방지를 위해 ?version=today를 추가 -->
+    <!-- 운영 전환 시 "https://mpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=현재일자" 로 변경 -->
+    <!-- <script src="https://tmpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=20221219"></script> -->
+    <!-- Hotjar Tracking Code for https://www.item1004.co.kr/ -->
+
+    <!-- Hotjar Tracking Code for https://www.item1004.co.kr/ -->
+
+    <!-- Run Conditions-->
+
+    <script>
+      console.log("hotjar processing");
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-254088310-1");
+    </script>
+    <script>
+      console.log("GA processing");
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 3337352, hjsv: 6 };
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+    </script>
+    <script src="https://api2.dangunpay.co.kr/js/pgAsistant.js"></script>
+    <script src="https://asset.talkplus.io/talkplus-js-0.3.2.js"></script>
+
+    <title>ITEM1004 - 온라인거래의 새로운 기준</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+<script>
+  // 결제창 return 함수(pay_result_submit 이름 변경 불가능)
+  function pay_result_submit() {
+    //@ts-ignore
+    payResultSubmit();
+  }
+  // 결제창 종료 함수(pay_result_close 이름 변경 불가능)
+  function pay_result_close() {
+    alert("결제를 취소하였습니다.");
+  }
+
+  // 인앱 브라우저로 열리면 해결 방법
+  window.onload = function () {
+    // alert(
+    //   navigator.userAgent.match(
+    //     /inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1]/i
+    //   )
+    // );
+    if (
+      navigator.userAgent.match(
+        /inapp|NAVER|KAKAOTALK|Snapchat|Line|WirtschaftsWoche|Thunderbird|Instagram|everytimeApp|WhatsApp|Electron|wadiz|AliApp|zumapp|iPhone(.*)Whale|Android(.*)Whale|kakaostory|band|twitter|DaumApps|DaumDevice\/mobile|FB_IAB|FB4A|FBAN|FBIOS|FBSS|SamsungBrowser\/[^1]/i
+      )
+    ) {
+      document.body.innerHTML = "";
+      if (navigator.userAgent.match(/iPhone|iPad/i)) {
+        location.href =
+          "ftp://43.200.7.120/bridge.html?_targeturl=" + location.href;
+        // location.href =
+        //   "https://vue.d27plzynpw231y.amplifyapp.com/home;
+      } else {
+        location.href =
+          "intent://" +
+          location.href.replace(/https?:\/\//i, "") +
+          "#Intent;scheme=http;package=com.android.chrome;end";
+      }
+    }
+  };
+</script>
