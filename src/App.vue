@@ -17,6 +17,7 @@ import { ref, watch } from "vue";
 import { useComponentStore } from "./store/modules/common/componentStore";
 import { storeToRefs } from "pinia";
 import { useCookie } from "vue-cookie-next";
+import { useLocalStorage } from "@vueuse/core";
 const { getCookie } = useCookie();
 
 const componentStore = useComponentStore();
@@ -43,12 +44,14 @@ function toggle(value: boolean) {
   lock.value = "";
 }
 
+// var accessToken = localStorage.getItem("accessToken");
+// console.log(accessToken);
+
 //로그 없애기
 const MODE = import.meta.env.MODE;
-
 console.log(MODE);
 
-if (MODE) {
+if (MODE == "production") {
   console.log = function () {};
   console.error = function () {};
   console.warn = function () {};
