@@ -8,8 +8,13 @@
       @update:propsShowModal="toggle()"
     />
     <div class="grid place-items-center w-full md:m-auto">
-      <div class="hidden md:block">
+      <div class="hidden md:block cursor-pointer" @click="moveLink('/')">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
+      </div>
+      <div
+          class="text-center p-1 mt-20 md:mt-5 w-11/12 font-bold text-everly-black md:text-2xl"
+      >
+        회원가입
       </div>
       <div
         class="text-left p-1 mt-20 md:mt-5 w-11/12 font-bold text-everly-main md:text-lg"
@@ -63,6 +68,7 @@ watch(isLargeScreen.value, () => {
 });
 
 function moveLink(type: string) {
+  link = type;
   switch (type) {
     case "setinfo":
       link = "/account/signUp/setinfo";

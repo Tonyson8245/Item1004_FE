@@ -177,6 +177,8 @@ function moveLink(link: string) {
       return;
     }
     router.push("/mypage");
+  } else if (link == "/account/signUp/confirm"){
+    if (userNickname == `로그인하기`) router.push(link);
   } else router.push(link);
 }
 </script>
