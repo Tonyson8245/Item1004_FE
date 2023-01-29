@@ -96,7 +96,7 @@ export function alertMSG(string?: string) {
 
 export function moveExternalLink(
   value:
-    | "서비스이용약관"
+    "서비스이용약관"
     | "개인정보처리방침"
     | "청소년보호정책"
     | "거래글신고하기"
@@ -108,6 +108,7 @@ export function moveExternalLink(
     | "카페"
     | "블로그"
     | "홍보"
+    | "카카오채널"
 ) {
   var url;
   switch (value) {
@@ -152,6 +153,9 @@ export function moveExternalLink(
       break;
     case "홍보":
       url = "https://blog.naver.com/item1004official/222994820855";
+      break;
+    case "카카오채널":
+      url = "https://pf.kakao.com/_Gtlaxj/chat";
       break;
   }
   window.open(url);
