@@ -2,7 +2,7 @@
   "name": "everly_prototype",
   "version": "0.0.0",
   "scripts": {
-    "dev-serve": "copyfiles -f ./dev/index.html ./ & vite  --mode development",
+    "dev-serve": "copyfiles -f ./dev/index.html ./ & vite  --mode development", 
     "prod-serve": "copyfiles -f ./prod/index.html ./ & vite  --mode production",
     "dev-build": "copyfiles -f ./dev/index.html ./ & run-p type-check  & vite build --mode development",
     "prod-build": "copyfiles -f ./prod/index.html ./ & run-p type-check & vite build --mode production",
