@@ -125,7 +125,7 @@
             <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
               충전 수수료
             </div>
-            <div class="flex-1">5%</div>
+            <div class="flex-1">4.8%</div>
           </div>
           <div class="flex">
             <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
@@ -297,14 +297,14 @@ const finalamount = ref(0);
 watch([amount, amountInput], () => {
   if (amount.value == "직접입력") {
     if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
-    else finalamount.value = Math.floor(parseInt(amountInput.value) * 0.95);
-  } else finalamount.value = Math.floor(parseInt(amount.value) * 0.95);
+    else finalamount.value = Math.floor(parseInt(amountInput.value) * 0.952);
+  } else finalamount.value = Math.floor(parseInt(amount.value) * 0.952);
 });
 
 // 충전하기 번튼 활성하
 const chargeButtonClass = ref("bg-everly-mid_grey");
 watch(finalamount, () => {
-  if (finalamount.value > 0) chargeButtonClass.value = `bg-everly-main`;
+  if (finalamount.value > 1000) chargeButtonClass.value = `bg-everly-main`;
   else chargeButtonClass.value = `bg-everly-mid_grey`;
 
   paymentStore.chargestoreProductPrice(finalamount.value);

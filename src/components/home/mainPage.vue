@@ -6,7 +6,7 @@
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>
     <div
-      class="flex-none w-full md:w-[1180px] bg-[#f0f0f0] md:bg-white pt-6 md:min-h-none min-h-[50rem]"
+      class="flex-none w-full md:w-[1180px] bg-[#f0f0f0] md:bg-white pt-6 md:min-h-none min-h-[30rem]"
     >
       <div
         class="grid grid-cols-1 md:grid-cols-2 gap-4 px-3 md:px-0"
@@ -353,7 +353,7 @@ watch(storeLoad, () => {
   }
 });
 watch(storehasnextPage, () => {
-  if (!storehasnextPage) mainStore.setstoreinfiniteStatus(false);
+  if (!storehasnextPage.value) mainStore.setstoreinfiniteStatus(false);
   else mainStore.setstoreinfiniteStatus(true);
 });
 

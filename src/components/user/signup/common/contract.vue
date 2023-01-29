@@ -6,7 +6,7 @@
       class="pr-2 w-5 h-5 cursor-pointer"
       @click="emit('check', { type: term.mandatory, idx: term.idx })"
     />
-    <div class="text-xs flex-1 cursor-default">
+    <div class="text-xs flex-1 cursor-pointer" @click="moveToLink()">
       ({{ mandatory }}) {{ text }}
     </div>
   </div>
@@ -28,8 +28,8 @@ const mandatory = computed(() => {
   else return "선택";
 });
 
-const moveToLink = (link: string) => {
-  console.log(link + "로 이동");
+const moveToLink = () => {
+  window.open(link);
 };
 
 /// 부모에서 보낸 어레이 중에 본인 약관이 있는 확인 하는 로직

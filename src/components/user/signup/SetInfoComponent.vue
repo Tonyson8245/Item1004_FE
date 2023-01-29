@@ -186,7 +186,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from "vue";
-import contractVue from "../signup/common/contract.vue";
+import contractVue from "./common/contract.vue";
 import { storeToRefs } from "pinia";
 import { useRoute, useRouter } from "vue-router";
 import { isNumber, IsNumber, isString } from "class-validator";
