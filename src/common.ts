@@ -108,6 +108,7 @@ export function moveExternalLink(
     | "카페"
     | "블로그"
     | "홍보"
+    | "카카오문의"
 ) {
   var url;
   switch (value) {
@@ -136,7 +137,7 @@ export function moveExternalLink(
         "https://docs.google.com/forms/d/e/1FAIpQLScy21eszWO_SaUBuZO2WTSdlCpe4D-vTft_Awldalki7v9FXg/viewform?usp=sf_link";
       break;
     case "공지사항":
-      url = "https://cafe.naver.com/0item1004";
+      url = "https://blog.naver.com/item1004official";
       break;
     case "유튜브":
       url = "https://www.youtube.com/channel/UC59eHlk7amIV45Bti3hoRWA";
@@ -152,6 +153,9 @@ export function moveExternalLink(
       break;
     case "홍보":
       url = "https://blog.naver.com/item1004official/222994820855";
+      break;
+    case "카카오문의" :
+      url = "http://pf.kakao.com/_Gtlaxj";
       break;
   }
   window.open(url);

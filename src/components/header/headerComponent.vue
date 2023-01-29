@@ -41,14 +41,14 @@
               
             
 
-              <div class="cursor-pointer flex"  @click="alertMSG()">
+              <!-- <div class="cursor-pointer flex"  @click="alertMSG()">
                   <img
                     class="cursor-pointer mr-2"
                     src="@/assets/icon/notify_mid-grey.svg"
                     alt=""
                   />
                   <button class=" text-everly-dark_grey">알림</button> 
-              </div>
+              </div> -->
               
 
               <div class="cursor-pointer flex"  @click="moveLink('/mypage')">

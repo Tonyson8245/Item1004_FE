@@ -43,6 +43,9 @@
                   v-if="storeSellBuy == 'sell'"
                   @click="toggleSellBuy('buy')"
                 > -->
+
+                <!-- 잠깐 지우겠음 -->
+
                 <div class="flex space-x-2 cursor-pointer" @click="alertMSG()">
                   <img
                     src="@/assets/icon/check_web_grey.svg"

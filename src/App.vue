@@ -9,7 +9,11 @@
         <component :is="Component" />
       </transition>
     </router-view>
+
+    
   </div>
+
+  
 </template>
 <script lang="ts" setup>
 import modalNotify from "@/components/modal/modalNotify.vue";
