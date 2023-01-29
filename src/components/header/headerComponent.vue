@@ -17,30 +17,37 @@
           </div>
           <div class="hidden md:block">
             <div class="flex space-x-4 items-center">
-              <img
+              <!-- <img
                 class="cursor-pointer"
                 src="@/assets/icon/noti_grey.svg"
                 alt=""
                 @click="moveExternalLink('공지사항')"
-              />
-              <img
+              /> -->
+              <button @click="moveExternalLink('공지사항')">공지사항</button> 
+              <!-- <img
                 class="cursor-pointer"
                 src="@/assets/icon/chat_mid-grey.svg"
                 alt=""
                 @click="moveLink('/chat')"
-              />
-              <img
+              /> -->
+              <button @click="moveLink('/chat')">채팅</button> 
+
+              <!-- <img
                 class="cursor-pointer"
                 src="@/assets/icon/notify_mid-grey.svg"
                 alt=""
                 @click="alertMSG()"
-              />
-              <img
+              /> -->
+              <button @click="alertMSG()">알림</button> 
+
+              <!-- <img
                 class="cursor-pointer"
                 src="@/assets/icon/profile_mid-grey.svg"
                 @click="moveLink('/mypage')"
                 alt=""
-              />
+              /> -->
+              <button @click="moveLink('/mypage')">마이페이지</button> 
+
             </div>
           </div>
         </div>
@@ -170,6 +177,8 @@ function moveLink(link: string) {
       return;
     }
     router.push("/mypage");
+  } else if (link == "/account/signUp/confirm"){
+    if (userNickname == `로그인하기`) router.push(link);
   } else router.push(link);
 }
 </script>

@@ -8,7 +8,7 @@
       @update:propsShowModal="toggle()"
     />
     <div class="grid place-items-center w-full m-auto">
-      <div class="">
+      <div class="cursor-pointer">
         <img
           src="@/assets/icon/logo_mobile.svg"
           alt=""

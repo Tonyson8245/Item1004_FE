@@ -33,3 +33,15 @@ yarn-error.log
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
+
+# OS
+.DS_Store
+
+# JetBrains' IDEs and editors
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
