@@ -158,7 +158,7 @@ export function moveExternalLink(
     case "카카오문의" :
       url = "http://pf.kakao.com/_Gtlaxj";
     case "카카오채널":
-      url = "https://pf.kakao.com/_Gtlaxj/chat";
+      url = "https://pf.kakao.com/_Gtlaxj";
       break;
   }
   window.open(url);

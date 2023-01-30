@@ -25,7 +25,7 @@
           충전 수단 선택
         </div>
         <div class="text-sm md:text-base py-3 md:pb-5">
-          * 준비 중인 충전 수단은 아이템 천사 카카오 채널을 통해 수동 결제가 가능합니다
+          * 계좌이체와 문화상품권은 아이템 천사 카카오 채널을 통해 수동 결제가 가능합니다
           <span
               class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-everly-white text-xs cursor-pointer"
               @click="moveExternalLink('카카오채널')"
@@ -51,7 +51,7 @@
               :img-url="`/assets/icon/virtualAccontwithblue_black.svg`"
             />
             <PaymentMethodVue
-              @get-value=""
+                @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`계좌이체`"
               :active="true"
@@ -71,7 +71,7 @@
               :paymentMethod="paymentMethod"
               :title="`문화상품권`"
               :active="true"
-              :img-url="`/assets/icon/culture_grey.svg`"
+              :img-url="`/assets/icon/culturewithblue_black.svg`"
               @click="showKakaoChannelConfirm(`문화상품권`)"
             />
             <PaymentMethodVue
