@@ -15,11 +15,19 @@
                 class="w-[11rem] h-[3.3rem] cursor-pointer"
               />
               <div>
-                <a class="text-everly-main text-lg font-bold ml-5">거래등록</a>
-                <a class="text-everly-main text-lg font-bold ml-5"
+                <a
+                  class="text-everly-main text-lg font-bold ml-5"
+                  @click="router.push('/write')"
+                  >거래등록</a
+                >
+                <a
+                  class="text-everly-main text-lg font-bold ml-5"
+                  @click="router.push('/mypage/mileage/charge')"
                   >마일리지 충전</a
                 >
-                <a class="text-everly-main text-lg font-bold ml-5"
+                <a
+                  class="text-everly-main text-lg font-bold ml-5"
+                  @click="router.push('/mypage/mileage/withdraw')"
                   >마일리지 출금</a
                 >
               </div>
