@@ -6,22 +6,25 @@
       <div class="flex cursor-default">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
-          
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-4">
-            <div class="flex justify-between items-center">
+          <div class="flex-none bg-[#fafafa] w-[1180px] px-4">
+            <div class="flex justify-between items-end pt-1 pb-4">
               <img
                 src="@/assets/icon/logo.gif"
                 alt=""
-                @click="moveLink('/home')"
+                @click="moveLink()"
                 class="w-[11rem] h-[3.3rem] cursor-pointer"
               />
               <div>
-                <a class=" text-everly-main text-lg font-bold ml-5">거래등록</a>
-                <a class=" text-everly-main text-lg font-bold ml-5">마일리지 충전</a>
-                <a class=" text-everly-main text-lg font-bold ml-5">마일리지 출금</a>
+                <a class="text-everly-main text-lg font-bold ml-5">거래등록</a>
+                <a class="text-everly-main text-lg font-bold ml-5"
+                  >마일리지 충전</a
+                >
+                <a class="text-everly-main text-lg font-bold ml-5"
+                  >마일리지 출금</a
+                >
               </div>
             </div>
-            
+
             <div class="flex justify-between items-start h-[3.5rem]">
               <div class="flex space-x-4 text-xl pt-4">
                 <!-- 팔래요 활성화 -->
@@ -178,7 +181,7 @@
                     <div>필터를 설정해주세요</div>
                     <div>
                       <img
-                        class=" cursor-pointer"
+                        class="cursor-pointer"
                         src="@/assets/icon/close_white.svg"
                         alt=""
                         @click="closeFilter()"
@@ -954,13 +957,10 @@ function loadList() {
   mainStore.setstoreLoad(true);
 }
 
-
-
 // 홈이동{
-function moveLink(){
-  if (route.meta.name=='home') location.reload()
-  else router.push('/home')
-
+function moveLink() {
+  if (route.meta.name == "home") location.reload();
+  else router.push("/home");
 }
 </script>
 
