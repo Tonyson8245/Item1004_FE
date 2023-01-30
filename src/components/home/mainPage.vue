@@ -1,14 +1,9 @@
 <template>
   <!-- <Test /> -->
-  <div class="w-full flex">
-    <div class="flex-grow" :class="bannerColorClass"></div>
-    <div class="flex-none w-[1180px]">
-      <BannerWeb class="hidden md:flex" @get-color="getColor($event)" />
-      <BannerTablet class="hidden sm:flex md:hidden" />
-      <BannerMobile class="flex sm:hidden" />
-    </div>
-    <div class="flex-grow" :class="bannerColorClass"></div>
-  </div>
+
+  <BannerWeb class="hidden md:flex" />
+  <BannerTablet class="hidden sm:flex md:hidden" />
+  <BannerMobile class="flex sm:hidden" />
 
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>

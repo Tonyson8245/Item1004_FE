@@ -1,21 +1,16 @@
 <template>
-  <div class="w-full cursor-pointer">
-    <Carousel
-      :autoplay="1000000"
-      :wrap-around="true"
-      class="w-full"
-      @slide-start="handleSlideStart"
-    >
-      <Slide v-for="slide in 2" :key="slide">
-        <div class="flex w-full">
-          <div class="flex-grow" :class="bgColorClass(slide)"></div>
+  <div class="cursor-pointer min-w-[1180px] w-full h-[440px]">
+    <Carousel :autoplay="5000" :wrap-around="true" class="w-full">
+      <Slide v-for="slide in 4" :key="slide">
+        <div class="flex w-full cursor-pointer" @click="moveLink(slide)">
+          <div class="flex-grow"></div>
           <div class="flex-grow-none">
             <img
-              :src="`/assets/img/banners/top_${slide}_desktop.jpg`"
+              :src="`/assets/img/banners/top_${slide}_desktop.jpeg`"
               style="object-fit: none; height: auto; height: 440px"
             />
           </div>
-          <div class="flex-grow" :class="bgColorClass(slide)"></div>
+          <div class="flex-grow"></div>
         </div>
       </Slide>
 
@@ -29,33 +24,35 @@
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import router from "@/router";
 import { isNotEmpty } from "class-validator";
-import { watch } from "vue";
+import { moveExternalLink } from "@/common";
 // 페이지 이동
-function moveLink(type: string) {
-  let link = type;
-  if (type == "signUp") {
+function moveLink(slide: number) {
+  if (slide == 1) {
+    let link;
     // 로그인 되어있는 상태면 마이페이지의 마일리지 현황 페이지로 이동
     const localData = localStorage.getItem("user");
     if (isNotEmpty(localData)) link = "/mypage/mileage/overview";
     else link = "/account/signUp/confirm";
+    router.push(link);
+  } else if (slide == 2) {
+    let link;
+    // 로그인 되어있는 상태면 마이페이지의 마일리지 현황 페이지로 이동
+    const localData = localStorage.getItem("user");
+    if (isNotEmpty(localData)) link = "/mypage/mileage/overview";
+    else link = "/account/signUp/confirm";
+    router.push(link);
+  } else if (slide == 3) {
+    moveExternalLink("카카오채널");
+  } else if (slide == 4) {
+    let link;
+    // 로그인 되어있는 상태면 마이페이지의 마일리지 현황 페이지로 이동
+    const localData = localStorage.getItem("user");
+    if (isNotEmpty(localData)) link = "/write";
+    else link = "/account/login";
+    router.push(link);
   }
-  router.push(link);
 }
 
-const emit = defineEmits([`getColor`]);
-const bgColorClass = (silde: number) => {
-  if (silde == 1) return "bg-[#7900ac]";
-  else return "bg-[#001839]";
-};
-
-const bgColorClass2 = (silde: number) => {
-  if (silde == 2) return "bg-[#7900ac]";
-  else return "bg-[#001839]";
-};
-function handleSlideStart(data: any) {
-  var slide = data.slidingToIndex;
-  emit("getColor", bgColorClass2(slide));
-}
 //////배너
 //carousel
 </script>

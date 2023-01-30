@@ -17,25 +17,36 @@
             />
           </div>
           <div class="hidden md:block text-sm">
-            <div class="flex space-x-4 items-center">
+            <div
+              class="flex space-x-4 items-center"
+              v-if="userNickname != '로그인하기'"
+            >
               <div
                 class="cursor-pointer flex"
                 @click="moveExternalLink('공지사항')"
               >
-                <img
-                  class="cursor-pointer mr-2 w-5"
-                  src="@/assets/icon/noti_grey.svg"
-                  alt=""
-                />
+                <div
+                  class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
+                >
+                  <img
+                    class="cursor-pointer"
+                    src="@/assets/icon/noti_blue.svg"
+                    alt=""
+                  />
+                </div>
                 <button class="text-everly-dark_grey">공지사항</button>
               </div>
 
               <div class="cursor-pointer flex" @click="moveLink('/chat')">
-                <img
-                  class="cursor-pointer mr-2 w-5"
-                  src="@/assets/icon/chat_mid-grey.svg"
-                  alt=""
-                />
+                <div
+                  class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
+                >
+                  <img
+                    class="cursor-pointer"
+                    src="@/assets/icon/chat_blue.svg"
+                    alt=""
+                  />
+                </div>
                 <button class="text-everly-dark_grey">채팅</button>
               </div>
 
@@ -49,12 +60,49 @@
               </div> -->
 
               <div class="cursor-pointer flex" @click="moveLink('/mypage')">
-                <img
-                  class="cursor-pointer mr-2 w-5"
-                  src="@/assets/icon/profile_mid-grey.svg"
-                  alt=""
-                />
+                <div
+                  class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
+                >
+                  <img
+                    class="cursor-pointer"
+                    src="@/assets/icon/profile_blue.svg"
+                    alt=""
+                  />
+                </div>
                 <button class="text-everly-dark_grey">마이페이지</button>
+              </div>
+            </div>
+            <div class="flex space-x-4 items-center" v-else>
+              <div
+                class="cursor-pointer flex"
+                @click="moveLink('/account/login')"
+              >
+                <div
+                  class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
+                >
+                  <img
+                    class="cursor-pointer"
+                    src="@/assets/icon/login_blue.svg"
+                    alt=""
+                  />
+                </div>
+                <button class="text-everly-dark_grey">로그인하기</button>
+              </div>
+
+              <div
+                class="cursor-pointer flex"
+                @click="moveLink('/account/signup/confirm')"
+              >
+                <div
+                  class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
+                >
+                  <img
+                    class="cursor-pointer"
+                    src="@/assets/icon/signup_blue.svg"
+                    alt=""
+                  />
+                </div>
+                <button class="text-everly-dark_grey">회원가입</button>
               </div>
             </div>
           </div>

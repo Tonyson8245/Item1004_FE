@@ -108,7 +108,6 @@ export function moveExternalLink(
     | "카페"
     | "블로그"
     | "홍보"
-    | "카카오문의"
     | "카카오채널"
 ) {
   var url;

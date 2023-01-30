@@ -14,22 +14,55 @@
                 @click="moveLink()"
                 class="w-[11rem] h-[3.3rem] cursor-pointer"
               />
-              <div>
-                <a
-                  class="text-everly-main text-lg font-bold ml-5"
-                  @click="router.push('/write')"
-                  >거래등록</a
-                >
-                <a
-                  class="text-everly-main text-lg font-bold ml-5"
-                  @click="router.push('/mypage/mileage/charge')"
-                  >마일리지 충전</a
-                >
-                <a
-                  class="text-everly-main text-lg font-bold ml-5"
-                  @click="router.push('/mypage/mileage/withdraw')"
-                  >마일리지 출금</a
-                >
+              <div class="flex gap-x-4">
+                <div class="flex items-center">
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-5"
+                      src="@/assets/icon/button_write_mobile.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a
+                    class="text-everly-main text-lg font-bold"
+                    @click="router.push('/write')"
+                    >거래등록</a
+                  >
+                </div>
+                <div class="flex items-center">
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-3"
+                      src="@/assets/icon/charge_white.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a
+                    class="text-everly-main text-lg font-bold"
+                    @click="router.push('/mypage/mileage/charge')"
+                    >마일리지 충전</a
+                  >
+                </div>
+                <div class="flex items-center">
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-3"
+                      src="@/assets/icon/withdraw_white.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a
+                    class="text-everly-main text-lg font-bold"
+                    @click="router.push('/mypage/mileage/withdraw')"
+                    >마일리지 출금</a
+                  >
+                </div>
               </div>
             </div>
 
