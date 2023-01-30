@@ -45,18 +45,30 @@
         </div>
       </div>
 
-      <div
-        class="hidden md:flex fixed bottom-10 z-50"
-        v-else="storeinfiniteStatus"
-      >
+      <div class="hidden md:flex fixed bottom-10 z-50">
         <div class="flex-grow"></div>
         <div class="flex-none w-[1180px]">
-          <div class="absolute right-0 bottom-0">
+          <div
+            class="absolute right-0 bottom-0 flex-col flex items-center justify-center gap-y-2"
+          >
             <img
+              @click="moveExternalLink('블로그')"
+              src="@/assets/icon/goto_blog.svg"
+              alt=""
+              class="w-[45px] h-[45px] inline-block cursor-pointer"
+            />
+            <img
+              @click="moveExternalLink('카카오채널')"
+              src="@/assets/icon/goto_kakao.svg"
+              alt=""
+              class="w-[45px] h-[45px] inline-block cursor-pointer"
+            />
+            <img
+              v-if="storeinfiniteStatus"
               @click="scrollToTop"
               src="@/assets/icon/button_goup.svg"
               alt=""
-              class="w-[55px] h-[55px] inline-block cursor-pointer"
+              class="w-[45px] h-[45px] inline-block cursor-pointer"
             />
           </div>
         </div>
@@ -225,18 +237,33 @@
     <!-- 모바일 글작성 -->
     <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
       <div class="flex justify-end">
-        <img
-          src="@/assets/icon/button_write_mobile.svg"
-          alt=""
-          @click="moveLink('/write')"
-        />
+        <div class="flex flex-col items-center justify-center gap-y-1">
+          <img
+            src="@/assets/icon/goto_blog.svg"
+            alt=""
+            class="w-[40px]"
+            @click="moveExternalLink('블로그')"
+          />
+          <img
+            src="@/assets/icon/goto_kakao.svg"
+            alt=""
+            class="w-[40px]"
+            @click="moveExternalLink('카카오채널')"
+          />
+          <img
+            src="@/assets/icon/button_write_mobile.svg"
+            alt=""
+            class="w-[40px]"
+            @click="moveLink('/write')"
+          />
+        </div>
       </div>
       <div
-        class="block md:hidden flex justify-center absolute w-full top-7"
+        class="md:hidden flex justify-center absolute w-full top-7"
         v-if="storeinfiniteStatus"
       >
         <div @click="scrollToTop">
-          <div><img src="@/assets/icon/button_gotop_mobile.svg" alt="" /></div>
+          <img src="@/assets/icon/button_gotop_mobile.svg" alt="" />
         </div>
       </div>
     </div>
