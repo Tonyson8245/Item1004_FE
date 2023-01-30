@@ -304,31 +304,29 @@ function load({ loaded }: LoadAction) {
     //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때
     if (storehasnextPage.value) {
-      if (storehasnextPage.value) {
-        var page = storeNextPage.value;
-        var sellbuy = storeSellBuy.value;
-        var categorys = filterStore.getCategorys;
-        var gameIdx = filterStoreGameKeywordIdx.value;
-        var serverIdx = filterStoreServerKeywordIdx.value;
+      var page = storeNextPage.value;
+      var sellbuy = storeSellBuy.value;
+      var categorys = filterStore.getCategorys;
+      var gameIdx = filterStoreGameKeywordIdx.value;
+      var serverIdx = filterStoreServerKeywordIdx.value;
 
-        var payload = new getProductCardBodyDto(
-          page,
-          6,
-          sellbuy,
-          categorys,
-          gameIdx,
-          serverIdx
-        );
+      var payload = new getProductCardBodyDto(
+        page,
+        6,
+        sellbuy,
+        categorys,
+        gameIdx,
+        serverIdx
+      );
 
-        mainStore
-          .setstoreProductCard(payload)
-          .then((res) => {
-            if (res) {
-              loaded();
-            } else console.log("loaded failed");
-          })
-          .catch(() => {});
-      }
+      mainStore
+        .setstoreProductCard(payload)
+        .then((res) => {
+          if (res) {
+          } else console.log("loaded failed");
+          loaded();
+        })
+        .catch(() => {});
     }
   }
 }

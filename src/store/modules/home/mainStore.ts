@@ -46,12 +46,11 @@ export const useMainStore = defineStore("mainStore", {
 
               var list = res.posts as GamePostSummaryDto[];
               this.storeProductCard = [...this.storeProductCard, ...list];
-
-              //서버 가져오기 완료
-              this.storeGetdone = true;
               //결과를 뷰단으로 보냄
               result = true;
             }
+            //서버 가져오기 완료
+            this.storeGetdone = true;
           })
           .catch((err) => {
             //서버 가져오기 완료
