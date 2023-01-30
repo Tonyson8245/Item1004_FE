@@ -176,7 +176,7 @@
             <div>
               <!-- 웹 필터 -->
               <div
-                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[8rem] border-b-2"
+                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[8.1rem] border-b-2"
                 v-if="storeShowFilter_web"
               >
                 <div class="flex-1 block"></div>
@@ -382,7 +382,8 @@
                           </div>
                         </div>
 
-                        <div class="flex w-1/2" v-show="storeShowServerFilter">
+                        <!-- TODO 1차 수정 2023-01-30 12:09:48 -->
+                        <!-- <div class="flex w-1/2" v-show="storeShowServerFilter">
                           <div class="flex-none py-2">서버검색</div>
                           <div class="flex-grow pl-10">
                             <filterSearch
@@ -392,7 +393,7 @@
                               :type="`server`"
                             />
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                     <div class="flex w-full justify-end px-5 space-x-3">

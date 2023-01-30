@@ -477,7 +477,7 @@
               class="text-xs text-everly-dark_grey col-span-9 flex md:hidden"
             >
               <img src="@/assets/icon/info_grey.svg" alt="" class="w-3 pr-1" />
-              원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+              원하는 게임이 없다면 "기타"를 입력해주세요
             </div>
             <div class="col-span-2 block md:hidden">게임명</div>
             <div class="col-span-9 block md:hidden">
@@ -512,7 +512,7 @@
             </div>
             <!-- 웹 게임/서버 검색-->
             <div class="col-span-2 hidden md:block">
-              게임명 서버명을<br />선택해주세요
+              게임과 서버를<br />선택해주세요
             </div>
             <div class="col-span-1 hidden md:block"></div>
             <div class="col-span-9 hidden md:block">
@@ -522,7 +522,7 @@
                   alt=""
                   class="w-4 pr-1"
                 />
-                원하는 게임 및 서버명이 없다면 "기타"를 입력해주세요
+                원하는 게임이 없다면 "기타"를 입력해주세요
               </div>
               <div class="flex">
                 <div class="flex w-1/2">
