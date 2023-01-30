@@ -6,7 +6,22 @@
       <div class="flex cursor-default">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9">
+          
+          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-4">
+            <div class="flex justify-between items-center">
+              <img
+                src="@/assets/icon/logo.gif"
+                alt=""
+                @click="moveLink('/home')"
+                class="w-[11rem] h-[3.3rem] cursor-pointer"
+              />
+              <div>
+                <a class=" text-everly-main text-lg font-bold ml-5">거래등록</a>
+                <a class=" text-everly-main text-lg font-bold ml-5">마일리지 충전</a>
+                <a class=" text-everly-main text-lg font-bold ml-5">마일리지 출금</a>
+              </div>
+            </div>
+            
             <div class="flex justify-between items-start h-[3.5rem]">
               <div class="flex space-x-4 text-xl pt-4">
                 <!-- 팔래요 활성화 -->
@@ -28,6 +43,9 @@
                   v-if="storeSellBuy == 'sell'"
                   @click="toggleSellBuy('buy')"
                 > -->
+
+                <!-- 잠깐 지우겠음 -->
+
                 <div class="flex space-x-2 cursor-pointer" @click="alertMSG()">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
@@ -147,7 +165,7 @@
             <div>
               <!-- 웹 필터 -->
               <div
-                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[6rem] border-b-2"
+                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[8rem] border-b-2"
                 v-if="storeShowFilter_web"
               >
                 <div class="flex-1 block"></div>
@@ -160,6 +178,7 @@
                     <div>필터를 설정해주세요</div>
                     <div>
                       <img
+                        class=" cursor-pointer"
                         src="@/assets/icon/close_white.svg"
                         alt=""
                         @click="closeFilter()"
@@ -746,11 +765,12 @@ import { useCommonStore } from "../../store/modules/common/commonStore";
 import { useFilterStore } from "../../store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useMainStore } from "@/store/modules/home/mainStore";
 import { alertMSG } from "@/common";
 
 const router = useRouter();
+const route = useRoute();
 //검색 store 가져오기
 const searchStore = useSearchStore();
 
@@ -932,6 +952,15 @@ const conditionBadge = computed(() => {
 const mainStore = useMainStore();
 function loadList() {
   mainStore.setstoreLoad(true);
+}
+
+
+
+// 홈이동{
+function moveLink(){
+  if (route.meta.name=='home') location.reload()
+  else router.push('/home')
+
 }
 </script>
 

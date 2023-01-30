@@ -231,6 +231,13 @@
         </div>
       </div>
     </div>
+
+    <div @click="moveExternalLink('카카오문의')" class="hidden md:block fixed bottom-10 right-10">
+      <button class=" rounded-full border flex flex-col items-center p-3 bg-yellow-200">
+        <p>카톡</p>
+        <p>1:1상담</p>      
+      </button>
+    </div>
   </div>
 </template>
 

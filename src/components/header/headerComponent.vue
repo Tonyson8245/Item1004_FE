@@ -7,8 +7,9 @@
         <div
           class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4 md:px-0"
         >
-          <div class="hidden md:flex space-x-6">
+          <div  class="hidden md:flex space-x-6">
             <img
+              v-if="route.meta.name !== `home`"
               src="@/assets/icon/logo.gif"
               alt=""
               @click="moveLink('/home')"
@@ -17,36 +18,48 @@
           </div>
           <div class="hidden md:block">
             <div class="flex space-x-4 items-center">
-              <!-- <img
-                class="cursor-pointer"
-                src="@/assets/icon/noti_grey.svg"
-                alt=""
-                @click="moveExternalLink('공지사항')"
-              /> -->
-              <button @click="moveExternalLink('공지사항')">공지사항</button> 
-              <!-- <img
-                class="cursor-pointer"
-                src="@/assets/icon/chat_mid-grey.svg"
-                alt=""
-                @click="moveLink('/chat')"
-              /> -->
-              <button @click="moveLink('/chat')">채팅</button> 
+              
+              <div class="cursor-pointer flex" @click="moveExternalLink('공지사항')">
+                  <img
+                    class="cursor-pointer mr-2"
+                    src="@/assets/icon/noti_grey.svg"
+                    alt=""
+                  />
+                  <button class=" text-everly-dark_grey">공지사항</button> 
 
-              <!-- <img
-                class="cursor-pointer"
-                src="@/assets/icon/notify_mid-grey.svg"
-                alt=""
-                @click="alertMSG()"
-              /> -->
-              <button @click="alertMSG()">알림</button> 
+              </div>
 
-              <!-- <img
-                class="cursor-pointer"
-                src="@/assets/icon/profile_mid-grey.svg"
-                @click="moveLink('/mypage')"
-                alt=""
-              /> -->
-              <button @click="moveLink('/mypage')">마이페이지</button> 
+              <div class="cursor-pointer flex"  @click="moveLink('/chat')">
+                  <img
+                    class="cursor-pointer mr-2"
+                    src="@/assets/icon/chat_mid-grey.svg"
+                    alt=""
+                  />
+                  <button class=" text-everly-dark_grey">채팅</button> 
+
+              </div>
+              
+            
+
+              <!-- <div class="cursor-pointer flex"  @click="alertMSG()">
+                  <img
+                    class="cursor-pointer mr-2"
+                    src="@/assets/icon/notify_mid-grey.svg"
+                    alt=""
+                  />
+                  <button class=" text-everly-dark_grey">알림</button> 
+              </div> -->
+              
+
+              <div class="cursor-pointer flex"  @click="moveLink('/mypage')">
+                  <img
+                    class="cursor-pointer mr-2"
+                    src="@/assets/icon/profile_mid-grey.svg"
+                    alt=""
+                  />
+                  <button class=" text-everly-dark_grey">마이페이지</button> 
+              </div>
+              
 
             </div>
           </div>
