@@ -57,10 +57,12 @@
       </div>
 
       <!--  하단 배너 -->
-      <div
+      <!-- TODO 1차 수정 2023-01-30 11:16:42 -->
+      <!-- <div
         class="md:mt-12 mt-2"
         v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
-      >
+      > -->
+      <div class="md:mt-12 mt-2" v-if="!storeShowFilter_mobile">
         <!-- 웹 -->
         <div class="grid-cols-3 gap-4 flex-grow w-full hidden md:grid">
           <div
@@ -232,12 +234,13 @@
       </div>
     </div>
 
-    <div @click="moveExternalLink('카카오문의')" class="hidden md:block fixed bottom-10 right-10">
+    <!-- 카카오 상담 버튼 -->
+    <!-- <div @click="moveExternalLink('카카오문의')" class="hidden md:block fixed bottom-10 right-10">
       <button class=" rounded-full border flex flex-col items-center p-3 bg-yellow-200">
         <p>카톡</p>
         <p>1:1상담</p>      
       </button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -301,31 +304,29 @@ function load({ loaded }: LoadAction) {
     //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때
     if (storehasnextPage.value) {
-      if (storehasnextPage.value) {
-        var page = storeNextPage.value;
-        var sellbuy = storeSellBuy.value;
-        var categorys = filterStore.getCategorys;
-        var gameIdx = filterStoreGameKeywordIdx.value;
-        var serverIdx = filterStoreServerKeywordIdx.value;
+      var page = storeNextPage.value;
+      var sellbuy = storeSellBuy.value;
+      var categorys = filterStore.getCategorys;
+      var gameIdx = filterStoreGameKeywordIdx.value;
+      var serverIdx = filterStoreServerKeywordIdx.value;
 
-        var payload = new getProductCardBodyDto(
-          page,
-          6,
-          sellbuy,
-          categorys,
-          gameIdx,
-          serverIdx
-        );
+      var payload = new getProductCardBodyDto(
+        page,
+        6,
+        sellbuy,
+        categorys,
+        gameIdx,
+        serverIdx
+      );
 
-        mainStore
-          .setstoreProductCard(payload)
-          .then((res) => {
-            if (res) {
-              loaded();
-            } else console.log("loaded failed");
-          })
-          .catch(() => {});
-      }
+      mainStore
+        .setstoreProductCard(payload)
+        .then((res) => {
+          if (res) {
+          } else console.log("loaded failed");
+          loaded();
+        })
+        .catch(() => {});
     }
   }
 }

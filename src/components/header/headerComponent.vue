@@ -5,9 +5,9 @@
       <div class="flex-1 hidden md:block border-b"></div>
       <div class="flex-none hidden md:block border-b">
         <div
-          class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4 md:px-0"
+          class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4 md:px-4"
         >
-          <div  class="hidden md:flex space-x-6">
+          <div class="hidden md:flex space-x-6">
             <img
               v-if="route.meta.name !== `home`"
               src="@/assets/icon/logo.gif"
@@ -16,51 +16,46 @@
               class="w-[11rem] h-[3.3rem] cursor-pointer"
             />
           </div>
-          <div class="hidden md:block">
+          <div class="hidden md:block text-sm">
             <div class="flex space-x-4 items-center">
-              
-              <div class="cursor-pointer flex" @click="moveExternalLink('공지사항')">
-                  <img
-                    class="cursor-pointer mr-2"
-                    src="@/assets/icon/noti_grey.svg"
-                    alt=""
-                  />
-                  <button class=" text-everly-dark_grey">공지사항</button> 
-
+              <div
+                class="cursor-pointer flex"
+                @click="moveExternalLink('공지사항')"
+              >
+                <img
+                  class="cursor-pointer mr-2 w-5"
+                  src="@/assets/icon/noti_grey.svg"
+                  alt=""
+                />
+                <button class="text-everly-dark_grey">공지사항</button>
               </div>
 
-              <div class="cursor-pointer flex"  @click="moveLink('/chat')">
-                  <img
-                    class="cursor-pointer mr-2"
-                    src="@/assets/icon/chat_mid-grey.svg"
-                    alt=""
-                  />
-                  <button class=" text-everly-dark_grey">채팅</button> 
-
+              <div class="cursor-pointer flex" @click="moveLink('/chat')">
+                <img
+                  class="cursor-pointer mr-2 w-5"
+                  src="@/assets/icon/chat_mid-grey.svg"
+                  alt=""
+                />
+                <button class="text-everly-dark_grey">채팅</button>
               </div>
-              
-            
 
               <!-- <div class="cursor-pointer flex"  @click="alertMSG()">
                   <img
-                    class="cursor-pointer mr-2"
+                    class="cursor-pointer mr-2 w-5"
                     src="@/assets/icon/notify_mid-grey.svg"
                     alt=""
                   />
                   <button class=" text-everly-dark_grey">알림</button> 
               </div> -->
-              
 
-              <div class="cursor-pointer flex"  @click="moveLink('/mypage')">
-                  <img
-                    class="cursor-pointer mr-2"
-                    src="@/assets/icon/profile_mid-grey.svg"
-                    alt=""
-                  />
-                  <button class=" text-everly-dark_grey">마이페이지</button> 
+              <div class="cursor-pointer flex" @click="moveLink('/mypage')">
+                <img
+                  class="cursor-pointer mr-2 w-5"
+                  src="@/assets/icon/profile_mid-grey.svg"
+                  alt=""
+                />
+                <button class="text-everly-dark_grey">마이페이지</button>
               </div>
-              
-
             </div>
           </div>
         </div>
@@ -190,7 +185,7 @@ function moveLink(link: string) {
       return;
     }
     router.push("/mypage");
-  } else if (link == "/account/signUp/confirm"){
+  } else if (link == "/account/signUp/confirm") {
     if (userNickname == `로그인하기`) router.push(link);
   } else router.push(link);
 }
