@@ -256,19 +256,23 @@ import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { onMounted, watch } from "vue";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import BannerTablet from "./components/banner/bannerTablet.vue";
 import { moveExternalLink } from "@/common";
+import { useComponentStore } from "@/store/modules/common/componentStore";
+import { useCookie } from "vue-cookie-next";
+const { getCookie } = useCookie();
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
 function goPay() {}
-
+const route = useRoute();
 const router = useRouter();
-
+const componentStore = useComponentStore();
+const { storeshowNotify } = storeToRefs(componentStore);
 //////조회 관련
 const filterStore = useFilterStore();
 const {
@@ -291,6 +295,16 @@ const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 onMounted(() => {
   mainStore.$reset();
   getProductList(6);
+
+  console.log(">>>>>23212313213>>>>>", route.meta.name);
+
+  if (getCookie("noti") == "stop") {
+    componentStore.setstoreshowNotify(false);
+  } else {
+    if (route.meta.name == "home") {
+      componentStore.setstoreshowNotify(true);
+    }
+  }
 });
 
 // Infinite scroll on off

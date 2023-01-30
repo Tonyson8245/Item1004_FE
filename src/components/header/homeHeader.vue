@@ -57,7 +57,7 @@
 
                 <!-- 잠깐 지우겠음 -->
 
-                <div class="flex space-x-2 cursor-pointer" @click="alertMSG()">
+                <div class="flex space-x-2 cursor-pointer cursor-not-allowed">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
