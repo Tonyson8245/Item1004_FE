@@ -175,13 +175,13 @@
       >
         <div class="hidden md:block">
           <Carousel :settings="settings" :breakpoints="breakpoints">
-            <Slide v-for="slide in 7" :key="slide">
+            <Slide v-for="slide in 8" :key="slide">
               <div
                 class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
               >
                 <div>
                   <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
-                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                  <img :src="`/assets/img/logo/${slide - 1}.png`" alt="" />
                 </div>
               </div>
             </Slide>
@@ -192,13 +192,13 @@
         </div>
         <div class="md:hidden">
           <Carousel :settings="settings" :breakpoints="breakpoints">
-            <Slide v-for="slide in 7" :key="slide">
+            <Slide v-for="slide in 8" :key="slide">
               <div
                 class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
               >
                 <div>
                   <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
-                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                  <img :src="`/assets/img/logo/${slide - 1}.png`" alt="" />
                 </div>
               </div>
             </Slide>
