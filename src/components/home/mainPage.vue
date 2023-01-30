@@ -1,8 +1,15 @@
 <template>
   <!-- <Test /> -->
-  <BannerWeb class="hidden md:flex" />
-  <BannerTablet class="hidden sm:flex md:hidden" />
-  <BannerMobile class="flex sm:hidden" />
+  <div class="w-full flex">
+    <div class="flex-grow" :class="bannerColorClass"></div>
+    <div class="flex-none w-[1180px]">
+      <BannerWeb class="hidden md:flex" @get-color="getColor($event)" />
+      <BannerTablet class="hidden sm:flex md:hidden" />
+      <BannerMobile class="flex sm:hidden" />
+    </div>
+    <div class="flex-grow" :class="bannerColorClass"></div>
+  </div>
+
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>
     <div
@@ -257,7 +264,7 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
 import { useRoute, useRouter } from "vue-router";
-import { onMounted, watch } from "vue";
+import { onMounted, watch, ref } from "vue";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import BannerTablet from "./components/banner/bannerTablet.vue";
@@ -412,6 +419,12 @@ function moveLink(link: string) {
 //   mainStore.resetsetstoreProductCard();
 //   mainStore.setstoreinfiniteStatus(false);
 // });
+
+//배너 색
+const bannerColorClass = ref("bg-[#7900ac]");
+function getColor(color: string) {
+  bannerColorClass.value = color;
+}
 </script>
 
 <style scoped></style>

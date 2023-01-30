@@ -1,12 +1,21 @@
 <template>
   <div class="w-full cursor-pointer">
-    <Carousel :autoplay="1000000" :wrap-around="true" class="w-full">
+    <Carousel
+      :autoplay="1000000"
+      :wrap-around="true"
+      class="w-full"
+      @slide-start="handleSlideStart"
+    >
       <Slide v-for="slide in 2" :key="slide">
-        <div class="carousel__item crop">
-          <img
-            :src="`/assets/img/banners/top_${slide}_desktop.jpeg`"
-            style="object-fit: none; height: auto; height: 440px"
-          />
+        <div class="flex w-full">
+          <div class="flex-grow" :class="bgColorClass(slide)"></div>
+          <div class="flex-grow-none">
+            <img
+              :src="`/assets/img/banners/top_${slide}_desktop.jpg`"
+              style="object-fit: none; height: auto; height: 440px"
+            />
+          </div>
+          <div class="flex-grow" :class="bgColorClass(slide)"></div>
         </div>
       </Slide>
 
@@ -20,6 +29,7 @@
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import router from "@/router";
 import { isNotEmpty } from "class-validator";
+import { watch } from "vue";
 // 페이지 이동
 function moveLink(type: string) {
   let link = type;
@@ -32,6 +42,20 @@ function moveLink(type: string) {
   router.push(link);
 }
 
+const emit = defineEmits([`getColor`]);
+const bgColorClass = (silde: number) => {
+  if (silde == 1) return "bg-[#7900ac]";
+  else return "bg-[#001839]";
+};
+
+const bgColorClass2 = (silde: number) => {
+  if (silde == 2) return "bg-[#7900ac]";
+  else return "bg-[#001839]";
+};
+function handleSlideStart(data: any) {
+  var slide = data.slidingToIndex;
+  emit("getColor", bgColorClass2(slide));
+}
 //////배너
 //carousel
 </script>
