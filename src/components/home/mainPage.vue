@@ -57,10 +57,12 @@
       </div>
 
       <!--  하단 배너 -->
-      <div
+      <!-- TODO 1차 수정 2023-01-30 11:16:42 -->
+      <!-- <div
         class="md:mt-12 mt-2"
         v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
-      >
+      > -->
+      <div class="md:mt-12 mt-2" v-if="!storeShowFilter_mobile">
         <!-- 웹 -->
         <div class="grid-cols-3 gap-4 flex-grow w-full hidden md:grid">
           <div
