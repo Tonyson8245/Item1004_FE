@@ -22,9 +22,11 @@
 </template>
 <script setup lang="ts">
 import { Carousel, Slide, Navigation } from "vue3-carousel";
-import router from "@/router";
 import { isNotEmpty } from "class-validator";
 import { moveExternalLink } from "@/common";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 // 페이지 이동
 function moveLink(slide: number) {
   if (slide == 1) {

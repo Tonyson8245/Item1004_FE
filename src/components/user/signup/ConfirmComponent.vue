@@ -16,12 +16,13 @@
       >
         회원가입
       </div> -->
-      <div class="">
-        
+      <div class="flex px-5 md:px-6">
+        <img src="@/assets/icon/19.png" alt="">
+        <div class=" pl-2">
+          본 정보 내용은 청소년 유해매체물로서 [정보통신망 이용촉진 및 정보보호 등에 관한 법률] 및 [청소년 보호법]에 따라 19세 미만의 청소년은 거래를 이용할 수 없습니다.
+        </div>
       </div>
-      <div class="px-5 md:px-6">
-        본 정보 내용은 청소년 유해매체물로서 [정보통신망 이용촉진 및 정보보호 등에 관한 법률] 및 [청소년 보호법]에 따라 19세 미만의 청소년은 거래를 이용할 수 없습니다.
-      </div>
+      
       <div
         class="text-left p-1 mt-20 md:mt-5 w-11/12 font-bold text-everly-main md:text-lg"
       >

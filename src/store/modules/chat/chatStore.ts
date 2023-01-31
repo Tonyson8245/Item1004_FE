@@ -12,8 +12,9 @@ import type createRoomResponse from "@/domain/chat/createRoomResponse";
 import type { user } from "@/domain/user/user.interface";
 import { loadRouteLocation } from "vue-router";
 import * as chatapi from "@/api/chat-service/index";
-import router from "@/router";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 
 export const useChatStore = defineStore("chatStore", () => {
   const client = ref(Object);

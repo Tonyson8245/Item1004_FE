@@ -1,6 +1,5 @@
 import type { TokenDto } from "@/domain/auth";
 import type { user } from "@/domain/user/user.interface";
-import router from "@/router";
 import { useLocalStorage } from "@vueuse/core";
 import axios, { AxiosError } from "axios";
 

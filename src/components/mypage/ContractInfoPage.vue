@@ -607,12 +607,13 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import commonFunction from "@/common";
 import type { user } from "@/domain/user/user.interface";
-import router from "@/router";
 import { alertMSG } from "@/common";
 import { useRoute } from "vue-router";
 import { moveExternalLink } from "@/common";
 import { IsEmpty, IsNotEmptyObject } from "class-validator";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
 const mypageStore = usemypageStore();
