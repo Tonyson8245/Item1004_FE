@@ -4,11 +4,25 @@ import router from "@/router";
 import { useLocalStorage } from "@vueuse/core";
 import axios, { AxiosError } from "axios";
 
-const baseurl_test = import.meta.env.VITE_BASE_URL_AUTH_TEST;
-const tokenUrl = import.meta.env.VITE_BASE_URL_USER_TEST;
+const baseurl = import.meta.env.VITE_BASE_URL_AUTH_BASE;
+const testurl = import.meta.env.VITE_BASE_URL_AUTH_TEST;
+const tokenUrl_base = import.meta.env.VITE_BASE_URL_USER_BASE;
+const tokenUrl_test = import.meta.env.VITE_BASE_URL_USER_TEST;
+
+var url = "";
+var tokenUrl = "";
+
+//API 경로 설정
+if (import.meta.env.MODE == "production") {
+  url = baseurl;
+  tokenUrl = tokenUrl_base;
+} else {
+  url = testurl;
+  tokenUrl = tokenUrl_test;
+}
 
 const instance = axios.create({
-  baseURL: baseurl_test, // baseUrl 설정
+  baseURL: url, // baseUrl 설정
   timeout: 10000, // timeout 설정
 });
 

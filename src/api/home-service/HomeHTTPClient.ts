@@ -6,13 +6,27 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const baseurl_test = import.meta.env.VITE_BASE_URL_HOME_TEST;
-const tokenUrl = import.meta.env.VITE_BASE_URL_USER_TEST;
+const baseurl = import.meta.env.VITE_BASE_URL_HOME_BASE;
+const testurl = import.meta.env.VITE_BASE_URL_HOME_TEST;
+const tokenUrl_base = import.meta.env.VITE_BASE_URL_USER_BASE;
+const tokenUrl_test = import.meta.env.VITE_BASE_URL_USER_TEST;
 
 const namespace = "homeHTTPClient::";
 
+var url = "";
+var tokenUrl = "";
+
+//API 경로 설정
+if (import.meta.env.MODE == "production") {
+  url = baseurl;
+  tokenUrl = tokenUrl_base;
+} else {
+  url = testurl;
+  tokenUrl = tokenUrl_test;
+}
+
 const instance = axios.create({
-  baseURL: baseurl_test, // baseUrl 설정
+  baseURL: url, // baseUrl 설정
   timeout: 10000, // timeout 설정
 });
 
