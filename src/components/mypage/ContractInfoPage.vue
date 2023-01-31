@@ -535,20 +535,33 @@
           </div>
         </div>
       </div>
-      <!-- 거래취소 + 인계/인수 -->
+      <!-- 거래취소 + 인계 -->
       <div
         class="hidden md:flex w-full px-48 space-x-5 py-24"
         v-if="
-          (getterContractDetail.my.isSeller &&
-            getterContractStageStatus == 0) ||
-          (!getterContractDetail.my.isSeller && getterContractStageStatus == 1)
+          getterContractDetail.my.isSeller && getterContractStageStatus == 0
         "
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          v
         >
           거래취소
         </div>
+        <div
+          class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          @click="putContractStatus(getterButtonContent)"
+        >
+          {{ getterButtonContent }}
+        </div>
+      </div>
+      <!-- 거래취소 + 인수 -->
+      <div
+        class="hidden md:flex w-full px-48 space-x-5 py-24"
+        v-else-if="
+          !getterContractDetail.my.isSeller && getterContractStageStatus == 1
+        "
+      >
         <div
           class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
           @click="putContractStatus(getterButtonContent)"
