@@ -21,7 +21,7 @@ const app = createApp(App);
 app.use(VueCookieNext);
 
 // set default config
-VueCookieNext.config({ expire: "1d" });
+VueCookieNext.config({ expire: "7d" });
 
 // set global cookie
 

@@ -1,46 +1,27 @@
-# everly_prototype
+## NPM 명령어
 
-This template should help get you started developing with Vue 3 in Vite.
+### 환경 구분
 
-## Recommended IDE Setup
+테스트 환경 : 테스트 API, 로그 기록 OFF
+실서버 환경 : 실제 API , 로그 기록 OFF
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### 로컬 서버 실행
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```jsx
+npm run dev-serve // 테스트 환경
+npm run prod-serve // 실 서버 환경
 ```
 
-### Compile and Hot-Reload for Development
+### 배포용 빌드
 
-```sh
-npm run dev
+```jsx
+npm run dev-build // 테스트 환경
+npm run prod-build // 실 서버 환경
 ```
 
-### Type-Check, Compile and Minify for Production
+### 배포용 빌드 파일을 로컬서버에서 실행
 
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+```jsx
+npm run dev-preview // 테스트 환경
+npm run prod-preview // 실 서버 환경
 ```

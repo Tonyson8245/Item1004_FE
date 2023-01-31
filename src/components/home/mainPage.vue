@@ -184,8 +184,8 @@
       </div>
 
       <div
-        class="md:mt-14 bg-white md:pb-10 py-2"
-        v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
+        class="md:mt-14 bg-white md:pb-14 py-2"
+        v-if="!storeShowFilter_mobile"
       >
         <div class="hidden md:block">
           <Carousel :settings="settings" :breakpoints="breakpoints">
@@ -220,10 +220,7 @@
         </div>
       </div>
 
-      <FooterMobile
-        class="block md:hidden"
-        v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
-      />
+      <FooterMobile class="block md:hidden" v-if="!storeShowFilter_mobile" />
     </div>
     <div class="flex-grow"></div>
 
@@ -232,7 +229,7 @@
     <!-- 모바일 글작성 -->
     <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
       <div class="flex justify-end">
-        <div class="flex flex-col items-end justify-center gap-y-1 mr-2">
+        <div class="flex flex-col items-end justify-center gap-y-1 pr-2">
           <img
             src="@/assets/icon/goto_blog.svg"
             alt=""
@@ -454,4 +451,8 @@ function getColor(color: string) {
 }
 </script>
 
-<style scoped></style>
+<style>
+.carousel__icon {
+  fill: lightgray !important;
+}
+</style>

@@ -46,12 +46,17 @@
       v-else-if="route.meta.navbar"
     />
 
-    <FooterWeb
+    <!-- TODO 1차 수정 2023-01-31 16:23:17 -->
+    <!-- <FooterWeb
       class="hidden md:block w-full bottom-0"
       v-if="
         !(storeinfiniteStatus && route.meta.name == 'home') &&
         route.meta.name != `paymentResult`
       "
+    /> -->
+    <FooterWeb
+      class="hidden md:block w-full bottom-0"
+      v-if="route.meta.name != `paymentResult`"
     />
 
     <!-- 스마트로 결제 / 결제 테스트 시 사용-->

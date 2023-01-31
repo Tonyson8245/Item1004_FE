@@ -236,7 +236,7 @@
             >
               <div>
                 <img
-                  src="@/assets/img/profile_red.jpeg"
+                  :src="`/assets/img/${getterContractDetail.otherUser.image}`"
                   class="w-10 rounded-lg"
                   alt=""
                 />
@@ -405,7 +405,7 @@
             >
               <div>
                 <img
-                  src="@/assets/img/profile_green.jpeg"
+                  :src="`/assets/img/${storeUserInfo.image}`"
                   class="w-10 rounded-lg"
                   alt=""
                 />
@@ -630,8 +630,12 @@ const router = useRouter();
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
 const mypageStore = usemypageStore();
-const { getterContractDetail, getterContractStageStatus, getterButtonContent } =
-  storeToRefs(mypageStore);
+const {
+  getterContractDetail,
+  getterContractStageStatus,
+  getterButtonContent,
+  storeUserInfo,
+} = storeToRefs(mypageStore);
 
 const route = useRoute();
 

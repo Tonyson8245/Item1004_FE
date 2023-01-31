@@ -66,10 +66,11 @@
               </div>
             </div>
 
+            <!-- 1차 수정 2023-01-31 16:17:07 -->
             <div class="flex justify-between items-start h-[3.5rem]">
-              <div class="flex space-x-4 text-xl pt-4">
+              <div class="flex space-x-4 text-xl pt-4 w-48">
                 <!-- 팔래요 활성화 -->
-                <div
+                <!-- <div
                   class="flex space-x-2 cursor-pointer"
                   v-if="storeSellBuy == 'sell'"
                   @click="toggleSellBuy('sell')"
@@ -80,7 +81,7 @@
                     class="w-6"
                   />
                   <span class="text-everly-main font-bold w-13">팔래요</span>
-                </div>
+                </div> -->
                 <!-- TODO 1차 출시 주석 2023-01-25 20:02:14-->
                 <!-- <div
                   class="flex space-x-2"
@@ -90,17 +91,17 @@
 
                 <!-- 잠깐 지우겠음 -->
 
-                <div class="flex space-x-2 cursor-pointer cursor-not-allowed">
+                <!-- <div class="flex space-x-2 cursor-pointer cursor-not-allowed">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
                     class="w-6"
                   />
                   <span class="text-everly-dark-grey w-13">살래요</span>
-                </div>
+                </div> -->
 
                 <!-- 살래요 활성화 -->
-                <div
+                <!-- <div
                   class="flex space-x-2"
                   v-if="storeSellBuy == 'buy'"
                   @click="toggleSellBuy('sell')"
@@ -123,7 +124,7 @@
                     class="w-6"
                   />
                   <span class="text-everly-red font-bold w-13">살래요</span>
-                </div>
+                </div> -->
               </div>
               <search class="w-[760px]" @click.stop="" style="z-index: 5" />
               <button
@@ -504,10 +505,10 @@
           <img src="@/assets/icon/check_mobile_red.svg" alt="" />
           <span class="text-everly-red font-bold">살래요</span>
         </div> -->
-        <div class="flex space-x-1 w-[66px]" @click="alertMSG()">
+        <!-- <div class="flex space-x-1 w-[66px]" @click="alertMSG()">
           <img src="@/assets/icon/check_mobile_grey.svg" alt="" />
           <span class="text-everly-dark_grey">살래요</span>
-        </div>
+        </div> -->
       </div>
     </div>
 

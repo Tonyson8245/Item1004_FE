@@ -11,7 +11,7 @@
       <div :class="{ 'items-center': lastMessageText() }" class="flex mx-3">
         <div class="rounded-lg overflow-hidden mr-2">
           <img
-            src="@/assets/img/profile_green.jpeg"
+            src="@/assets/img/profile_mint.png"
             alt=""
             class="w-12 rounded-lg"
           />
@@ -59,7 +59,8 @@ const props = defineProps<{ channel: channel }>();
 const router = useRouter();
 
 const route = useRoute();
-const { messages, client, user, channels, selectedChannel } = storeToRefs(chatStore);
+const { messages, client, user, channels, selectedChannel } =
+  storeToRefs(chatStore);
 
 // console.log(route.params);
 

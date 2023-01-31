@@ -31,7 +31,7 @@ export class otherUser {
 
   constructor() {
     this.idx = 0;
-    this.image = "@/asset/img/profile_green.jpeg";
+    this.image = "@/asset/img/profile_mint.jpeg";
     this.nickname = "닉네임";
     this.isVerified = false;
     this.code = "#AAAAAAAAA";

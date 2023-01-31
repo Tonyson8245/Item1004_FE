@@ -25,10 +25,11 @@
           충전 수단 선택
         </div>
         <div class="text-sm md:text-base py-3 md:pb-5">
-          * 계좌이체와 문화상품권은 아이템 천사 카카오 채널을 통해 수동 결제가 가능합니다
+          * 계좌이체와 문화상품권은 아이템 천사 카카오 채널을 통해 수동 결제가
+          가능합니다
           <span
-              class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-everly-white text-xs cursor-pointer"
-              @click="moveExternalLink('카카오채널')"
+            class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-everly-white text-xs cursor-pointer"
+            @click="moveExternalLink('카카오채널')"
           >
             카카오 채널 바로가기
           </span>
@@ -51,7 +52,7 @@
               :img-url="`/assets/icon/virtualAccontwithblue_black.svg`"
             />
             <PaymentMethodVue
-                @get-value="setpaymentMethod($event)"
+              @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`계좌이체`"
               :active="true"
@@ -67,7 +68,7 @@
             />
             <!-- todo 문화상품권 이미지를 활성화된 이미지로 변경해야 함 -->
             <PaymentMethodVue
-              @get-value=""
+              @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`문화상품권`"
               :active="true"
@@ -120,7 +121,7 @@
         </div>
       </div>
     </div>
-    <div v-if="paymentMethod != ''">
+    <div v-if="paymentMethod == '신용카드'">
       <hr
         class="border-everly-mid_grey md:border-[#707070] my-4 md:my-8 md:ml-8"
       />
@@ -266,7 +267,7 @@ import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { storeToRefs } from "pinia";
 import type { user } from "@/domain/user/user.interface";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
-import commonFunction, {moveExternalLink} from "@/common";
+import commonFunction, { moveExternalLink } from "@/common";
 const router = useRouter();
 
 const paymentMethod = ref("card");
@@ -280,6 +281,8 @@ onMounted(() => {
 });
 
 function setpaymentMethod(string: string) {
+  console.log(string);
+
   if (string != "") paymentMethod.value = string;
 }
 
@@ -350,11 +353,11 @@ function charge() {
   } else console.log("유저 정보가 없습니다.");
 }
 
-function showKakaoChannelConfirm(paymentType:string){
+function showKakaoChannelConfirm(paymentType: string) {
   // 카카오채널로 가능하다는 컨펌 창 띄우기
   const message = `아이템 천사 카카오 채널을 통해 ${paymentType}(으)로 결제가 가능합니다.\n카카오 채널로 이동하시겠습니까?`;
-  if (confirm(message)) moveExternalLink('카카오채널');
- }
+  if (confirm(message)) moveExternalLink("카카오채널");
+}
 </script>
 
 <style scoped>

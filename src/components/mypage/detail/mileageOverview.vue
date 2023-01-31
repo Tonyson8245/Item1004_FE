@@ -4,7 +4,7 @@
     <!-- 프로필 -->
     <div class="flex bg-everly-wbg_grey md:py-6 md:space-x-6 md:bg-transparent">
       <img
-        src="@/assets/img/profile_green.jpeg"
+        :src="`/assets/img/${storeUserInfo.image}`"
         alt=""
         class="w-[6.4rem] h-[6.4rem] rounded-2xl hidden md:block"
       />

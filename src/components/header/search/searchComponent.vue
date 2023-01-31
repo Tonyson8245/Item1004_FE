@@ -14,30 +14,34 @@
           @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
           class="w-full rounded-l-lg bg-white py-4 px-0 text-[#6B7280] outline-none text-sm"
         /> -->
+
+        <!-- TODO 1차 수정 2023-01-31 16:18:37 -->
         <div
-          @click="alertMSG()"
-          class="flex-grow rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
+          @click="toggleFilter_web()"
+          class="flex-grow rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm"
         >
           <input
             disabled
-            placeholder="검색 기능은 준비 중입니다. 필터를 이용해주세요"
             :class="bottomBorder"
             v-model="storeKeyword"
             @input="(event : Event) => setKeyword((event.target as HTMLInputElement).value)"
-            class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm cursor-not-allowed"
+            class="w-full rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm"
           />
         </div>
         <div
           class="bg-transparent px-4 py-4 cursor-pointer flex items-center"
           @click="toggleFilter_web()"
         >
-          <button class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-white" >
+          <button
+            class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-white"
+          >
             필터
           </button>
           <!-- <img src="@/assets/icon/filter_blue.svg" alt="" /> -->
         </div>
         <div
-          class="bg-everly-main rounded-r-lg py-[0.5rem] px-1 cursor-not-allowed"
+          @click="toggleFilter_web()"
+          class="bg-everly-main rounded-r-lg py-[0.5rem] px-1"
         >
           <img src="@/assets/icon/search_white_large.svg" alt="" />
         </div>
