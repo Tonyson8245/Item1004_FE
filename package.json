@@ -2,7 +2,7 @@
   "name": "everly_prototype",
   "version": "0.0.0",
   "scripts": {
-    "dev-serve": "copyfiles -f ./dev/index.html ./ & vite  --mode development",
+    "dev-serve": "copyfiles -f ./dev/index.html ./ & vite  --mode development", 
     "prod-serve": "copyfiles -f ./prod/index.html ./ & vite  --mode production",
     "dev-build": "copyfiles -f ./dev/index.html ./ & run-p type-check  & vite build --mode development",
     "prod-build": "copyfiles -f ./prod/index.html ./ & run-p type-check & vite build --mode production",
@@ -22,6 +22,7 @@
     "@vueuse/integrations": "^9.6.0",
     "axios": "^1.2.1",
     "class-validator": "^0.14.0",
+    "copyfiles": "^2.4.1",
     "dotenv": "^16.0.3",
     "pinia": "^2.0.23",
     "uuid-generator-ts": "^1.1.0",

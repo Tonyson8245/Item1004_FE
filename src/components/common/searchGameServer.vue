@@ -2,6 +2,7 @@
   <div class="w-full">
     <div class="flex relative">
       <input
+        v-if="props.type == 'game'"
         :placeholder="placeholder"
         @click="toggleSearch()"
         v-model="inputKeyword"
@@ -10,7 +11,22 @@
 }"
         class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[220px]"
       />
-      <div class="absolute right-3 top-2 md:right-10 md:top-2">
+      <!--  -->
+      <input
+        v-else
+        :placeholder="placeholder"
+        @click="toggleSearch()"
+        v-model="inputKeyword"
+        @input="(event: Event) => {
+  setTempKeyword((event.target as HTMLInputElement).value); offServerFilter();
+}"
+        disabled
+        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[220px] cursor-not-allowed"
+      />
+      <div
+        class="absolute right-3 top-2 md:right-10 md:top-2"
+        v-if="props.type == 'game'"
+      >
         <img src="@/assets/icon/circle_search_grey.svg" alt="" class="w-6" />
       </div>
     </div>
@@ -78,7 +94,8 @@ else inputKeyword = storeTempServerKeyword;
 const placeholder = computed(() => {
   if (props.type == "game") return "게임명을 입력해주세요";
   else {
-    if (route.meta.name == "write") return "서버명을 입력해주세요 ";
+    // TODO 1차 수정 2023-01-30 12:28:20
+    if (route.meta.name == "write") return "전체 서버";
     else return "전체 서버";
   }
 });
@@ -89,13 +106,15 @@ function toggleSearch() {
     commonStore.setstoreShowGameSimilar(true);
     commonStore.setstoreShowServerSimilar(false);
   } else {
-    commonStore.setstoreShowServerSimilar(true);
-    commonStore.setstoreShowGameSimilar(false);
+    // TODO 1차 수정 2023-01-30 12:29:00
+    // commonStore.setstoreShowServerSimilar(true);
+    // commonStore.setstoreShowGameSimilar(false);
   }
 }
 
 //debounce는 0.6초 뒤에 값 적용되게 해주는 함수
 
+// TODO 1차 수정 2023-01-30 12:33:36
 const setTempKeyword = debounce((keyword: string | null) => {
   //값이 없을 경우는 초기화
   if (keyword == "") {
@@ -149,18 +168,29 @@ function clickKeyword(value: GameDto) {
   let name = value.name;
   let idx = value.idx;
 
+  // TODO 1차 수정 2023-01-30 12:34:41
   //type에 따라서 해당 값을 store에 저장
-  if (props.type == "game") {
-    commonStore.setstoreGameKeyword(name, idx); // 해당값을 저장
-    commonStore.setstoreTempGameKeyword(name); // 임시값도 통일
-    commonStore.resetstoreGameSmilar(); // 리스트 초기화
-    //서버 검색 키기
-    commonStore.setstoreShowServerFilter(true);
-  } else {
-    commonStore.setstoreServerKeyword(name, idx);
-    commonStore.setstoreTempServerKeyword(name);
-    commonStore.resetstoreServerSmilar();
-  }
+  commonStore.setstoreGameKeyword(name, idx); // 해당값을 저장
+  commonStore.setstoreTempGameKeyword(name); // 임시값도 통일
+  commonStore.resetstoreGameSmilar(); // 리스트 초기화
+  //서버 검색 키기
+  commonStore.setstoreShowServerFilter(true);
+  commonStore.setstoreServerKeyword("전체서버", idx);
+  commonStore.setstoreTempServerKeyword("전체서버");
+  commonStore.resetstoreServerSmilar();
+
+  // if (props.type == "game") {
+  //   commonStore.setstoreGameKeyword(name, idx); // 해당값을 저장
+  //   commonStore.setstoreTempGameKeyword(name); // 임시값도 통일
+  //   commonStore.resetstoreGameSmilar(); // 리스트 초기화
+  //   //서버 검색 키기
+  //   commonStore.setstoreShowServerFilter(true);
+  // } else {
+  //   commonStore.setstoreServerKeyword(name, idx);
+  //   commonStore.setstoreTempServerKeyword(name);
+  //   commonStore.resetstoreServerSmilar();
+  // }
+
   // 리스트 닫기
   commonStore.setstoreShowServerSimilar(false);
   commonStore.setstoreShowGameSimilar(false);

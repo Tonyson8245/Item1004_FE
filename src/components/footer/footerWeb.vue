@@ -29,7 +29,13 @@
               class="text-left cursor-pointer px-4"
               @click="moveExternalLink('문의하기')"
             >
-              고객센터(1:1문의)
+              고객센터
+            </div>
+            <div
+              class="text-left cursor-pointer px-4"
+              @click="moveExternalLink('카카오채널')"
+            >
+              실시간문의
             </div>
           </div>
         </div>

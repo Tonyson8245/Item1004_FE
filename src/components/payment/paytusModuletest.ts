@@ -226,7 +226,7 @@ function startPayment(paymentMethod: string) {
 //1. 암호와 데이터 받기 전 결제 정보를 서버에 저장한다.
 function setFormControl(url: string) {
   var result;
-  var requestUrl = import.meta.env.VITE_BASE_URL_PAYMENT_TEST + url;
+  var requestUrl = import.meta.env.VITE_BASE_URL_PAYMENT_BASE + url;
   axios
     .post(
       requestUrl,
@@ -260,7 +260,7 @@ function setFormControl(url: string) {
 async function goPayment(url: string) {
   var payPrice = storeproductPrice - storepoint + storefee;
   var requestUrl =
-    import.meta.env.VITE_BASE_URL_PAYMENT_TEST + url + "?goodsAmt=" + payPrice;
+    import.meta.env.VITE_BASE_URL_PAYMENT_BASE + url + "?goodsAmt=" + payPrice;
   await axios
     .get(requestUrl, {
       headers: { "Content-Type": "multipart/form-data" },

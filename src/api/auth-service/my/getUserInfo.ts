@@ -1,7 +1,6 @@
 import http from "@/api/auth-service/authHTTPClient";
 import type { TokenDto } from "@/domain/auth";
 import type { userInfoResult } from "@/domain/user/userInfoDto";
-import type { userInfoOverviewResult } from "@/domain/user/userInfoOverview";
 import { checkTokenStatus } from "@/api/common";
 
 export async function getUserInfo<T>(): Promise<userInfoResult> {

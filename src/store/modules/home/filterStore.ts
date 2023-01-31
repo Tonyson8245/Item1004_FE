@@ -43,7 +43,7 @@ export const useFilterStore = defineStore("filterStore", {
       var serverName = state.filterStoreServerKeyword;
       if (gameName != "" && serverName != "")
         return gameName + "-" + serverName;
-      else if (gameName != "") return gameName + "-전체서버";
+      else if (gameName != "") return gameName.trim() + "-전체서버";
       else return "";
     },
   },

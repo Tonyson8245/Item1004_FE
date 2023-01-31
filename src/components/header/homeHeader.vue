@@ -6,7 +6,66 @@
       <div class="flex cursor-default">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4 pt-9">
+          <div class="flex-none bg-[#fafafa] w-[1180px] px-4">
+            <div class="flex justify-between items-end pt-1 pb-4">
+              <img
+                src="@/assets/icon/logo.gif"
+                alt=""
+                @click="moveLink()"
+                class="w-[11rem] h-[3.3rem] cursor-pointer"
+              />
+              <div class="flex gap-x-4">
+                <div class="flex items-center">
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-5"
+                      src="@/assets/icon/button_write_mobile.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a
+                    class="text-everly-main text-lg font-bold"
+                    @click="router.push('/write')"
+                    >거래등록</a
+                  >
+                </div>
+                <div class="flex items-center">
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-3"
+                      src="@/assets/icon/charge_white.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a
+                    class="text-everly-main text-lg font-bold"
+                    @click="router.push('/mypage/mileage/charge')"
+                    >마일리지 충전</a
+                  >
+                </div>
+                <div class="flex items-center">
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-3"
+                      src="@/assets/icon/withdraw_white.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a
+                    class="text-everly-main text-lg font-bold"
+                    @click="router.push('/mypage/mileage/withdraw')"
+                    >마일리지 출금</a
+                  >
+                </div>
+              </div>
+            </div>
+
             <div class="flex justify-between items-start h-[3.5rem]">
               <div class="flex space-x-4 text-xl pt-4">
                 <!-- 팔래요 활성화 -->
@@ -28,7 +87,10 @@
                   v-if="storeSellBuy == 'sell'"
                   @click="toggleSellBuy('buy')"
                 > -->
-                <div class="flex space-x-2 cursor-pointer" @click="alertMSG()">
+
+                <!-- 잠깐 지우겠음 -->
+
+                <div class="flex space-x-2 cursor-pointer cursor-not-allowed">
                   <img
                     src="@/assets/icon/check_web_grey.svg"
                     alt=""
@@ -147,7 +209,7 @@
             <div>
               <!-- 웹 필터 -->
               <div
-                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[6rem] border-b-2"
+                class="flex cursor-default absolute w-full bg-[#fafafa] min-w-[1180px] pt-2 left-0 top-[8.1rem] border-b-2"
                 v-if="storeShowFilter_web"
               >
                 <div class="flex-1 block"></div>
@@ -160,6 +222,7 @@
                     <div>필터를 설정해주세요</div>
                     <div>
                       <img
+                        class="cursor-pointer"
                         src="@/assets/icon/close_white.svg"
                         alt=""
                         @click="closeFilter()"
@@ -352,7 +415,8 @@
                           </div>
                         </div>
 
-                        <div class="flex w-1/2" v-show="storeShowServerFilter">
+                        <!-- TODO 1차 수정 2023-01-30 12:09:48 -->
+                        <!-- <div class="flex w-1/2" v-show="storeShowServerFilter">
                           <div class="flex-none py-2">서버검색</div>
                           <div class="flex-grow pl-10">
                             <filterSearch
@@ -362,7 +426,7 @@
                               :type="`server`"
                             />
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                     <div class="flex w-full justify-end px-5 space-x-3">
@@ -746,11 +810,12 @@ import { useCommonStore } from "../../store/modules/common/commonStore";
 import { useFilterStore } from "../../store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useMainStore } from "@/store/modules/home/mainStore";
 import { alertMSG } from "@/common";
 
 const router = useRouter();
+const route = useRoute();
 //검색 store 가져오기
 const searchStore = useSearchStore();
 
@@ -932,6 +997,12 @@ const conditionBadge = computed(() => {
 const mainStore = useMainStore();
 function loadList() {
   mainStore.setstoreLoad(true);
+}
+
+// 홈이동{
+function moveLink() {
+  if (route.meta.name == "home") location.reload();
+  else router.push("/home");
 }
 </script>
 

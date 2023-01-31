@@ -215,7 +215,7 @@ async function setFormControl(
   payload: cardDto.payload,
   uuid: string
 ) {
-  var requestUrl = import.meta.env.VITE_BASE_URL_PAYMENT_TEST + FormControlurl;
+  var requestUrl = import.meta.env.VITE_BASE_URL_PAYMENT_BASE + FormControlurl;
 
   await http
     .post(
@@ -264,7 +264,7 @@ async function goPayment(url: string, payPrice: string, ordNm: string) {
 
   //라우팅할때 제공받은 경로
   var requestUrl =
-    import.meta.env.VITE_BASE_URL_PAYMENT_TEST + url + "?goodsAmt=" + payPrice;
+    import.meta.env.VITE_BASE_URL_PAYMENT_BASE + url + "?goodsAmt=" + payPrice;
 
   // paytus-set-parameter-****.php
   await http

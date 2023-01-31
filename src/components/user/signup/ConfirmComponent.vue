@@ -8,14 +8,28 @@
       @update:propsShowModal="toggle()"
     />
     <div class="grid place-items-center w-full md:m-auto">
-      <div class="hidden md:block">
+      <div class="hidden md:block cursor-pointer " @click="moveLink('/')">
         <img class="w-36" src="@/assets/icon/logo_mobile.svg" alt="" />
       </div>
+      <!-- <div
+          class="text-center p-1 mt-20 md:mt-5 w-11/12 font-bold text-everly-black md:text-2xl"
+      >
+        회원가입
+      </div> -->
+      <!-- 19세 표시 주의 문구 -->
+      <div class="flex px-5 mt-20  md:mt-16 md:px-6 items-center">
+        <img class=" w-14 h-14" src="@/assets/icon/19.png" alt="">
+        <div class=" pl-2 text-sm md:text-base">
+          본 정보 내용은 청소년 유해매체물로서 [정보통신망 이용촉진 및 정보보호 등에 관한 법률] 및 [청소년 보호법]에 따라 19세 미만의 청소년은 거래를 이용할 수 없습니다.
+        </div>
+      </div>
+      
       <div
-        class="text-left p-1 mt-20 md:mt-5 w-11/12 font-bold text-everly-main md:text-lg"
+        class="text-left p-1 mt-5 w-11/12 font-bold text-everly-main md:text-lg"
       >
         본인인증
       </div>
+      
       <div class="text-sm px-5 md:px-6">
         본인인증 시 제공되는 정보는 해당 인증기관에서 직접 수집하며, 인증 이외의
         용도로 이용 또는 저장하지 않습니다.
@@ -62,7 +76,11 @@ watch(isLargeScreen.value, () => {
   else buttonContent.value = "";
 });
 
+
+console.error("123")
+
 function moveLink(type: string) {
+  link = type;
   switch (type) {
     case "setinfo":
       link = "/account/signUp/setinfo";
