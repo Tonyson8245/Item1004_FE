@@ -232,7 +232,7 @@
     <!-- 모바일 글작성 -->
     <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
       <div class="flex justify-end">
-        <div class="flex flex-col items-center justify-center gap-y-1">
+        <div class="flex flex-col items-end justify-center gap-y-1 mr-2">
           <img
             src="@/assets/icon/goto_blog.svg"
             alt=""
@@ -245,12 +245,17 @@
             class="w-[40px]"
             @click="moveExternalLink('카카오채널')"
           />
-          <img
-            src="@/assets/icon/button_write_mobile.svg"
-            alt=""
-            class="w-[40px]"
-            @click="moveLink('/write')"
-          />
+          <div
+            class="flex items-center bg-everly-main rounded-full text-everly-white pr-3 text-sm"
+          >
+            <img
+              src="@/assets/icon/button_write_mobile.svg"
+              alt=""
+              class="w-[35px]"
+              @click="moveLink('/write')"
+            />
+            글 작성
+          </div>
         </div>
       </div>
       <div
