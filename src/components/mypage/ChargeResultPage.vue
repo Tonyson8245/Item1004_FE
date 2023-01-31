@@ -111,24 +111,25 @@
     </div>
     <div class="flex-grow"></div>
     <div class="flex">
+      <div class="grow border-t border-everly-mid_grey"></div>
       <div
-          class="w-full md:flex-none md:w-[73.750rem] md:flex md:justify-center grow border-t border-everly-mid_grey"
+        class="w-full md:flex-none md:w-[73.750rem] md:flex md:justify-center border-t border-everly-mid_grey"
       >
-        <div
-            class="w-full md:w-[30.625rem] md:text-xl text-sm flex-col justify-start flex"
-        >
-          <div class="p-5 pb-0 md:px-0 md:py-[2.215rem] space-y-2 md:space-y-8 text-sm">
+        <div class="md:w-[30.625rem] p-4 md:p-0">
+          <div
+            class="p-5 pb-0 md:px-0 md:py-[2.215rem] space-y-2 md:space-y-8 text-sm"
+          >
             출금신청 후 카카오 채널로 문의 주시면 더 빠른 출금이 가능합니다
             <span
-                class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-everly-white text-xs cursor-pointer"
-                @click="moveExternalLink('카카오채널')"
+              class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-everly-white text-xs cursor-pointer"
+              @click="moveExternalLink('카카오채널')"
             >
               카카오 채널 바로가기
-        </span>
+            </span>
           </div>
         </div>
       </div>
-      <div class="grow hidden md:block border-t border-everly-mid_grey"></div>
+      <div class="grow border-t border-everly-mid_grey"></div>
     </div>
     <div>
       <div class="flex py-8 md:py-16">
@@ -157,7 +158,7 @@ import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { computed, ref, onMounted } from "vue";
 import { chargeCompleteBody } from "@/domain/payment/chargeCompleteDto";
-import {moveExternalLink} from "@/common";
+import { moveExternalLink } from "@/common";
 const router = useRouter();
 const route = useRoute();
 const paymentStore = usePaymentStore();

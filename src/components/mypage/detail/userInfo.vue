@@ -26,10 +26,11 @@
           <div class="flex md:w-[25rem]">
             #{{ storeUserInfoOverview.code }}
             <img
+              v-if="isSupported"
               src="@/assets/icon/copy_grey.svg"
               alt=""
-              class="ml-2"
-              @click="copyUsercode(storeUserInfoOverview.code)"
+              class="ml-2 cursor-pointer"
+              @click="copy(storeUserInfoOverview.code.toString())"
             />
           </div>
         </div>
@@ -203,13 +204,15 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onUnmounted } from "vue";
-import { useClipboard, useMediaQuery, useToggle } from "@vueuse/core";
+import { useMediaQuery, usePermission, useToggle } from "@vueuse/core";
+import { useClipboard } from "@vueuse/core";
 import { useauthStore } from "@/store/modules/auth/authStore";
 import { useRouter } from "vue-router";
 import ModalMypage from "@/components/mypage/components/modalMypage.vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import { isEmpty, isNotEmptyObject } from "class-validator";
+import type { ConstantTypes } from "@vue/compiler-core";
 
 const mypageStore = usemypageStore();
 const { storeUserInfoOverview } = storeToRefs(mypageStore);
@@ -222,12 +225,9 @@ onUnmounted(() => {
   mypageStore.resetUserInfoOverview();
 });
 
-const { copy } = useClipboard({});
-
-function copyUsercode(code: string) {
-  copy(code);
-  alert("유저코드가 복사되었습니다.");
-}
+//복사하기
+const input = ref("");
+const { text, isSupported, copy } = useClipboard();
 
 const emailContent = (string: string) => {
   if (!isNotEmptyObject(string)) return `이메일 인증을 해주세요.`;

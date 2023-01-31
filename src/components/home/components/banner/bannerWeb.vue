@@ -68,8 +68,4 @@ function moveLink(slide: number) {
 }
 </style>
 
-<style>
-.carousel__icon {
-  fill: white !important;
-}
-</style>
+<style></style>

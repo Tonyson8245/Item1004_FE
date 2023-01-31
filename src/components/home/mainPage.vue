@@ -454,4 +454,8 @@ function getColor(color: string) {
 }
 </script>
 
-<style scoped></style>
+<style>
+.carousel__icon {
+  fill: lightgray !important;
+}
+</style>
