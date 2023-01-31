@@ -546,6 +546,7 @@
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          @click="cancelContract()"
         >
           거래취소
         </div>
@@ -567,6 +568,7 @@
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          @click="cancelContract()"
         >
           거래취소
         </div>
@@ -684,6 +686,19 @@ function putContractStatus(status: string) {
     mypageStore.resetContractList();
   }
   router.go(-1);
+}
+
+function cancelContract() {
+  if (ordNm != undefined) {
+    mypageStore.deleteContract(ordNm).then((res) => {
+      if (res) alert("거래가 취소되었습니다.");
+      else alert("거래 취소가 실패했습니다.");
+
+      router.go(-1);
+    });
+  } else {
+    alert("올바르지 않은 결제 번호입니다.");
+  }
 }
 </script>
 
