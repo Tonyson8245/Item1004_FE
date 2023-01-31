@@ -254,7 +254,7 @@
         </div>
       </div>
       <div
-        class="md:hidden flex justify-center absolute w-full top-7"
+        class="md:hidden flex justify-center absolute w-full bottom-0"
         v-if="storeinfiniteStatus"
       >
         <div @click="scrollToTop">
