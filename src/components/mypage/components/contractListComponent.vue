@@ -77,9 +77,10 @@ import type { PropType } from "vue";
 import type { card } from "@/domain/payment/contracPostListDto.interface";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
-import router from "@/router";
 import { post } from "@/domain/payment/contractPostDetailDto.interaface";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const mypageStore = usemypageStore();
 const { storeContractListTabType } = storeToRefs(mypageStore);
 const props = defineProps({

@@ -42,11 +42,12 @@ import { storeToRefs } from "pinia";
 import { ref,onUpdated,onMounted, toRefs, watch  } from 'vue';
 import { numberToKorean } from "@/common";
 import itemLogo from "./itemLogo.vue"
-import router from "@/router";
+import { useRouter } from "vue-router";
 import { moveExternalLink } from "@/common";
 
 const chatStore = useChatStore();
 const { postItem } = storeToRefs(chatStore);
+const router = useRouter();
 
 function goPostPage(postIdx:number | undefined) {
     if(!postItem.value?.isDeleted) router.push('/post?postId='+postIdx);
