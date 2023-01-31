@@ -105,6 +105,26 @@ export const usemypageStore = defineStore("mypageStore", {
     },
     getterContractDetail: (state) => {
       if (isNotEmptyObject(state.storeContractDetail)) {
+        var newContract = state.storeContractDetail;
+
+        switch (newContract.post.productType) {
+          case "gameMoney":
+            newContract.post.productType = "게임머니";
+            break;
+          case "character":
+            newContract.post.productType = "캐릭터";
+            break;
+          case "item":
+            newContract.post.productType = "아이템";
+            break;
+          case "etc":
+            newContract.post.productType = "기타";
+            break;
+          default:
+            newContract.post.productType = "게임머니";
+            break;
+        }
+
         return state.storeContractDetail;
       } else {
         return new contractInfo.contractPostDetailResult();
