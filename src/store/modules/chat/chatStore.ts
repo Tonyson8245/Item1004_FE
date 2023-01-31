@@ -10,11 +10,10 @@ import { createRoomBody } from "@/domain/chat/createRoomBody";
 import type createRoomResponse from "@/domain/chat/createRoomResponse";
 
 import type { user } from "@/domain/user/user.interface";
-import { loadRouteLocation } from "vue-router";
 import * as chatapi from "@/api/chat-service/index";
 import { useRouter } from "vue-router";
 
-const router = useRouter();
+
 
 export const useChatStore = defineStore("chatStore", () => {
   const client = ref(Object);
@@ -34,6 +33,8 @@ export const useChatStore = defineStore("chatStore", () => {
   // const postId = ref<string | string[]>('');
   // 현재 채팅방에 관련된 postItem
   const postItem = ref<postResult>();
+
+  const router = useRouter();
 
   const init = async () => {
     // TODO: client.value가 null이면 새로 생성한다.
@@ -380,6 +381,8 @@ export const useChatStore = defineStore("chatStore", () => {
       .then((res) => {
         //성공하면 페이지를 올린다.
         // console.log("sucess : ", res);
+        console.log("받은 내용 : ",router);
+        
         router.push("/chat/" + res.result);
       })
       .catch((err) => {
