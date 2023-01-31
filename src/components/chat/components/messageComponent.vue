@@ -4,7 +4,7 @@
       <!-- 프로필 사진 -->
       <div class="rounded-lg overflow-hidden mr-3 min-w-[2.5rem]">
         <img
-          src="@/assets/img/profile_green.jpeg"
+          src="@/assets/img/profile_mint.png"
           alt=""
           class="w-10 md:w-14 rounded-lg"
         />

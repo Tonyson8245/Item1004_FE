@@ -15,9 +15,7 @@ var url = "";
 var tokenUrl = "";
 
 //API 경로 설정
-//테스트 API 작동 오류로 일단 실 API 사용
-//if (import.meta.env.MODE == "production") {
-if (true) {
+if (import.meta.env.MODE == "production") {
   url = baseurl;
   tokenUrl = tokenUrl_base;
 } else {
