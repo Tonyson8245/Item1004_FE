@@ -99,9 +99,7 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { router } from "../../main";
-
-// const router = useRouter();
+const router = useRouter();
 </script>
 
 <style scoped></style>
