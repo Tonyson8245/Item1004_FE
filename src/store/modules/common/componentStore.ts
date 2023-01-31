@@ -7,7 +7,8 @@ const delay = (ms: number) => {
 export const useComponentStore = defineStore("componentStore", {
   state: () => ({
     closeDropdown: false,
-
+    //공지사항 모달
+    storeshowNotify: false,
     scrollLock: false,
   }),
 
@@ -15,6 +16,9 @@ export const useComponentStore = defineStore("componentStore", {
     //서버로 부터 가져오는 로직 나중에 axios 붙힐때 연동할 생각할 것
   },
   actions: {
+    setstoreshowNotify(status: boolean) {
+      this.storeshowNotify = status;
+    },
     async toogleCloseDropdown(status: boolean) {
       this.closeDropdown = status;
 

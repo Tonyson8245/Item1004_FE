@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-[3rem] pb-[4rem] flex h-full bg-everly-light_grey md:bg-everly-white"
+    class="py-[3rem] pb-[4rem] flex bg-everly-light_grey md:bg-everly-white h-screen md:h-full"
     @click="setshowMore(false)"
   >
     <div class="flex-1"></div>
@@ -535,20 +535,33 @@
           </div>
         </div>
       </div>
-      <!-- 거래취소 + 인계/인수 -->
+      <!-- 거래취소 + 인계 -->
       <div
         class="hidden md:flex w-full px-48 space-x-5 py-24"
         v-if="
-          (getterContractDetail.my.isSeller &&
-            getterContractStageStatus == 0) ||
-          (!getterContractDetail.my.isSeller && getterContractStageStatus == 1)
+          getterContractDetail.my.isSeller && getterContractStageStatus == 0
         "
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          v
         >
           거래취소
         </div>
+        <div
+          class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          @click="putContractStatus(getterButtonContent)"
+        >
+          {{ getterButtonContent }}
+        </div>
+      </div>
+      <!-- 거래취소 + 인수 -->
+      <div
+        class="hidden md:flex w-full px-48 space-x-5 py-24"
+        v-else-if="
+          !getterContractDetail.my.isSeller && getterContractStageStatus == 1
+        "
+      >
         <div
           class="bg-everly-main text-everly-white flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
           @click="putContractStatus(getterButtonContent)"
@@ -607,12 +620,13 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import commonFunction from "@/common";
 import type { user } from "@/domain/user/user.interface";
-import router from "@/router";
 import { alertMSG } from "@/common";
 import { useRoute } from "vue-router";
 import { moveExternalLink } from "@/common";
 import { IsEmpty, IsNotEmptyObject } from "class-validator";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
 const mypageStore = usemypageStore();

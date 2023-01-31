@@ -18,11 +18,20 @@
         </div>
       </div>
       <div>
-        <div class="text-sm md:text-base font-bold py-3 md:pt-8 md:pb-5">
+        <div class="text-sm md:text-base font-bold py-3 md:pt-8">
           <span class="bg-everly-light_blue px-1 rounded font-normal mr-1"
             >1</span
           >
           충전 수단 선택
+        </div>
+        <div class="text-sm md:text-base py-3 md:pb-5">
+          * 계좌이체와 문화상품권은 아이템 천사 카카오 채널을 통해 수동 결제가 가능합니다
+          <span
+              class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-everly-white text-xs cursor-pointer"
+              @click="moveExternalLink('카카오채널')"
+          >
+            카카오 채널 바로가기
+          </span>
         </div>
         <!-- 결제 수단들 -->
         <div>
@@ -42,11 +51,12 @@
               :img-url="`/assets/icon/virtualAccontwithblue_black.svg`"
             />
             <PaymentMethodVue
-              @get-value="setpaymentMethod($event)"
+                @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`계좌이체`"
-              :active="false"
+              :active="true"
               :img-url="`/assets/icon/accountRealtimewithblue_black.svg`"
+              @click="showKakaoChannelConfirm(`계좌이체`)"
             />
             <PaymentMethodVue
               @get-value="setpaymentMethod($event)"
@@ -55,12 +65,14 @@
               :active="false"
               :img-url="`/assets/icon/cellphone_grey.svg`"
             />
+            <!-- todo 문화상품권 이미지를 활성화된 이미지로 변경해야 함 -->
             <PaymentMethodVue
-              @get-value="setpaymentMethod($event)"
+              @get-value=""
               :paymentMethod="paymentMethod"
               :title="`문화상품권`"
-              :active="false"
-              :img-url="`/assets/icon/culture_grey.svg`"
+              :active="true"
+              :img-url="`/assets/icon/culturewithblue_black.svg`"
+              @click="showKakaoChannelConfirm(`문화상품권`)"
             />
             <PaymentMethodVue
               @get-value="setpaymentMethod($event)"
@@ -254,7 +266,7 @@ import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { storeToRefs } from "pinia";
 import type { user } from "@/domain/user/user.interface";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
-import commonFunction from "@/common";
+import commonFunction, {moveExternalLink} from "@/common";
 const router = useRouter();
 
 const paymentMethod = ref("card");
@@ -301,7 +313,7 @@ watch([amount, amountInput], () => {
   } else finalamount.value = Math.floor(parseInt(amount.value) * 0.952);
 });
 
-// 충전하기 번튼 활성하
+// 충전하기 버튼 활성하
 const chargeButtonClass = ref("bg-everly-mid_grey");
 watch(finalamount, () => {
   if (finalamount.value > 1000) chargeButtonClass.value = `bg-everly-main`;
@@ -337,6 +349,12 @@ function charge() {
     // payment(router, "onlyPoint", "card", 1, 10, 100, 110, 110, 1, 2); // 마일리지만 사용
   } else console.log("유저 정보가 없습니다.");
 }
+
+function showKakaoChannelConfirm(paymentType:string){
+  // 카카오채널로 가능하다는 컨펌 창 띄우기
+  const message = `아이템 천사 카카오 채널을 통해 ${paymentType}(으)로 결제가 가능합니다.\n카카오 채널로 이동하시겠습니까?`;
+  if (confirm(message)) moveExternalLink('카카오채널');
+ }
 </script>
 
 <style scoped>

@@ -1,8 +1,10 @@
 <template>
   <!-- <Test /> -->
+
   <BannerWeb class="hidden md:flex" />
   <BannerTablet class="hidden sm:flex md:hidden" />
   <BannerMobile class="flex sm:hidden" />
+
   <div class="flex w-full z-0">
     <div class="flex-grow"></div>
     <div
@@ -38,18 +40,30 @@
         </div>
       </div>
 
-      <div
-        class="hidden md:flex fixed bottom-10 z-50"
-        v-else="storeinfiniteStatus"
-      >
+      <div class="hidden md:flex fixed bottom-10 z-50">
         <div class="flex-grow"></div>
         <div class="flex-none w-[1180px]">
-          <div class="absolute right-0 bottom-0">
+          <div
+            class="absolute right-0 bottom-0 flex-col flex items-center justify-center gap-y-2"
+          >
             <img
+              @click="moveExternalLink('블로그')"
+              src="@/assets/icon/goto_blog.svg"
+              alt=""
+              class="w-[45px] h-[45px] inline-block cursor-pointer"
+            />
+            <img
+              @click="moveExternalLink('카카오채널')"
+              src="@/assets/icon/goto_kakao.svg"
+              alt=""
+              class="w-[45px] h-[45px] inline-block cursor-pointer"
+            />
+            <img
+              v-if="storeinfiniteStatus"
               @click="scrollToTop"
               src="@/assets/icon/button_goup.svg"
               alt=""
-              class="w-[55px] h-[55px] inline-block cursor-pointer"
+              class="w-[45px] h-[45px] inline-block cursor-pointer"
             />
           </div>
         </div>
@@ -57,10 +71,12 @@
       </div>
 
       <!--  하단 배너 -->
-      <div
+      <!-- TODO 1차 수정 2023-01-30 11:16:42 -->
+      <!-- <div
         class="md:mt-12 mt-2"
         v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
-      >
+      > -->
+      <div class="md:mt-12 mt-2" v-if="!storeShowFilter_mobile">
         <!-- 웹 -->
         <div class="grid-cols-3 gap-4 flex-grow w-full hidden md:grid">
           <div
@@ -173,13 +189,13 @@
       >
         <div class="hidden md:block">
           <Carousel :settings="settings" :breakpoints="breakpoints">
-            <Slide v-for="slide in 7" :key="slide">
+            <Slide v-for="slide in 8" :key="slide">
               <div
                 class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
               >
                 <div>
                   <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
-                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                  <img :src="`/assets/img/logo/${slide - 1}.png`" alt="" />
                 </div>
               </div>
             </Slide>
@@ -190,13 +206,13 @@
         </div>
         <div class="md:hidden">
           <Carousel :settings="settings" :breakpoints="breakpoints">
-            <Slide v-for="slide in 7" :key="slide">
+            <Slide v-for="slide in 8" :key="slide">
               <div
                 class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
               >
                 <div>
                   <!-- <img :src="`/assets/img/logo/${slide}.jpg`" alt="" /> -->
-                  <img :src="`/assets/img/logo/${slide}.png`" alt="" />
+                  <img :src="`/assets/img/logo/${slide - 1}.png`" alt="" />
                 </div>
               </div>
             </Slide>
@@ -216,21 +232,49 @@
     <!-- 모바일 글작성 -->
     <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
       <div class="flex justify-end">
-        <img
-          src="@/assets/icon/button_write_mobile.svg"
-          alt=""
-          @click="moveLink('/write')"
-        />
+        <div class="flex flex-col items-end justify-center gap-y-1 mr-2">
+          <img
+            src="@/assets/icon/goto_blog.svg"
+            alt=""
+            class="w-[40px]"
+            @click="moveExternalLink('블로그')"
+          />
+          <img
+            src="@/assets/icon/goto_kakao.svg"
+            alt=""
+            class="w-[40px]"
+            @click="moveExternalLink('카카오채널')"
+          />
+          <div
+            class="flex items-center bg-everly-main rounded-full text-everly-white pr-3 text-sm"
+          >
+            <img
+              src="@/assets/icon/button_write_mobile.svg"
+              alt=""
+              class="w-[35px]"
+              @click="moveLink('/write')"
+            />
+            글 작성
+          </div>
+        </div>
       </div>
       <div
-        class="block md:hidden flex justify-center absolute w-full top-7"
+        class="md:hidden flex justify-center absolute w-full bottom-0"
         v-if="storeinfiniteStatus"
       >
         <div @click="scrollToTop">
-          <div><img src="@/assets/icon/button_gotop_mobile.svg" alt="" /></div>
+          <img src="@/assets/icon/button_gotop_mobile.svg" alt="" />
         </div>
       </div>
     </div>
+
+    <!-- 카카오 상담 버튼 -->
+    <!-- <div @click="moveExternalLink('카카오문의')" class="hidden md:block fixed bottom-10 right-10">
+      <button class=" rounded-full border flex flex-col items-center p-3 bg-yellow-200">
+        <p>카톡</p>
+        <p>1:1상담</p>      
+      </button>
+    </div> -->
   </div>
 </template>
 
@@ -246,19 +290,23 @@ import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import FooterMobile from "../footer/footerMobile.vue";
-import { useRouter } from "vue-router";
-import { onMounted, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { onMounted, watch, ref } from "vue";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import { useSearchStore } from "@/store/modules/home/searchStore";
 import BannerTablet from "./components/banner/bannerTablet.vue";
 import { moveExternalLink } from "@/common";
+import { useComponentStore } from "@/store/modules/common/componentStore";
+import { useCookie } from "vue-cookie-next";
+const { getCookie } = useCookie();
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
 const emit = defineEmits([`goPay`]);
 function goPay() {}
-
+const route = useRoute();
 const router = useRouter();
-
+const componentStore = useComponentStore();
+const { storeshowNotify } = storeToRefs(componentStore);
 //////조회 관련
 const filterStore = useFilterStore();
 const {
@@ -281,6 +329,16 @@ const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 onMounted(() => {
   mainStore.$reset();
   getProductList(6);
+
+  console.log(">>>>>23212313213>>>>>", route.meta.name);
+
+  if (getCookie("noti") == "stop") {
+    componentStore.setstoreshowNotify(false);
+  } else {
+    if (route.meta.name == "home") {
+      componentStore.setstoreshowNotify(true);
+    }
+  }
 });
 
 // Infinite scroll on off
@@ -294,31 +352,29 @@ function load({ loaded }: LoadAction) {
     //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
     //다음 페이지가 있을때
     if (storehasnextPage.value) {
-      if (storehasnextPage.value) {
-        var page = storeNextPage.value;
-        var sellbuy = storeSellBuy.value;
-        var categorys = filterStore.getCategorys;
-        var gameIdx = filterStoreGameKeywordIdx.value;
-        var serverIdx = filterStoreServerKeywordIdx.value;
+      var page = storeNextPage.value;
+      var sellbuy = storeSellBuy.value;
+      var categorys = filterStore.getCategorys;
+      var gameIdx = filterStoreGameKeywordIdx.value;
+      var serverIdx = filterStoreServerKeywordIdx.value;
 
-        var payload = new getProductCardBodyDto(
-          page,
-          6,
-          sellbuy,
-          categorys,
-          gameIdx,
-          serverIdx
-        );
+      var payload = new getProductCardBodyDto(
+        page,
+        6,
+        sellbuy,
+        categorys,
+        gameIdx,
+        serverIdx
+      );
 
-        mainStore
-          .setstoreProductCard(payload)
-          .then((res) => {
-            if (res) {
-              loaded();
-            } else console.log("loaded failed");
-          })
-          .catch(() => {});
-      }
+      mainStore
+        .setstoreProductCard(payload)
+        .then((res) => {
+          if (res) {
+          } else console.log("loaded failed");
+          loaded();
+        })
+        .catch(() => {});
     }
   }
 }
@@ -390,6 +446,12 @@ function moveLink(link: string) {
 //   mainStore.resetsetstoreProductCard();
 //   mainStore.setstoreinfiniteStatus(false);
 // });
+
+//배너 색
+const bannerColorClass = ref("bg-[#7900ac]");
+function getColor(color: string) {
+  bannerColorClass.value = color;
+}
 </script>
 
 <style scoped></style>

@@ -29,7 +29,7 @@
               src="@/assets/icon/copy_grey.svg"
               alt=""
               class="ml-2"
-              @click="copy(`#A2379F56GH`)"
+              @click="copyUsercode(storeUserInfoOverview.code)"
             />
           </div>
         </div>
@@ -223,6 +223,11 @@ onUnmounted(() => {
 });
 
 const { copy } = useClipboard({});
+
+function copyUsercode(code: string) {
+  copy(code);
+  alert("유저코드가 복사되었습니다.");
+}
 
 const emailContent = (string: string) => {
   if (!isNotEmptyObject(string)) return `이메일 인증을 해주세요.`;

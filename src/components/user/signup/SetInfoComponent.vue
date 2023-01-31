@@ -322,10 +322,12 @@ const duplicationCheckShowtoogle = (show: boolean) => {
   duplicationCheckShow.value = show;
 };
 const duplicationCheckImg = computed(() => {
+  if(regexUserIdClass.value === "text-everly-red") return "warning_red"  
   if (storesameUserIdisExist.value == `noExist`) {
     tempuserId.value = userId.value;
     return "check_circle_green_full";
-  } else return "warning_red";
+  }   
+  else return "warning_red";
 });
 
 //비밀번호
@@ -398,7 +400,7 @@ watch(
     passwordCheck,
     recommendidx,
     storeuserCodeisExist,
-    mandatoryArray,
+    mandatoryArray,    
   ],
   () => {
     let idduplicationCheck = storesameUserIdisExist.value == "noExist";
@@ -423,7 +425,7 @@ watch(
     ) {
       console.log(`가능`);
       signUpShow.value = true;
-    } else signUpShow.value = false;
+    } else signUpShow.value = false;    
   },
   { deep: true }
 );
