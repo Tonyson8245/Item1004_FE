@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-[3rem] pb-[4rem] flex h-full bg-everly-light_grey md:bg-everly-white"
+    class="py-[3rem] pb-[4rem] flex bg-everly-light_grey md:bg-everly-white h-screen md:h-full"
     @click="setshowMore(false)"
   >
     <div class="flex-1"></div>
