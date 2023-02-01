@@ -11,8 +11,16 @@
           class="py-1 h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll"
           @scroll="handleListScroll"
         >
+
+          <div class="flex flex-col items-center border rounded-lg p-5 mx-8 my-4 bg-everly-light_blue ">
+            <p class=" text-everly-red font-bold">⚠ 잠깐! 채팅할 때 주의하세요 ⚠</p>
+            <p>입금 전, 현재 거래하는 판매자에게 정확하게 입금하는지 확인하세요!</p>
+            <p class="font-bold">중재 기간 동안 잘못 입금한 금액은 바로 반환되지 않습니다</p>
+          </div>
           <!-- 채팅 내용 화면 영역 -->
           <div v-for="message in messages">
+            
+            
             <messageComponent
               v-if="message.userId !== client.channel.userId"
               :message="message"
