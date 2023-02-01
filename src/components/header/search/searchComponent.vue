@@ -32,9 +32,8 @@
           class="bg-transparent px-4 py-4 cursor-pointer flex items-center"
           @click="toggleFilter_web()"
         >
-          <button
-            class="bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-white"
-          >
+        <!-- 2023-01-31 17:25:37 기능 완료 될 때까지 숨김 처리 -->
+          <button class=" bg-everly-main px-2 py-1 m-1 rounded-lg w-12 text-center text-white" >
             필터
           </button>
           <!-- <img src="@/assets/icon/filter_blue.svg" alt="" /> -->

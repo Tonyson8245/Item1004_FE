@@ -48,7 +48,7 @@
           >
             <img
               @click="moveExternalLink('블로그')"
-              src="@/assets/icon/goto_blog.svg"
+              src="@/assets/icon/noti_blog.png"
               alt=""
               class="w-[45px] h-[45px] inline-block cursor-pointer"
             />
@@ -231,7 +231,7 @@
       <div class="flex justify-end">
         <div class="flex flex-col items-end justify-center gap-y-1 pr-2">
           <img
-            src="@/assets/icon/goto_blog.svg"
+            src="@/assets/icon/noti_blog.png"
             alt=""
             class="w-[40px]"
             @click="moveExternalLink('블로그')"
@@ -327,13 +327,12 @@ onMounted(() => {
   mainStore.$reset();
   getProductList(6);
 
-  console.log(">>>>>23212313213>>>>>", route.meta.name);
-
+  //일단 다끔
   if (getCookie("noti") == "stop") {
     componentStore.setstoreshowNotify(false);
   } else {
     if (route.meta.name == "home") {
-      componentStore.setstoreshowNotify(true);
+      componentStore.setstoreshowNotify(false);
     }
   }
 });

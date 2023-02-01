@@ -25,8 +25,8 @@
                 <p>{{ numberToKorean(postItem?.pricePerUnit as number) }}  원</p>                             
             </div>
         </div>        
-        <div class=" ml-auto mr-8 opacity-50" @click="moveExternalLink('유저신고하기')">
-            유저신고
+        <div class="text-sm w-8 ml-auto mr-8 opacity-50" @click="moveExternalLink('유저신고하기')">
+             <p>유저신고</p>
         </div>            
     </div>
     

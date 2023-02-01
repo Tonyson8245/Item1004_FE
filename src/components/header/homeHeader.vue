@@ -15,7 +15,7 @@
                 class="w-[11rem] h-[3.3rem] cursor-pointer"
               />
               <div class="flex gap-x-4">
-                <div class="flex items-center">
+                <div class="flex items-center cursor-pointer" @click="router.push('/write')" >
                   <div
                     class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
                   >
@@ -26,14 +26,13 @@
                     />
                   </div>
                   <a
-                    class="text-everly-main text-lg font-bold"
-                    @click="router.push('/write')"
+                    class="text-everly-main text-lg font-bold "                    
                     >거래등록</a
                   >
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center cursor-pointer" @click="router.push('/mypage/mileage/charge')">
                   <div
-                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center "
                   >
                     <img
                       class="cursor-pointer w-3"
@@ -42,14 +41,13 @@
                     />
                   </div>
                   <a
-                    class="text-everly-main text-lg font-bold"
-                    @click="router.push('/mypage/mileage/charge')"
+                    class="text-everly-main text-lg font-bold "                    
                     >마일리지 충전</a
                   >
                 </div>
-                <div class="flex items-center">
+                <div class="flex items-center cursor-pointer" @click="router.push('/mypage/mileage/withdraw')">
                   <div
-                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center "
                   >
                     <img
                       class="cursor-pointer w-3"
@@ -58,10 +56,9 @@
                     />
                   </div>
                   <a
-                    class="text-everly-main text-lg font-bold"
-                    @click="router.push('/mypage/mileage/withdraw')"
-                    >마일리지 출금</a
-                  >
+                    class="text-everly-main text-lg font-bold "
+                    
+                    >마일리지 출금</a>
                 </div>
               </div>
             </div>

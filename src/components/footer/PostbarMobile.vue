@@ -137,7 +137,6 @@ function goChatPage() {
     const userData = JSON.parse(localData) as user;      
     if (userData.idx === storeUserIdx.value)  router.push('/chat');    
     else  {
-      console.log("이동 하는거 맞네");
       
       if (typeof route.query.postId === 'string') chatStore.isRoomExist(route.query.postId);             
     }

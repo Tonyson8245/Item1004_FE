@@ -13,7 +13,7 @@
 </template>
 <script lang="ts" setup>
 import modalNotify from "@/components/modal/modalNotify.vue";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch } from "vue";
 import { useComponentStore } from "./store/modules/common/componentStore";
 import { storeToRefs } from "pinia";
 
