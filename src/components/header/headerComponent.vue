@@ -82,7 +82,7 @@
                 >
                   <img
                     class="cursor-pointer"
-                    src="@/assets/icon/login_blue.svg"
+                    src="@/assets/icon/19.png"
                     alt=""
                   />
                 </div>
@@ -117,13 +117,14 @@
     >
       <div class="flex justify-between items-center">
         <div
-          class="text-white font-bold truncate"
+          class=" flex items-center text-white font-bold truncate"
           @click="
             if (userNickname != '로그인하기') moveLink('/mypage');
             else moveLink('/account/login');
           "
         >
-          {{ userNickname }}
+        <img class=" w-5 h-5 mr-1" v-if="userNickname === '로그인하기'" src="@/assets/icon/19.png" alt="">
+          <p>{{ userNickname }}</p>
         </div>
         <div class="md:hidden">
           <div class="flex space-x-4">

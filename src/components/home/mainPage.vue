@@ -48,7 +48,7 @@
           >
             <img
               @click="moveExternalLink('블로그')"
-              src="@/assets/icon/goto_blog.svg"
+              src="@/assets/icon/noti_blog.png"
               alt=""
               class="w-[45px] h-[45px] inline-block cursor-pointer"
             />
@@ -234,7 +234,7 @@
       <div class="flex justify-end">
         <div class="flex flex-col items-end justify-center gap-y-1 mr-2">
           <img
-            src="@/assets/icon/goto_blog.svg"
+            src="@/assets/icon/noti_blog.png"
             alt=""
             class="w-[40px]"
             @click="moveExternalLink('블로그')"
