@@ -77,7 +77,7 @@ watch(minSize.value, (minSize) => {
   if (!minSize) {
     //마이페이지의 경우
     if (whiteHeader.value) classBgcolor.value = bgColoType("white");
-    //그외의 페이지의 경우
+    //그 외의 페이지의 경우
     else classBgcolor.value = bgColoType("blue");
   }
   //웹
