@@ -12,6 +12,7 @@ var url = "";
 var tokenUrl = "";
 
 //API 경로 설정
+
 if (import.meta.env.MODE == "production") {
   url = baseurl;
   tokenUrl = tokenUrl_base;
