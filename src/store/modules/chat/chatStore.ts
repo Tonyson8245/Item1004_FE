@@ -46,12 +46,20 @@ export const useChatStore = defineStore("chatStore", () => {
     client.value = Object(null);
   };
   const login = async () => {
+    const public_key = import.meta.env.VITE_TALK_PLUS_PUBLIC_API_KEY;
+    const test_key = import.meta.env.VITE_TALK_PLUS_TEST_API_KEY;
     //@ts-ignore
+    //API 경로 설정
+    //테스트 API 작동 오류로 일단 실 API 사용
+    //if (import.meta.env.MODE == "production") {
+    let api_key = public_key
+    if (import.meta.env.MODE == "production")   api_key = public_key;
+    else  api_key = test_key;    
 
     client.value = await new TalkPlus.Client({
-      appId: import.meta.env.VITE_TALK_PLUS_API_KEY,
+      appId: api_key,
     });
-    // console.log("톡 플러스 클라이언트 정보 : ", client.value);
+    console.log("톡 플러스 클라이언트 정보 : ", client.value);
 
     let isLogin = false;
     try {
