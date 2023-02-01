@@ -330,13 +330,12 @@ onMounted(() => {
   mainStore.$reset();
   getProductList(6);
 
-  console.log(">>>>>23212313213>>>>>", route.meta.name);
-
+  //일단 다끔
   if (getCookie("noti") == "stop") {
     componentStore.setstoreshowNotify(false);
   } else {
     if (route.meta.name == "home") {
-      componentStore.setstoreshowNotify(true);
+      componentStore.setstoreshowNotify(false);
     }
   }
 });
