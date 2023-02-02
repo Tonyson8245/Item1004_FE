@@ -19,9 +19,7 @@ export async function deleteContractCancel<T>(ordNm: string): Promise<meta> {
         headers: {
           accesstoken: token,
         },
-      });
-       alert('거래가 취소 되었습니다.')
-       location.reload();
+      });      
       return result;
     } catch (err) {
       
