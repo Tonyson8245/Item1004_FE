@@ -129,7 +129,6 @@ async function setPostItem() {
 // 선택된 채널 세팅
 async function setSelectedChannel() {    
   // url이 새로운 방 생성인 new?postId일 수 있음
-  console.log("setSelectedChannel");
   
   if (!route.query.postId && route.params.channelId) await chatStore.getSelectedChannel(route.params.channelId)
 }
