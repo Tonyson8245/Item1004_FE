@@ -5,11 +5,12 @@
         <postHead v-if="postItem" />
         <!-- bg-[url('@/assets/img/chat-background.svg')] -->
         <!-- bg-op-30-right-blue  -->
+        <!-- @scroll="handleListScroll" -->
         <div
           id="scroll-view"
           ref="scrollView"
           class="py-1 h-full flex flex-col chat-bg bg-[url('@/assets/img/chat-background.svg')] bg-no-repeat bg-center bg-70% overflow-x-hidden overflow-scroll"
-          @scroll="handleListScroll"
+         
         >
 
           <div class="flex flex-col items-center border rounded-lg p-5 mx-8 my-4 bg-everly-light_blue ">
@@ -108,20 +109,19 @@ const {
   postItem,
 } = storeToRefs(chatStore);
 const scrollView = ref<HTMLElement | null>(null);
-const { arrivedState, directions } = useScroll(scrollView);
-const { left, right, top, bottom } = toRefs(arrivedState);
+const { x, y, arrivedState, isScrolling, directions } = useScroll(scrollView);
+const { top, bottom } = toRefs(arrivedState);
+const {  top: toTop, bottom: toBottom } = toRefs(directions)
 
 const route = useRoute();
 const router = useRouter();
 
-// 스크롤이 하단에 고정되어 있으면 true로 주고, 내가 스크롤을 올리면 false
-// 스크롤 올리는 와중에는 메세지가 왔을 때 스크롤이 하단으로 이동 X
+// 스크롤 하단으로 이동 시켜야하는지 알 수 있는 플래그
+// true: 내가 메세지 보냈을 때, 처음 로딩 했을 때, 내가 스크롤 바닥에 내렸을 때
+// false: 내가 스크롤을 위로 올렸을 때
 const isScrollBottom = ref(true);
 
 const text = ref("");
-
-//  import type channel from '@/domain/chat/channel.interface';
-//  const props = defineProps<{ selectedChannel: channel}>();
 
 async function sendMessageProcess(e: any) {
   if (text.value != "") {
@@ -137,8 +137,8 @@ async function sendMessageProcess(e: any) {
         router.replace("/chat/" + result);
       }
       // 방이 생성 되면은 방에 대한 정보를 api 요청해서 가지고 오고,
-      //방을 channels에 꽂아주고,
-      //selectedChannel에 현재 방 꽂아주고,
+      // 방을 channels에 꽂아주고,
+      // selectedChannel에 현재 방 꽂아주고,
       //메세지 보내고 메세지 보낸걸 messages에 꽂아주고,
       //lastMessage를 channels의 해당 channel에 꽂아주고,
     } else await sendMessage(selectedChannel.value?.id);
@@ -149,8 +149,6 @@ async function sendMessage(channelId: string | undefined) {
   await chatStore.sendMessage(text.value, channelId as string);
   text.value = "";
   scrollToBottom();
-
-  // console.log("보낼때 클라이언트 밸류", client.value);
 }
 
 onMounted(() => {
@@ -169,35 +167,38 @@ onMounted(() => {
   // 감시 시작
   //@ts-ignore
   observer.observe(scrollView.value, config);
-  // chatStore.isRoomExit();
-  // chatStore.getPost();
-
 });
 
-watch(top, () => {
+
+// 스크롤 상단으로 이동 하는지 감지
+watch(isScrolling, async () => {
+  isScrollBottom.value = false
   if (top.value) {
-    // console.log("변경됨", messagesHasNext);
     // 불러올 메세지가 더 있으면 추가로 불러온다.
-    chatStore.pagingMessages(selectedChannel.value?.id as string);
+    // 페이징 성공 시 스크롤에 150 정도 여유를 준다
+    if (await chatStore.pagingMessages(selectedChannel.value?.id as string)) {
+      y.value += 150;       
+    }
+  }  
+
+  if (bottom.value) {
+    // 내가 자의로 스크롤 바닥에 내리면 true
+    isScrollBottom.value = true
+  }    
+});
+
+watch(messages, () => {
+  // 메세지 추가 될 경우 스크롤 바텀으로
+  if (isScrollBottom.value) {    
+    scrollToBottom();
   }
 });
 
+
 const scrollToBottom = () => {
-  //@ts-ignore
-  scrollView.value.scrollTop = scrollView.value.scrollHeight;
+  y.value += 1000
 };
 
-// 스크롤 시 작동
-const handleListScroll = (e: any) => {
-  // console.log("페이징 노 실행");
-  const { scrollHeight, scrollTop, clientHeight } = e.target;
-  const cal = ((scrollTop + clientHeight) / scrollHeight) * 100;
-  isScrollBottom.value = 95 < cal;
-  // const bottom = scrollHeight - (scrollTop + clientHeight)
-  // console.log("스크린 총 길이 : ",scrollHeight);
-  // console.log("화면에 보이는 길이 : ",clientHeight);
-  // console.log("화면에 보이는 길이 : ",clientHeight);
-};
 </script>
 
 <style scoped>

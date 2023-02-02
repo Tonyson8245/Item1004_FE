@@ -109,7 +109,6 @@ watch(route, () => {
   }
 });
 
-console.log(props.channel);
 </script>
 
 <style scoped>

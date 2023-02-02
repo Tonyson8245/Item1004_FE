@@ -53,13 +53,12 @@ export const useChatStore = defineStore("chatStore", () => {
     //테스트 API 작동 오류로 일단 실 API 사용
     //if (import.meta.env.MODE == "production") {
     let api_key = public_key
-    if (import.meta.env.MODE == "production")   api_key = public_key;
+    if (import.meta.env.MODE == "production")  api_key = public_key;
     else  api_key = test_key;    
 
     client.value = await new TalkPlus.Client({
       appId: api_key,
     });
-    console.log("톡 플러스 클라이언트 정보 : ", client.value);
 
     let isLogin = false;
     try {
@@ -192,10 +191,10 @@ export const useChatStore = defineStore("chatStore", () => {
           order: "latest",
           lastMessageId: lastMessageId,
           limit: 10, // how many messages to fetch, default: 20, max: 50
-        });
+        })
       } catch (error) {
         console.log("error : ", error);
-        return;
+        return false;
       }
       // console.log("가져온 결과 ",result);
       messages.value = [
@@ -203,6 +202,7 @@ export const useChatStore = defineStore("chatStore", () => {
         ...messages.value,
       ];
       messagesHasNext.value = result.hasNext;
+      return true;
       // //메세지 읽음 처리
       // await messageRead(channelId);
     }
