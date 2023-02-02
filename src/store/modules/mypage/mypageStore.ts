@@ -349,5 +349,20 @@ export const usemypageStore = defineStore("mypageStore", {
           console.log(err);
         });
     },
+    async deleteContract(ordNm: string) {
+      var result = false;
+      await paymentApi
+        .deleteContractCancel(ordNm)
+        .then((res) => {
+          console.log(res);
+          result = true;
+        })
+        .catch((err) => {
+          console.log(err);
+
+          result = false;
+        });
+      return result;
+    },
   },
 });

@@ -549,7 +549,7 @@
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
-          @click="deleteContractCancel(route.query.ordNm as string)"
+          @click="cancelContract()"
         >
           거래취소
         </div>
@@ -585,7 +585,7 @@
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
-          @click="deleteContractCancel(route.query.ordNm as string)"
+          @click="cancelContract()"
         >
           거래취소
         </div>
@@ -718,6 +718,18 @@ function putContractStatus(status: string) {
 // 채팅 페이지로 보내기
 async function goChatPage() {  
   if (typeof route.query.postIdx === "string") await chatStore.isRoomExist(route.query.postIdx)
+}
+function cancelContract() {
+  if (ordNm != undefined) {
+    mypageStore.deleteContract(ordNm).then((res) => {
+      if (res) alert("거래가 취소되었습니다.");
+      else alert("거래 취소가 실패했습니다.");
+
+      router.go(-1);
+    });
+  } else {
+    alert("올바르지 않은 결제 번호입니다.");
+  }
 }
 </script>
 
