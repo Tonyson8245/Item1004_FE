@@ -69,19 +69,21 @@ login().then( async (data)=>{
   // 채팅화면 거래글 postId 세팅
   await setPostItem();
 
-  
-  
-  // console.log(client.value);
 
-  //@ts-ignore
-  client.value.on('event', async (data) => {
-    // console.log("이벤트 발생", data);
-    if (data.type === 'message') {
-        //TODO: 현재 메세지 받는 이벤트가 이 페이지에 오면 여러개가 생성이 되서 문제 발생하고 있음.
-        //@ts-ignore
-      if(data.message.userId !== client.value.userId)   await onReceiveMessage(data)
-    }
-  })  
+  try {
+    //@ts-ignore
+    client.value.on('event', async (data) => {
+      // console.log("이벤트 발생", data);
+      if (data.type === 'message') {
+          //TODO: 현재 메세지 받는 이벤트가 이 페이지에 오면 여러개가 생성이 되서 문제 발생하고 있음.
+          //@ts-ignore
+        if(data.message.userId !== client.value.userId)   await onReceiveMessage(data)
+      }
+    })  
+  } catch (error) {
+    console.log(error);    
+  }
+  
 });
 // console.log(route.query.postId);
 

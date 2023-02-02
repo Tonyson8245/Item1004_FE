@@ -51,11 +51,9 @@ export const useChatStore = defineStore("chatStore", () => {
     //@ts-ignore
     //API 경로 설정
     //테스트 API 작동 오류로 일단 실 API 사용
-    //if (import.meta.env.MODE == "production") {
     let api_key = public_key
     if (import.meta.env.MODE == "production")  api_key = public_key;
     else  api_key = test_key;    
-
     client.value = await new TalkPlus.Client({
       appId: api_key,
     });
@@ -77,11 +75,6 @@ export const useChatStore = defineStore("chatStore", () => {
       //@ts-ignore
 
       const userData = JSON.parse(localData) as user;
-
-      // let uerid = "5"
-      // if (userData) {
-      //   uerid = `${userData.idx}`
-      // }
       try {
         //@ts-ignore
         user.value = await client.value.loginAnonymous({
@@ -103,30 +96,20 @@ export const useChatStore = defineStore("chatStore", () => {
   const setChannels = (channel: channel) => {
     // 리스트 안에 내가 받은 채널과 같은아이디 가지고 있는 채널이 있냐?
     // yes : 리스트 안에서 내가 받은 채널과 같은 아이디 가지고 잇는 채널 찾아서 지워라
-
     const pickChannel = findChannel(channel.id);
-    // console.log("채널 : ", pickChannel);
-    // console.log("채널 정보",pickChannel);
-    // console.log(channels.value);
-
     if (pickChannel) {
-      // console.log("받은 채널 : ", channel);
-
       channels.value.forEach((item, i, origin) => {
         if (item === pickChannel) {
           origin.splice(i, 1);
         }
       });
     }
-
     channels.value.unshift(channel);
-    // console.log(channels.value);
   };
 
   const pagingChannels = async () => {
     if (channelsHasNext.value) {
-      // console.log("페이징 실행합니다");
-      // getChannels()
+      
       const lastChannelId: string =
         channels.value[channels.value.length - 1].id;
       getChannels(lastChannelId);
@@ -143,12 +126,10 @@ export const useChatStore = defineStore("chatStore", () => {
     try {
       //@ts-ignore
       result = await client.value.getChannels(getchannelparams);
-      // console.log("인터페이스 확인용", result);
       //@ts-ignore
       channels.value.push(...result.channels);
       channelsHasNext.value = result.hasNext;
 
-      // console.log(result);
     } catch (error) {
       console.log("error : ", error);
       return;
@@ -164,7 +145,7 @@ export const useChatStore = defineStore("chatStore", () => {
       result = await client.value.getMessages({
         channelId: channelId,
         order: "latest", // default: 'latest'. Use 'oldest' to order by oldest messages first
-        limit: 20, // how many messages to fetch, default: 20, max: 50
+        limit: 20,
       });
     } catch (error) {
       console.log("error : ", error);
@@ -180,8 +161,7 @@ export const useChatStore = defineStore("chatStore", () => {
 
   const pagingMessages = async (channelId: string) => {
     if (messagesHasNext.value) {
-      // console.log("페이징 실행합니다");
-      // getChannels()
+    
       const lastMessageId: string = messages.value[0].id;
       let result: resp;
       try {
@@ -196,7 +176,6 @@ export const useChatStore = defineStore("chatStore", () => {
         console.log("error : ", error);
         return false;
       }
-      // console.log("가져온 결과 ",result);
       messages.value = [
         ...(result.messages?.reverse() as message[]),
         ...messages.value,
@@ -204,7 +183,6 @@ export const useChatStore = defineStore("chatStore", () => {
       messagesHasNext.value = result.hasNext;
       return true;
       // //메세지 읽음 처리
-      // await messageRead(channelId);
     }
   };
 
@@ -219,7 +197,6 @@ export const useChatStore = defineStore("chatStore", () => {
   // 채팅방 메세지 읽었을 때, 메세지 보낼 때 , 메세지 받을 때
   // TODO: 채팅방 리스트가져오기 채팅 내용 가져오기 두곳에서 실행되고 있기 때문에 두 메서드 같이 한 페이지에서 실행되면 이 메서드는 두번 실행이 된다.
   const getUnreadCount = async () => {
-    // console.log('전체 메세지 카운팅');
     try {
       //@ts-ignore
       const result = await client.value.getUnreadCount();
@@ -233,7 +210,6 @@ export const useChatStore = defineStore("chatStore", () => {
 
   // 채널 내 메세지 읽음 처리
   const messageRead = async (channelId: string) => {
-    // console.log("채널 메세지 읽음");
     let result;
     try {
       //@ts-ignore
@@ -250,16 +226,9 @@ export const useChatStore = defineStore("chatStore", () => {
   // 채팅방 클릭 시 작동
   // 내가 현재 보고 있는 채널을 세팅하고, 메세지를 읽어온다.
   const setSelectedChannel = async (clickedChannel: channel) => {
-    selectedChannel.value = clickedChannel;
-    // console.log(selectedChannel.value);
-
-    // console.log("selectedChannel.value 세팅 : ",selectedChannel.value);
-
+    selectedChannel.value = clickedChannel
     await getMessages(selectedChannel.value.id);
-    await getUnreadCount();
-
-    // selectedChannel.value.unreadCount = 0;
-  };
+    await getUnreadCount();  };
 
   // 채팅방 id로 불러오기
   const getSelectedChannel = async (channelId: string | string[]) => {
@@ -267,13 +236,7 @@ export const useChatStore = defineStore("chatStore", () => {
     const result = await client.value.getChannel({
       channelId: channelId,
     });
-    // selectedChannel.value = result.channel;
-
     setSelectedChannel(result.channel);
-    // console.log("로그요 : ",selectedChannel.value);
-
-    // await getMessages(result.channel.id);
-    // await getUnreadCount();
   };
 
   const resetSelectedChannel = () => {
@@ -290,21 +253,13 @@ export const useChatStore = defineStore("chatStore", () => {
     isNewChat.value = isNew;
   };
 
-  // const setPostId = (postid: any) => {
-  //   postId.value = postid
-  // }
-
   const setPostItem = async (postid: any) => {
-    // postItem.value = postid
-    // console.log("전송하는 포스트 아이디 : ", postid);
 
     await chatapi
       .getPost(postid)
       .then((res) => {
         //@ts-ignore
         postItem.value = res.data.result;
-        // console.log('요청성공 : ', res);
-        // console.log('post는 : ', postItem.value);
       })
       .catch((err) => {
         console.log("error : ", err);
@@ -320,9 +275,6 @@ export const useChatStore = defineStore("chatStore", () => {
   const messageIntoMessages = (message: message) => {
     if (messages.value.find(x => x.id === message.id)) return     
        else  messages.value.push(message);
-
-      
-    
   };
 
   // 메세지 리스트를 채널에 넣기
@@ -335,7 +287,6 @@ export const useChatStore = defineStore("chatStore", () => {
     // 없으면 채널을 API로 찾아온다
     else {
       // 메서드 그냥 읽어온거면은 메세지 자동 포함되어 있으니깐 추가 안 해줘도 된다.
-
       try {
         //@ts-ignore
         const bringChannel = (pickChannel = await client.value.getChannel({
@@ -362,15 +313,12 @@ export const useChatStore = defineStore("chatStore", () => {
         type: "text",
         text: text,
       });
-      // console.log("보낸 메세지에 대한 결과");
-      // console.log(result);
     } catch (error) {
       console.log("error : ", error);
       return;
     }
     messageIntoMessages(result.message);
     messagesIntoChannel(result.message.channelId, result.message);
-    // console.log(result);
   };
 
   const findChannel = (channelId: string) => {
@@ -388,9 +336,6 @@ export const useChatStore = defineStore("chatStore", () => {
       .getChatRoom(postIdx)
       .then((res) => {
         //성공하면 페이지를 올린다.
-        // console.log("sucess : ", res);
-        console.log("받은 내용 : ",router);
-        
         router.push("/chat/" + res.result);
       })
       .catch((err) => {
@@ -405,16 +350,12 @@ export const useChatStore = defineStore("chatStore", () => {
           err.data.meta.code === "invalid_value"
         ) {
           // 형식 올바
-          // console.log("형식이 올바르지 않음");
           alert("올바른 요청이 아닙니다");
         } else if (err.status === 200 && err.data.meta.code === "success") {
           // 존재하는 채팅방
-          // console.log("요청성공");
         } else if (err.status === 401) {
           alert("올바른 요청이 아닙니다");
         }
-        // console.log(err.response);
-        // router.push('/chat/')
       });
   };
   // 채팅방 새로 생성
@@ -427,7 +368,6 @@ export const useChatStore = defineStore("chatStore", () => {
     await chatapi
       .createChatRoom(body)
       .then((res) => {
-        // console.log("요청성공 : ", res);
         // 요청 성공
         if (res.meta.isSuccess) {
           result = res.result;
@@ -437,8 +377,6 @@ export const useChatStore = defineStore("chatStore", () => {
         console.log("error : ", res);
         result = null;
       });
-    // console.log("result는 성공인가? ", result);
-
     return result;
   };
 
@@ -456,19 +394,6 @@ export const useChatStore = defineStore("chatStore", () => {
         console.log(err);
       });
   };
-
-  // 채팅 대상 검색
-  //  const searchChannel = async (targetUser: string) =>{
-  //   let result: resp;
-  //   // console.log("내 아이디",user.value.id);
-  //   // console.log("찾을 유저",targetUser);
-  //   result = await client.value.searchChannels({
-  //     members: ['5Qxp8jLsrx'],
-  //     limit: 10,
-  //   });
-  //   console.log(result);
-  // }
-
   return {
     client,
     setClientNull,
