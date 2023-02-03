@@ -65,9 +65,14 @@ import mileageWithdraw from "@/components/mypage/detail/mileageWithdraw.vue";
 import milageWithdrawResult from "@/components/mypage/WithdrawResultPage.vue";
 // @ts-ignore
 import contractInfo from "@/components/mypage/ContractInfoPage.vue";
+// @ts-ignore
 import contractListSell from "@/components/mypage/detail/contractSellList.vue";
+// @ts-ignore
 import contractListBuy from "@/components/mypage/detail/contractBuyList.vue";
+// @ts-ignore
 import mypageMobilepage from "@/components/mypage/mypageMobilepage.vue";
+// @ts-ignore
+import AdultView from "@/views/AdultView.vue";
 
 export default {
   mypageMobilepage,
@@ -108,4 +113,5 @@ export default {
   infoSet,
   signUpComfirm,
   MainView,
+  AdultView,
 };
