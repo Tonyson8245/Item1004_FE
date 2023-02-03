@@ -4,6 +4,7 @@ import type meta from "@/domain/common/meta.interface";
 import { checkTokenStatus } from "@/api/common";
 
 export async function deleteContractCancel<T>(ordNm: string): Promise<meta> {
+
   // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
   checkTokenStatus();
 
@@ -18,9 +19,10 @@ export async function deleteContractCancel<T>(ordNm: string): Promise<meta> {
         headers: {
           accesstoken: token,
         },
-      });
+      });      
       return result;
     } catch (err) {
+      
       return Promise.reject(err);
     }
   } else return Promise.reject("error");

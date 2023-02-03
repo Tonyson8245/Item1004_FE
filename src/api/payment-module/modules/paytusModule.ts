@@ -14,6 +14,15 @@ async function getIp() {
   return result;
 }
 
+
+
+const host = hostUrl() 
+
+function hostUrl() {  
+  if (import.meta.env.MODE == "production") return import.meta.env.VITE_BASE_URL_PAYMENT_BASE;
+   else return import.meta.env.VITE_BASE_URL_PAYMENT_TEST;
+}
+
 //form 데이터 생성하기(이미 값이 있는 경우는 만들지 않는다.)
 function createform() {
   var fomrmisExist = document.getElementsByName("payInitTest");
@@ -196,7 +205,7 @@ async function setform(
   inputOrdEmail.setAttribute("value", "");
   inputReturnUrl.setAttribute(
     "value",
-    "https://www.item1004.co.kr/mypage/mileage/charge/result"
+    host+"/mypage/mileage/charge/result"
   );
   inputNotiUrl.setAttribute("value", "");
   inputEdiDate.setAttribute("value", ediDate);
@@ -215,7 +224,10 @@ async function setFormControl(
   payload: cardDto.payload,
   uuid: string
 ) {
-  var requestUrl = import.meta.env.VITE_BASE_URL_PAYMENT_BASE + FormControlurl;
+  var requestUrl = host + FormControlurl;
+
+  console.log("setFormControl : ",requestUrl);
+  
 
   await http
     .post(
@@ -262,10 +274,13 @@ async function goPayment(url: string, payPrice: string, ordNm: string) {
   var ediDate = "";
   var encData = "";
 
+
   //라우팅할때 제공받은 경로
   var requestUrl =
-    import.meta.env.VITE_BASE_URL_PAYMENT_BASE + url + "?goodsAmt=" + payPrice;
+  host + url + "?goodsAmt=" + payPrice;
 
+  console.log("요청 url : ",requestUrl);
+  
   // paytus-set-parameter-****.php
   await http
     .get(requestUrl, {

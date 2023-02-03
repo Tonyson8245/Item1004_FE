@@ -29,9 +29,23 @@ class postDataDto {
   };
 }
 
+const baseurl = import.meta.env.VITE_BASE_URL_AUTH_BASE+"/my/infos";
+const testurl = import.meta.env.VITE_BASE_URL_AUTH_TEST+"/my/infos";
+const tokenUrl_base = import.meta.env.VITE_BASE_URL_USER_BASE;
+const tokenUrl_test = import.meta.env.VITE_BASE_URL_USER_TEST;
+
+var url = "";
+var tokenUrl = "";
+
+//API 경로 설정
+if (import.meta.env.MODE == "production") {
+  url = baseurl;
+  tokenUrl = tokenUrl_base;
+} else {
+  url = testurl;
+  tokenUrl = tokenUrl_test;
+}
 async function getuseinfo<T>(): Promise<infoResponse | undefined> {
-  var url =
-    "https://4045zs3ccg.execute-api.ap-northeast-2.amazonaws.com/develop/my/infos";
   // TODO 토큰 상태를 확인 하는 메서드, 나중에 정리 필요
   checkTokenStatus();
   var accessTokenData = localStorage.getItem("accessToken");
