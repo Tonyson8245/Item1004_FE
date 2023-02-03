@@ -2,10 +2,11 @@ export * from "./mileage/mileage";
 export * from "./payment/payment";
 export * from "./result/getcontractResult";
 export * from "./result/getchargeResult";
-export * from "./contract/getcontractPostDetail"
+export * from "./contract/getcontractPostDetail";
 export * from "./contract/getContractPostList";
 export * from "./mileage/withdrawMileage";
 export * from "./mileage/chechUseablePoint";
 export * from "./mileage/checkwithdrawPoint";
 export * from "./contract/putContractTakeover";
 export * from "./contract/putContractTake";
+export * from "./contract/deleteContractCancel";

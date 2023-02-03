@@ -185,7 +185,12 @@
             >
               신고하기
             </div>
-            <div class="px-4 py-2">채팅하기</div>
+            <div 
+              class="px-4 py-2"
+              @click="goChatPage"
+            >
+              채팅하기
+            </div>
           </div>
           <!-- 헤더 -->
           <div class="flex justify-between w-full">
@@ -258,7 +263,7 @@
                     @click.stop=""
                     class="hidden md:block w-3 justify-end"
                   >
-                    <img src="@/assets/icon/dice_grey.svg" alt="" class="" />
+                    <img src="@/assets/icon/dice_grey.svg" alt="" class=" cursor-pointer" />
                   </div>
                 </div>
                 <div class="flex justify-between items-center">
@@ -544,7 +549,7 @@
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
-          v
+          @click="cancelContract()"
         >
           거래취소
         </div>
@@ -580,6 +585,7 @@
       >
         <div
           class="bg-everly-light_blue text-everly-main flex-1 text-center rounded-lg py-3 font-bold cursor-pointer"
+          @click="cancelContract()"
         >
           거래취소
         </div>
@@ -625,7 +631,12 @@ import { useRoute } from "vue-router";
 import { moveExternalLink } from "@/common";
 import { IsEmpty, IsNotEmptyObject } from "class-validator";
 import { useRouter } from "vue-router";
+import { useChatStore } from "@/store/modules/chat/chatStore";
+import { deleteContractCancel } from "@/api/payment-service/contract/deleteContractCancel";
 
+
+
+const chatStore = useChatStore();
 const router = useRouter();
 const showbuyerInfo = ref(false);
 const showuserInfo = ref(false);
@@ -664,8 +675,7 @@ watch(minSize.value, () => {
 
 onMounted(() => {
   //데이터 불러오기
-  console.log(postIdx, ordNm);
-
+  // console.log(postIdx, ordNm);
   if (postIdx != undefined && ordNm != undefined)
     mypageStore.getContractPostDetail(parseInt(postIdx), ordNm);
   else router.go(-1);
@@ -702,6 +712,24 @@ function putContractStatus(status: string) {
     mypageStore.resetContractList();
   }
   router.go(-1);
+}
+
+
+// 채팅 페이지로 보내기
+async function goChatPage() {  
+  if (typeof route.query.postIdx === "string") await chatStore.isRoomExist(route.query.postIdx)
+}
+function cancelContract() {
+  if (ordNm != undefined) {
+    mypageStore.deleteContract(ordNm).then((res) => {
+      if (res) alert("거래가 취소되었습니다.");
+      else alert("거래 취소가 실패했습니다.");
+
+      router.go(-1);
+    });
+  } else {
+    alert("올바르지 않은 결제 번호입니다.");
+  }
 }
 </script>
 

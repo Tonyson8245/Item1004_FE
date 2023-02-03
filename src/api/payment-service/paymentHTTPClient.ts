@@ -31,7 +31,7 @@ const namespace = "paymentTTPClient::";
 
 instance.interceptors.response.use(
   (response) => {
-    //성공 시에는 result 값만 돌려보넴
+    //성공 시에는 result 값만 돌려보넴    
     return response.data.result;
   },
   async (error) => {
