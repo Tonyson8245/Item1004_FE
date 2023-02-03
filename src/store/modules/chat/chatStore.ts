@@ -13,10 +13,10 @@ import type { user } from "@/domain/user/user.interface";
 import * as chatapi from "@/api/chat-service/index";
 import { useRouter } from "vue-router";
 
-
+import TalkPlusClass from "@/domain/chat/TalkPlus";
 
 export const useChatStore = defineStore("chatStore", () => {
-  const client = ref(Object);
+  const client = ref(TalkPlusClass.getInstance());
   const user = ref(Object);
   const channels = ref<channel[]>([]);
 
@@ -36,6 +36,9 @@ export const useChatStore = defineStore("chatStore", () => {
 
   const router = useRouter();
 
+  console.log("클라이언트 밸류 : ", client.value);
+  
+
   const init = async () => {
     // TODO: client.value가 null이면 새로 생성한다.
     // if (client.value.sessionId) {
@@ -54,9 +57,6 @@ export const useChatStore = defineStore("chatStore", () => {
     let api_key = public_key
     if (import.meta.env.MODE == "production")  api_key = public_key;
     else  api_key = test_key;    
-    client.value = await new TalkPlus.Client({
-      appId: api_key,
-    });
 
     let isLogin = false;
     try {
