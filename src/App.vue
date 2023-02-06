@@ -1,4 +1,5 @@
 <template>
+  <metainfo></metainfo>
   <div :class="lock">
     <modalNotify
       :propsShowModal="storeshowNotify"

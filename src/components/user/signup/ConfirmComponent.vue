@@ -108,9 +108,9 @@ function getNiceEncData() {
     );
     router.push("/account/login");
   } else {
-    authStore.getNiceEncData("register").then((res) => {
-      if (res?.encryptionData) {
-        encData.value = res?.encryptionData;
+    authStore.getNiceEncData("signup").then((res) => {      
+      if (res?.encData) {
+        encData.value = res?.encData;
         setTimeout(() => {
           fnPopup();
         }, 100);
