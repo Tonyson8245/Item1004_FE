@@ -31,13 +31,7 @@
               />
               수정하기
             </div>
-            <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-              @click="toggleShowModal()"
-            >
-              <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
-              삭제하기
-            </div> -->
+           -->
             <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
               @click="alertMSG()"
@@ -51,7 +45,7 @@
             </div>
             <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-              @click="alertMSG()"
+              @click="toggleShowModal()"
             >
               <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
               삭제하기
@@ -534,6 +528,11 @@
         <hr
           class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
         />
+        -->
+        <div class="py-4 text-center w-full" @click="alertMSG()">수정하기</div>
+        <hr
+          class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
+        />
         <div
           class="py-4 text-center w-full"
           @click="
@@ -542,12 +541,7 @@
           "
         >
           삭제하기
-        </div> -->
-        <div class="py-4 text-center w-full" @click="alertMSG()">수정하기</div>
-        <hr
-          class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
-        />
-        <div class="py-4 text-center w-full" @click="alertMSG()">삭제하기</div>
+        </div>
       </div>
     </transition>
   </div>
@@ -632,10 +626,6 @@ onMounted(() => {
   if (!isEmpty(idx?.toString()) && idx != null) {
     postStore.setStorePostData(idx.toString());
   } else router.push("/");
-});
-//페이지 나갈때 기존 데이터 지우기
-onUnmounted(() => {
-  postStore.resetStorePostData();
 });
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit

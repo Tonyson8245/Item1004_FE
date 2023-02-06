@@ -239,49 +239,30 @@ export const usePostStore = defineStore("postStore", {
           console.log(err);
         });
     },
+    async deletePost() {
+      var result = false;
+      var postIdx = this.storePostIdx.toString();
+      await homeApi
+        .deletePost(postIdx)
+        .then((res) => {
+          result = true;
+        })
+        .catch((err) => {
+          var message = "";
 
-    resetStorePostData() {
-      this.storeShowBuy = false;
-      this.storeShowManagePost = false;
-
-      //거래글
-      this.storecreatAt = "";
-      this.storePostTitle = "";
-      this.storePostIdx = 0;
-      this.storeSaleUnit = 0; // 물품 단;
-      this.storeMinValue = 0; // 물품 단;
-      this.storeMaxValue = 0; // 물품 단;
-      this.storeUnitName = "개"; // 물품 단;
-      this.storePricePerUnit = 0; // 물품 단위당 가;
-      this.storeGameName = "";
-      this.storeServerName = "";
-      this.storeCategory = "";
-
-      this.storeSellBuy = "";
-      this.storeWishCount = 0;
-      this.storeChatCount = 0;
-      this.storeCharacterlevel = 0;
-      this.storeCharacterRoleName = "";
-      this.storeContent = "";
-      this.storehasInGamePaymentHistory = false;
-      this.storeisDuplicatedSync = false;
-
-      //유저
-      this.storeUserCode = "";
-      this.storeUserNickname = "";
-      this.storeUserIdx = 0;
-
-      this.storeemailVerify = false;
-      this.storephoneVerify = false;
-      this.storebankAccountVerify = false;
-
-      this.storeUserImg = "";
-      this.storeUserIsVerfied = false;
-      this.storeUsercontractLevelName = "";
-      this.storeUsersellPostCount = 0;
-      this.storeUserbuyPostCount = 0;
-      this.storeUserreviewCount = 0;
-      this.storeqty = 1;
+          // 예외처리
+          switch (err.message) {
+            case "contract_ongoing_post":
+              message = "거래 진행 중인 게시글은 삭제가 불가합니다.";
+              break;
+            default:
+              message = "올바르지 않은 요청입니다.";
+              break;
+          }
+          alert(message);
+          result = false;
+        });
+      return result;
     },
   },
 });

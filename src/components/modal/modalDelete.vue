@@ -50,7 +50,7 @@
               <button
                 class="text-everly-white font-bold bg-everly-main w-full py-2 rounded-lg text-sm md:text-base"
                 type="button"
-                v-on:click="$emit('update:changeStatus', 'success')"
+                v-on:click="deletePost()"
               >
                 삭제
               </button>
@@ -75,11 +75,12 @@
 </template>
 
 <script lang="ts" setup>
+import { usePostStore } from "@/store/modules/home/postStore";
 import { useVModel } from "@vueuse/core";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
+const postStore = usePostStore();
 const props = defineProps<{
   propsShowModal: boolean;
   propsType: string;
@@ -87,5 +88,15 @@ const props = defineProps<{
 const emit = defineEmits(["update:propsShowModal", "update:changeStatus"]);
 
 const propsShowModal = useVModel(props, "propsShowModal", emit);
+
+function deletePost() {
+  postStore.deletePost().then((res) => {
+    if (res) {
+      emit("update:changeStatus", "success"); //성공했을때는 성공이라고 하고 끄게
+    } else {
+      emit("update:propsShowModal", false); // 실패했을 경우 바로 끄게
+    }
+  });
+}
 </script>
 <style scoped></style>

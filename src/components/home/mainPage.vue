@@ -295,6 +295,7 @@ import BannerTablet from "./components/banner/bannerTablet.vue";
 import { moveExternalLink } from "@/common";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useCookie } from "vue-cookie-next";
+import { usePostStore } from "@/store/modules/home/postStore";
 const { getCookie } = useCookie();
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
@@ -306,6 +307,7 @@ const componentStore = useComponentStore();
 const { storeshowNotify } = storeToRefs(componentStore);
 //////조회 관련
 const filterStore = useFilterStore();
+const postStore = usePostStore();
 const {
   storeShowFilter_mobile,
   filterStoreGameKeywordIdx,
@@ -325,8 +327,8 @@ const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 //처음 페이지 로드 될때 동작
 onMounted(() => {
   mainStore.$reset();
+  postStore.$reset();
   getProductList(6);
-
   //일단 다끔
   if (getCookie("noti") == "stop") {
     componentStore.setstoreshowNotify(false);
