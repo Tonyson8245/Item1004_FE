@@ -100,7 +100,7 @@ function fnPopup() {
 
 useMeta({
   meta: [
-    {vmid: 'description', 'http-equiv': 'PICS-label', content: "(PICS-1.1 'http://service.kocsc.or.kr/rating.html' L gen true for 'http://item1004.co.kr/' r (y 1))"},
+    {vmid: 'description', 'http-equiv': 'PICS-label', content: "(PICS-1.1 'http://service.kocsc.or.kr/rating.html' l gen true for 'http://item1004.co.kr/' r (y 1))"},
   ]
 })
 
