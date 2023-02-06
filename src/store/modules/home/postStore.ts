@@ -251,7 +251,7 @@ export const usePostStore = defineStore("postStore", {
           var message = "";
 
           // 예외처리
-          switch (err.message) {
+          switch (err.code) {
             case "contract_ongoing_post":
               message = "거래 진행 중인 게시글은 삭제가 불가합니다.";
               break;
