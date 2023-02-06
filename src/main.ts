@@ -10,6 +10,7 @@ import router from "./router/index";
 import type { Router } from "vue-router";
 import * as Sentry from "@sentry/vue";
 import { VueCookieNext } from "vue-cookie-next";
+import { createMetaManager } from 'vue-meta'
 
 declare module "pinia" {
   export interface PiniaCustomProperties {
@@ -19,7 +20,8 @@ declare module "pinia" {
 
 const app = createApp(App);
 app.use(VueCookieNext);
-
+const metaManager = createMetaManager()
+app.use(metaManager)
 // set default config
 VueCookieNext.config({ expire: "7d" });
 

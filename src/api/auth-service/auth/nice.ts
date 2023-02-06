@@ -8,16 +8,18 @@ const niceInstance = axios.create({
 });
 
 export async function getNiceEncDataAPI<T>(
-  mode: string
+  type:  "adult" | "signup" | "phone"
 ): Promise<niceEncrypotionDto> {
-  const url = "/auth/certifications/encryption-data?mode=" + mode;
+  const url = `/auth/certifications/${type}/enc-data`;
   try {
     const result: niceEncrypotionDto = await http.get(url);
-    console.log(`api success`);
+    console.log(`api success`);    
     return result;
   } catch (err) {
     console.log("API error");
     console.log(`api failed`);
+    console.log(err);
+    
     return Promise.reject(err);
   }
 }

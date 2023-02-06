@@ -58,12 +58,12 @@ export const useauthStore = defineStore("authStore", {
     },
     //나이스 암호화 데이터 가져오는 방법
     async getNiceEncData<T>(
-      mode: string
+      type:  "adult" | "signup" | "phone"
     ): Promise<authDto.niceEncrypotionDto | undefined> {
       let result;
       await authApi
-        .getNiceEncDataAPI(mode)
-        .then((res) => {
+        .getNiceEncDataAPI(type)
+        .then((res) => {         
           result = res;
         })
         .catch((err) => {});
