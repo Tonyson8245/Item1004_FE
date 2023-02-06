@@ -1,11 +1,14 @@
 <template>
   <div
-    class="w-full md:w-[51.875rem] md:h-[43.938rem] space-y-3 bg-everly-light_grey md:bg-everly-white md:py-2"
+    class="w-full md:w-[51.875rem] space-y-3 bg-everly-light_grey md:bg-everly-white md:py-2"
   >
     <div class="bg-everly-white py-7 md:py-3 px-4">
-      <div class="text-sm font-bold">
+      <div class="text-sm md:text-xl font-bold flex items-center">
         회원탈퇴
-        <span class="hidden md:block"> 사유를 최소 1개 이상 선택해주세요 </span>
+        <span class="hidden md:block ml-2 text-base"
+          >(회원 탈퇴 사유를 선택해 주세요. 중복 가능)</span
+        >
+        <span class="md:hidden"> 사유를 최소 1개 이상 선택해주세요 </span>
       </div>
       <div class="grid md:grid-cols-2 text-everly-dark_grey text-sm py-2">
         <div>선택지 1</div>
@@ -15,52 +18,75 @@
         <div>선택지 5</div>
         <div>선택지 6</div>
       </div>
-      <div>
-        <div>회원 탈퇴사유를 적어주세요</div>
-        <div>(0/200자)</div>
+      <div class="text-xs border-everly-mid_grey border">
+        <textarea
+          name=""
+          id=""
+          rows="3"
+          placeholder="회원탈퇴 사유를 적어주세요"
+          class="p-1 w-full"
+        ></textarea>
+        <div class="border-everly-dark_grey text-right">(0/200자)</div>
       </div>
     </div>
     <hr class="border-everly-light_grey border hidden md:block mx-4" />
-    <div class="bg-everly-white py-7 md:py-3 px-4">
-      <div>회원탈퇴 안내사항</div>
-      <div>
-        <div>
-          1. 탈퇴 신청 후 14일 까지는 탈퇴가 유예됩니다. 만약 유예기간 내에 다시
-          로그인할 경우 기존 회원정보는 유지되며 탈퇴 신청 이전과 동일하게 사용
-          가능합니다.
-        </div>
-      </div>
-      <div>
-        2. 탈퇴 신청 14일 이후에 탈퇴 처리 시 사용자의 데이터는 아래와 같이
-        처리됩니다.
-        <div>
-          -회원가입 시 제공하신 개인 정보 (이메일, 나이, 생일)는 영구
-          삭제됩니다.
-        </div>
-        <div>
-          -작성하신 거래글과 닉네임은 유지됩니다. ( 위 정보가 남지 않기를 원하는
-          사용자는 각 데이터를 삭제 후 탈퇴 신청을 하시기 바랍니다.)
-        </div>
-      </div>
-      <div>3. 탈퇴 처리 후 재 회원가입 시 신규 사용자로 가입됩니다.</div>
-    </div>
-    <hr class="border-everly-light_grey border hidden md:block mx-4" />
-    <div class="bg-everly-white py-7 md:py-3 px-4">
-      <div>회원탈퇴 동의</div>
-      <div>회원 탈퇴 동의 선택</div>
-    </div>
-    <div class="space-y-2 hidden md:block px-56">
-      <div class="text-center py-2.5 rounded-lg" :class="buttonClass">
-        인증하기
-      </div>
+    <div class="bg-everly-white py-7 md:py-3 px-4 space-y-2">
+      <div class="text-sm md:text-base font-bold">회원탈퇴 안내사항</div>
       <div
-        class="text-everly-main bg-everly-light_blue text-center py-2.5 rounded-lg"
-        v-on:click="
-          goBack();
-          emit('update:propsShowModal', false);
-        "
+        class="text-xs md:text-sm md:text-everly-black space-y-2 text-everly-dark_grey"
       >
-        취소
+        <div>
+          <div>
+            1. 탈퇴 신청 후 14일 까지는 탈퇴가 유예됩니다. 만약 유예기간 내에
+            다시 로그인할 경우 기존 회원정보는 유지되며 탈퇴 신청 이전과
+            동일하게 사용 가능합니다.
+          </div>
+        </div>
+        <div>
+          2. 탈퇴 신청 14일 이후에 탈퇴 처리 시 사용자의 데이터는 아래와 같이
+          처리됩니다.
+          <div>
+            -회원가입 시 제공하신 개인 정보 (이메일, 나이, 생일)는 영구
+            삭제됩니다.
+          </div>
+          <div>
+            -작성하신 거래글과 닉네임은 유지됩니다. ( 위 정보가 남지 않기를
+            원하는 사용자는 각 데이터를 삭제 후 탈퇴 신청을 하시기 바랍니다.)
+          </div>
+        </div>
+        <div>3. 탈퇴 처리 후 재 회원가입 시 신규 사용자로 가입됩니다.</div>
+      </div>
+    </div>
+    <hr class="border-everly-light_grey border hidden md:block mx-4" />
+
+    <div class="bg-everly-white py-7 md:py-3 px-4 space-y-3">
+      <div class="text-sm md:text-base font-bold">회원탈퇴 동의</div>
+      <div class="text-xs flex md:text-base">
+        <label>
+          <input
+            class="radioinput"
+            type="checkbox"
+            :id="`최종선택`"
+            :v-model="withdrawlConfirm"
+            :value="`최종선택`"
+          />
+          <span />
+        </label>
+        회원 탈퇴 안내를 모두 확인하였으며 탈퇴에 동의합니다.
+      </div>
+      <div class="md:px-56 space-y-2">
+        <div class="text-center py-2.5 rounded-lg" :class="buttonClass">
+          인증하기
+        </div>
+        <div
+          class="text-everly-main bg-everly-light_blue text-center py-2.5 rounded-lg hidden md:block"
+          v-on:click="
+            goBack();
+            emit('update:propsShowModal', false);
+          "
+        >
+          취소
+        </div>
       </div>
     </div>
   </div>
@@ -104,6 +130,84 @@ function goBack() {
 
 //탈퇴하기 버튼 상태
 const buttonClass = ref("bg-everly-mid_grey text-everly-white");
+
+//최종 탈퇴 선택지
+const withdrawlConfirm = ref("");
 </script>
 
-<style scoped></style>
+<style scoped>
+textarea:focus {
+  outline: none;
+}
+button:focus {
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
+
+input::placeholder {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.radioinput {
+  display: none;
+}
+
+label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+label span {
+  position: relative;
+  line-height: 22px;
+}
+
+label span:before,
+label span:after {
+  content: "";
+}
+
+label span:before {
+  border: 1px solid #c7c7c7;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  border-radius: 5px;
+  margin-bottom: 2.5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+label span:after {
+  background-image: url(@/assets/icon/checked_blue.svg);
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  background-size: cover;
+  opacity: 0;
+  vertical-align: middle;
+}
+@media (max-width: 768px) {
+  label span:before {
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+  }
+}
+@media (max-width: 768px) {
+  label span:after {
+    top: 2px;
+    width: 15px;
+    height: 15px;
+    vertical-align: middle;
+  }
+}
+
+label input:checked + span:after {
+  opacity: 1;
+}
+</style>
