@@ -1,4 +1,4 @@
 export class niceEncrypotionDto {
-  authId: string;
+  authId?: string;
   encData: string;
 }

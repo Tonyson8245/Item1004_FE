@@ -343,6 +343,16 @@ const router = createRouter({
       component: components.redirect,
     },
     {
+      path: "/adult",
+      component: components.AdultView,
+      meta: {
+        // transition: "slide-right",
+        name: "adult",
+        // navbar: true,
+        needLogin: false,
+      },
+    },
+    {
       path: "/logout",
       component: components.logout,
       meta: {

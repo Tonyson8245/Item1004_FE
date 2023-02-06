@@ -7,7 +7,6 @@ module.exports = {
       tablet: "768px",
     },
     extend: {
-
       backgroundSize:{
         '50%': '50%',
         '60%': '60%',
@@ -28,7 +27,7 @@ module.exports = {
           bright_grey: "#f0f0f0",
           wbg_grey: "#fafafa",
           red: "#d5152c",
-
+          yellow: '#fff241',
           buy: "b20f47"
         }
       }

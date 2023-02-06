@@ -82,7 +82,7 @@
                 >
                   <img
                     class="cursor-pointer"
-                    src="@/assets/icon/19.png"
+                    src="@/assets/icon/19.svg"
                     alt=""
                   />
                 </div>
@@ -123,7 +123,7 @@
             else moveLink('/account/login');
           "
         >
-        <img class=" w-5 h-5 mr-1" v-if="userNickname === '로그인하기'" src="@/assets/icon/19.png" alt="">
+        <img class=" w-5 h-5 mr-1" v-if="userNickname === '로그인하기'" src="@/assets/icon/19.svg" alt="">
           <p>{{ userNickname }}</p>
         </div>
         <div class="md:hidden">
