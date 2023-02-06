@@ -13,17 +13,19 @@ const result = route.query.result;
 const type = route.query.type;
 const isAdult = route.query.type;
 
-const baseurl = import.meta.env.VITE_BASE_URL_AUTH_BASE;
+const baseurl = "https://www.item1004.co.kr";
 const testurl = import.meta.env.VITE_BASE_URL_AUTH_TEST;
 let url = "";
 //API 경로 설정
 if (import.meta.env.MODE == "production") {
   url = baseurl;
-  url = testurl;
 } else {
+  url = testurl;
 }
+
 console.log("route는 : ", route);
 console.log("location.host : ", location.host);
+
 if (result === "success" && type === "signup") {
   // let url = `http://localhost:5173/account/signUp/setinfo?authId=` + authId;
   url = `${url}/account/signUp/setinfo?authId=` + authId;
