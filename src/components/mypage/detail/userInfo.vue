@@ -199,6 +199,30 @@
     >
       로그아웃
     </div>
+    <div>
+      <div class="md:hidden">
+        <hr class="border-everly-light_grey my-4 md:my-8" />
+        <div
+          class="px-5 pt-1 block md:hidden text-everly-dark_grey font-bold cursor-pointer"
+          @click="deleteUserAccount()"
+        >
+          탈퇴하기
+        </div>
+        <hr class="border-everly-light_grey my-4 md:my-8" />
+      </div>
+      <div
+        class="text-everly-dark_grey text-sm items-center space-x-3 hidden md:flex"
+      >
+        <div>• 회원탈퇴 후 동일한 아이디로 재가입이 불가능 합니다.</div>
+        <div
+          class="flex text-sm items-center space-x-3 bg-everly-white border-everly-dark_grey rounded-md border px-1.5 py-0.5 cursor-pointer"
+          @click="deleteUserAccount()"
+        >
+          <div>탈퇴하기</div>
+          <img src="@/assets/icon/arrow_right.svg" alt="" class="w-1.5" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -275,6 +299,20 @@ watch(minSize.value, (minSize) => {
 const showModal = ref(false);
 function setShowModal(status: boolean) {
   showModal.value = status;
+}
+
+// 회원 탈퇴
+function deleteUserAccount() {
+  mypageStore
+    .deleteUserAccount("까꿍")
+    .then((res) => {
+      router.replace("/logout");
+      alert("탈퇴가 완료되었습니다.");
+      console.log("탈퇴 성공");
+    })
+    .catch((err) => {
+      console.log("탈퇴 실패");
+    });
 }
 </script>
 

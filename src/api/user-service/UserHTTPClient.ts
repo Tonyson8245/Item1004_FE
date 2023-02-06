@@ -32,10 +32,13 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log(error);
+
     const {
       config,
       response: { status },
     } = error;
+
     if (status === 401) {
       const originalRequest = config;
 

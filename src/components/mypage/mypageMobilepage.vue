@@ -1,7 +1,7 @@
 <template>
   <div class="divide-[#f0f0f0] divide-y border-everly-light_grey border-b">
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="router.push('/mypage/user/info')"
     >
       <div class="flex">
@@ -10,7 +10,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="router.push('/mypage/contractList/buy')"
     >
       <div class="flex">
@@ -19,7 +19,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="router.push('/mypage/contractList/sell')"
     >
       <div class="flex">
@@ -28,7 +28,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="router.push('/mypage/mileage/charge')"
     >
       <div class="flex">
@@ -38,7 +38,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="router.push('/mypage/mileage/withdraw')"
     >
       <div class="flex">
@@ -48,7 +48,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="router.push('/mypage/mileage/overview')"
     >
       <div class="flex">
@@ -58,7 +58,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="moveExternalLink('공지사항')"
     >
       <div class="flex">
@@ -68,7 +68,7 @@
       <img src="@/assets/icon/arrow_right.svg" alt="" class="pr-3" />
     </div>
     <div
-      class="flex justify-between px-5 py-4"
+      class="flex justify-between px-5 py-4 cursor-pointer"
       @click="moveExternalLink('문의하기')"
     >
       <div class="flex">

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import * as paymentApi from "@/api/payment-service/index";
 import * as authApi from "@/api/auth-service/index";
+import * as userApi from "@/api/user-service/index";
 import type mileageOveriewResponseDto from "@/domain/payment/mileageOverviewReponseDTO.interface";
 import { putBankAccountBody } from "@/domain/auth";
 import * as contractInfo from "@/domain/payment/contractPostDetailDto.interaface";
@@ -359,7 +360,20 @@ export const usemypageStore = defineStore("mypageStore", {
         })
         .catch((err) => {
           console.log(err);
-
+          result = false;
+        });
+      return result;
+    },
+    async deleteUserAccount(withdrawalReasons: string) {
+      var result = false;
+      await userApi
+        .deleteUseAccount(withdrawalReasons)
+        .then((res) => {
+          console.log(res);
+          result = true;
+        })
+        .catch((err) => {
+          console.log(err);
           result = false;
         });
       return result;
