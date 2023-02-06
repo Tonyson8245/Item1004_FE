@@ -18,7 +18,7 @@
       </div> -->
       <!-- 19세 표시 주의 문구 -->
       <div class="flex px-5 mt-20  md:mt-16 md:px-6 items-center">
-        <img class=" w-14 h-14" src="@/assets/icon/19.png" alt="">
+        <img class=" w-14 h-14" src="@/assets/icon/19.svg" alt="">
         <div class=" pl-2 text-sm md:text-base">
           본 정보 내용은 청소년 유해매체물로서 [정보통신망 이용촉진 및 정보보호 등에 관한 법률] 및 [청소년 보호법]에 따라 19세 미만의 청소년은 거래를 이용할 수 없습니다.
         </div>
@@ -108,9 +108,9 @@ function getNiceEncData() {
     );
     router.push("/account/login");
   } else {
-    authStore.getNiceEncData("register").then((res) => {
-      if (res?.encryptionData) {
-        encData.value = res?.encryptionData;
+    authStore.getNiceEncData("signup").then((res) => {      
+      if (res?.encData) {
+        encData.value = res?.encData;
         setTimeout(() => {
           fnPopup();
         }, 100);
