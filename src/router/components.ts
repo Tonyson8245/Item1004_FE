@@ -73,9 +73,11 @@ import contractListBuy from "@/components/mypage/detail/contractBuyList.vue";
 import mypageMobilepage from "@/components/mypage/mypageMobilepage.vue";
 // @ts-ignore
 import AdultView from "@/views/AdultView.vue";
+import userWithdrawl from "@/components/mypage/modaldetail/deleteUserAccount.vue";
 
 export default {
   mypageMobilepage,
+  userWithdrawl,
   contractListBuy,
   contractListSell,
   contractInfo,

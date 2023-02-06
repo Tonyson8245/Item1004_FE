@@ -233,6 +233,23 @@ const router = createRouter({
                 navbar: false,
               },
             },
+            {
+              path: "user/info/withdrawl",
+              meta: {
+                title: "회원탈퇴",
+                navbar: false,
+                needLogin: true,
+              },
+              components: {
+                default: async () => {
+                  if (!isMobile()) {
+                    return components.userinfo;
+                  } else {
+                    return components.userWithdrawl;
+                  }
+                },
+              },
+            },
           ],
         },
       ],
