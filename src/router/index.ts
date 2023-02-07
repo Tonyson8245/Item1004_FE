@@ -11,10 +11,7 @@ import { isEmpty } from "class-validator";
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
-    {
-      path: "/",
-      redirect: "/home",
-    },
+
     {
       path: "/paytus",
       component: components.paytus,
@@ -34,7 +31,7 @@ const router = createRouter({
       meta: { transition: "slide-right", name: "home", needLogin: false },
       children: [
         {
-          path: "home",
+          path: "/",
           component: components.mainPage,
           meta: {
             transition: "slide-right",
