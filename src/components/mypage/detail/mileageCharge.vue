@@ -33,6 +33,11 @@
           >
             카카오 채널 바로가기
           </span>
+
+        </div>
+
+        <div class="text-sm md:text-base py-3 md:pb-5">
+          * 충전 포인트로 상품구매 목적이 아닌 단순 현금화 및 카드 포인트 적립 등 악용하는 경우에 즉시 계정정지 및 수사기관에 고발조치 합니다.         
         </div>
         <!-- 결제 수단들 -->
         <div>
@@ -268,6 +273,8 @@ import { storeToRefs } from "pinia";
 import type { user } from "@/domain/user/user.interface";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import commonFunction, { moveExternalLink } from "@/common";
+import { useMeta, useActiveMeta } from "vue-meta";
+
 const router = useRouter();
 
 const paymentMethod = ref("card");
@@ -358,6 +365,19 @@ function showKakaoChannelConfirm(paymentType: string) {
   const message = `아이템 천사 카카오 채널을 통해 ${paymentType}(으)로 결제가 가능합니다.\n카카오 채널로 이동하시겠습니까?`;
   if (confirm(message)) moveExternalLink("카카오채널");
 }
+
+
+// 메타태그
+useMeta({
+  title: "아이템천사 - 마일리지 충전",
+  meta: [
+  { name: 'description', content: '아이템천사 마일리지 충전', vmid: 'description'},
+
+  { name: 'author', content: '아이템천사'},
+  ],
+});
+
+
 </script>
 
 <style scoped>
