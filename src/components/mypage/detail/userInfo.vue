@@ -1,7 +1,7 @@
 <template>
   <ModalMypage
     :propsShowModal="showModal"
-    :propsType="'userinfoPutAccount'"
+    :propsType="modalType"
     @update:propsShowModal="setShowModal(false)"
   />
   <div class="py-5 md:py-0 md:pl-8">
@@ -186,7 +186,7 @@
         </div>
         <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
-          @click="clickButton('putBankAccount', true)"
+          @click="clickButton('userinfoPutAccount', true)"
         >
           {{ buttonContent(storeUserInfoOverview.bankAccount != "") }}
         </div>
@@ -198,6 +198,30 @@
       @click="logout()"
     >
       로그아웃
+    </div>
+    <div>
+      <div class="md:hidden">
+        <hr class="border-everly-light_grey my-4 md:my-8" />
+        <div
+          class="px-5 pt-1 block md:hidden text-everly-dark_grey font-bold cursor-pointer"
+          @click="clickButton('deleteUserAccount', true)"
+        >
+          탈퇴하기
+        </div>
+        <hr class="border-everly-light_grey my-4 md:my-8" />
+      </div>
+      <div
+        class="text-everly-dark_grey text-sm items-center space-x-3 hidden md:flex"
+      >
+        <div>• 회원탈퇴 후 동일한 아이디로 재가입이 불가능 합니다.</div>
+        <div
+          class="flex text-sm items-center space-x-3 bg-everly-white border-everly-dark_grey rounded-md border px-1.5 py-0.5 cursor-pointer"
+          @click="clickButton('deleteUserAccount', true)"
+        >
+          <div>탈퇴하기</div>
+          <img src="@/assets/icon/arrow_right.svg" alt="" class="w-1.5" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -244,18 +268,25 @@ const buttonContent = (status: boolean) => {
 };
 
 const router = useRouter();
-const authstore = useauthStore();
 function logout() {
   router.push("/logout");
 }
 
+//모달의 종류
+const modalType = ref("");
 //버튼 누르는 동작
 function clickButton(type: string, status: boolean) {
+  modalType.value = type;
   //웹인경우
-  if (minSize.value.value) setShowModal(status);
-  //모바일인경우
+  if (minSize.value.value) {
+    setShowModal(status);
+  }
+  //모바일인경우 각 페이지로 이동
   else {
-    router.push("/mypage/user/info/putBankAccount");
+    if (type == "userinfoPutAccount")
+      router.push("/mypage/user/info/putBankAccount"); // 출금계좌 인증 페이지
+    else if (type == "deleteUserAccount")
+      router.push("/mypage/user/info/withdrawl"); //회원 탈퇴 페이지
   }
 }
 
