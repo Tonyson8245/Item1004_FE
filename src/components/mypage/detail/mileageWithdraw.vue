@@ -219,6 +219,7 @@ import { useMediaQuery } from "@vueuse/core";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import { isNotEmptyObject } from "class-validator";
+import { useMeta, useActiveMeta } from "vue-meta";
 
 const router = useRouter();
 const mypageStore = usemypageStore();
@@ -285,6 +286,17 @@ watch(minSize.value, (minSize) => {
     //페이지가 모바일이되는 경우
     showModal.value = false;
   }
+});
+
+
+// 메타태그
+useMeta({
+  title: "아이템천사 - 마일리지 출금",
+  meta: [
+  { name: 'description', content: '아이템천사 마일리지 출금', vmid: 'description'},
+
+  { name: 'author', content: '아이템천사'},
+  ],
 });
 </script>
 
