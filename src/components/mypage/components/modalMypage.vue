@@ -54,8 +54,13 @@
                 </div>
               </div>
             </div>
+
             <putBankAccount
               v-else-if="props.propsType == 'userinfoPutAccount'"
+              @update:propsShowModal="emit('update:propsShowModal', false)"
+            />
+            <DeleteUserAccount
+              v-else-if="props.propsType == 'deleteUserAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
             />
           </div>
@@ -77,6 +82,7 @@ import { ref } from "vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import DeleteUserAccount from "../modaldetail/deleteUserAccount.vue";
 
 const router = useRouter();
 const props = defineProps<{
