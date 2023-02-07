@@ -381,7 +381,6 @@ router.beforeEach((to, from) => {
 
   // 라우팅 될때 데이터 가져오기
   const mypageStore = usemypageStore();
-  const { storeUserInfo } = storeToRefs(mypageStore);
 
   const userData = localStorage.getItem("user");
   const refreshTokenData = localStorage.getItem("refreshToken");
@@ -460,10 +459,8 @@ router.beforeEach((to, from) => {
     if (token == null) {
       alert("로그인이 필요합니다");
 
-      if (from.meta.needLogin == true)
-        router.replace(
-          "/"
-        ); //뒤로 갈 페이지가 로그인이 필요한 페이지면 홈으로 보냄
+      if (from.meta.needLogin == true) router.replace("/");
+      //뒤로 갈 페이지가 로그인이 필요한 페이지면 홈으로 보냄
       else router.replace(from);
       return;
     } else if (to.meta.needCheckAdult == true) checkIsAdult(); //성인도 체크해봐야함
