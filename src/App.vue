@@ -41,12 +41,12 @@ function toggle(value: boolean) {
 const MODE = import.meta.env.MODE;
 console.log(MODE);
 
-// if (MODE == "production") {
-//   console.log = function () {};
-//   console.error = function () {};
-//   console.warn = function () {};
-//   console.debug = function () {};
-// }
+if (MODE == "production") {
+  console.log = function () {};
+  console.error = function () {};
+  console.warn = function () {};
+  console.debug = function () {};
+}
 </script>
 
 <style></style>
