@@ -5,17 +5,17 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
-
 <url>
   <loc>https://www.item1004.co.kr/</loc>
+  <changefreq>daily</changefreq>
+  <priority>1.0</priority>
 </url>
-
 <url>
    <loc>https://www.item1004.co.kr/mypage/mileage/withdraw</loc>
+   <changefreq>daily</changefreq>
 </url>
-
 <url>
    <loc>https://www.item1004.co.kr/mypage/mileage/charge</loc>
+   <changefreq>daily</changefreq>
 </url>
 </urlset>
