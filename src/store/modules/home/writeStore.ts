@@ -93,7 +93,6 @@ export const useWriteStore = defineStore("writeStore", {
         .catch((err) => {
           console.log(err);
           alert("등록에 실패하였습니다.");
-          this.router.replace("/");
         });
       return result;
     },
@@ -200,12 +199,12 @@ export const useWriteStore = defineStore("writeStore", {
       await homeApi
         .editPost(post, postIdx)
         .then((res) => {
+          console.log(res);
           this.router.replace("/post?postId=" + postIdx);
         })
         .catch((err) => {
           console.log(err);
           alert("등록에 실패하였습니다.");
-          this.router.replace("/");
         });
       return result;
     },

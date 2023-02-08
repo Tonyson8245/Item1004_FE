@@ -58,9 +58,9 @@ const content = computed(() => {
   else if (props.failedType == "wrongPrice")
     return "가격 책정이 올바르지 않습니다.";
   else if (props.failedType == "noGameIdx")
-    return "게임명이 올바르지 않습니다.";
+    return "게임명이 존재하지않거나\n 올바르지 않습니다.";
   else if (props.failedType == "noServerIdx")
-    return "서버명이 올바르지 않습니다.";
+    return "서버명이 존재하지않거나\n 올바르지 않습니다.";
 });
 </script>
 <style scoped></style>

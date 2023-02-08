@@ -102,9 +102,16 @@ async function toggleDropdown() {
 }
 
 //초기화
-console.log(props.modelValue);
-if (props.modelValue != null) {
+console.log(
+  props.propsPlaceholder,
+  props.modelValue,
+  isEmpty(props.modelValue),
+  props.modelValue == ""
+);
+if (!isEmpty(props.modelValue)) {
   title.value = props.modelValue;
+} else {
+  title.value = props.propsPlaceholder;
 }
 </script>
 
