@@ -74,6 +74,7 @@ import mypageMobilepage from "@/components/mypage/mypageMobilepage.vue";
 // @ts-ignore
 import AdultView from "@/views/AdultView.vue";
 import userWithdrawl from "@/components/mypage/modaldetail/deleteUserAccount.vue";
+import VirtualAccount from "@/components/mypage/modaldetail/VirtualAccount.vue"
 
 export default {
   mypageMobilepage,
@@ -87,6 +88,7 @@ export default {
   paytus,
   mileageChargeResult,
   mileageCharge,
+  VirtualAccount,
   userinfo,
   guide,
   logout,

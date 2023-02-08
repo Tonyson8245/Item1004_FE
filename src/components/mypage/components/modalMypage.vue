@@ -55,6 +55,10 @@
               </div>
             </div>
 
+            <!-- 가상 계좌 -->
+            <ModalVirtualAccount  
+              v-else-if="props.propsType == 'virtualAccount'"/>
+
             <putBankAccount
               v-else-if="props.propsType == 'userinfoPutAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
@@ -82,6 +86,7 @@ import { ref } from "vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import ModalVirtualAccount from "@/components/mypage/modaldetail/VirtualAccount.vue";
 import DeleteUserAccount from "../modaldetail/deleteUserAccount.vue";
 
 const router = useRouter();

@@ -1,5 +1,11 @@
 <template>
-  <Modal v-if="showModal" @update:props-show-modal="setModal($event)" />
+  <router-view></router-view>
+  <!-- 모바일용 충전 한도 안내 모달 -->
+  <ChargeLimitInfoModal v-if="isInfoModal" @update:props-show-modal="setIsInfoModal($event)" />
+  <ModalMypage
+    :propsShowModal="isModal"
+    :propsType="modalType"
+  />
   <div>
     <div class="py-5 px-5 md:py-0 md:px-0 md:pl-8">
       <div class="hidden md:block pb-4 font-bold text-xl">마일리지 충전</div>
@@ -53,7 +59,8 @@
               @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`가상계좌`"
-              :active="false"
+              :active="true"
+              
               :img-url="`/assets/icon/virtualAccontwithblue_black.svg`"
             />
             <PaymentMethodVue
@@ -74,7 +81,7 @@
             <!-- todo 문화상품권 이미지를 활성화된 이미지로 변경해야 함 -->
             <PaymentMethodVue
               @get-value="setpaymentMethod($event)"
-              :paymentMethod="paymentMethod"
+              :paymentMethod="paymentMethod"  
               :title="`문화상품권`"
               :active="true"
               :img-url="`/assets/icon/culturewithblue_black.svg`"
@@ -151,7 +158,7 @@
             </div>
             <div
               class="px-4 md:hidden text-xs border-everly-mid_grey border flex items-center"
-              @click="setModal(true)"
+              @click="setIsInfoModal(true)"
             >
               자세히보기
             </div>
@@ -258,14 +265,20 @@
         </div>
       </div>
     </div>
+    <div v-else-if="paymentMethod == '가상계좌'">
+      
+      <button @click="showPaymentModal('virtualAccount')">
+
+      </button>
+    </div>
     <div v-else class="h-80"></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, computed } from "vue";
 import PaymentMethodVue from "../components/paymentMethod.vue";
-import Modal from "../components/chargeLimitInfoModal.vue";
+import ChargeLimitInfoModal from "../components/chargeLimitInfoModal.vue";
 import { payment } from "@/api/payment-module";
 import { useRouter } from "vue-router";
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
@@ -274,9 +287,12 @@ import type { user } from "@/domain/user/user.interface";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import commonFunction, { moveExternalLink } from "@/common";
 import { useMeta, useActiveMeta } from "vue-meta";
+import ModalMypage from "@/components/mypage/components/modalMypage.vue";
+import { useMediaQuery } from "@vueuse/core";
 
 const router = useRouter();
 
+// 지불 방식에 따라 하단 뷰를 변화 시킨다.
 const paymentMethod = ref("card");
 const paymentStore = usePaymentStore();
 const mypageStore = usemypageStore();
@@ -288,15 +304,49 @@ onMounted(() => {
 });
 
 function setpaymentMethod(string: string) {
-  console.log(string);
-
-  if (string != "") paymentMethod.value = string;
+  paymentMethod.value = string;
 }
 
-const showModal = ref(false);
-function setModal(value: boolean) {
-  showModal.value = value;
+
+// 모바일용 충전 한도 안내 모달
+const isInfoModal = ref(false);
+
+// 가상계좌 모달
+const isModal = ref(false);
+
+//모달의 종류
+const modalType = ref("");
+
+function setModalType(paymentMethodType: string) {
+  modalType.value = paymentMethodType;
 }
+
+function setIsInfoModal(value: boolean) {
+  isInfoModal.value = value;
+}
+
+function setIsModal(value: boolean) {
+  isModal.value = value;
+}
+
+
+// 지불 방식에 따른 모달의 변화를 받는다
+function showPaymentModal(paymentMethodType:string) {  
+  // 모바일 사이즈
+  if(!useMediaQuery("(min-width: 640px)").value){
+    router.push('/mypage/mileage/charge/virtualAccount')
+  }
+  else{
+    // 모달 켜준다.
+    setIsModal(true)
+    // 어떤 지불방식의 모달을 띄울지 세팅
+    setModalType(paymentMethodType);    
+  }  
+}
+
+
+
+
 //가격 리스트
 const amountlist = [
   10000, 30000, 50000, 100000, 150000, 200000, 250000, 300000, 350000,

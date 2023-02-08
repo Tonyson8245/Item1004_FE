@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border bg-everly-white flex justify-center items-center text-xs md:text-base text-center relative"
+    class="border bg-everly-white flex justify-center items-center text-xs md:text-base text-center relative"
     :class="borderClass"
     @click="emit('getValue', emitValue)"
   >
