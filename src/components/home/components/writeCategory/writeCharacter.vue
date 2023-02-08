@@ -67,12 +67,6 @@
       <div class="col-span-1 hidden md:block"></div>
       <div class="col-span-9 md:pr-10">
         <div class="flex items-center justify-center">
-          <!-- <inputwithClose
-            :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
-            :propsPlaceholder="descriptionPlaceholder"
-            :modelValue="description"
-            @getModel="description = $event"
-          /> -->
           <textarea
             id="message"
             rows="6"
@@ -94,6 +88,7 @@
           :propsRoleList="storeRoleList"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-full`"
+          :modelValue="storeroleName"
           @getValue="storeroleIdx = $event"
         />
         <dropdown
@@ -101,6 +96,7 @@
           :propsRoleList="storeRoleList"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-[480px]`"
+          :modelValue="storeroleName"
           @getValue="storeroleIdx = $event"
         />
       </div>
@@ -139,6 +135,7 @@
           ]"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-full`"
+          :modelValue="getstoreregistration"
           @getValue="storeregistration = changeregistraion($event)"
         />
         <dropdown
@@ -154,6 +151,7 @@
           ]"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-[480px]`"
+          :modelValue="getstoreregistration"
           @getValue="storeregistration = changeregistraion($event)"
         />
       </div>
@@ -168,6 +166,7 @@
           :propsList="['O', 'X']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-full`"
+          :modelValue="storehasPaymentHistory ? 'O' : 'X'"
           @getValue="storehasPaymentHistory = $event == 'O' ? true : false"
         />
         <dropdown
@@ -175,6 +174,7 @@
           :propsList="['O', 'X']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
+          :modelValue="storehasPaymentHistory ? 'O' : 'X'"
           @getValue="storehasPaymentHistory = $event == 'O' ? true : false"
         />
       </div>
@@ -189,6 +189,7 @@
           :propsList="['O', 'X']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-full`"
+          :modelValue="storeisDuplicatedSync ? 'O' : 'X'"
           @getValue="storeisDuplicatedSync = $event == 'O' ? true : false"
         />
         <dropdown
@@ -196,6 +197,7 @@
           :propsList="['O', 'X']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
+          :modelValue="storeisDuplicatedSync ? 'O' : 'X'"
           @getValue="storeisDuplicatedSync = $event == 'O' ? true : false"
         />
       </div>
@@ -225,8 +227,20 @@ import ModalWriteFailed from "@/components/modal/modalWriteFailed.vue";
 import commonFunction from "@/common";
 
 const writeStore = useWriteStore();
-const { storepostType, storeRoleList } = storeToRefs(writeStore);
-
+const {
+  storepostType,
+  storeRoleList,
+  getstoreregistration,
+  storeroleName,
+  storetitle,
+  storecontent,
+  storepricePerUnit,
+  storeregistration,
+  storelevel,
+  storehasPaymentHistory,
+  storeisDuplicatedSync,
+  storeroleIdx,
+} = storeToRefs(writeStore);
 let SellBuy = ref("판매");
 
 watch(storepostType, () => {
@@ -249,16 +263,6 @@ function select(value: string) {
 }
 
 //글작성
-const {
-  storetitle,
-  storecontent,
-  storepricePerUnit,
-  storeregistration,
-  storelevel,
-  storehasPaymentHistory,
-  storeisDuplicatedSync,
-  storeroleIdx,
-} = storeToRefs(writeStore);
 
 onMounted(() => {
   console.log("onMounter");

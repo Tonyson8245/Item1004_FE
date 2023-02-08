@@ -7,7 +7,7 @@
       v-on:click="toggleDropdown()"
     >
       <button
-        class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left pl-3 pr-8 flex justify-between"
+        class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left pl-3 md:pl-5 pr-8 flex justify-between"
         :class="props.propsClass"
       >
         {{ title }}
@@ -65,10 +65,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type PropType } from "vue";
+import { ref, watch, type PropType, onMounted } from "vue";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { storeToRefs } from "pinia";
 import type { GameRoleDto } from "@/domain/home/gameRoleDto";
+import { isEmpty } from "class-validator";
 
 const componentStore = useComponentStore();
 const { closeDropdown } = storeToRefs(componentStore);
@@ -80,6 +81,7 @@ const props = defineProps({
   propsList: Object as PropType<string[]>,
   propsPlaceholder: String,
   propsRoleList: Object as PropType<GameRoleDto[]>,
+  modelValue: null,
 });
 
 let show = ref(false);
@@ -97,6 +99,12 @@ async function toggleDropdown() {
     await componentStore.toogleCloseDropdown(false);
   }
   show.value = !show.value;
+}
+
+//초기화
+console.log(props.modelValue);
+if (props.modelValue != null) {
+  title.value = props.modelValue;
 }
 </script>
 

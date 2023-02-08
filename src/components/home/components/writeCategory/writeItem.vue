@@ -224,7 +224,7 @@
       <div
         class="md:text-xl text-base border md:py-3 py-2 border-everly-mid_grey rounded-lg font-bold w-full md:w-[490px] text-center"
         :class="buttonClass"
-        @click="createPost()"
+        @click="clickButton()"
       >
         {{ buttonContent }}
       </div>
@@ -242,9 +242,13 @@ import modalWriteComfirm from "@/components/modal/modalWriteComfirm.vue";
 import ModalWriteFailed from "@/components/modal/modalWriteFailed.vue";
 import commonFunction from "@/common";
 import { useRoute } from "vue-router";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 
 const currency = "개";
 const writeStore = useWriteStore();
+const commonStore = useCommonStore();
+const { commonStoreServerKeywordIdx, commonStoreGameKeywordIdx } =
+  storeToRefs(commonStore);
 const { storepostType } = storeToRefs(writeStore);
 
 let SellBuy = ref("판매");
@@ -374,7 +378,7 @@ function clear(state: string) {
 }
 ///거래등록
 const buttonClass = ref("text-everly-white bg-everly-main cursor-pointer");
-function createPost() {
+function clickButton() {
   //판매등록
   if (checkPost()) showModal.value = true;
 }
@@ -386,6 +390,16 @@ function checkPost() {
   var pricePerUnit = storepricePerUnit.value;
   var title = storetitle.value;
 
+  if (commonStoreGameKeywordIdx.value == 0) {
+    failedType.value = "noGameIdx";
+    showFailedModal.value = true;
+    return false;
+  }
+  if (commonStoreServerKeywordIdx.value == 0) {
+    failedType.value = "noServerIdx";
+    showFailedModal.value = true;
+    return false;
+  }
   if (commonFunction.checkMinMax(minAmount, maxAmount)) {
     console.log("minmax실패");
     failedType.value = "minMax";
@@ -415,6 +429,7 @@ function checkPost() {
   }
   return true;
 }
+
 //정규식 확인
 const showFailedModal = ref(false);
 const failedType = ref("");

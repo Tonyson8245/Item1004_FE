@@ -82,4 +82,8 @@ export class GamePostContentSummaryDto {
   @Length(1, 10)
   @IsOptional()
   roleName?: string;
+
+  roleIdx: number;
+  gameIdx: number;
+  serverIdx: number;
 }
