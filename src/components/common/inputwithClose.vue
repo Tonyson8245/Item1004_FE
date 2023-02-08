@@ -19,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+import { isEmpty } from "class-validator";
 import { ref } from "vue";
 
 const emit = defineEmits(["getModel", "clearContent"]);
@@ -33,6 +34,9 @@ let content = ref("");
 function refresh() {
   content.value = "";
   emit("clearContent");
+}
+if (!isEmpty(props.modelValue)) {
+  content.value = props.modelValue;
 }
 </script>
 

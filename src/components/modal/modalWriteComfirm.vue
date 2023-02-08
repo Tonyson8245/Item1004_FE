@@ -80,10 +80,11 @@
 <script lang="ts" setup>
 import { useauthStore } from "@/store/modules/auth/authStore";
 import { useWriteStore } from "@/store/modules/home/writeStore";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import { isEmpty } from "class-validator";
 
 const emit = defineEmits(["select"]);
 const props = defineProps({
@@ -91,9 +92,17 @@ const props = defineProps({
   postType: String,
 });
 const writeStore = useWriteStore();
-const router = useRouter();
+const route = useRoute();
+
 function create() {
-  if (props.postType != undefined) writeStore.createPost(props.postType);
+  var idx = route.query.postId;
+
+  if (props.postType != undefined) {
+    if (route.meta.name == "edit") {
+      if (!isEmpty(idx?.toString()) && idx != null)
+        writeStore.editPost(props.postType, idx.toString());
+    } else writeStore.createPost(props.postType);
+  }
 }
 
 //유저 정보 가져오기

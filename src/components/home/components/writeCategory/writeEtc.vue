@@ -224,9 +224,9 @@
       <div
         class="md:text-xl text-base border md:py-3 py-2 border-everly-mid_grey rounded-lg font-bold w-full md:w-[490px] text-center"
         :class="buttonClass"
-        @click="createPost()"
+        @click="clickButton()"
       >
-        거래 등록하기
+        {{ buttonContent }}
       </div>
     </div>
   </div>
@@ -237,13 +237,18 @@ import inputwithClose from "@/components/common/inputwithClose.vue";
 import inputwithCloseNumber from "@/components/common/inputwithCloseNumber.vue";
 import { useWriteStore } from "@/store/modules/home/writeStore";
 import { storeToRefs } from "pinia";
-import { watch, ref, onUnmounted } from "vue";
+import { watch, ref, onUnmounted, onMounted } from "vue";
 import modalWriteComfirm from "@/components/modal/modalWriteComfirm.vue";
 import ModalWriteFailed from "@/components/modal/modalWriteFailed.vue";
 import commonFunction from "@/common";
+import { useRoute } from "vue-router";
+import { useCommonStore } from "@/store/modules/common/commonStore";
 
 const currency = "개";
 const writeStore = useWriteStore();
+const commonStore = useCommonStore();
+const { commonStoreServerKeywordIdx, commonStoreGameKeywordIdx } =
+  storeToRefs(commonStore);
 const { storepostType } = storeToRefs(writeStore);
 
 let SellBuy = ref("판매");
@@ -295,6 +300,7 @@ function setStore(state: string) {
   const amountunit = texttoNumber(unitAmount.value);
   const priceunit = texttoNumber(unitPrice.value);
 
+  //0이면 바꿔준다.
   switch (state) {
     case "minAmount":
       storeminAmount.value =
@@ -371,10 +377,9 @@ function clear(state: string) {
       break;
   }
 }
-
 ///거래등록
 const buttonClass = ref("text-everly-white bg-everly-main cursor-pointer");
-function createPost() {
+function clickButton() {
   //판매등록
   if (checkPost()) showModal.value = true;
 }
@@ -386,6 +391,16 @@ function checkPost() {
   var pricePerUnit = storepricePerUnit.value;
   var title = storetitle.value;
 
+  if (commonStoreGameKeywordIdx.value == 0) {
+    failedType.value = "noGameIdx";
+    showFailedModal.value = true;
+    return false;
+  }
+  if (commonStoreServerKeywordIdx.value == 0) {
+    failedType.value = "noServerIdx";
+    showFailedModal.value = true;
+    return false;
+  }
   if (commonFunction.checkMinMax(minAmount, maxAmount)) {
     console.log("minmax실패");
     failedType.value = "minMax";
@@ -415,6 +430,7 @@ function checkPost() {
   }
   return true;
 }
+
 //정규식 확인
 const showFailedModal = ref(false);
 const failedType = ref("");
@@ -426,6 +442,17 @@ function failedModaloff(status: boolean) {
 //나갈때 초기화
 onUnmounted(() => {
   writeStore.$reset();
+});
+
+////수정일 때
+const route = useRoute();
+const buttonContent = ref("거래등록하기");
+onMounted(() => {
+  if (route.meta.name == "edit") {
+    buttonContent.value = "거래 수정하기";
+  } else {
+    buttonContent.value = "거래 등록하기";
+  }
 });
 </script>
 

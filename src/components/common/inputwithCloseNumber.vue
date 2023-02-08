@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import commonFunction from "@/common";
+import { isEmpty } from "class-validator";
 
 const emit = defineEmits(["getModel", "clearContent"]);
 const props = defineProps({
@@ -35,6 +36,7 @@ const content = ref("");
 function changeValue(event: Event) {
   var value = event.target as HTMLInputElement;
   commonFunction.inputNumberFormat(event.target as HTMLInputElement);
+
   content.value = value.value;
   emit("getModel", commonFunction.uncomma(value.value));
 }
@@ -53,10 +55,12 @@ function isNumber(evt: any) {
     return true;
   }
 }
-// TODO 천의자리 끊기
-// watch(content, () => {
-//   content.value = parseInt(content.value).toLocaleString();
-// });
+
+if (props.modelValue != null && !isEmpty(props.modelValue)) {
+  content.value = props.modelValue;
+
+  if (props.modelValue == "0") content.value = "";
+}
 </script>
 
 <style scoped></style>

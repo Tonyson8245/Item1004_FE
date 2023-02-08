@@ -67,12 +67,6 @@
       <div class="col-span-1 hidden md:block"></div>
       <div class="col-span-9 md:pr-10">
         <div class="flex items-center justify-center">
-          <!-- <inputwithClose
-            :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full`"
-            :propsPlaceholder="descriptionPlaceholder"
-            :modelValue="description"
-            @getModel="description = $event"
-          /> -->
           <textarea
             id="message"
             rows="6"
@@ -94,6 +88,7 @@
           :propsRoleList="storeRoleList"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-full`"
+          :modelValue="storeroleName"
           @getValue="storeroleIdx = $event"
         />
         <dropdown
@@ -101,6 +96,7 @@
           :propsRoleList="storeRoleList"
           :propsPlaceholder="`캐릭터 직업을 선택하세요`"
           :propsClass="`w-[480px]`"
+          :modelValue="storeroleName"
           @getValue="storeroleIdx = $event"
         />
       </div>
@@ -139,6 +135,7 @@
           ]"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-full`"
+          :modelValue="getstoreregistration"
           @getValue="storeregistration = changeregistraion($event)"
         />
         <dropdown
@@ -154,6 +151,7 @@
           ]"
           :propsPlaceholder="`계정 종류을 선택하세요`"
           :propsClass="`w-[480px]`"
+          :modelValue="getstoreregistration"
           @getValue="storeregistration = changeregistraion($event)"
         />
       </div>
@@ -168,14 +166,16 @@
           :propsList="['O', 'X']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="storehasPaymentHistory = $event == 'O' ? true : false"
+          :modelValue="getstorehasPaymentHistory"
+          @getValue="storehasPaymentHistory = $event === 'O' ? true : false"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['O', 'X']"
           :propsPlaceholder="`결제내역 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="storehasPaymentHistory = $event == 'O' ? true : false"
+          :modelValue="getstorehasPaymentHistory"
+          @getValue="storehasPaymentHistory = $event === 'O' ? true : false"
         />
       </div>
       <!-- 이중연동 유무를-->
@@ -189,14 +189,16 @@
           :propsList="['O', 'X']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-full`"
-          @getValue="storeisDuplicatedSync = $event == 'O' ? true : false"
+          :modelValue="getstoreisDuplicatedSync"
+          @getValue="storeisDuplicatedSync = $event === 'O' ? true : false"
         />
         <dropdown
           class="hidden md:block"
           :propsList="['O', 'X']"
           :propsPlaceholder="`이중연동 유무를 선택하세요`"
           :propsClass="`w-[480px]`"
-          @getValue="storeisDuplicatedSync = $event == 'O' ? true : false"
+          :modelValue="getstoreisDuplicatedSync"
+          @getValue="storeisDuplicatedSync = $event === 'O' ? true : false"
         />
       </div>
     </div>
@@ -205,9 +207,9 @@
       <div
         class="md:text-xl text-base border md:py-3 py-2 border-everly-mid_grey rounded-lg font-bold w-full md:w-[490px] text-center"
         :class="buttonClass"
-        @click="createPost()"
+        @click="clickButton()"
       >
-        거래 등록하기
+        {{ buttonContent }}
       </div>
     </div>
   </div>
@@ -219,14 +221,31 @@ import inputwithCloseNumber from "@/components/common/inputwithCloseNumber.vue";
 import dropdown from "@/components/common/dropdown.vue";
 import { useWriteStore } from "@/store/modules/home/writeStore";
 import { storeToRefs } from "pinia";
-import { watch, ref, onMounted, onUnmounted } from "vue";
+import { watch, ref, onMounted, onUnmounted, computed } from "vue";
 import ModalWriteComfirm from "@/components/modal/modalWriteComfirm.vue";
 import ModalWriteFailed from "@/components/modal/modalWriteFailed.vue";
 import commonFunction from "@/common";
-
+import { useRoute } from "vue-router";
+import { useCommonStore } from "@/store/modules/common/commonStore";
+import { isNotEmpty } from "class-validator";
+const commonStore = useCommonStore();
+const { commonStoreServerKeywordIdx, commonStoreGameKeywordIdx } =
+  storeToRefs(commonStore);
 const writeStore = useWriteStore();
-const { storepostType, storeRoleList } = storeToRefs(writeStore);
-
+const {
+  storepostType,
+  storeRoleList,
+  getstoreregistration,
+  storeroleName,
+  storetitle,
+  storecontent,
+  storepricePerUnit,
+  storeregistration,
+  storelevel,
+  storehasPaymentHistory,
+  storeisDuplicatedSync,
+  storeroleIdx,
+} = storeToRefs(writeStore);
 let SellBuy = ref("판매");
 
 watch(storepostType, () => {
@@ -249,16 +268,6 @@ function select(value: string) {
 }
 
 //글작성
-const {
-  storetitle,
-  storecontent,
-  storepricePerUnit,
-  storeregistration,
-  storelevel,
-  storehasPaymentHistory,
-  storeisDuplicatedSync,
-  storeroleIdx,
-} = storeToRefs(writeStore);
 
 onMounted(() => {
   console.log("onMounter");
@@ -292,7 +301,7 @@ function changeregistraion(text: string) {
 
 ///거래등록
 const buttonClass = ref("text-everly-white bg-everly-main cursor-pointer");
-function createPost() {
+function clickButton() {
   //판매등록
   if (checkPost()) showModal.value = true;
 }
@@ -305,6 +314,16 @@ function checkPost() {
   var isDuplcationSync = storeisDuplicatedSync.value;
   var title = storetitle.value;
 
+  if (commonStoreGameKeywordIdx.value == 0) {
+    failedType.value = "noGameIdx";
+    showFailedModal.value = true;
+    return false;
+  }
+  if (commonStoreServerKeywordIdx.value == 0) {
+    failedType.value = "noServerIdx";
+    showFailedModal.value = true;
+    return false;
+  }
   if (commonFunction.checkTitle(title)) {
     failedType.value = "title";
     showFailedModal.value = true;
@@ -331,21 +350,41 @@ const failedType = ref("");
 function failedModaloff(status: boolean) {
   showFailedModal.value = status;
 }
-// 상태에 따라 버튼색 다르게 하기
-// watch(
-//   [
-//     storeminAmount,
-//     storemaxAmount,
-//     storesaleUnit,
-//     storepricePerUnit,
-//     storetitle,
-//   ],
-//   () => {
-//     if (checkPost())
-//       buttonClass.value = "text-everly-white bg-everly-main cursor-pointer";
-//     else buttonClass.value = "text-everly-white bg-everly-mid_grey";
-//   }
-// );
+
+//나갈때 초기화
+onUnmounted(() => {
+  writeStore.$reset();
+});
+
+////수정일 때
+const route = useRoute();
+const buttonContent = ref("거래등록하기");
+onMounted(() => {
+  if (route.meta.name == "edit") {
+    buttonContent.value = "거래 수정하기";
+  } else {
+    buttonContent.value = "거래 등록하기";
+  }
+});
+const getstoreisDuplicatedSync = computed(() => {
+  // null 이 아닐때만 O,X 넣기
+  var text = isNotEmpty(storeisDuplicatedSync.value)
+    ? storeisDuplicatedSync.value
+      ? "O"
+      : "X"
+    : null;
+  return text;
+});
+
+const getstorehasPaymentHistory = computed(() => {
+  // null 이 아닐때만 O,X 넣기
+  var text = isNotEmpty(storehasPaymentHistory.value)
+    ? storehasPaymentHistory.value
+      ? "O"
+      : "X"
+    : null;
+  return text;
+});
 </script>
 
 <style scoped></style>
