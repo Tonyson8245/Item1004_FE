@@ -186,8 +186,21 @@ const router = createRouter({
               meta: {
                 title: "마일리지 충전",
                 name: `charge`,
+                needLogin: true,
                 navbar: false,
               },
+              children:[
+                {
+                  path: "virtualAccount",
+                  component: components.VirtualAccount,
+                  meta: {
+                    title: "가상계좌 충전",
+                    name: `virtualAccount`,
+                    needLogin: true,
+                    navbar: false,
+                  },
+                },
+              ]
             },
             {
               path: "mileage/withdraw",
@@ -210,7 +223,7 @@ const router = createRouter({
               path: "user/info/putBankAccount",
               component: components.putBankAccount,
               meta: {
-                title: "회원정보수정",
+                title: "출금하기",
                 navbar: false,
               },
             },
