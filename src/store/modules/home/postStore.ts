@@ -237,7 +237,8 @@ export const usePostStore = defineStore("postStore", {
             : {};
         })
         .catch((err) => {
-          console.log(err);
+          alert(err.message);
+          this.router.replace("/");
         });
     },
 
