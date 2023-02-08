@@ -53,10 +53,10 @@ function isNumber(evt: any) {
     return true;
   }
 }
-// TODO 천의자리 끊기
-// watch(content, () => {
-//   content.value = parseInt(content.value).toLocaleString();
-// });
+
+if (props.modelValue != null) {
+  content.value = props.modelValue;
+}
 </script>
 
 <style scoped></style>

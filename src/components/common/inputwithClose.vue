@@ -34,6 +34,9 @@ function refresh() {
   content.value = "";
   emit("clearContent");
 }
+if (props.modelValue != null) {
+  content.value = props.modelValue;
+}
 </script>
 
 <style scoped></style>

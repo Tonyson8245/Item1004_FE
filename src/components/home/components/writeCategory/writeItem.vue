@@ -226,7 +226,7 @@
         :class="buttonClass"
         @click="createPost()"
       >
-        거래 등록하기
+        {{ buttonContent }}
       </div>
     </div>
   </div>
@@ -237,10 +237,11 @@ import inputwithClose from "@/components/common/inputwithClose.vue";
 import inputwithCloseNumber from "@/components/common/inputwithCloseNumber.vue";
 import { useWriteStore } from "@/store/modules/home/writeStore";
 import { storeToRefs } from "pinia";
-import { watch, ref, onUnmounted } from "vue";
+import { watch, ref, onUnmounted, onMounted } from "vue";
 import modalWriteComfirm from "@/components/modal/modalWriteComfirm.vue";
 import ModalWriteFailed from "@/components/modal/modalWriteFailed.vue";
 import commonFunction from "@/common";
+import { useRoute } from "vue-router";
 
 const currency = "개";
 const writeStore = useWriteStore();
@@ -425,6 +426,17 @@ function failedModaloff(status: boolean) {
 //나갈때 초기화
 onUnmounted(() => {
   writeStore.$reset();
+});
+
+////수정일 때
+const route = useRoute();
+const buttonContent = ref("거래등록하기");
+onMounted(() => {
+  if (route.meta.name == "edit") {
+    buttonContent.value = "거래 수정하기";
+  } else {
+    buttonContent.value = "거래 등록하기";
+  }
 });
 </script>
 

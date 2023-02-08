@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import dummyPost from "@/assets/dummy/home/post/dummypost";
 import * as homeApi from "@/api/home-service/index";
 import type { PropType } from "vue";
+import { useCommonStore } from "../common/commonStore";
 
 export const usePostStore = defineStore("postStore", {
   state: () => ({
@@ -239,6 +240,7 @@ export const usePostStore = defineStore("postStore", {
           console.log(err);
         });
     },
+
     async deletePost() {
       var result = false;
       var postIdx = this.storePostIdx.toString();

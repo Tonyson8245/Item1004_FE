@@ -20,21 +20,9 @@
             class="hidden md:flex gap-5"
             v-if="storeUserInfo.idx == storeUserIdx"
           >
-            <!-- TODO 1차 출시 주석 2023-01-25 23:50:36 -->
-            <!-- <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-            >
-              <img
-                src="@/assets/icon/pencil_grey.svg"
-                alt=""
-                class="w-3 mr-2"
-              />
-              수정하기
-            </div>
-           -->
             <div
               class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-              @click="alertMSG()"
+              @click="goEditPage()"
             >
               <img
                 src="@/assets/icon/pencil_grey.svg"
@@ -523,13 +511,12 @@
         class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 rounded-t-lg w-full sm:text-base"
         v-else-if="storeShowManagePost"
       >
-        <!-- TODO 1차 출시 주석 2023-01-25 23:50:15 -->
-        <!-- <div class="py-4 text-center w-full">수정하기</div>
+        <div class="py-4 text-center w-full" @click="goEditPage()">
+          수정하기
+        </div>
         <hr
           class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
         />
-        -->
-        <div class="py-4 text-center w-full" @click="alertMSG()">수정하기</div>
         <hr
           class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
         />
@@ -743,6 +730,25 @@ function goChatPage() {
       }
     }
   }
+}
+
+function goEditPage() {
+  var postIdx = route.query.postId;
+  var writerIdx = storeUserIdx.value;
+  var userIdx = storeUserInfo.value.idx;
+  console.log(
+    !isEmpty(postIdx?.toString()),
+    postIdx != null,
+    writerIdx == userIdx
+  );
+
+  if (
+    !isEmpty(postIdx?.toString()) &&
+    postIdx != null &&
+    writerIdx == userIdx
+  ) {
+    router.push(`/edit?postId=${postIdx}`);
+  } else router.push("/");
 }
 </script>
 
