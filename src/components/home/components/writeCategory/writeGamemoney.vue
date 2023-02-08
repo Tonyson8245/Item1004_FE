@@ -401,6 +401,7 @@ function checkPost() {
     showFailedModal.value = true;
     return false;
   }
+
   if (commonFunction.checkMinMax(minAmount, maxAmount)) {
     console.log("minmax실패");
     failedType.value = "minMax";

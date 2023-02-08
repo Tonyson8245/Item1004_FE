@@ -228,7 +228,9 @@ import commonFunction from "@/common";
 import { useRoute } from "vue-router";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { isNotEmpty } from "class-validator";
-
+const commonStore = useCommonStore();
+const { commonStoreServerKeywordIdx, commonStoreGameKeywordIdx } =
+  storeToRefs(commonStore);
 const writeStore = useWriteStore();
 const {
   storepostType,
@@ -312,6 +314,16 @@ function checkPost() {
   var isDuplcationSync = storeisDuplicatedSync.value;
   var title = storetitle.value;
 
+  if (commonStoreGameKeywordIdx.value == 0) {
+    failedType.value = "noGameIdx";
+    showFailedModal.value = true;
+    return false;
+  }
+  if (commonStoreServerKeywordIdx.value == 0) {
+    failedType.value = "noServerIdx";
+    showFailedModal.value = true;
+    return false;
+  }
   if (commonFunction.checkTitle(title)) {
     failedType.value = "title";
     showFailedModal.value = true;
