@@ -123,10 +123,10 @@
       <div class="flex-1 hidden md:block border-b"></div>
     </div>
     <div v-if="route.meta.name == 'home' || route.meta.name == 'list'">
-      <div class="flex cursor-default">
+      <div class="flex cursor-default bg-[#fafafa]">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
-          <div class="flex-none bg-[#fafafa] w-[1180px] px-4">
+          <div class="flex-none w-[1180px] px-4">
             <div class="flex justify-between items-end py-3">
               <div class="flex space-x-6">
                 <div class="flex space-x-1">

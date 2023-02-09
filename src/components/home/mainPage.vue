@@ -4,6 +4,54 @@
   <BannerWeb class="hidden md:flex" />
   <BannerTablet class="hidden sm:flex md:hidden" />
   <BannerMobile class="flex sm:hidden" />
+
+  <div class="flex">
+    <div class="flex-1"></div>
+    <div class="flex-none w-[73.75rem]">
+      <div class="hidden md:block">상품권판매시작</div>
+      <div class="flex">
+        <div>아이템거래</div>
+        <div>상품권거래</div>
+        <div>내거래</div>
+        <div>충전하기</div>
+        <div>출금하기</div>
+      </div>
+      <div>
+        인기거래
+        <div class="md:flex">
+          <div>거래글 1</div>
+          <div>거래글 2</div>
+          <div>거래글 3</div>
+          <div>거래글 4</div>
+          <div>거래글 5</div>
+        </div>
+      </div>
+      <!-- 웹내용 -->
+      <div class="hidden md:block">
+        <div class="grid grid-cols-6 gap-10">
+          <div class="col-span-4 bg-everly-light_grey">실시간 물품</div>
+          <div class="col-span-2 bg-everly-light_grey">마일리지 충전</div>
+          <div class="col-span-4 bg-everly-light_grey">동영상 컨텐츠</div>
+          <div class="col-span-2 bg-everly-light_grey">마일리지 충전</div>
+          <div class="col-span-3 bg-everly-light_grey">고객센터</div>
+          <div class="col-span-3 bg-everly-light_grey">공지사항</div>
+        </div>
+      </div>
+      <!-- 모바일 내용 -->
+      <div class="md:hidden">
+        <div>상품권판매시작</div>
+        <div>포션퍼줄게</div>
+        <div>공지사항</div>
+        <div>
+          <div>아이템천사 고객센터</div>
+          <div>1:1 상담</div>
+        </div>
+      </div>
+
+      <div>협력사들</div>
+    </div>
+    <div class="flex-1"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
