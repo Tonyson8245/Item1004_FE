@@ -7,7 +7,9 @@
     "
     class="relative"
   >
-    <headerComponentVue class="w-full z-10 top-0 sticky md:sticky" />
+    <!-- 모바일은 필터 + 헤더 / 웹은 헤더 -> 검색 -> 필터의 구조 -->
+    <webHeader class="w-full z-10 top-0 hidden md:block sticky md:sticky" />
+    <MobileHeader class="w-full z-10 top-0 sticky md:hidden" />
 
     <!-- 결제 테스트시  -->
     <!-- <router-view v-slot="{ Component }">
@@ -65,7 +67,7 @@
 </template>
 <script lang="ts" setup>
 import { useSearchStore } from "@/store/modules/home/searchStore";
-import headerComponentVue from "../components/header/headerComponent.vue";
+import webHeader from "../components/header/webHeader.vue";
 import { storeToRefs } from "pinia";
 import Navbar from "@/components/footer/NavbarMobile.vue";
 import Postbar from "@/components/footer/PostbarMobile.vue";
@@ -78,6 +80,7 @@ import { useRoute } from "vue-router";
 import FooterLogin from "@/components/footer/footerLogin.vue";
 import ContractInfobar from "@/components/footer/ContractInfobarMobile.vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
+import MobileHeader from "@/components/header/mobileHeader.vue";
 
 // import smartroVue from "@/components/payment/smartro.vue";
 
@@ -88,7 +91,6 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 // };
 
 const mainStore = useMainStore();
-const mypageStore = usemypageStore();
 const commonStore = useCommonStore();
 const componentStore = useComponentStore();
 const route = useRoute();
@@ -96,7 +98,6 @@ const route = useRoute();
 //검색창 활성화 값 가져오기
 const searchStore = useSearchStore();
 const { storeShowSearch_web } = storeToRefs(searchStore);
-const { storeinfiniteStatus } = storeToRefs(mainStore);
 
 //웹 검색창 비활성화
 function toggleSearchWeb() {

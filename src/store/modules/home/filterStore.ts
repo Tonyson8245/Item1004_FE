@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { useComponentStore } from "../common/componentStore";
 export const useFilterStore = defineStore("filterStore", {
   state: () => ({
     //웹,모바일 상태에서 필터창 켜졌는지 여부
@@ -49,8 +50,11 @@ export const useFilterStore = defineStore("filterStore", {
   },
   actions: {
     setstoreShowFilter_mobile(status: boolean) {
+      var componentStore = useComponentStore();
+
       //debounce는 0.6초 뒤에 값 적용되게 해주는 함수
       this.storeShowFilter_mobile = status;
+      componentStore.setscrollLock(status);
     },
     setstoreShowFilter_web(status: boolean) {
       this.storeShowFilter_web = status;

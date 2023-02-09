@@ -9,7 +9,7 @@
         @input="(event: Event) => {
   setTempKeyword((event.target as HTMLInputElement).value); offServerFilter();
 }"
-        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[220px]"
+        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[170px]"
       />
       <!--  -->
       <input
@@ -21,10 +21,10 @@
   setTempKeyword((event.target as HTMLInputElement).value); offServerFilter();
 }"
         disabled
-        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[220px] cursor-not-allowed"
+        class="bg-white text-[#6B7280] px-3 outline-none text-sm py-2 border-everly-mid_grey border-b w-full md:w-[170px] cursor-not-allowed"
       />
       <div
-        class="absolute right-3 top-2 md:right-10 md:top-2"
+        class="absolute right-3 top-2 md:right-2 md:top-2"
         v-if="props.type == 'game'"
       >
         <img src="@/assets/icon/circle_search_grey.svg" alt="" class="w-6" />
