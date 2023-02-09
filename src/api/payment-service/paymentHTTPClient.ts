@@ -31,7 +31,7 @@ const namespace = "paymentTTPClient::";
 
 instance.interceptors.response.use(
   (response) => {
-    //성공 시에는 result 값만 돌려보넴    
+    //성공 시에는 result 값만 돌려보넴
     return response.data.result;
   },
   async (error) => {
@@ -69,6 +69,9 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
             console.log(namespace, "재발급 실패 >>> PAYMENT");
             return Promise.reject("재발급 실패 error");
           });

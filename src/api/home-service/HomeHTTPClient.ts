@@ -72,6 +72,9 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
             console.log(namespace, "재발급 실패 >>>> HOME");
             return Promise.reject(error.response.data.meta);
           });
