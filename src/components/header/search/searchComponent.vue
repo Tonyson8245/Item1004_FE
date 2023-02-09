@@ -2,10 +2,10 @@
   <div>
     <div
       class="dropdown-wrapper w-full border border-everly-main rounded-lg overflow-hidden bg-everly-white"
+      @click="toggleFilter_web()"
     >
       <div class="flex items-center h-[2.5rem] pl-4" :class="props.propsClass">
         <div
-          @click="toggleFilter_web()"
           class="flex-grow rounded-l-lg bg-transparent py-4 px-0 outline-none text-sm"
         >
           <input
@@ -431,6 +431,7 @@ import { useCommonStore } from "../../../store/modules/common/commonStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "@/store/modules/home/mainStore";
+import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
   propsClass: String,
@@ -501,7 +502,13 @@ const {
   filterStoreServerKeywordIdx,
 } = storeToRefs(filterStore);
 
+const route = useRoute();
+const router = useRouter();
 function toggleFilter_web() {
+  if (route.meta.name != `list`) {
+    router.push("/list");
+  }
+
   //활성화 할때, 기존 필터와 변경될 필터 값과 비교하기 위해서 저장해둠
   if (!storeShowFilter_web.value) {
     var gameKeyword = filterStoreGameKeyword.value;

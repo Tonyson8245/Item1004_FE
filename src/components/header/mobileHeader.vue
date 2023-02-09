@@ -3,7 +3,7 @@
     <!-- 모바일 메인 헤더 -->
     <div
       class="w-full bg-everly-main px-4 py-3 cursor-default top-0 md:hidden z-20 fixed"
-      v-if="route.meta.name == `home`"
+      v-if="route.meta.name == `home` || route.meta.name == `list`"
     >
       <div class="flex justify-between items-center">
         <div

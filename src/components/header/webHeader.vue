@@ -16,10 +16,12 @@
             />
             <div class="flex justify-between items-center pt-3">
               <search
+                v-if="route.meta.name == 'home' || route.meta.name == 'list'"
                 :props-class="`w-[35.375rem]`"
                 @click.stop=""
                 style="z-index: 5"
               />
+              <div v-else class="h-[4rem]"></div>
             </div>
           </div>
           <div class="hidden md:block text-sm md:pt-6">
@@ -120,7 +122,7 @@
       </div>
       <div class="flex-1 hidden md:block border-b"></div>
     </div>
-    <div>
+    <div v-if="route.meta.name == 'home' || route.meta.name == 'list'">
       <div class="flex cursor-default">
         <div class="flex-1 hidden md:block"></div>
         <div class="flex-none hidden md:block">
@@ -195,7 +197,7 @@
 
     <!-- 헤더끝 -->
     <div class="z-10">
-      <div v-if="route.meta.name != `home`">
+      <div v-if="route.meta.name != `home` && route.meta.name != `list`">
         <CommonHeader />
       </div>
     </div>

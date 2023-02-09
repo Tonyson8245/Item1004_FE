@@ -40,6 +40,16 @@ const router = createRouter({
           },
         },
         {
+          path: "/list",
+          component: components.listPage,
+          meta: {
+            transition: "slide-right",
+            name: "list",
+            navbar: true,
+            needLogin: false,
+          },
+        },
+        {
           path: "write",
           component: components.writePage,
           meta: {

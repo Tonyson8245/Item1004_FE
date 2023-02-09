@@ -9,7 +9,7 @@
   >
     <!-- 모바일은 필터 + 헤더 / 웹은 헤더 -> 검색 -> 필터의 구조 -->
     <webHeader class="w-full z-10 top-0 hidden md:block sticky md:sticky" />
-    <MobileHeader class="w-full z-10 top-0 sticky md:hidden" />
+    <MobileHeader />
 
     <!-- 결제 테스트시  -->
     <!-- <router-view v-slot="{ Component }">
@@ -48,14 +48,6 @@
       v-else-if="route.meta.navbar"
     />
 
-    <!-- TODO 1차 수정 2023-01-31 16:23:17 -->
-    <!-- <FooterWeb
-      class="hidden md:block w-full bottom-0"
-      v-if="
-        !(storeinfiniteStatus && route.meta.name == 'home') &&
-        route.meta.name != `paymentResult`
-      "
-    /> -->
     <FooterWeb
       class="hidden md:block w-full bottom-0"
       v-if="route.meta.name != `paymentResult`"
