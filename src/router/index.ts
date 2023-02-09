@@ -194,7 +194,7 @@ const router = createRouter({
                   path: "virtualAccount",
                   component: components.VirtualAccount,
                   meta: {
-                    title: "가상계좌 충전",
+                    title: "가상계좌 발급",
                     name: `virtualAccount`,
                     needLogin: true,
                     navbar: false,

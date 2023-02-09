@@ -57,7 +57,9 @@
 
             <!-- 가상 계좌 -->
             <ModalVirtualAccount  
-              v-else-if="props.propsType == 'virtualAccount'"/>
+              v-else-if="props.propsType == 'virtualAccount'"
+              @update:propsShowModal="emit('update:propsShowModal', false)"
+            />
 
             <putBankAccount
               v-else-if="props.propsType == 'userinfoPutAccount'"

@@ -1,7 +1,6 @@
 <template>
   <router-view></router-view>
   <!-- 모바일용 충전 한도 안내 모달 -->
-  <ChargeLimitInfoModal v-if="isInfoModal" @update:props-show-modal="setIsInfoModal($event)" />
   <ModalMypage
     :propsShowModal="isModal"
     :propsType="modalType"
@@ -59,8 +58,7 @@
               @get-value="setpaymentMethod($event)"
               :paymentMethod="paymentMethod"
               :title="`가상계좌`"
-              :active="true"
-              
+              :active="true"              
               :img-url="`/assets/icon/virtualAccontwithblue_black.svg`"
             />
             <PaymentMethodVue
@@ -133,42 +131,12 @@
         </div>
       </div>
     </div>
-    <div v-if="paymentMethod == '신용카드'">
+    <div v-if="paymentMethod == '신용카드' || paymentMethod == '가상계좌'">
       <hr
         class="border-everly-mid_grey md:border-[#707070] my-4 md:my-8 md:ml-8"
       />
-      <div class="px-5 md:px-0 md:pl-8 text-sm md:text-base">
-        <div class="py-3">신용카드 충전</div>
-        <div class="space-y-2">
-          <div class="flex">
-            <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
-              마일리지 종류
-            </div>
-            <div class="flex-1">구매전용 마일리지(출금불가)</div>
-          </div>
-          <div class="flex">
-            <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
-              충전 수수료
-            </div>
-            <div class="flex-1">4.8%</div>
-          </div>
-          <div class="flex">
-            <div class="text-everly-dark_grey w-[5.688rem] md:w-[8.313rem]">
-              충전 한도
-            </div>
-            <div
-              class="px-4 md:hidden text-xs border-everly-mid_grey border flex items-center"
-              @click="setIsInfoModal(true)"
-            >
-              자세히보기
-            </div>
-            <div class="flex-1 hidden md:block">
-              각 PG사에 따라 한도금액이 다르게 적용됩니다. 한도정책은 카드사
-              사정에 따라 언제든지 변경될 수 있습니다
-            </div>
-          </div>
-        </div>
-      </div>
+        <CardPaymentInfo v-if="paymentMethod == '신용카드'"/>
+        <VirtualAccountInfo v-else-if="paymentMethod == '가상계좌'"/>        
       <hr class="border-everly-mid_grey my-4 md:my-8 md:ml-8" />
       <div>
         <div class="px-5 md:py-0 md:px-0 md:pl-8">
@@ -266,10 +234,6 @@
       </div>
     </div>
     <div v-else-if="paymentMethod == '가상계좌'">
-      
-      <button @click="showPaymentModal('virtualAccount')">
-
-      </button>
     </div>
     <div v-else class="h-80"></div>
   </div>
@@ -289,7 +253,8 @@ import commonFunction, { moveExternalLink } from "@/common";
 import { useMeta, useActiveMeta } from "vue-meta";
 import ModalMypage from "@/components/mypage/components/modalMypage.vue";
 import { useMediaQuery } from "@vueuse/core";
-
+import CardPaymentInfo from "./paymentInfo/CardPaymentInfo.vue";
+import VirtualAccountInfo from "./paymentInfo/VirtualAccountInfo.vue";
 const router = useRouter();
 
 // 지불 방식에 따라 하단 뷰를 변화 시킨다.
@@ -307,10 +272,6 @@ function setpaymentMethod(string: string) {
   paymentMethod.value = string;
 }
 
-
-// 모바일용 충전 한도 안내 모달
-const isInfoModal = ref(false);
-
 // 가상계좌 모달
 const isModal = ref(false);
 
@@ -321,14 +282,10 @@ function setModalType(paymentMethodType: string) {
   modalType.value = paymentMethodType;
 }
 
-function setIsInfoModal(value: boolean) {
-  isInfoModal.value = value;
-}
 
 function setIsModal(value: boolean) {
   isModal.value = value;
 }
-
 
 // 지불 방식에 따른 모달의 변화를 받는다
 function showPaymentModal(paymentMethodType:string) {  
@@ -340,7 +297,7 @@ function showPaymentModal(paymentMethodType:string) {
     // 모달 켜준다.
     setIsModal(true)
     // 어떤 지불방식의 모달을 띄울지 세팅
-    setModalType(paymentMethodType);    
+    setModalType(paymentMethodType);
   }  
 }
 
@@ -390,7 +347,22 @@ watch(finalamount, () => {
 const { storefeePrice, storeFinalPrice, storeProductPrice } =
   storeToRefs(paymentStore);
 
-function charge() {
+
+// 결제 방식에 따라 결제 모드가 바뀌도록
+function charge() {  
+  switch (paymentMethod.value) {
+    case '신용카드':
+        cardCharge()
+      break
+  
+    case '가상계좌':
+        showPaymentModal('virtualAccount')       
+      break
+  }
+}
+
+// 카드 결제
+function cardCharge() {
   //유저 정보 가져오기
   const localData = localStorage.getItem("user");
   if (localData != null) {

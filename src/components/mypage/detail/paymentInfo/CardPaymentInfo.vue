@@ -1,6 +1,5 @@
-<template lang="">
-<ChargeLimitInfoModal v-if="isInfoModal" @update:props-show-modal="setIsInfoModal($event)" />
-
+<template>
+<ChargeLimitInfoModal v-if="isInfoModal" @update:props-show-info-modal="setIsInfoModal($event)" />
     <div class="px-5 md:px-0 md:pl-8 text-sm md:text-base">
         <div class="py-3">신용카드 충전</div>
         <div class="space-y-2">
@@ -46,6 +45,6 @@ function setIsInfoModal(value: boolean) {
   isInfoModal.value = value;
 }
 </script>
-<style lang="">
+<style >
     
 </style>
