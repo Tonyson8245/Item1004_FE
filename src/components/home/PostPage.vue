@@ -320,7 +320,7 @@
         >
           <div class="hidden md:block text-lg">상세설명</div>
           <div
-            class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem]"
+            class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem] whitespace-pre-wrap"
           >
             {{ storeContent }}
           </div>
