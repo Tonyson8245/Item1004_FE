@@ -137,11 +137,11 @@ function goPaymentPage() {
 function goChatPage() {
   const localData = localStorage.getItem("user");
   if (localData != null) {
-    const userData = JSON.parse(localData) as user;      
-    if (userData.idx === storeUserIdx.value)  router.push('/chat');    
-    else  {
-      
-      if (typeof route.query.postId === 'string') chatStore.isRoomExist(route.query.postId);             
+    const userData = JSON.parse(localData) as user;
+    if (userData.idx === storeUserIdx.value) router.push("/chat");
+    else {
+      if (typeof route.query.postId === "string")
+        chatStore.isRoomExist(route.query.postId);
     }
   }
 }

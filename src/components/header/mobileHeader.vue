@@ -52,9 +52,13 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <CommonHeader />
+    </div>
     <!-- 모바일 팔래요/살래요 -->
     <div
       class="bg-everly-white cursor-default md:hidden z-50 border-b w-full fixed top-[49px]"
+      v-if="route.meta.name == `home` || route.meta.name == `list`"
     >
       <div class="flex w-full space-x-4 border-b p-4">
         <!--팔래요 활성화 -->
@@ -362,6 +366,7 @@
 
 <script setup lang="ts">
 import filterSearch from "../common/searchGameServer.vue";
+import CommonHeader from "./commonHeader.vue";
 import { useSearchStore } from "../../store/modules/home/searchStore";
 import { useCommonStore } from "../../store/modules/common/commonStore";
 import { useFilterStore } from "../../store/modules/home/filterStore";

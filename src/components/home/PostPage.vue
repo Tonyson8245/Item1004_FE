@@ -793,6 +793,12 @@ function goEditPage() {
 // 수정 신고 버튼
 const showMore = ref(false);
 const toggleMore = useToggle(showMore);
+
+// 페이지 벗어날때 모바일 하단 끄기
+onUnmounted(() => {
+  toggleShowbuy(false);
+  postStore.setstoreShowManagePost(false);
+});
 </script>
 
 <style scoped>
