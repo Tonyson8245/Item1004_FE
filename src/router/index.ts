@@ -190,17 +190,18 @@ const router = createRouter({
                 navbar: false,
               },
               children:[
-                {
-                  path: "virtualAccount",
-                  component: components.VirtualAccount,
-                  meta: {
-                    title: "가상계좌 발급",
-                    name: `virtualAccount`,
-                    needLogin: true,
-                    navbar: false,
-                  },
-                },
+                
               ]
+            },
+            {
+              path: "mileage/charge/virtualAccount",
+              component: components.VirtualAccount,
+              meta: {
+                title: "가상계좌 발급",
+                name: `virtualAccount`,
+                needLogin: true,
+                navbar: false,
+              },
             },
             {
               path: "mileage/withdraw",

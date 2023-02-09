@@ -1,9 +1,10 @@
 <template>
-  <router-view></router-view>
+  <!-- <router-view></router-view> -->
   <!-- 모바일용 충전 한도 안내 모달 -->
   <ModalMypage
     :propsShowModal="isModal"
     :propsType="modalType"
+    @update:propsShowModal="setIsModal(false)"
   />
   <div>
     <div class="py-5 px-5 md:py-0 md:px-0 md:pl-8">

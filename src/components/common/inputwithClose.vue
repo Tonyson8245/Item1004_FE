@@ -5,12 +5,12 @@
       v-model="content"
       :placeholder="props.propsPlaceholder"
       @input="(event: Event) => {  emit('getModel', (event.target as HTMLInputElement).value); }"
-      class="border rounded-lg focus:border-[#3f52fc] border-everly-mid_grey placeholder:text-sm"
+      class="border rounded-lg focus:border-[#3f52fc] border-everly-mid_grey placeholder:text-sm "
       :class="props.propsClass"
     />
     <img
       src="@/assets/icon/close_grey.svg"
-      class="absolute right-0 p-4 hidden md:block"
+      class="absolute right-0 p-4 hidden md:block "
       alt=""
       v-show="content != ''"
       @click="refresh()"

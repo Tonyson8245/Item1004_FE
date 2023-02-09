@@ -1,5 +1,5 @@
 <template>
-  <div class="cursor-pointer">
+  <div class="">
     <div
       v-if="propsShowModal"
       class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 justify-center items-center flex"
@@ -65,6 +65,7 @@
               v-else-if="props.propsType == 'userinfoPutAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
             />
+
             <DeleteUserAccount
               v-else-if="props.propsType == 'deleteUserAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
@@ -84,7 +85,7 @@
 import putBankAccount from "../modaldetail/putBankAccount.vue";
 import putBankAccountWithdraw from "../modaldetail/putBankAccountInWithdraw.vue";
 import { useVModel } from "@vueuse/core";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -102,6 +103,7 @@ const propsShowModal = useVModel(props, "propsShowModal", emit);
 
 const mypageStore = usemypageStore();
 const { storewithdrawAmt, storeUserInfo } = storeToRefs(mypageStore);
+
 
 function withdraw() {
   mypageStore.postWithdrawMileage().then((res) => {
