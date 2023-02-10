@@ -7,23 +7,98 @@
 
   <div class="flex">
     <div class="flex-1"></div>
-    <div class="flex-none w-[73.75rem]">
-      <div class="hidden md:block">상품권판매시작</div>
-      <div class="flex">
-        <div>아이템거래</div>
-        <div>상품권거래</div>
-        <div>내거래</div>
-        <div>충전하기</div>
-        <div>출금하기</div>
+    <div class="flex-none md:w-[73.75rem] w-full">
+      <div class="hidden md:block mt-14">
+        <img src="@/assets/img/banners/sale_giftCard_web.png" alt="" />
       </div>
-      <div>
-        인기거래
+      <div class="w-full flex justify-center my-8">
+        <div class="flex space-x-5 md:space-x-24">
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/gameTrade_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9 md:mt-2 md:ml-1"
+              />
+            </div>
+            아이템거래
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/giftCardTrade_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            상품권거래
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/myTrade.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            내거래
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/charge_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            충전하기
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/withdraw_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            출금하기
+          </div>
+        </div>
+      </div>
+      <div class="px-4 md:px-0">
+        <span class="font-bold flex items-center">
+          <img src="@/assets/icon/flame.svg" alt="" class="pb-1.5 pr-0.5" />
+          인기거래</span
+        >
         <div class="md:flex">
-          <div>거래글 1</div>
-          <div>거래글 2</div>
-          <div>거래글 3</div>
-          <div>거래글 4</div>
-          <div>거래글 5</div>
+          <div v-for="card in cardQty">
+            <mainCard />
+          </div>
         </div>
       </div>
       <!-- 웹내용 -->
@@ -57,137 +132,25 @@
 <script setup lang="ts">
 import BannerWeb from "@/components/home/components/banner/bannerWeb.vue";
 import BannerMobile from "@/components/home/components/banner/bannerMobile.vue";
-import ProductCard from "./components/cards/productCard.vue";
-import { useFilterStore } from "@/store/modules/home/filterStore";
-import { storeToRefs } from "pinia";
-import { useMainStore } from "@/store/modules/home/mainStore";
-import { VueEternalLoading } from "@ts-pro/vue-eternal-loading";
-import type { LoadAction } from "@ts-pro/vue-eternal-loading";
-import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Navigation } from "vue3-carousel";
-import FooterMobile from "../footer/footerMobile.vue";
-import { useRoute, useRouter } from "vue-router";
-import { onMounted, watch, ref } from "vue";
-import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
-import { useSearchStore } from "@/store/modules/home/searchStore";
-import BannerTablet from "./components/banner/bannerTablet.vue";
-import { moveExternalLink } from "@/common";
-import { useComponentStore } from "@/store/modules/common/componentStore";
-import { useCookie } from "vue-cookie-next";
-import { usePostStore } from "@/store/modules/home/postStore";
-const { getCookie } = useCookie();
-
-// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
-const emit = defineEmits([`goPay`]);
-function goPay() {}
-const route = useRoute();
+import mainCard from "./components/cards/mainCard.vue";
+import { useRouter } from "vue-router";
+import { ref, computed, watch } from "vue";
+import { useMediaQuery } from "@vueuse/core";
 const router = useRouter();
-const componentStore = useComponentStore();
-const { storeshowNotify } = storeToRefs(componentStore);
-//////조회 관련
-const filterStore = useFilterStore();
-const postStore = usePostStore();
-const {
-  storeShowFilter_mobile,
-  filterStoreGameKeywordIdx,
-  filterStoreServerKeywordIdx,
-} = storeToRefs(filterStore); //  웹 필터 켜짐 여부
-const mainStore = useMainStore();
-const {
-  storeProductCard,
-  storeinfiniteStatus,
-  storeNextPage,
-  storehasnextPage,
-  storeLoad,
-} = storeToRefs(mainStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
-const searchStore = useSearchStore();
-const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 
-//처음 페이지 로드 될때 동작
-onMounted(() => {
-  mainStore.$reset();
-  postStore.$reset();
-  getProductList(6);
-  //일단 다끔
-  if (getCookie("noti") == "stop") {
-    componentStore.setstoreshowNotify(false);
+const cardQty = ref(3);
+
+const minSize = computed(() => {
+  return useMediaQuery("(min-width: 640px)");
+});
+//화면이 작아지면 꺼지는 로직
+watch(minSize.value, (minSize) => {
+  if (!minSize) {
+    //페이지가 모바일이되는 경우
+    cardQty.value = 3;
   } else {
-    if (route.meta.name == "list") {
-      componentStore.setstoreshowNotify(false);
-    }
+    cardQty.value = 10;
   }
-});
-
-// Infinite scroll on off
-function toggleInfiniteStatus(status: boolean) {
-  mainStore.setstoreinfiniteStatus(status);
-}
-
-// 무한 스크롤 동작
-function load({ loaded }: LoadAction) {
-  if (storeinfiniteStatus.value) {
-    //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
-    //다음 페이지가 있을때
-    if (storehasnextPage.value) {
-      var page = storeNextPage.value;
-      var sellbuy = storeSellBuy.value;
-      var categorys = filterStore.getCategorys;
-      var gameIdx = filterStoreGameKeywordIdx.value;
-      var serverIdx = filterStoreServerKeywordIdx.value;
-
-      var payload = new getProductCardBodyDto(
-        page,
-        6,
-        sellbuy,
-        categorys,
-        gameIdx,
-        serverIdx
-      );
-
-      mainStore
-        .setstoreProductCard(payload)
-        .then((res) => {
-          if (res) {
-          } else console.log("loaded failed");
-          loaded();
-        })
-        .catch(() => {});
-    }
-  }
-}
-
-function getProductList(pageUnit: number) {
-  if (storehasnextPage.value) {
-    var page = storeNextPage.value;
-    var sellbuy = storeSellBuy.value;
-    var categorys = filterStore.getCategorys;
-    var gameIdx = filterStoreGameKeywordIdx.value;
-    var serverIdx = filterStoreServerKeywordIdx.value;
-
-    var payload = new getProductCardBodyDto(
-      page,
-      pageUnit,
-      sellbuy,
-      categorys,
-      gameIdx,
-      serverIdx
-    );
-
-    mainStore.setstoreProductCard(payload).then((res) => {});
-  }
-}
-
-watch(storeLoad, () => {
-  if (storeLoad.value) {
-    console.log("watch load");
-    scrollToTopinstant();
-    toggleInfiniteStatus(true);
-    mainStore.setstoreLoad(false);
-  }
-});
-watch(storehasnextPage, () => {
-  if (!storehasnextPage.value) mainStore.setstoreinfiniteStatus(false);
-  else mainStore.setstoreinfiniteStatus(true);
 });
 
 //////배너
@@ -223,12 +186,6 @@ function moveLink(link: string) {
 //   mainStore.resetsetstoreProductCard();
 //   mainStore.setstoreinfiniteStatus(false);
 // });
-
-//배너 색
-const bannerColorClass = ref("bg-[#7900ac]");
-function getColor(color: string) {
-  bannerColorClass.value = color;
-}
 </script>
 
 <style>
