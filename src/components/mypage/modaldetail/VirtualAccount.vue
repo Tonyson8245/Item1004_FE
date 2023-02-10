@@ -62,22 +62,27 @@
                 <!-- <input class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text"> -->
             </li>
             <li class="flex flex-col gap-1 md:gap-0 md:flex-row md:items-center">
-                <span class="flex w-28">
-                    <p class="text-everly-red-buy">*</p>      
-                    <p class="">계좌번호</p> 
-                </span>                
-                <input v-model="accountNumber" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
-            </li>
+                <span class="flex md:w-28">
+                  <p class="text-everly-red-buy">*</p>      
+                  <p class="">계좌번호</p>
+              </span>                
+              <input v-model="accountNumber" placeholder="(-) 없이 번호만 입력해주세요" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
+            </li>           
+
             <li class="flex flex-col gap-1 md:gap-0 md:flex-row md:items-center">
                 <span class="flex w-28">
                     <p class="text-everly-red-buy">*</p>      
                     <p class="">예금주명</p> 
                 </span>
                 <span class="flex flex-auto">
-                    <input v-bind="accountOwner" v-on="accountOwner" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text">
+                    <input  v-bind:value="accountOwner" v-on:input="setAccountOwner" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text">
                     <!-- 모바일 인증 -->
                     <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white">계좌인증</button>
-                    <button class="hidden md:block h-12 w-48 ml-2 border bg-everly-mid_grey text-white text-sm rounded-md cursor-not-allowed">1원 인증</button>          
+                    <!-- :class="{'bg-everly-main cursor-pointer': isSendVerifyWord }"  -->
+                    <button  :class="isSendVerifyWord ? 'bg-everly-main cursor-pointer' : 'bg-everly-mid_grey cursor-not-allowed'"
+                             class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
+                             :disabled="!isSendVerifyWord"
+                             @click="sendVerifyWordButton">1원 인증</button>          
                 </span>
             </li>            
             <li class="flex flex-col md:flex-row md:items-center">
@@ -171,19 +176,27 @@ import { useRouter } from "vue-router";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import dropdownVue from "@/components/common/dropdown.vue";
 import modalList from "../components/modalList.vue";
+import * as paymentApi from "@/api/payment-service";
 
-
+// 모달 끄고 닫기 에밋
 const emit = defineEmits(["update:propsShowModal"]);
+
 const router = useRouter();
 
 //은행이름
 const bankName = ref("");
 // 계좌번호
 const accountNumber = ref("");
-// 예금주명 , 계좌번호 주인
+// 예금주명, 계좌번호 주인
 const accountOwner = ref("");
-//은행 리스트 리스트 보여주기
+//은행 리스트 보여주기 플래그
 const isBankListModal = ref(false);
+// 1원 인증 단어 보내기 플래그
+const isSendVerifyWord = ref(false);
+
+function setAccountOwner(event:Event) {
+  accountOwner.value = (event.target as HTMLInputElement).value
+}
 
 function showBankListModal(status: boolean) {
   isBankListModal.value = status;
@@ -193,13 +206,35 @@ function getValue(event: string) {
   bankName.value = event;
 }
 
-watch([accountNumber,accountOwner], ([number,name])=>{
-  console.log(number, name);  
+// TODO: 계좌번호랑 예금주 하나라도 입력 되면은 1원 인증 버튼 acrive 해라이!
+watch([accountNumber,accountOwner,bankName], ([aN, aO, bN])=>{  
+  if (aN!=='' && aO!=='' &&  bN!=='') isSendVerifyWord.value=true      
+  else isSendVerifyWord.value=false;
 })
 
-// watch(accountOwner, (value)=>{
-//   console.log(value);
-// })
+// 1원인증 전송 버튼
+async function sendVerifyWordButton() {
+  // if (!isSendVerifyWord.value) return
+  // api 1원인증코드 보내기
+  isSendVerifyWord.value = false;
+  await paymentApi.sendAccountVerifyWord(bankName.value, accountNumber.value, accountOwner.value)
+        .then((res) => {
+                    
+        })
+        .catch((err) => {
+          isSendVerifyWord.value = true;
+          if (err.code === 404) {
+            alert('계좌인증에 실패했습니다.')
+          } else if (err.code === 400) {
+            alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
+          }
+          console.log("1원 보내기 오류 : ", err);
+        });
+}
+
+async function name(params:type) {
+  
+}
 
 //은행 명들
 const bankList = [
