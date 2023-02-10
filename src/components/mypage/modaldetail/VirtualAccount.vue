@@ -85,27 +85,33 @@
                              @click="sendVerifyWordButton">1원 인증</button>          
                 </span>
             </li>            
-            <li class="flex flex-col md:flex-row md:items-center">
+            <li v-if="verifyTrDt != ''" class="flex flex-col md:flex-row md:items-center">
                 <span class="flex w-28">
                     <p class=" text-everly-red-buy">*</p>      
-                    <p class="">인증단어</p>
+                    <p class="">인증단어</p>                   
                 </span>                
                 <span class="flex flex-auto">
-                    <input class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text">
+                    <div class="flex items-center border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0">
+                      <input maxlength="4" v-bind:value="verifyWord" v-on:input="setVerifyWord"  class=" flex-auto focus:outline-none" type="text">
+                      <p v-if="timer.isRunning.value" class="text-everly-red-buy">{{ timer.minutes }}:{{ timer.seconds }}</p>
+                    </div>
                     <!-- 모바일 인증 -->
-                    <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white">인증하기</button>
-                    <button class="hidden md:block h-12 w-48 ml-2 border bg-everly-main text-white text-sm rounded-md">인증하기</button>          
+                    <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white" @click="verifyAccount">인증하기</button>
+                    <button :class="isVerifyWord ? 'bg-everly-main cursor-pointer' : 'bg-everly-mid_grey cursor-not-allowed'"
+                             class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
+                            :disabled="!isVerifyWord" @click="verifyAccount">인증하기</button>                
                 </span>
 
             </li>
-            <li class="flex flex-col md:flex-row md:items-center">
+            <li v-if="verifyTrDt != ''" class="flex flex-col md:flex-row md:items-center">
                 <span class="flex w-28">                               
-                </span>       
-                <p class=" text-sm text-everly-dark_grey">* 계좌에 1원을 보낸 4자리 단어를 입력해주세요</p>
-                 <!-- 모바일 인증 -->
+                </span>     
+                <p v-if="!isAccountVerified" class=" text-sm text-everly-dark_grey">* 계좌에 1원을 보낸 4자리 단어를 입력해주세요</p>
+                <!-- isAccountVerified -->
+               <p v-if="isAccountVerified" class=" text-sm text-everly-main font-bold">*계좌가 인증됐습니다</p>
+                
             </li>
             <li>
-               
             </li>
         </ul>
       </div>
@@ -138,20 +144,20 @@
   
       <div class="bg-everly-white py-7 md:py-1 px-4 md:px-5 space-y-3">
         <div class="font-bold">약관 동의</div>
-        <div class="flex items-center cursor-pointer">
-          <img src="@/assets/icon/check_circle.svg" class=" mr-1" alt="체크박스"/>
+        <div class="flex items-center cursor-pointer" @click="setIsCheckAllAgreement">
+          <img :src="isCheckAllAgreement? '../../../assets/icon/check_circle_blue.svg':'../../../assets/icon/check_circle.svg'" class=" w-5 mr-1" alt="체크박스"/>
           <span class="md:pl-1">
             전체동의
           </span>
         </div>
-        <div class="flex items-center cursor-pointer">
-          <img src="@/assets/icon/check_circle.svg" class=" mr-1" alt="체크박스"/>
+        <div class="flex items-center cursor-pointer" @click="setIsCheckCustomerAgreement">
+          <img :src="isCheckCustomerAgreement? '../../../assets/icon/check_circle_blue.svg':'../../../assets/icon/check_circle.svg'" class=" w-5 mr-1" alt="체크박스"/>
           <span class="md:pl-1">
             가상계좌 발급 고객동의 (필수)
           </span>
         </div>
-        <div class="flex items-center cursor-pointer">
-          <img src="@/assets/icon/check_circle.svg" class=" mr-1" alt="체크박스"/>
+        <div class="flex items-center cursor-pointer" @click="setIsCheckAcountAgreement">
+          <img :src="isCheckAcountAgreement? '../../../assets/icon/check_circle_blue.svg':'../../../assets/icon/check_circle.svg'" class=" w-5 mr-1" alt="체크박스"/>
           <span class="md:pl-1">
             가상계좌 발급 확인 안내 (필수)
           </span>
@@ -159,7 +165,6 @@
         <div class="md:px-56 space-y-2">
           <div
             class="text-center py-2.5 rounded-lg"
-            
           >
             발급받기
           </div>
@@ -177,6 +182,8 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import dropdownVue from "@/components/common/dropdown.vue";
 import modalList from "../components/modalList.vue";
 import * as paymentApi from "@/api/payment-service";
+import { useTimer } from 'vue-timer-hook';
+
 
 // 모달 끄고 닫기 에밋
 const emit = defineEmits(["update:propsShowModal"]);
@@ -193,10 +200,65 @@ const accountOwner = ref("");
 const isBankListModal = ref(false);
 // 1원 인증 단어 보내기 플래그
 const isSendVerifyWord = ref(false);
+// 인증단어 4자리 입력 시 계좌 인증하기 플래그
+const isVerifyWord = ref(false)
+// 검증 거래일자
+const verifyTrDt = ref("")
+// 검증 거래번호
+const verifyTrNo = ref("")
+// 4자리 인증 단어
+const verifyWord = ref('')
+// 계좌 인증 완료 여부 플래그
+const isAccountVerified = ref(false)
+// 전체 동의 여부 플래그
+const isCheckAllAgreement = ref(false)
+// 가상계좌 발급 고객동의 플래그
+const isCheckCustomerAgreement = ref(false)
+// 가상계좌 발급 확인 안내 플래그
+const isCheckAcountAgreement = ref(false)
+// 카운트 시간
+const time = new Date();
+time.setSeconds(time.getSeconds() + 300); // 5분
+//@ts-ignore
+// 인증 카운터
+const timer = useTimer(time);
+timer.pause();
 
 function setAccountOwner(event:Event) {
   accountOwner.value = (event.target as HTMLInputElement).value
 }
+
+function setVerifyWord(event:Event) {
+  verifyWord.value = (event.target as HTMLInputElement).value
+}
+// 전체 동의 버튼
+function setIsCheckAllAgreement() {
+  isCheckAllAgreement.value = !isCheckAllAgreement.value;
+  if (isCheckAllAgreement.value) {
+    isCheckCustomerAgreement.value=true
+    isCheckAcountAgreement.value=true
+  }else  {
+    isCheckCustomerAgreement.value=false
+    isCheckAcountAgreement.value=false
+  }
+}
+function setIsCheckCustomerAgreement() {
+  isCheckCustomerAgreement.value = !isCheckCustomerAgreement.value;
+  // 전체 동의 체크 해제
+  if (!isCheckCustomerAgreement.value && isCheckAllAgreement.value) {
+    isCheckAllAgreement.value=false
+  }
+  if(isCheckCustomerAgreement.value && isCheckAcountAgreement.value) isCheckAllAgreement.value=true;
+}
+function setIsCheckAcountAgreement() {
+  isCheckAcountAgreement.value = !isCheckAcountAgreement.value;
+  // 전체 동의 체크 해제
+  if (!isCheckAcountAgreement.value && isCheckAllAgreement.value) {
+    isCheckAllAgreement.value=false
+  }
+  if(isCheckCustomerAgreement.value && isCheckAcountAgreement.value) isCheckAllAgreement.value=true;
+}
+
 
 function showBankListModal(status: boolean) {
   isBankListModal.value = status;
@@ -206,7 +268,7 @@ function getValue(event: string) {
   bankName.value = event;
 }
 
-// TODO: 계좌번호랑 예금주 하나라도 입력 되면은 1원 인증 버튼 acrive 해라이!
+// TODO: 계좌번호랑 예금주 하나라도 입력 되면은 1원 인증 버튼 active 해라이!
 watch([accountNumber,accountOwner,bankName], ([aN, aO, bN])=>{  
   if (aN!=='' && aO!=='' &&  bN!=='') isSendVerifyWord.value=true      
   else isSendVerifyWord.value=false;
@@ -219,22 +281,59 @@ async function sendVerifyWordButton() {
   isSendVerifyWord.value = false;
   await paymentApi.sendAccountVerifyWord(bankName.value, accountNumber.value, accountOwner.value)
         .then((res) => {
-                    
+          console.log(res);
+            // 타이머 동작
+            timer.restart()
+            verifyTrDt.value = res.verifyTrDt
+            verifyTrNo.value = res.verifyTrNo
         })
         .catch((err) => {
+          console.log(err);
           isSendVerifyWord.value = true;
           if (err.code === 404) {
-            alert('계좌인증에 실패했습니다.')
+            alert('계좌인증에 실패했습니다. 은행명, 계좌번호, 예금주명을 확인해주세요')
           } else if (err.code === 400) {
             alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
           }
-          console.log("1원 보내기 오류 : ", err);
+          else alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.')
         });
 }
 
-async function name(params:type) {
-  
+// 계좌 인증하기 버튼
+async function verifyAccount() {
+  await paymentApi.accountVerify(verifyTrDt.value,verifyTrNo.value, verifyWord.value)
+        .then((res) => {
+          console.log(res);
+          // 계좌 인증 성공 시 인증버튼 비활성화 && 카운트다운 스탑
+          isAccountVerified.value = true;
+          isVerifyWord.value = false
+          timer.pause()
+        }).catch((err) => {
+          console.log(err);
+          if (err.code === 400) {
+            alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
+          }
+        });
 }
+
+watch([verifyWord], ([vW])=> {  
+  // 인증하기 4단어 입력 시 인증하기 활성화
+  if (vW.length === 4) isVerifyWord.value = true;
+  else isVerifyWord.value = false; 
+})
+
+
+
+watch(timer.isExpired, (tIE)=>{
+   // 타이머 시간 초과 시 새로고침
+   if(tIE) {
+    alert("계좌인증시간이 초과하였습니다. 다시 시도해주세요.");
+    location.reload();
+  }
+})
+
+
+
 
 //은행 명들
 const bankList = [
