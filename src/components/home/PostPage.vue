@@ -702,7 +702,10 @@ watch([showBuy, storeShowManagePost], () => {
 
 //payment page로 보내기
 function goPaymentPage() {
-  if (navigator.userAgent.indexOf("Mobi") > -1) {
+  if (
+    import.meta.env.MODE == "production" &&
+    navigator.userAgent.indexOf("Mobi") > -1
+  ) {
     alert("모바일 결제는 지원 예정입니다.");
     return;
   }
