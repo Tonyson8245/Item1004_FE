@@ -71,6 +71,7 @@ export class accountVerifyRequestBody{
 * @since 2023-02-10 15:03:01
 */
 
-export interface accountVerifyResponce extends meta {
-    
+export interface accountVerifyResponce {
+    meta:meta
 }
+

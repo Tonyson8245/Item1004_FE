@@ -11,3 +11,4 @@ export * from "./contract/putContractTakeover";
 export * from "./contract/putContractTake";
 export * from "./contract/deleteContractCancel";
 export * from "./account/sendAccountVerifyWord"
+export * from "./account/accountVerify"

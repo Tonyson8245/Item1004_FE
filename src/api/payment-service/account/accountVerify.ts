@@ -12,7 +12,7 @@ import  { accountVerifyRequestBody } from "@/domain/payment/accountVerifyDto.int
 export async function accountVerify<T>(
     verifyTrDt:string, verifyTrNo:string, verifyVal:string
 ): Promise<accountVerifyResponce> {
-  const requestBody = new accountVerifyRequestBody(verifyTrDt, verifyTrNo, verifyVal)
+  const requestBody = new accountVerifyRequestBody(verifyTrDt, verifyTrNo, verifyVal)  
   const url = "/paytus/vbank/check-account-valid.php";
   try {   
     const result: accountVerifyResponce = await http.post(url, requestBody, 
@@ -20,8 +20,11 @@ export async function accountVerify<T>(
         headers: { "Content-Type": "multipart/form-data" },
       }
     );
+    console.log("result : ",result);
     return result;
   } catch (err) {
+    console.log("err : ",err);
     return Promise.reject(err);
   }
 }
+
