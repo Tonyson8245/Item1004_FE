@@ -312,8 +312,14 @@ function checkPost() {
   var registration = storeregistration.value;
   var hasPaymentHistory = storehasPaymentHistory.value;
   var isDuplcationSync = storeisDuplicatedSync.value;
+  var pricePerUnit = storepricePerUnit.value;
   var title = storetitle.value;
 
+  if (parseInt(pricePerUnit) < 2000) {
+    failedType.value = "minTotalPrice";
+    showFailedModal.value = true;
+    return false;
+  }
   if (commonStoreGameKeywordIdx.value == 0) {
     failedType.value = "noGameIdx";
     showFailedModal.value = true;

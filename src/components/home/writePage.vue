@@ -608,6 +608,7 @@ function toggleSellBuy(status: string) {
 }
 
 function setCategory(Category: string) {
+  writeStore.$reset();
   commonStore.setstoreCategory(Category);
   writeStore.setstoreCategory(Category);
 }
