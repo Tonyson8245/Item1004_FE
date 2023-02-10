@@ -65,7 +65,7 @@ import Navbar from "@/components/footer/NavbarMobile.vue";
 import Postbar from "@/components/footer/PostbarMobile.vue";
 import FooterWeb from "@/components/footer/footerWeb.vue";
 import PaymentbarMobile from "@/components/footer/PaymentbarMobile.vue";
-import { useMainStore } from "@/store/modules/home/mainStore";
+import { useListStore } from "@/store/modules/home/listStore";
 import { useCommonStore } from "@/store/modules/common/commonStore";
 import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useRoute } from "vue-router";
@@ -82,7 +82,7 @@ import MobileHeader from "@/components/header/mobileHeader.vue";
 //   childComponentRef.value?.open();
 // };
 
-const mainStore = useMainStore();
+const listStore = useListStore();
 const commonStore = useCommonStore();
 const componentStore = useComponentStore();
 const route = useRoute();

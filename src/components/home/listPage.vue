@@ -281,7 +281,7 @@ import BannerMobile from "@/components/home/components/banner/bannerMobile.vue";
 import ProductCard from "./components/cards/productCard.vue";
 import { useFilterStore } from "@/store/modules/home/filterStore";
 import { storeToRefs } from "pinia";
-import { useMainStore } from "@/store/modules/home/mainStore";
+import { useListStore } from "@/store/modules/home/listStore";
 import { VueEternalLoading } from "@ts-pro/vue-eternal-loading";
 import type { LoadAction } from "@ts-pro/vue-eternal-loading";
 import "vue3-carousel/dist/carousel.css";
@@ -313,20 +313,20 @@ const {
   filterStoreGameKeywordIdx,
   filterStoreServerKeywordIdx,
 } = storeToRefs(filterStore); //  웹 필터 켜짐 여부
-const mainStore = useMainStore();
+const listStore = useListStore();
 const {
   storeProductCard,
   storeinfiniteStatus,
   storeNextPage,
   storehasnextPage,
   storeLoad,
-} = storeToRefs(mainStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
+} = storeToRefs(listStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
 const searchStore = useSearchStore();
 const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 
 //처음 페이지 로드 될때 동작
 onMounted(() => {
-  mainStore.$reset();
+  listStore.$reset();
   postStore.$reset();
   getProductList(6);
   //일단 다끔
@@ -341,7 +341,7 @@ onMounted(() => {
 
 // Infinite scroll on off
 function toggleInfiniteStatus(status: boolean) {
-  mainStore.setstoreinfiniteStatus(status);
+  listStore.setstoreinfiniteStatus(status);
 }
 
 // 무한 스크롤 동작
@@ -365,7 +365,7 @@ function load({ loaded }: LoadAction) {
         serverIdx
       );
 
-      mainStore
+      listStore
         .setstoreProductCard(payload)
         .then((res) => {
           if (res) {
@@ -394,7 +394,7 @@ function getProductList(pageUnit: number) {
       serverIdx
     );
 
-    mainStore.setstoreProductCard(payload).then((res) => {});
+    listStore.setstoreProductCard(payload).then((res) => {});
   }
 }
 
@@ -403,12 +403,12 @@ watch(storeLoad, () => {
     console.log("watch load");
     scrollToTopinstant();
     toggleInfiniteStatus(true);
-    mainStore.setstoreLoad(false);
+    listStore.setstoreLoad(false);
   }
 });
 watch(storehasnextPage, () => {
-  if (!storehasnextPage.value) mainStore.setstoreinfiniteStatus(false);
-  else mainStore.setstoreinfiniteStatus(true);
+  if (!storehasnextPage.value) listStore.setstoreinfiniteStatus(false);
+  else listStore.setstoreinfiniteStatus(true);
 });
 
 //////배너
@@ -441,8 +441,8 @@ function moveLink(link: string) {
 
 // 페이지 벗어날때 초기화 할경우
 // onBeforeUnmount(() => {
-//   mainStore.resetsetstoreProductCard();
-//   mainStore.setstoreinfiniteStatus(false);
+//   listStore.resetsetstoreProductCard();
+//   listStore.setstoreinfiniteStatus(false);
 // });
 
 //배너 색

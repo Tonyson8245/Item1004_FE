@@ -430,7 +430,7 @@ import { useFilterStore } from "../../../store/modules/home/filterStore";
 import { useCommonStore } from "../../../store/modules/common/commonStore";
 import { debounce } from "vue-debounce";
 import { storeToRefs } from "pinia";
-import { useMainStore } from "@/store/modules/home/mainStore";
+import { useListStore } from "@/store/modules/home/listStore";
 import { useRoute, useRouter } from "vue-router";
 
 const props = defineProps({
@@ -613,8 +613,8 @@ function setFilter() {
   filterStore.setstoreShowFilter_mobile(false);
   //바뀌었을 경우만 실행
   if (!isSamefilter()) {
-    mainStore.setstoreinfiniteStatus(true);
-    mainStore.resetsetstoreProductCard();
+    listStore.setstoreinfiniteStatus(true);
+    listStore.resetsetstoreProductCard();
     console.log("filtter 설정");
     filterStore.setstoreGameServerFilter(
       commonStoreGameKeyword.value,
@@ -652,8 +652,8 @@ function closeFilterBadge(type: string) {
   if (type == "gameServer") {
     filterStore.refreshSearchGameServer();
   } else filterStore.changeCategory(type);
-  mainStore.resetsetstoreProductCard();
-  mainStore.setstoreLoad(true);
+  listStore.resetsetstoreProductCard();
+  listStore.setstoreLoad(true);
 }
 
 //필터가 있을때만 뱃지가 보이는 값
@@ -672,9 +672,9 @@ const conditionBadge = computed(() => {
 });
 
 ///필터로 불러오는 로직
-const mainStore = useMainStore();
+const listStore = useListStore();
 function loadList() {
-  mainStore.setstoreLoad(true);
+  listStore.setstoreLoad(true);
 }
 </script>
 

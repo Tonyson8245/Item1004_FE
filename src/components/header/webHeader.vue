@@ -124,8 +124,8 @@
     </div>
     <div v-if="route.meta.name == 'home' || route.meta.name == 'list'">
       <div class="flex cursor-default bg-[#fafafa]">
-        <div class="flex-1 hidden md:block"></div>
-        <div class="flex-none hidden md:block">
+        <div class="flex-1 hidden md:block bg-[#fafafa]"></div>
+        <div class="flex-none hidden md:block bg-[#fafafa]">
           <div class="flex-none w-[1180px] px-4">
             <div class="flex justify-between items-end py-3">
               <div class="flex space-x-6">
@@ -191,7 +191,7 @@
             </div>
           </div>
         </div>
-        <div class="flex-1 hidden md:block"></div>
+        <div class="flex-1 hidden md:block bg-[#fafafa]"></div>
       </div>
     </div>
 
