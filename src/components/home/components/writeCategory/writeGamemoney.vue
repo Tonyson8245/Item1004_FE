@@ -43,7 +43,7 @@
           (단위)
         </div>
         <div class="flex items-center justify-start">
-          <div class="pr-3">
+          <div class="pr-1">
             <inputwithCloseNumber
               :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full md:w-[17.5rem]`"
               :propsPlaceholder="minAmountPlaceholder"
@@ -55,14 +55,14 @@
               @clearContent="clear('minAmount')"
             />
           </div>
-          <div class="pr-3 flex">
+          <div class="flex pr-3">
             <div class="flex pr-3">
               <span>{{ unitAmount != "없음" ? unitAmount : "" }}</span
               ><span class="hidden md:block pl-3"> {{ currency }}</span>
             </div>
             ~
           </div>
-          <div class="pr-3">
+          <div class="">
             <inputwithCloseNumber
               :propsClass="`px-3 md:px-5 text-left py-2 shrink w-full md:w-[17.5rem]`"
               :propsPlaceholder="maxAmountPlaceholder"
@@ -391,6 +391,11 @@ function checkPost() {
   var pricePerUnit = storepricePerUnit.value;
   var title = storetitle.value;
 
+  if (parseInt(minAmount) * parseInt(pricePerUnit) < 2000) {
+    failedType.value = "minTotalPrice";
+    showFailedModal.value = true;
+    return false;
+  }
   if (commonStoreGameKeywordIdx.value == 0) {
     failedType.value = "noGameIdx";
     showFailedModal.value = true;

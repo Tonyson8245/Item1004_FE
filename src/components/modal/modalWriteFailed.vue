@@ -51,6 +51,8 @@ const props = defineProps({
 
 const content = computed(() => {
   if (props.failedType == "title") return "올바르지 않은 제목 형식입니다.";
+  else if (props.failedType == "minTotalPrice")
+    return "최소 등록가격은 2,000원입니다.\n 가격 정보를 수정해주세요.";
   else if (props.failedType == "mandatory")
     return "필수 기재 항목을\n작성해주세요.";
   else if (props.failedType == "minMax")
