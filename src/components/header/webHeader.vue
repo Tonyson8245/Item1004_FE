@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div class="cursor-pointer min-w-[120rem] h-[5rem] w-full">
+      <div class="flex w-full cursor-pointer">
+        <div class="flex-grow"></div>
+        <div class="flex-grow-none">
+          <img
+            src="@/assets/img/banners/main_top_banner.webp"
+            style="object-fit: none; width: 120rem; height: auto"
+          />
+        </div>
+        <div class="flex-grow"></div>
+      </div>
+    </div>
     <!-- 웹 메인 헤더  -->
     <div class="flex cursor-default bg-[#fafafa] top-0 z-50 md:flex">
       <div class="flex-1 hidden md:block border-b"></div>
