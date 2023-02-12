@@ -53,6 +53,14 @@ export const usePaymentStore = defineStore("paymentStore", {
     storefeePercent: 4.8,
     storefeePrice: 0,
 
+     /**
+    * @description 가상계좌 입금 예정금액 표시 시 사용
+    * @author 이광호
+    * @sdoc VirtualAccount.vue, mileageCharge.vue
+    * @since 2023-02-12 15:17:35
+    */
+     storeVirtualAccountChargeAmount:"",
+
     ///결과 값 모음
     storeContractResult: {} as contractCompleteResult,
     storeChargeResult: {} as chargeCompleteResult,
@@ -274,5 +282,12 @@ export const usePaymentStore = defineStore("paymentStore", {
           console.log(err);
         });
     },
+    
+    setStoreVirtualAccountChargeAmount(chargeAmount: string){
+      console.log("chargeAmount : ",chargeAmount);
+      
+      this.storeVirtualAccountChargeAmount = chargeAmount;
+      console.log("storeChargeAmount : ",this.storeVirtualAccountChargeAmount);
+    }
   },
 });

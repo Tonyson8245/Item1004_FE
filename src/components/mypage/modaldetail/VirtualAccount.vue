@@ -79,7 +79,7 @@
                     <!-- 모바일 인증 -->
                     <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white">계좌인증</button>
                     <!-- :class="{'bg-everly-main cursor-pointer': isSendVerifyWord }"  -->
-                    <button  :class="isSendVerifyWord ? 'bg-everly-main cursor-pointer' : 'bg-everly-mid_grey cursor-not-allowed'"
+                    <button  :class="isSendVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
                              class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
                              :disabled="!isSendVerifyWord"
                              @click="sendVerifyWordButton">1원 인증</button>          
@@ -97,7 +97,7 @@
                     </div>
                     <!-- 모바일 인증 -->
                     <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white" @click="verifyAccount">인증하기</button>
-                    <button :class="isVerifyWord ? 'bg-everly-main cursor-pointer' : 'bg-everly-mid_grey cursor-not-allowed'"
+                    <button :class="isVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
                              class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
                             :disabled="!isVerifyWord" @click="verifyAccount">인증하기</button>                
                 </span>
@@ -135,7 +135,7 @@
                     <p class=" text-everly-red-buy">*</p>      
                     <p class="">입금 예정 금액</p> 
                 </span>                
-                <input class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
+                <input disabled :value="storeVirtualAccountChargeAmount" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
             </li>
             
         </ul>
@@ -164,7 +164,7 @@
         </div>
         <div class="md:px-56 space-y-2">
           <div
-          :class="isRequireedAll ? 'bg-everly-main cursor-pointer' : 'bg-everly-mid_grey cursor-not-allowed'"
+          :class="isRequireedAll ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
             class="text-center py-2.5 rounded-lg border bg-everly-mid_grey text-white "
             @click="requestVirtualAccount"
           >
@@ -185,12 +185,14 @@ import dropdownVue from "@/components/common/dropdown.vue";
 import modalList from "../components/modalList.vue";
 import * as paymentApi from "@/api/payment-service";
 import { useTimer } from 'vue-timer-hook';
-
-
+import { usePaymentStore } from "@/store/modules/home/paymentStore";
+import { storeToRefs } from "pinia";
 // 모달 끄고 닫기 에밋
 const emit = defineEmits(["update:propsShowModal"]);
 
-const router = useRouter();
+const paymentStore = usePaymentStore();
+
+const {  storeVirtualAccountChargeAmount } = storeToRefs(paymentStore);
 
 //은행이름
 const bankName = ref("");
@@ -348,7 +350,7 @@ watch([isAccountVerified, isCheckCustomerAgreement, isCheckAcountAgreement], ([i
 async function requestVirtualAccount() {
 
   if (isRequireedAll.value ) {
-    await paymentApi.requestVirtualAccount("이광호", '15000', '신한은행', '110374495753')
+    await paymentApi.requestVirtualAccount(accountOwner.value, storeVirtualAccountChargeAmount.value, bankName.value, accountNumber.value)
         .then((res) => {
           console.log(res);
           alert('발급이 완료됐습니다. 등록된 휴대전화의 문자를 확인해주세요.')

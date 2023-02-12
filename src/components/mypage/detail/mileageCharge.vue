@@ -204,16 +204,16 @@
       </div>
       <hr class="border-everly-mid_grey my-4 md:my-8 md:ml-8 hidden md:block" />
       <div class="px-5 pt-4 md:pt-0 md:px-0 md:pl-8 md:flex md:justify-center">
-        <div
+        <p
           class="bg-white text-sm md:text-base md:w-[28.813rem] md:border rounded-lg py-3 md:p-3 relative"
         >
           충전 예정 마일리지
-          <div
+          <p
             class="absolute top-[0.7rem] md:top-[0.8rem] right-5 text-everly-main"
           >
             {{ finalamount.toLocaleString() }} 원
-          </div>
-        </div>
+          </p>
+        </p>
       </div>
       <div class="p-5 md:w-full md:px-0 md:pl-8 md:pt-20">
         <div
@@ -263,6 +263,7 @@ const paymentMethod = ref("신용카드");
 const paymentStore = usePaymentStore();
 const mypageStore = usemypageStore();
 const { storeUserInfo, storecheckuseablePoint } = storeToRefs(mypageStore);
+
 
 //마일리지 값 가져오기
 onMounted(() => {
@@ -324,18 +325,24 @@ function getamountInput(input: string) {
 
 // 최종가격
 const finalamount = ref(0);
-watch([amount, amountInput], () => {
+watch([amount, amountInput,paymentMethod], () => {
   if (paymentMethod.value === "신용카드") {
     if (amount.value == "직접입력") {
       if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
       else finalamount.value = Math.floor(parseInt(amountInput.value) * 0.952);
     } else finalamount.value = Math.floor(parseInt(amount.value) * 0.952);
   }
-  else if(paymentMethod.value === "가상계좌"){
+  else if(paymentMethod.value === "가상계좌"){    
+   
     if (amount.value == "직접입력") {
+      paymentStore.setStoreVirtualAccountChargeAmount(amountInput.value)
+      // 아무것도 입력 되어있지 않았을 때 NaN을 0으로 처리
       if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
       else finalamount.value = Math.floor(parseInt(amountInput.value) - 1000);
-    } else finalamount.value = Math.floor(parseInt(amount.value) - 1000);
+    } else {
+      finalamount.value = Math.floor(parseInt(amount.value) - 1000);
+      paymentStore.setStoreVirtualAccountChargeAmount(amount.value)
+    }
   }
 });
 
@@ -369,6 +376,7 @@ function charge() {
       break
   }
 }
+
 
 // 카드 결제
 function cardCharge() {
