@@ -101,6 +101,27 @@ const router = createRouter({
           },
         },
         {
+          path: "/mypage/mileage/charge/virtualAccount",
+          component: components.VirtualAccount,
+          meta: {
+            title: "가상계좌 발급",
+            name: `virtualAccount`,
+            needLogin: true,
+            navbar: false,
+          },
+        },
+        {
+          path: "/mypage/mileage/charge/virtualAccountResult",
+          component: components.VirtualAccountResult,
+          meta: {
+            name: "virtualAccountResult",
+            title: "가상계좌 발급 완료",
+            navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
+          },
+        },
+        {
           path: "/mypage/mileage/withdraw/result",
           component: components.milageWithdrawResult,
           meta: {
@@ -193,16 +214,7 @@ const router = createRouter({
                 
               ]
             },
-            {
-              path: "mileage/charge/virtualAccount",
-              component: components.VirtualAccount,
-              meta: {
-                title: "가상계좌 발급",
-                name: `virtualAccount`,
-                needLogin: true,
-                navbar: false,
-              },
-            },
+            
             {
               path: "mileage/withdraw",
               component: components.mileageWithdraw,

@@ -106,7 +106,7 @@
             <li v-if="verifyTrDt != ''" class="flex flex-col md:flex-row md:items-center">
                 <span class="flex w-28">                               
                 </span>     
-                <p v-if="!isAccountVerified" class=" text-sm text-everly-dark_grey">* 계좌에 1원을 보낸 4자리 단어를 입력해주세요</p>
+                <p v-if="!isAccountVerified" class=" text-sm text-everly-dark_grey">* 가장 최근 계좌에 1원을 보낸 4자리 단어를 입력해주세요</p>
                 <!-- isAccountVerified -->
                <p v-if="isAccountVerified" class=" text-sm text-everly-main font-bold">*계좌가 인증됐습니다</p>
                 
@@ -193,6 +193,7 @@ const emit = defineEmits(["update:propsShowModal"]);
 const paymentStore = usePaymentStore();
 
 const {  storeVirtualAccountChargeAmount } = storeToRefs(paymentStore);
+const router = useRouter()
 
 //은행이름
 const bankName = ref("");
@@ -350,10 +351,12 @@ watch([isAccountVerified, isCheckCustomerAgreement, isCheckAcountAgreement], ([i
 async function requestVirtualAccount() {
 
   if (isRequireedAll.value ) {
+    // 버튼 비활성화
+    isRequireedAll.value = false
     await paymentApi.requestVirtualAccount(accountOwner.value, storeVirtualAccountChargeAmount.value, bankName.value, accountNumber.value)
         .then((res) => {
           console.log(res);
-          alert('발급이 완료됐습니다. 등록된 휴대전화의 문자를 확인해주세요.')
+          router.push(`/mypage/mileage/charge/virtualAccountResult?amount=${res.amount}&scheduledCharge=${res.scheduledCharge}&bankName=${res.bankName}&bankAccount=${res.bankAccount}`)          
         }).catch((err) => {
           console.log(err);
           if (err.code === 400) {
@@ -361,9 +364,17 @@ async function requestVirtualAccount() {
           }
         });
   }
-
-  
 }
+
+
+
+
+
+//사이즈 확인
+const minSize = computed(() => {
+  return useMediaQuery("(min-width: 768px)");
+});
+
 
 //은행 명들
 const bankList = [

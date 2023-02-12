@@ -75,6 +75,7 @@ import mypageMobilepage from "@/components/mypage/mypageMobilepage.vue";
 import AdultView from "@/views/AdultView.vue";
 import userWithdrawl from "@/components/mypage/modaldetail/deleteUserAccount.vue";
 import VirtualAccount from "@/components/mypage/modaldetail/VirtualAccount.vue"
+import VirtualAccountResult from "@/components/mypage/VirtualAccountResult.vue"
 
 export default {
   mypageMobilepage,
@@ -89,6 +90,7 @@ export default {
   mileageChargeResult,
   mileageCharge,
   VirtualAccount,
+  VirtualAccountResult,
   userinfo,
   guide,
   logout,
