@@ -259,7 +259,7 @@ import VirtualAccountInfo from "./paymentInfo/VirtualAccountInfo.vue";
 const router = useRouter();
 
 // 지불 방식에 따라 하단 뷰를 변화 시킨다.
-const paymentMethod = ref("card");
+const paymentMethod = ref("신용카드");
 const paymentStore = usePaymentStore();
 const mypageStore = usemypageStore();
 const { storeUserInfo, storecheckuseablePoint } = storeToRefs(mypageStore);
@@ -325,10 +325,18 @@ function getamountInput(input: string) {
 // 최종가격
 const finalamount = ref(0);
 watch([amount, amountInput], () => {
-  if (amount.value == "직접입력") {
-    if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
-    else finalamount.value = Math.floor(parseInt(amountInput.value) * 0.952);
-  } else finalamount.value = Math.floor(parseInt(amount.value) * 0.952);
+  if (paymentMethod.value === "신용카드") {
+    if (amount.value == "직접입력") {
+      if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
+      else finalamount.value = Math.floor(parseInt(amountInput.value) * 0.952);
+    } else finalamount.value = Math.floor(parseInt(amount.value) * 0.952);
+  }
+  else if(paymentMethod.value === "가상계좌"){
+    if (amount.value == "직접입력") {
+      if (isNaN(parseInt(amountInput.value))) finalamount.value = 0;
+      else finalamount.value = Math.floor(parseInt(amountInput.value) - 1000);
+    } else finalamount.value = Math.floor(parseInt(amount.value) - 1000);
+  }
 });
 
 // 충전하기 버튼 활성하

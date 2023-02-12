@@ -66,7 +66,7 @@
                   <p class="text-everly-red-buy">*</p>      
                   <p class="">계좌번호</p>
               </span>                
-              <input v-model="accountNumber" placeholder="(-) 없이 번호만 입력해주세요" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
+              <input v-model="accountNumber" :disabled="isAccountVerified" placeholder="(-) 없이 번호만 입력해주세요" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
             </li>           
 
             <li class="flex flex-col gap-1 md:gap-0 md:flex-row md:items-center">
@@ -75,7 +75,7 @@
                     <p class="">예금주명</p> 
                 </span>
                 <span class="flex flex-auto">
-                    <input  v-bind:value="accountOwner" v-on:input="setAccountOwner" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text">
+                    <input  v-bind:value="accountOwner" :disabled="isAccountVerified" v-on:input="setAccountOwner" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text">
                     <!-- 모바일 인증 -->
                     <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white">계좌인증</button>
                     <!-- :class="{'bg-everly-main cursor-pointer': isSendVerifyWord }"  -->
@@ -90,9 +90,9 @@
                     <p class=" text-everly-red-buy">*</p>      
                     <p class="">인증단어</p>                   
                 </span>                
-                <span class="flex flex-auto">
+                <span class="flex flex-auto ">
                     <div class="flex items-center border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0">
-                      <input maxlength="4" v-bind:value="verifyWord" v-on:input="setVerifyWord"  class=" flex-auto focus:outline-none" type="text">
+                      <input :disabled="isAccountVerified" maxlength="4" v-bind:value="verifyWord" v-on:input="setVerifyWord"  class=" flex-auto focus:outline-none" type="text">
                       <p v-if="timer.isRunning.value" class="text-everly-red-buy">{{ timer.minutes }}:{{ timer.seconds }}</p>
                     </div>
                     <!-- 모바일 인증 -->
@@ -164,7 +164,9 @@
         </div>
         <div class="md:px-56 space-y-2">
           <div
-            class="text-center py-2.5 rounded-lg"
+          :class="isRequireedAll ? 'bg-everly-main cursor-pointer' : 'bg-everly-mid_grey cursor-not-allowed'"
+            class="text-center py-2.5 rounded-lg border bg-everly-mid_grey text-white "
+            @click="requestVirtualAccount"
           >
             발급받기
           </div>
@@ -216,6 +218,9 @@ const isCheckAllAgreement = ref(false)
 const isCheckCustomerAgreement = ref(false)
 // 가상계좌 발급 확인 안내 플래그
 const isCheckAcountAgreement = ref(false)
+// 발급 받기 활성화를 위한 필수 입력변수들 충족 플래그
+const isRequireedAll = ref(false)
+
 // 카운트 시간
 const time = new Date();
 time.setSeconds(time.getSeconds() + 300); // 5분
@@ -329,11 +334,34 @@ watch(timer.isExpired, (tIE)=>{
    if(tIE) {
     alert("계좌인증시간이 초과하였습니다. 다시 시도해주세요.");
     location.reload();
-  }
+  }  
 })
 
 
+watch([isAccountVerified, isCheckCustomerAgreement, isCheckAcountAgreement], ([iAV, iCCA, iCAA])=>{
+  if (iAV && iCCA && iCAA)  {
+    isRequireedAll.value=true
+  }
+  else isRequireedAll.value=false
+})
 
+async function requestVirtualAccount() {
+
+  if (isRequireedAll.value ) {
+    await paymentApi.requestVirtualAccount("이광호", '15000', '신한은행', '110374495753')
+        .then((res) => {
+          console.log(res);
+          alert('발급이 완료됐습니다. 등록된 휴대전화의 문자를 확인해주세요.')
+        }).catch((err) => {
+          console.log(err);
+          if (err.code === 400) {
+            alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
+          }
+        });
+  }
+
+  
+}
 
 //은행 명들
 const bankList = [

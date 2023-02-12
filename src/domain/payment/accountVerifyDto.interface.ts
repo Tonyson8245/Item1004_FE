@@ -26,7 +26,7 @@ export class sendAccountVerifyWordRequestBody {
 * @sdoc 
 * @since 2023-02-10 10:51:38
 */
-export interface result{
+export interface sendAccountResult{
     verifyTrDt:string, //검증 거래일자
     verifyTrNo:string  //검증 거래번호
 }
@@ -37,7 +37,7 @@ export interface result{
 * @sdoc sendAccountVerifyWord.ts
 * @since 2023-02-10 10:51:38
 */
-export interface sendAccountVerifyWordResponce extends meta, result {
+export interface sendAccountVerifyWordResponce extends meta, sendAccountResult {
     
 }
 
@@ -63,15 +63,56 @@ export class accountVerifyRequestBody{
     }
 }
 
-
 /**
 * @description 1원 보낸 계좌 인증 리스폰스에 사용
 * @author 이광호
 * @sdoc accountVerify.ts
 * @since 2023-02-10 15:03:01
 */
+export interface accountVerifyResponce extends meta {
 
-export interface accountVerifyResponce {
-    meta:meta
 }
 
+
+
+
+/**
+* @description 1원 보낸 계좌 인증 리퀘스트에 사용
+* @author 이광호
+* @sdoc requestVirtualAccount.ts
+* @since 2023-02-10 15:03:01
+*/
+export class accountRequestBody{
+    custNm:string         //예금주 명
+    amount:string         //충전 예정 금액
+    custBankName:string   //은행 이름
+    custBankAcct:string   //은행 계좌번호
+    constructor(
+        custNm:string,
+        amount:string,
+        custBankName:string,
+        custBankAcct:string
+    ){
+        this.custNm = custNm;
+        this.amount = amount;
+        this.custBankName = custBankName;
+        this.custBankAcct = custBankAcct;
+    }
+}
+
+/**
+* @description 1원 보낸 계좌 인증 리스폰스에 사용
+* @author 이광호
+* @sdoc requestVirtualAccount.ts
+* @since 2023-02-10 15:03:01
+*/
+export interface accountRequestResponse extends meta, accountRequestResult{
+
+}
+
+interface accountRequestResult {
+    amount:number
+    scheduledCharge:number
+    bankName:string
+    bankAccount:string
+}

@@ -13,6 +13,8 @@ export async function accountVerify<T>(
     verifyTrDt:string, verifyTrNo:string, verifyVal:string
 ): Promise<accountVerifyResponce> {
   const requestBody = new accountVerifyRequestBody(verifyTrDt, verifyTrNo, verifyVal)  
+  console.log("계좌인증 바디 : ", requestBody);
+  
   const url = "/paytus/vbank/check-account-valid.php";
   try {   
     const result: accountVerifyResponce = await http.post(url, requestBody, 
