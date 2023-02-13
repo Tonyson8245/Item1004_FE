@@ -14,7 +14,7 @@
               <img
                 src="@/assets/icon/close_grey.svg"
                 alt=""
-                @click="emit(`update:propsShowModal`, false)"
+                @click="emit(`update:propsShowInfoModal`, false)"
               />
             </div>
             <div class="text-sm font-bold text-center pb-4">충전 한도 안내</div>
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { useVModel } from "@vueuse/core";
 
-const emit = defineEmits(["update:propsShowModal"]);
+const emit = defineEmits(["update:propsShowInfoModal"]);
 </script>
 
 <style scoped></style>

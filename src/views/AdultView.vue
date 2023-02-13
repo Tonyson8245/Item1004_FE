@@ -9,7 +9,7 @@
           청소년이 이용할 수 없습니다.</b
         >
         <a
-          href="https://intro.item1004.co.kr/"
+          href="https://www.naver.com"
           class="mt-6 border rounded-lg p-3 w-full text-white cursor-pointer bg-black flex justify-center"
         >
           <p class="mr-1 text-everly-yellow">19세미만</p>
