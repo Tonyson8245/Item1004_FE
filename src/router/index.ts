@@ -112,6 +112,27 @@ const router = createRouter({
           },
         },
         {
+          path: "/mypage/mileage/charge/virtualAccount",
+          component: components.VirtualAccount,
+          meta: {
+            title: "가상계좌 발급",
+            name: `virtualAccount`,
+            needLogin: true,
+            navbar: false,
+          },
+        },
+        {
+          path: "/mypage/mileage/charge/virtualAccountResult",
+          component: components.VirtualAccountResult,
+          meta: {
+            name: "virtualAccountResult",
+            title: "가상계좌 발급 완료",
+            navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
+          },
+        },
+        {
           path: "/mypage/mileage/withdraw/result",
           component: components.milageWithdrawResult,
           meta: {
@@ -197,9 +218,14 @@ const router = createRouter({
               meta: {
                 title: "마일리지 충전",
                 name: `charge`,
+                needLogin: true,
                 navbar: false,
               },
+              children:[
+                
+              ]
             },
+            
             {
               path: "mileage/withdraw",
               component: components.mileageWithdraw,
@@ -218,10 +244,10 @@ const router = createRouter({
               },
             },
             {
-              path: "user/info/putBankAccount",
-              component: components.putBankAccount,
+              path: "user/info/verifyWithDrawAccount",
+              component: components.VerifyWithDrawAccount,
               meta: {
-                title: "회원정보수정",
+                title: "출금계좌 인증",
                 navbar: false,
               },
             },

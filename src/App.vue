@@ -11,6 +11,7 @@
       </transition>
     </router-view>
   </div>
+  <TeleportExample />
 </template>
 <script lang="ts" setup>
 import modalNotify from "@/components/modal/modalNotify.vue";

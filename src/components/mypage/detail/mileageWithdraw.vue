@@ -41,7 +41,7 @@
             class="bg-everly-white border-everly-mid_grey border text-everly-dark_grey rounded-lg w-full md:w-auto px-2 py-2 md:py-2 md:px-3 flex justify-between items-center sm:flex-1 md:flex-none max-w-[17.5rem] sm:max-w-none cursor-pointer"
             @click="clickButton('withdrawPutAccount', true)"
           >
-            <div>출금 계좌 변경하기</div>
+            <p>출금 계좌 변경하기</p>
             <img
               src="@/assets/icon/arrow_right.svg"
               alt=""
@@ -271,7 +271,7 @@ function clickButton(typeName: string, status: boolean) {
     }
     //모바일인경우
     else {
-      router.push("/mypage/user/info/putBankAccount");
+      router.push("/mypage/user/info/verifyWithDrawAccount");
     }
   }
 }
