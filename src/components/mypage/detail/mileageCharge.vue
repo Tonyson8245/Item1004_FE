@@ -211,7 +211,7 @@
           <p
             class="absolute top-[0.7rem] md:top-[0.8rem] right-5 text-everly-main"
           >
-            {{ finalamount.toLocaleString() }} 원
+            {{ finalamount <= 0  ?  0 : finalamount.toLocaleString()  }} 원
           </p>
         </p>
       </div>
@@ -292,7 +292,7 @@ function setIsModal(value: boolean) {
 // 지불 방식에 따른 모달의 변화를 받는다
 function showPaymentModal(paymentMethodType:string) {  
   // 모바일 사이즈
-  if(!useMediaQuery("(min-width: 640px)").value){
+  if(!useMediaQuery("(min-width: 768px)").value){
     router.push('/mypage/mileage/charge/virtualAccount')
   }
   else{
@@ -332,8 +332,8 @@ watch([amount, amountInput,paymentMethod], () => {
       else finalamount.value = Math.floor(parseInt(amountInput.value) * 0.952);
     } else finalamount.value = Math.floor(parseInt(amount.value) * 0.952);
   }
+  // 가상 계좌는 수수료 1000원
   else if(paymentMethod.value === "가상계좌"){    
-   
     if (amount.value == "직접입력") {
       paymentStore.setStoreVirtualAccountChargeAmount(amountInput.value)
       // 아무것도 입력 되어있지 않았을 때 NaN을 0으로 처리

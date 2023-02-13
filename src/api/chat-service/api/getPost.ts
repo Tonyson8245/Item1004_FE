@@ -20,6 +20,11 @@ export async function getPost<postDto>(
       return result;
     } catch (err) {
       console.log("API error");
+      console.log(err);
+      if(err.status === 500){
+        alert('상품 정보를 가지고 올 수 없습니다. 고객센터로 문의주세요')
+      }
+      
       return Promise.reject(err);
     }
   } else return Promise.reject("token error");

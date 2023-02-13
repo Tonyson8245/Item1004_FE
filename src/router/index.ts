@@ -233,10 +233,10 @@ const router = createRouter({
               },
             },
             {
-              path: "user/info/putBankAccount",
-              component: components.putBankAccount,
+              path: "user/info/verifyWithDrawAccount",
+              component: components.VerifyWithDrawAccount,
               meta: {
-                title: "출금하기",
+                title: "출금계좌 인증",
                 navbar: false,
               },
             },

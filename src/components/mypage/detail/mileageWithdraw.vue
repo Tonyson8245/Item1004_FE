@@ -271,7 +271,7 @@ function clickButton(typeName: string, status: boolean) {
     }
     //모바일인경우
     else {
-      router.push("/mypage/user/info/putBankAccount");
+      router.push("/mypage/user/info/verifyWithDrawAccount");
     }
   }
 }

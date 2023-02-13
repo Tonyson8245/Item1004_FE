@@ -47,7 +47,8 @@
                     취소
                   </div>
                   <div
-                    class="flex-1 rounded-lg bg-everly-main text-everly-white py-2 cursor-pointer"
+                    :class="isConfirm ? 'bg-everly-main' : ' bg-everly-mid_grey'"
+                    class="flex-1 rounded-lg  text-everly-white py-2 cursor-pointer"
                     @click="withdraw()"
                   >
                     확인완료
@@ -97,6 +98,10 @@ import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import ModalVirtualAccount from "@/components/mypage/modaldetail/VirtualAccount.vue";
 import DeleteUserAccount from "../modaldetail/deleteUserAccount.vue";
+import * as paymentApi from "@/api/payment-service";
+import { useMediaQuery } from "@vueuse/core";
+
+const isConfirm = ref(true);
 
 const router = useRouter();
 const props = defineProps<{
@@ -110,19 +115,48 @@ const propsShowModal = useVModel(props, "propsShowModal", emit);
 const mypageStore = usemypageStore();
 const { storewithdrawAmt, storeUserInfo } = storeToRefs(mypageStore);
 
+console.log("storewithdrawAmt : ",storewithdrawAmt);
+
 
 function withdraw() {
-  mypageStore.postWithdrawMileage().then((res) => {
-    console.log(res);
-
-    if (res) router.push("/mypage/mileage/withdraw/result");
-    else {
-      alert("출금 신청이 실패되었습니다.");
-      router.push("/mypage/mileage/withdraw");
-    }
-
-    mypageStore.setstorewithdrawAmt(0);
+  isConfirm.value = false;
+  // 출금하기에 보내는 돈 원금 1만원
+  paymentApi.withDrawSubmit(storewithdrawAmt.value.toString())
+  // .then((res) => {
+  //   console.log(res);
+  //   if (res) router.push("/mypage/mileage/withdraw/result");
+  //   else {
+  //     alert("출금 신청이 실패되었습니다.");
+  //     router.push("/mypage/mileage/withdraw");
+  //   }
+  //   mypageStore.setstorewithdrawAmt(0);
+  // });
+  .then((res) => {
+    console.log(res);    
+    console.log("완료",res);     
+    alert('출금신청이 완료 됐습니다. 등록된 휴대폰의 문자를 확인해주세요.')
+    pageReload()
+  })
+  .catch((err) => {
+    console.log(err);
+    // if (err.code === 404) {
+    //   alert('계좌인증에 실패했습니다. 은행명, 계좌번호, 예금주명을 확인해주세요')
+    // } else if (err.code === 400) {
+    //   alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
+    // }
+    // else alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.')
+    isConfirm.value = true
+    alert('오류가 발생했습니다. 고객센터로 문의해주세요')
   });
 }
+
+function pageReload() {
+   // 모바일 뒤로가기
+  if (useMediaQuery("(min-width: 768px)")) history.back()
+  // 데스트탑 새로고침
+  else  location.reload();
+}
+
+
 </script>
 <style scoped></style>

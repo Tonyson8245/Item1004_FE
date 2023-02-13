@@ -7,7 +7,7 @@
         @update:propsShowModal="showBankListModal(false); getValue($event);"
     />
     <div
-      class="w-full md:w-[51.875rem] space-y-3 bg-everly-light_grey md:bg-everly-white md:py-4 md:rounded-lg"
+      class="w-full mt-10 md:mt-0 md:w-[51.875rem] space-y-3 bg-everly-light_grey md:bg-everly-white md:py-4 md:rounded-lg"
     >
         
       <div class="bg-everly-white py-5 md:py-1 px-4 md:px-5">
@@ -18,8 +18,7 @@
           <h1 class="hidden md:flex items-center text-xl">
             가상계좌 발급
           </h1>
-          
-          
+    
           <img
             src="@/assets/icon/close_grey.svg"
             alt=""
@@ -49,11 +48,13 @@
                     :propsDropdown="'h-52 overflow-y-scroll'"
                     @getValue="getValue($event)"
                     class="flex-auto hidden md:block"
+                    :class="isAccountVerified ? 'pointer-events-none' : 'pointer-events-auto'"                 
                 />
                 <!-- 모바일일때 -->
-                <div class="relative block sm:hidden" @click="showBankListModal(true)">
+                <div :disabled="isAccountVerified" class="relative block md:hidden" @click="showBankListModal(true)">
                     <button
                         class="text-everly-dark_grey py-3 rounded-lg border border-everly-mid_grey text-xs md:text-sm bg-white text-left pl-3 pr-8 flex justify-between w-full"
+                        
                     >
                     {{ bankName == "" ? "은행명을 입력해주세요" : bankName }}
                     </button>
@@ -66,7 +67,7 @@
                   <p class="text-everly-red-buy">*</p>      
                   <p class="">계좌번호</p>
               </span>                
-              <input v-model="accountNumber" :disabled="isAccountVerified" placeholder="(-) 없이 번호만 입력해주세요" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
+              <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" v-model="accountNumber" :disabled="isAccountVerified" placeholder="(-) 없이 번호만 입력해주세요" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
             </li>           
 
             <li class="flex flex-col gap-1 md:gap-0 md:flex-row md:items-center">
@@ -77,7 +78,12 @@
                 <span class="flex flex-auto">
                     <input  v-bind:value="accountOwner" :disabled="isAccountVerified" v-on:input="setAccountOwner" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text">
                     <!-- 모바일 인증 -->
-                    <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white">계좌인증</button>
+                    <button 
+                    :class="isSendVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
+                    :disabled="!isSendVerifyWord" 
+                    class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white"
+                    @click="sendVerifyWordButton"
+                    >계좌인증</button>
                     <!-- :class="{'bg-everly-main cursor-pointer': isSendVerifyWord }"  -->
                     <button  :class="isSendVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
                              class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
@@ -91,20 +97,27 @@
                     <p class="">인증단어</p>                   
                 </span>                
                 <span class="flex flex-auto ">
-                    <div class="flex items-center border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0">
+                    <div class="flex items-center border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12">
                       <input :disabled="isAccountVerified" maxlength="4" v-bind:value="verifyWord" v-on:input="setVerifyWord"  class=" flex-auto focus:outline-none" type="text">
-                      <p v-if="timer.isRunning.value" class="text-everly-red-buy">{{ timer.minutes }}:{{ timer.seconds }}</p>
                     </div>
                     <!-- 모바일 인증 -->
-                    <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white" @click="verifyAccount">인증하기</button>
-                    <button :class="isVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
-                             class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
-                            :disabled="!isVerifyWord" @click="verifyAccount">인증하기</button>                
+                    <button 
+                      :disabled="!isVerifyWord"
+                      :class="isVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
+                      class="md:hidden py-2 px-3 ml-auto border rounded-lg text-white" 
+                      @click="verifyAccount">인증하기</button>
+
+                    <button 
+                      :disabled="!isVerifyWord" 
+                      :class="isVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
+                      class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "                      
+                      @click="verifyAccount">인증하기</button>  
+
                 </span>
 
             </li>
             <li v-if="verifyTrDt != ''" class="flex flex-col md:flex-row md:items-center">
-                <span class="flex w-28">                               
+                <span class="flex w-28">
                 </span>     
                 <p v-if="!isAccountVerified" class=" text-sm text-everly-dark_grey">* 가장 최근 계좌에 1원을 보낸 4자리 단어를 입력해주세요</p>
                 <!-- isAccountVerified -->
@@ -135,33 +148,36 @@
                     <p class=" text-everly-red-buy">*</p>      
                     <p class="">입금 예정 금액</p> 
                 </span>                
-                <input disabled :value="storeVirtualAccountChargeAmount" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
+                <input disabled :value=" commonFunction.comma(storeVirtualAccountChargeAmount)" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
             </li>
             
         </ul>
       </div>
       <hr class="border-everly-light_grey border hidden md:block mx-4" />
   
-      <div class="bg-everly-white py-7 md:py-1 px-4 md:px-5 space-y-3">
+      <ul class="bg-everly-white py-7 md:py-1 px-4 md:px-5 space-y-3">
         <div class="font-bold">약관 동의</div>
-        <div class="flex items-center cursor-pointer" @click="setIsCheckAllAgreement">
+        <li class="flex items-center cursor-pointer" @click="setIsCheckAllAgreement">
           <img :src="isCheckAllAgreement? '../../../assets/icon/check_circle_blue.svg':'../../../assets/icon/check_circle.svg'" class=" w-5 mr-1" alt="체크박스"/>
           <span class="md:pl-1">
             전체동의
           </span>
-        </div>
-        <div class="flex items-center cursor-pointer" @click="setIsCheckCustomerAgreement">
+        </li>
+        <li class="flex items-center cursor-pointer" @click="setIsCheckCustomerAgreement">
           <img :src="isCheckCustomerAgreement? '../../../assets/icon/check_circle_blue.svg':'../../../assets/icon/check_circle.svg'" class=" w-5 mr-1" alt="체크박스"/>
           <span class="md:pl-1">
             가상계좌 발급 고객동의 (필수)
           </span>
-        </div>
-        <div class="flex items-center cursor-pointer" @click="setIsCheckAcountAgreement">
+          <VirtualAccountAgreementCustomer />
+          <!-- <button class=" text-sm ml-3"> 전문보기</button> -->
+        </li>
+        <li class="flex items-center cursor-pointer" @click="setIsCheckAcountAgreement">
           <img :src="isCheckAcountAgreement? '../../../assets/icon/check_circle_blue.svg':'../../../assets/icon/check_circle.svg'" class=" w-5 mr-1" alt="체크박스"/>
           <span class="md:pl-1">
             가상계좌 발급 확인 안내 (필수)
           </span>
-        </div>
+          <VirtualAccountAgreementConfirm/>
+        </li>
         <div class="md:px-56 space-y-2">
           <div
           :class="isRequireedAll ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
@@ -172,7 +188,7 @@
           </div>
           
         </div>
-      </div>
+      </ul>
     </div>
   </template>
   
@@ -184,9 +200,12 @@ import { usemypageStore } from "@/store/modules/mypage/mypageStore";
 import dropdownVue from "@/components/common/dropdown.vue";
 import modalList from "../components/modalList.vue";
 import * as paymentApi from "@/api/payment-service";
-import { useTimer } from 'vue-timer-hook';
 import { usePaymentStore } from "@/store/modules/home/paymentStore";
 import { storeToRefs } from "pinia";
+import commonFunction from "@/common";
+import VirtualAccountAgreementCustomer from "@/components/teleport/VirtualAccountAgreementCustomer.vue";
+import VirtualAccountAgreementConfirm from "@/components/teleport/VirtualAccountAgreementConfirm.vue"
+
 // 모달 끄고 닫기 에밋
 const emit = defineEmits(["update:propsShowModal"]);
 
@@ -223,14 +242,6 @@ const isCheckCustomerAgreement = ref(false)
 const isCheckAcountAgreement = ref(false)
 // 발급 받기 활성화를 위한 필수 입력변수들 충족 플래그
 const isRequireedAll = ref(false)
-
-// 카운트 시간
-const time = new Date();
-time.setSeconds(time.getSeconds() + 300); // 5분
-//@ts-ignore
-// 인증 카운터
-const timer = useTimer(time);
-timer.pause();
 
 function setAccountOwner(event:Event) {
   accountOwner.value = (event.target as HTMLInputElement).value
@@ -290,8 +301,6 @@ async function sendVerifyWordButton() {
   await paymentApi.sendVirtualAccountVerifyWord(bankName.value, accountNumber.value, accountOwner.value)
         .then((res) => {
           console.log(res);
-            // 타이머 동작
-            timer.restart()
             verifyTrDt.value = res.verifyTrDt
             verifyTrNo.value = res.verifyTrNo
         })
@@ -315,7 +324,6 @@ async function verifyAccount() {
           // 계좌 인증 성공 시 인증버튼 비활성화 && 카운트다운 스탑
           isAccountVerified.value = true;
           isVerifyWord.value = false
-          timer.pause()
         }).catch((err) => {
           console.log(err);
           if (err.code === 400) {
@@ -332,15 +340,6 @@ watch([verifyWord], ([vW])=> {
 
 
 
-watch(timer.isExpired, (tIE)=>{
-   // 타이머 시간 초과 시 새로고침
-   if(tIE) {
-    alert("계좌인증시간이 초과하였습니다. 다시 시도해주세요.");
-    location.reload();
-  }  
-})
-
-
 watch([isAccountVerified, isCheckCustomerAgreement, isCheckAcountAgreement], ([iAV, iCCA, iCAA])=>{
   if (iAV && iCCA && iCAA)  {
     isRequireedAll.value=true
@@ -349,7 +348,6 @@ watch([isAccountVerified, isCheckCustomerAgreement, isCheckAcountAgreement], ([i
 })
 
 async function requestVirtualAccount() {
-
   if (isRequireedAll.value ) {
     // 버튼 비활성화
     isRequireedAll.value = false
@@ -367,15 +365,18 @@ async function requestVirtualAccount() {
 }
 
 
-
-
-
 //사이즈 확인
 const minSize = computed(() => {
   return useMediaQuery("(min-width: 768px)");
 });
 
 
+function pageReload() {
+   // 모바일 뒤로가기
+  if (useMediaQuery("(min-width: 768px)")) history.back()
+  // 데스트탑 새로고침
+  else  location.reload();
+}
 //은행 명들
 const bankList = [
     "산업은행",
