@@ -58,7 +58,7 @@ import mileageChargeResult from "@/components/mypage/ChargeResultPage.vue";
 // @ts-ignore
 import paytus from "@/components/payment/paytus.vue";
 // @ts-ignore
-import putBankAccount from "@/components/mypage/modaldetail/putBankAccount.vue";
+// import putBankAccount from "@/components/mypage/modaldetail/putBankAccount.vue";
 // @ts-ignore
 import mileageWithdraw from "@/components/mypage/detail/mileageWithdraw.vue";
 // @ts-ignore
@@ -75,6 +75,9 @@ import mypageMobilepage from "@/components/mypage/mypageMobilepage.vue";
 import AdultView from "@/views/AdultView.vue";
 import userWithdrawl from "@/components/mypage/modaldetail/deleteUserAccount.vue";
 import editPage from "@/components/home/editPage.vue";
+import VirtualAccount from "@/components/mypage/modaldetail/VirtualAccount.vue"
+import VirtualAccountResult from "@/components/mypage/VirtualAccountResult.vue"
+import VerifyWithDrawAccount from "@/components/mypage/modaldetail/WithdrawAccount.vue"
 
 export default {
   editPage,
@@ -85,10 +88,13 @@ export default {
   contractInfo,
   milageWithdrawResult,
   mileageWithdraw,
-  putBankAccount,
+  // putBankAccount,
+  VerifyWithDrawAccount,
   paytus,
   mileageChargeResult,
   mileageCharge,
+  VirtualAccount,
+  VirtualAccountResult,
   userinfo,
   guide,
   logout,

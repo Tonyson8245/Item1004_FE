@@ -87,7 +87,7 @@
         <img
           src="@/assets/icon/check_circle_green_full.svg"
           alt=""
-          class="w-8 md:w-10 w-8 md:h-10 mt-20 sm:mt-14 mb-10 md:mt-3 md:mb-8"
+          class="w-8 md:w-10 md:h-10 mt-20 sm:mt-14 mb-10 md:mt-3 md:mb-8"
         />
         <div class="text-xl font-bold mb-4 md:mb-7">
           계좌 인증에 성공하였습니다.
