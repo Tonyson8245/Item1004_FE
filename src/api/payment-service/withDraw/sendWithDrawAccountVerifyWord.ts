@@ -11,10 +11,10 @@ import { checkTokenStatus } from "@/api/common";
 * @since 2023-02-12 19:41:15
 */
 export async function sendWithDrawAccountVerifyWord<T>(
-  bankName:string, bankAccount:string, userName:string
-): Promise<sendWithDrawAccountVerifyWordResponse> {
-  const requestBody = new sendWithdrawAccountVerifyWordRequestBody(bankName, bankAccount, userName)  
-  console.log("출급 계좌인증 바디 : ", requestBody);
+  bankName:string, bankAccount:string
+): Promise<string> {
+  const requestBody = new sendWithdrawAccountVerifyWordRequestBody(bankName, bankAccount)  
+  
   
   const url = "/auth/accounts";
   checkTokenStatus();
@@ -23,7 +23,7 @@ export async function sendWithDrawAccountVerifyWord<T>(
     const token = (JSON.parse(accessTokenData) as TokenDto).token;
     
     try {
-      const result: sendWithDrawAccountVerifyWordResponse= await http.post(url, requestBody, {
+      const result: string= await http.post(url, requestBody, {
         headers: {
           //  "Content-Type": "multipart/form-data" ,
            accessToken: token,
@@ -33,6 +33,8 @@ export async function sendWithDrawAccountVerifyWord<T>(
       return result;
     } catch (err) {
       console.log(`api failed`);
+      console.log(err);
+      
       return Promise.reject(err);
     }
   } else return Promise.reject("token error");

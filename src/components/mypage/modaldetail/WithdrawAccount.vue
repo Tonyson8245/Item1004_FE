@@ -66,52 +66,44 @@
                   <p class="text-everly-red-buy">*</p>      
                   <p class="">계좌번호</p>
               </span>                
-              <input v-model="accountNumber" :disabled="isAccountVerified" placeholder="(-) 없이 번호만 입력해주세요" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
-            </li>           
-
-            <li class="flex flex-col gap-1 md:gap-0 md:flex-row md:items-center">
-                <span class="flex w-28">
-                    <p class="text-everly-red-buy">*</p>      
-                    <p class="">예금주명</p> 
-                </span>
-                <span class="flex flex-auto">
-                    <input  v-bind:value="accountOwner" :disabled="isAccountVerified" v-on:input="setAccountOwner" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text">
+              <span class="flex flex-auto">
+                <input v-model="accountNumber" :disabled="isAccountVerified" placeholder="(-) 없이 번호만 입력해주세요" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 " type="text">
+                    <!-- <input  v-bind:value="accountOwner" :disabled="isAccountVerified" v-on:input="setAccountOwner" class="border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0" type="text"> -->
                     <!-- 모바일 인증 -->
-                    <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white">계좌인증</button>
+                    <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white">1원 인증</button>
                     <!-- :class="{'bg-everly-main cursor-pointer': isSendVerifyWord }"  -->
                     <button  :class="isSendVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
                              class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
                              :disabled="!isSendVerifyWord"
                              @click="sendVerifyWordButton">1원 인증</button>          
                 </span>
-            </li>            
-            <li  class="flex flex-col md:flex-row md:items-center">
+            </li>           
+
+                 
+            <li v-if="isExistAccount" class="flex flex-col md:flex-row md:items-center">
                 <span class="flex w-28">
                     <p class=" text-everly-red-buy">*</p>      
                     <p class="">인증단어</p>                   
                 </span>                
                 <span class="flex flex-auto ">
                     <div class="flex items-center border border-everly-mid_grey rounded-lg md:rounded-md flex-auto py-2 px-4 md:h-12 mr-3 md:mr-0">
-                      <input :disabled="isAccountVerified" maxlength="4" v-bind:value="verifyWord" v-on:input="setVerifyWord"  class=" flex-auto focus:outline-none" type="text">
+                      <input  maxlength="4" v-bind:value="verifyWord" v-on:input="setVerifyWord"  class=" flex-auto focus:outline-none" placeholder="ex) 모자옛날" type="text">
                       <p v-if="timer.isRunning.value" class="text-everly-red-buy">{{ timer.minutes }}:{{ timer.seconds }}</p>
                       <!-- <timer class=" text-everly-sub_blue"/> -->
                       <!-- <p>{{ time }}</p> -->
                     </div>
                     <!-- 모바일 인증 -->
-                    <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white" >인증하기</button>
+                    <!-- <button class="md:hidden py-2 px-3 ml-auto border rounded-lg bg-everly-mid_grey text-white" >인증하기</button>
                     <button :class="isVerifyWord ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
                              class="hidden md:block h-12 w-48 ml-2 borde text-white text-sm rounded-md "
-                            :disabled="!isVerifyWord">인증하기</button>                
+                            :disabled="!isVerifyWord">인증하기</button>                 -->
                 </span>
 
             </li>
-            <li  class="flex flex-col md:flex-row md:items-center">
+            <li v-if="isExistAccount" class="flex flex-col md:flex-row md:items-center">
                 <span class="flex w-28">                               
                 </span>     
-                <p v-if="!isAccountVerified" class=" text-sm text-everly-dark_grey">* 가장 최근 계좌에 1원을 보낸 4자리 단어를 입력해주세요</p>
-                <!-- isAccountVerified -->
-               <p v-if="isAccountVerified" class=" text-sm text-everly-main font-bold">*계좌가 인증됐습니다</p>
-                
+                <p class=" text-sm text-everly-dark_grey">* 가장 최근 계좌에 1원을 보낸 4자리 단어를 입력해주세요</p>                
             </li>
             <li>
             </li>
@@ -126,7 +118,7 @@
           <div
           :class="isRequireedAll ? 'bg-everly-main cursor-pointer hover:shadow-lg hover:opacity-75' : 'bg-everly-mid_grey cursor-not-allowed'"
             class="text-center py-2.5 rounded-lg border bg-everly-mid_grey text-white "
-            @click="requestVirtualAccount"
+            @click="verifyWithDrawAccount"
           >
             인증하기
           </div>
@@ -170,6 +162,8 @@ const isBankListModal = ref(false);
 const isSendVerifyWord = ref(false);
 // 인증단어 4자리 입력 시 계좌 인증하기 플래그
 const isVerifyWord = ref(false)
+// 인증단어 보내기 성공 시 본인계좌가 맞기 때문에 true 설정
+const isExistAccount = ref(false)
 // 인증ID
 const authId = ref("")
 
@@ -196,10 +190,6 @@ const timer =  useTimer(time);
 timer.pause();
 
 
-function setAccountOwner(event:Event) {
-  accountOwner.value = (event.target as HTMLInputElement).value
-}
-
 function setVerifyWord(event:Event) {
   verifyWord.value = (event.target as HTMLInputElement).value
 }
@@ -214,8 +204,8 @@ function getValue(event: string) {
 }
 
 // TODO: 계좌번호랑 예금주 하나라도 입력 되면은 1원 인증 버튼 active 해라이!
-watch([accountNumber,accountOwner,bankName], ([aN, aO, bN])=>{  
-  if (aN!=='' && aO!=='' &&  bN!=='') isSendVerifyWord.value=true      
+watch([accountNumber,bankName], ([aN, bN])=>{  
+  if (aN!=='' &&  bN!=='') isSendVerifyWord.value=true      
   else isSendVerifyWord.value=false;
 })
 
@@ -224,45 +214,27 @@ async function sendVerifyWordButton() {
   // if (!isSendVerifyWord.value) return
   // api 1원인증코드 보내기
   isSendVerifyWord.value = false;
-  await paymentApi.sendWithDrawAccountVerifyWord(bankName.value, accountNumber.value, accountOwner.value)
+  await paymentApi.sendWithDrawAccountVerifyWord(bankName.value, accountNumber.value)
   // await paymentApi.sendWithDrawAccountVerifyWord('신한은행', '110374495753', '이광호')
         .then((res) => {
           console.log(res);
-          // authId.value = res
-            // 타이머 동작
-            timer.restart();          
+          authId.value = res
+          alert('계좌에 1원을 보냈습니다. 입금자명 4자리를 입력해주세요')          
+          // 타이머 동작
+          timer.restart();                    
+          isExistAccount.value = true;
         })
         .catch((err) => {
           console.log(err);
           isSendVerifyWord.value = true;
-          if (err.code === 400) {
-            alert('계좌인증에 실패했습니다. 은행명, 계좌번호, 예금주명을 확인해주세요')
-          } else if (err.code === 404) {
-            alert('토큰 오류가 발생했습니다. 다시 로그인 후 진행해주세요')
-          }
-          else {
-            alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.')
-
-          }
+          if (err.code === "paytus_error") alert('계좌인증에 실패했습니다. 은행명, 계좌번호, 예금주명을 확인해주세요')
+          else if (err.code === "extinct_token") alert('토큰 오류가 발생했습니다. 다시 로그인 후 진행해주세요')
+          else if (err.code ==="invalid_value") alert('요청 값이 존재하지 않거나 형식이 올바르지 않습니다')          
+          else alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.')
         });
 }
 
-// 계좌 인증하기 버튼
-// async function verifyAccount() {
-//   await paymentApi.accountVerify(verifyTrDt.value,verifyTrNo.value, verifyWord.value)
-//         .then((res) => {
-//           console.log(res);
-//           // 계좌 인증 성공 시 인증버튼 비활성화 && 카운트다운 스탑
-//           isAccountVerified.value = true;
-//           isVerifyWord.value = false
-//           timer.pause()
-//         }).catch((err) => {
-//           console.log(err);
-//           if (err.code === 400) {
-//             alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
-//           }
-//         });
-// }
+
 
 watch([verifyWord], ([vW])=> {  
   // 인증하기 4단어 입력 시 인증하기 활성화
@@ -272,37 +244,46 @@ watch([verifyWord], ([vW])=> {
 
 
 
-// watch(timer.isExpired, (tIE)=>{
-//    // 타이머 시간 초과 시 새로고침
-//    if(tIE) {
-//     alert("계좌인증시간이 초과하였습니다. 다시 시도해주세요.");
-//     location.reload();
-//   }  
-// })
+watch(timer.isExpired, (tIE)=>{
+   // 타이머 시간 초과 시 새로고침
+   if(tIE) {
+    alert("계좌인증시간이 초과하였습니다. 다시 시도해주세요.");
+    location.reload();
+  }  
+})
+
+
+ // 본인계좌로 1원 인증 단어를 보냈는지, 인증단어를 4자리 입력했는지 확인해서 인증하기 버튼 활성화
+watch([isVerifyWord, isExistAccount], ([iVf, iEA])=>{
+  if (iVf && iEA) {
+    isRequireedAll.value = true;
+  }
+})
 
 
 
-
-async function requestVirtualAccount() {
-
+async function verifyWithDrawAccount() {
   if (isRequireedAll.value ) {
     // 버튼 비활성화
     isRequireedAll.value = false
-    await paymentApi.requestVirtualAccount(accountOwner.value, storeVirtualAccountChargeAmount.value, bankName.value, accountNumber.value)
+    await paymentApi.verifyWithDrawAccount(authId.value, verifyWord.value)
         .then((res) => {
           console.log(res);
-          router.push(`/mypage/mileage/charge/virtualAccountResult?amount=${res.amount}&scheduledCharge=${res.scheduledCharge}&bankName=${res.bankName}&bankAccount=${res.bankAccount}`)          
+          alert('출금계좌 인증이 완료됐습니다')
+          // 데스트탑 새로고침
+          if (useMediaQuery("(min-width: 640px)")) location.reload();
+          // 모바일 뒤로가기
+          else history.back()          
         }).catch((err) => {
           console.log(err);
-          if (err.code === 400) {
-            alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
-          }
+          timer.pause()
+          if (err.code === "paytus_error") alert('계좌인증에 실패했습니다. 은행명, 계좌번호, 예금주명을 확인해주세요')
+          else if (err.code === "extinct_token") alert('토큰 오류가 발생했습니다. 다시 로그인 후 진행해주세요')
+          else if (err.code ==="invalid_value") alert('요청 값이 존재하지 않거나 형식이 올바르지 않습니다')          
+          else alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.')          
         });
   }
 }
-
-
-
 
 
 
