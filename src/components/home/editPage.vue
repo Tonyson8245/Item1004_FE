@@ -150,7 +150,7 @@
                 <div
                   class="flex justify-center text-everly-dark cursor-pointer"
                   v-if="storeCategory == 'gameMoney'"
-                  @click="setCategory(`gameMoney`)"
+                  :class="categoryClass(`gameMoney`)"
                 >
                   <div
                     class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl border-everly-main"
@@ -168,7 +168,7 @@
                 </div>
                 <div
                   class="flex justify-center text-everly-dark_grey cursor-pointer"
-                  @click="setCategory(`gameMoney`)"
+                  :class="categoryClass(`gameMoney`)"
                   v-else
                 >
                   <div class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl">
@@ -186,7 +186,7 @@
                 <!-- 아이템 -->
                 <div
                   class="flex justify-center text-everly-dark cursor-pointer"
-                  @click="setCategory(`item`)"
+                  :class="categoryClass(`item`)"
                   v-if="storeCategory == 'item'"
                 >
                   <div
@@ -205,7 +205,7 @@
                 </div>
                 <div
                   class="flex justify-center text-everly-dark_grey cursor-pointer"
-                  @click="setCategory(`item`)"
+                  :class="categoryClass(`item`)"
                   v-else
                 >
                   <div class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl">
@@ -223,7 +223,7 @@
                 <!-- 캐릭터 -->
                 <div
                   class="flex justify-center text-everly-dark cursor-pointer"
-                  @click="setCategory(`character`)"
+                  :class="categoryClass(`character`)"
                   v-if="storeCategory == 'character'"
                 >
                   <div
@@ -242,7 +242,7 @@
                 </div>
                 <div
                   class="flex justify-center text-everly-dark_grey cursor-pointer"
-                  @click="setCategory(`character`)"
+                  :class="categoryClass(`character`)"
                   v-else
                 >
                   <div class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl">
@@ -260,7 +260,7 @@
                 <!-- 기타 -->
                 <div
                   class="flex justify-center text-everly-dark cursor-pointer"
-                  @click="setCategory(`etc`)"
+                  :class="categoryClass(`etc`)"
                   v-if="storeCategory == 'etc'"
                 >
                   <div
@@ -279,7 +279,7 @@
                 </div>
                 <div
                   class="flex justify-center text-everly-dark_grey cursor-pointer"
-                  @click="setCategory(`etc`)"
+                  :class="categoryClass(`etc`)"
                   v-else
                 >
                   <div class="w-16 h-16 sm:w-32 sm:h-32 border rounded-xl">
@@ -307,7 +307,7 @@
                 <div
                   class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
                   v-if="storeCategory != 'gameMoney'"
-                  @click="setCategory(`gameMoney`)"
+                  :class="categoryClass(`gameMoney`)"
                 >
                   <div class="text-center">
                     <img
@@ -325,7 +325,7 @@
                 </div>
                 <div
                   class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
-                  @click="setCategory(`gameMoney`)"
+                  :class="categoryClass(`gameMoney`)"
                   v-else
                 >
                   <div class="text-center">
@@ -348,7 +348,7 @@
                 <div
                   class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center"
                   v-if="storeCategory != 'item'"
-                  @click="setCategory(`item`)"
+                  :class="categoryClass(`item`)"
                 >
                   <div class="text-center">
                     <img
@@ -366,7 +366,7 @@
                 </div>
                 <div
                   class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
-                  @click="setCategory(`item`)"
+                  :class="categoryClass(`item`)"
                   v-else
                 >
                   <div class="text-center">
@@ -389,7 +389,7 @@
                 <div
                   class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center"
                   v-if="storeCategory != 'character'"
-                  @click="setCategory(`character`)"
+                  :class="categoryClass(`character`)"
                 >
                   <div class="text-center">
                     <img
@@ -407,7 +407,7 @@
                 </div>
                 <div
                   class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
-                  @click="setCategory(`character`)"
+                  :class="categoryClass(`character`)"
                   v-else
                 >
                   <div class="text-center">
@@ -430,7 +430,7 @@
                 <div
                   class="border border-everly-mid_grey w-[160px] h-[160px] rounded-xl flex items-center justify-center"
                   v-if="storeCategory != 'etc'"
-                  @click="setCategory(`etc`)"
+                  :class="categoryClass(`etc`)"
                 >
                   <div class="text-center">
                     <img
@@ -448,7 +448,7 @@
                 </div>
                 <div
                   class="border border-everly-main w-[160px] h-[160px] rounded-xl flex items-center justify-center cursor-pointer"
-                  @click="setCategory(`etc`)"
+                  :class="categoryClass(`etc`)"
                   v-else
                 >
                   <div class="text-center">
@@ -553,17 +553,13 @@
           </div>
         </div>
         <!-- 키워드가 있고 선택하는 것에 따라 내용이 달라짐 -->
-        <div
-          v-if="commonStoreGameKeyword != '' && commonStoreServerKeyword != ''"
-          class="p-5"
-        >
+        <div class="p-5">
           <div v-if="storeCategory == 'gameMoney'"><writeGamemoney /></div>
           <div v-else-if="storeCategory == 'item'"><writeItem /></div>
           <div v-else-if="storeCategory == 'character'"><WriteCharacter /></div>
           <div v-else-if="storeCategory == 'etc'"><WriteEtc /></div>
           <div v-else class="p-28"></div>
         </div>
-        <div v-else class="p-28"></div>
       </div>
       <div class="flex-grow"></div>
     </div>
@@ -579,10 +575,12 @@ import writeGamemoney from "./components/writeCategory/writeGamemoney.vue";
 import writeItem from "./components/writeCategory/writeItem.vue";
 import WriteCharacter from "./components/writeCategory/writeCharacter.vue";
 import WriteEtc from "./components/writeCategory/writeEtc.vue";
-import { onUnmounted, onMounted } from "vue";
+import { onUnmounted, onMounted, watch } from "vue";
 import { usemypageStore } from "@/store/modules/mypage/mypageStore";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { alertMSG } from "@/common";
+import { usePostStore } from "@/store/modules/home/postStore";
+import { isEmpty } from "class-validator";
 
 const commonStore = useCommonStore();
 const {
@@ -591,12 +589,9 @@ const {
   storeShowServerFilter,
   storeServerSimilar,
   storeShowServerSimilar,
-  storeCategory,
   commonStoreGameKeyword,
   commonStoreServerKeyword,
 } = storeToRefs(commonStore);
-const mypageStore = usemypageStore();
-const { storeUserInfo } = storeToRefs(mypageStore);
 const router = useRouter();
 
 // router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
@@ -607,18 +602,6 @@ function toggleSellBuy(status: string) {
   writeStore.setstorepostType(status);
 }
 
-function setCategory(Category: string) {
-  writeStore.$reset();
-  commonStore.setstoreCategory(Category);
-  writeStore.setstoreCategory(Category);
-}
-
-// 생명주기, 들어가고 나갈때 초기화
-// onMounted(() => {
-//   commonStore.reset();
-//   console.log(`초기화`);
-// });
-
 onUnmounted(() => {
   commonStore.reset();
   console.log(`초기화`);
@@ -626,6 +609,26 @@ onUnmounted(() => {
 
 const writeStore = useWriteStore();
 const { storepostType } = storeToRefs(writeStore);
+
+////수정 관련 로직 추가
+// 생명주기, 들어가고 나갈때 초기화
+const route = useRoute();
+const postStore = usePostStore();
+onMounted(() => {
+  var idx = route.query.postId;
+
+  if (!isEmpty(idx?.toString()) && idx != null) {
+    writeStore.setStorePostDataforEdit(idx.toString());
+  } else router.push("/");
+});
+//기존 카테고리 가져옴
+const { storeCategory } = storeToRefs(commonStore);
+
+//카테고리 클릭 안되게
+const categoryClass = (category: string) => {
+  if (category == storeCategory.value) return "cursor-pointer";
+  else return "cursor-not-allowed";
+};
 </script>
 
 <style scoped></style>

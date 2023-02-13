@@ -5,7 +5,11 @@
     @update:propsShowModal="toggleShowModal()"
     @update:changeStatus="deleteStatus = $event"
   />
-  <div :class="overflowControl" class="pb-20 sm:pb-0 relative">
+  <div
+    :class="overflowControl"
+    class="pb-20 sm:pb-0 relative"
+    v-if="storecreatAt != ''"
+  >
     <div class="flex">
       <div class="flex-1"></div>
       <div
@@ -17,38 +21,57 @@
         >
           <span class="">{{ commonFunction.timeForToday(storecreatAt) }}</span>
           <div
-            class="hidden md:flex gap-5"
+            class="hidden md:flex gap-5 relative"
             v-if="storeUserInfo.idx == storeUserIdx"
           >
-            <!-- TODO 1차 출시 주석 2023-01-25 23:50:36 -->
-            <!-- <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-            >
-              <img
-                src="@/assets/icon/pencil_grey.svg"
-                alt=""
-                class="w-3 mr-2"
-              />
-              수정하기
-            </div>
-           -->
-            <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-              @click="alertMSG()"
-            >
-              <img
-                src="@/assets/icon/pencil_grey.svg"
-                alt=""
-                class="w-3 mr-2"
-              />
-              수정하기
+            <div class="cursor-pointer" @click="toggleMore()">
+              <img src="@/assets/icon/dice_grey.svg" alt="" />
             </div>
             <div
-              class="border-everly-mid_grey py-2 px-4 rounded-md flex border cursor-pointer"
-              @click="toggleShowModal()"
+              class="border bg-everly-white absolute right-0 top-[1.5rem] w-[5.6rem] text-center text-xs md:text-sm text-everly-dark_grey cursor-pointer"
+              v-if="showMore"
             >
-              <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
-              삭제하기
+              <!-- TODO 1차 출시 주석 2023-01-25 20:31:17 -->
+              <div
+                class="px-2 py-2 flex justify-center items-center"
+                @click="goEditPage()"
+              >
+                <img
+                  src="@/assets/icon/pencil_grey.svg"
+                  alt=""
+                  class="w-3 mr-2"
+                />
+                수정하기
+              </div>
+              <div
+                class="px-2 py-2 flex justify-start items-center"
+                @click="alertMSG()"
+              >
+                <img
+                  src="@/assets/icon/eyes_close.svg"
+                  alt=""
+                  class="w-4 mr-[0.4rem]"
+                />
+                숨기기
+              </div>
+              <div
+                class="px-2 py-2 flex justify-center items-center"
+                @click="alertMSG()"
+              >
+                <img
+                  src="@/assets/icon/check_circle_full_grey.svg"
+                  alt=""
+                  class="w-3.5 mr-2"
+                />
+                거래종료
+              </div>
+              <div
+                class="px-2 py-2 flex justify-center items-center"
+                @click="toggleShowModal()"
+              >
+                <img src="@/assets/icon/bin_grey.svg" alt="" class="w-3 mr-2" />
+                삭제하기
+              </div>
             </div>
           </div>
           <div class="hidden md:flex gap-5" v-else>
@@ -297,7 +320,7 @@
         >
           <div class="hidden md:block text-lg">상세설명</div>
           <div
-            class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem]"
+            class="md:border-[#000000] w-full md:p-3 p-1 text-everly-dark_grey md:text-base text-sm md:border md:min-h-[8.938rem] whitespace-pre-wrap"
           >
             {{ storeContent }}
           </div>
@@ -523,13 +546,12 @@
         class="flex-1 text-sm absolute md:hidden bg-everly-white bottom-14 z-30 rounded-t-lg w-full sm:text-base"
         v-else-if="storeShowManagePost"
       >
-        <!-- TODO 1차 출시 주석 2023-01-25 23:50:15 -->
-        <!-- <div class="py-4 text-center w-full">수정하기</div>
+        <div class="py-4 text-center w-full" @click="goEditPage()">
+          수정하기
+        </div>
         <hr
           class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
         />
-        -->
-        <div class="py-4 text-center w-full" @click="alertMSG()">수정하기</div>
         <hr
           class="border-everly-light_grey md:border-[#707070] border-px w-full absolute left-0 md:static"
         />
@@ -545,6 +567,7 @@
       </div>
     </transition>
   </div>
+  <div v-else class="h-[40rem]"></div>
 </template>
 
 <script setup lang="ts">
@@ -679,7 +702,10 @@ watch([showBuy, storeShowManagePost], () => {
 
 //payment page로 보내기
 function goPaymentPage() {
-  if (navigator.userAgent.indexOf("Mobi") > -1) {
+  if (
+    import.meta.env.MODE == "production" &&
+    navigator.userAgent.indexOf("Mobi") > -1
+  ) {
     alert("모바일 결제는 지원 예정입니다.");
     return;
   }
@@ -744,6 +770,29 @@ function goChatPage() {
     }
   }
 }
+
+function goEditPage() {
+  var postIdx = route.query.postId;
+  var writerIdx = storeUserIdx.value;
+  var userIdx = storeUserInfo.value.idx;
+  console.log(
+    !isEmpty(postIdx?.toString()),
+    postIdx != null,
+    writerIdx == userIdx
+  );
+
+  if (
+    !isEmpty(postIdx?.toString()) &&
+    postIdx != null &&
+    writerIdx == userIdx
+  ) {
+    router.push(`/edit?postId=${postIdx}`);
+  } else router.push("/");
+}
+
+// 수정 신고 버튼
+const showMore = ref(false);
+const toggleMore = useToggle(showMore);
 </script>
 
 <style scoped>

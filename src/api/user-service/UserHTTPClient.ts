@@ -32,10 +32,13 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log(error);
+
     const {
       config,
       response: { status },
     } = error;
+
     if (status === 401) {
       const originalRequest = config;
 
@@ -66,6 +69,9 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
             console.log(namespace, "재발급 실패 >>> USER");
             return Promise.reject(error.response.data.meta);
           });

@@ -2,6 +2,7 @@ import type { TokenDto } from "@/domain/auth";
 import type { user } from "@/domain/user/user.interface";
 import { useLocalStorage } from "@vueuse/core";
 import axios from "axios";
+import { isEmpty, isNotEmpty } from "class-validator";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -34,7 +35,8 @@ instance.interceptors.response.use(
   (response) => {
     //성공 시에는 result 값만 돌려보넴
     //여기 참고
-    return response.data.result;
+    if (isNotEmpty(response.data.result)) return response.data.result;
+    else return response.data.meta.isSuccess;
   },
   async (error) => {
     const {
@@ -70,6 +72,9 @@ instance.interceptors.response.use(
               res.data.result.accessToken.token;
           })
           .catch((err) => {
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
             console.log(namespace, "재발급 실패 >>>> HOME");
             return Promise.reject(error.response.data.meta);
           });

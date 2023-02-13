@@ -11,7 +11,6 @@ import { isEmpty } from "class-validator";
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
-
     {
       path: "/paytus",
       component: components.paytus,
@@ -47,6 +46,18 @@ const router = createRouter({
             transition: "slide-right",
             name: "write",
             title: "거래 등록",
+            navbar: false,
+            needLogin: true,
+            needCheckAdult: true,
+          },
+        },
+        {
+          path: "edit",
+          component: components.editPage,
+          meta: {
+            transition: "slide-right",
+            name: "edit",
+            title: "거래 수정",
             navbar: false,
             needLogin: true,
             needCheckAdult: true,
@@ -228,6 +239,23 @@ const router = createRouter({
               meta: {
                 title: "구매내역",
                 navbar: false,
+              },
+            },
+            {
+              path: "user/info/withdrawl",
+              meta: {
+                title: "회원탈퇴",
+                navbar: false,
+                needLogin: true,
+              },
+              components: {
+                default: async () => {
+                  if (!isMobile()) {
+                    return components.userinfo;
+                  } else {
+                    return components.userWithdrawl;
+                  }
+                },
               },
             },
           ],

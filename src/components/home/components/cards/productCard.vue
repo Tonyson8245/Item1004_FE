@@ -1,16 +1,17 @@
 <template>
-  <div class="relative cursor-pointer">
+  <div class="relative cursor-pointer overflow-hidden">
     <div
       v-if="props.card?.post.status == 'end'"
-      class="absolute w-full h-full bg-white rounded-lg opacity-50 border cursor-not-allowed"
+      class="absolute w-full h-full bg-white rounded-xl opacity-50 cursor-not-allowed"
       style="z-index: 1"
     ></div>
     <div
       v-if="props.card?.post.status == 'end'"
-      class="absolute w-full h-full backdrop-blur-[1.3px] rounded-lg border flex items-center justify-center cursor-not-allowed"
+      style="z-index: 1"
+      class="absolute w-full h-full backdrop-blur-[1.3px] rounded-xl flex items-center justify-center cursor-not-allowed"
     >
       <div
-        class="rounded-full border bg-white text-everly-mid_grey w-20 h-20 flex items-center justify-center font-bold border-2 md:text-lg"
+        class="rounded-full border-2 bg-white text-everly-mid_grey w-20 h-20 flex items-center justify-center font-bold md:text-lg"
       >
         판매<br />완료
       </div>

@@ -79,8 +79,11 @@ function timeForToday(value: string | Date) {
 //특수 문자 유무 체크 정규식
 function checkTitle(title: string) {
   var regExp = /^[a-zA-Z0-9ㄱ-힣()\[\]'",./\s]+$/;
+  console.log(title.length);
 
-  return !regExp.test(title); // 형식에 맞는 경우 true 리턴
+  if (title.length > 50) {
+    return true; //글 길이 제한
+  } else return !regExp.test(title); // 형식에 틀린 경우 true 리턴
 }
 
 //최대 최소 확인 정규식

@@ -13,12 +13,10 @@ const mypageStore = usemypageStore();
 const authstore = useauthStore();
 
 mypageStore.$reset();
-
 authstore.deleteToken();
-router.push("/");
 
 setTimeout(() => {
-  router.go(0);
+  router.push("/");
 }, 100);
 </script>
 
