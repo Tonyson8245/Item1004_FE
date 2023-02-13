@@ -458,6 +458,7 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { useCookie } from "vue-cookie-next";
 import { moveExternalLink } from "@/common";
+import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 const router = useRouter();
 
 const cardQty = ref(3);
@@ -569,11 +570,26 @@ function moveLink(link: string) {
   router.push(link);
 }
 
-// 페이지 벗어날때 초기화 할경우
-// onBeforeUnmount(() => {
-//   listStore.resetsetstoreProductCard();
-//   listStore.setstoreinfiniteStatus(false);
-// });
+// 처음 페이지 로드 될때 동작
+onMounted(() => {
+  listStore.$reset();
+  postStore.$reset();
+  getProductList(10);
+  //일단 다끔
+  if (getCookie("noti") == "stop") {
+    componentStore.setstoreshowNotify(false);
+  } else {
+    if (route.meta.name == "list") {
+      componentStore.setstoreshowNotify(false);
+    }
+  }
+});
+
+function getProductList(pageUnit: number) {
+  var payload = new getProductCardBodyDto(1, pageUnit, "sell");
+
+  listStore.setstoreProductCard(payload).then((res) => {});
+}
 </script>
 
 <style scoped lang="scss">
