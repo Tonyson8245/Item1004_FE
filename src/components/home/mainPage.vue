@@ -227,7 +227,7 @@
     <!-- 맨위로 모바일-->
 
     <!-- 모바일 글작성 -->
-    <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
+    <div class="block md:hidden bottom-20 right-0 fixed" style="z-index: 2">
       <div class="flex justify-end">
         <div class="flex flex-col items-end justify-center gap-y-1 pr-2">
           <img
