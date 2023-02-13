@@ -1,15 +1,15 @@
 
 import http from "../paymentHTTPClient";
-import type { accountVerifyResponce } from "@/domain/payment/accountVerifyDto.interface";
-import  { accountVerifyRequestBody } from "@/domain/payment/accountVerifyDto.interface";
+import type { accountVerifyResponce } from "@/domain/payment/virtualAccountVerifyDto.interface";
+import  { accountVerifyRequestBody } from "@/domain/payment/virtualAccountVerifyDto.interface";
 
 /**
-* @description 1원 보낸 계좌 인증 API
+* @description 입금전용 가상계좌발급 1원 보낸 계좌 인증 API
 * @author 이광호
 * @sdoc VirtualAccount.vue
 * @since 2023-02-10 15:05:29
 */
-export async function accountVerify<T>(
+export async function virtualAccountVerify<T>(
     verifyTrDt:string, verifyTrNo:string, verifyVal:string
 ): Promise<accountVerifyResponce> {
   const requestBody = new accountVerifyRequestBody(verifyTrDt, verifyTrNo, verifyVal)  

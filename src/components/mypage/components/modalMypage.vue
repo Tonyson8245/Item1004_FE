@@ -11,7 +11,8 @@
         >
           <!-- emit 값을 다시 보냄 -->
           <div v-if="props.propsType != ''">
-            <putBankAccountWithdraw
+              <!-- 출금 계좌 인증 -->
+            <WithdrawAccount
               v-if="props.propsType == 'withdrawPutAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
             />
@@ -61,11 +62,15 @@
               @update:propsShowModal="emit('update:propsShowModal', false)"
             />
 
-            <putBankAccount
+           <!-- TODO: 2023-02-12 18:53:15 동오야 이전에 쓰던거 일단 남겨놈 안 쓸거니깐 너가 확인하고 지워주라 -->
+            <!-- <putBankAccount
               v-else-if="props.propsType == 'userinfoPutAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
-            />
+            /> -->
 
+             <!-- 출금 계좌 인증 -->
+
+            
             <DeleteUserAccount
               v-else-if="props.propsType == 'deleteUserAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
@@ -82,7 +87,8 @@
 </template>
 
 <script lang="ts" setup>
-import putBankAccount from "../modaldetail/putBankAccount.vue";
+import WithdrawAccount from '@/components/mypage/modaldetail/WithdrawAccount.vue'
+// import putBankAccount from "../modaldetail/putBankAccount.vue";
 import putBankAccountWithdraw from "../modaldetail/putBankAccountInWithdraw.vue";
 import { useVModel } from "@vueuse/core";
 import { ref, watch } from "vue";

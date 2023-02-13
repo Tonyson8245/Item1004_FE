@@ -1,11 +1,11 @@
 
 import http from "../paymentHTTPClient";
-import type { accountRequestResponse } from "@/domain/payment/accountVerifyDto.interface";
-import  { accountRequestBody } from "@/domain/payment/accountVerifyDto.interface";
+import type { accountRequestResponse } from "@/domain/payment/virtualAccountVerifyDto.interface";
+import  { accountRequestBody } from "@/domain/payment/virtualAccountVerifyDto.interface";
 import type { TokenDto } from "@/domain/auth";
 import { checkTokenStatus } from "@/api/common";
 /**
-* @description 가상계좌 발급받기
+* @description  입금전용  가상계좌 발급받기
 * @author 이광호
 * @sdoc VirtualAccount.vue
 * @since 2023-02-10 19:38:20

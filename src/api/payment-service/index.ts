@@ -10,6 +10,7 @@ export * from "./mileage/checkwithdrawPoint";
 export * from "./contract/putContractTakeover";
 export * from "./contract/putContractTake";
 export * from "./contract/deleteContractCancel";
-export * from "./account/sendAccountVerifyWord"
-export * from "./account/accountVerify"
-export * from "./account/requestVirtualAccount"
+export * from "./vitualAccount/sendVirtualAccountVerifyWord"
+export * from "./vitualAccount/virtualAccountVerify"
+export * from "./vitualAccount/requestVirtualAccount"
+export * from "./withDraw/sendWithDrawAccountVerifyWord"
