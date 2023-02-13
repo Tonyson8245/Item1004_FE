@@ -1,17 +1,23 @@
 <template>
   <div>
-    <div class="cursor-pointer min-w-[120rem] h-[5rem] w-full">
-      <div class="flex w-full cursor-pointer">
-        <div class="flex-grow"></div>
-        <div class="flex-grow-none">
-          <img
-            src="@/assets/img/banners/main_top_banner.webp"
-            style="object-fit: none; width: 120rem; height: auto"
-          />
+    <slide-up-down v-model="showTopbanner" :duration="500">
+      <div class="relative h-[85px] bg-everly-white">
+        <div class="flex w-full">
+          <div class="flex-grow bg-[#F98700]"></div>
+          <div class="min-w-[1180px]">
+            <img src="@/assets/img/banners/main_top_banner.jpeg" alt="" />
+          </div>
+          <div class="flex-grow bg-[#F98700]"></div>
         </div>
-        <div class="flex-grow"></div>
+        <img
+          src="@/assets/icon/circle_close.svg"
+          alt=""
+          class="absolute top-0 right-0 p-1.5 w-6"
+          @click="InactiveTopBanner()"
+        />
       </div>
-    </div>
+    </slide-up-down>
+
     <!-- 웹 메인 헤더  -->
     <div class="flex cursor-default bg-[#fafafa] top-0 z-50 md:flex">
       <div class="flex-1 hidden md:block border-b"></div>
@@ -141,7 +147,7 @@
           <div class="flex-none w-[1180px] px-4">
             <div class="flex justify-between items-end py-3">
               <div class="flex space-x-6">
-                <div class="flex space-x-1">
+                <div class="flex space-x-1" @click="router.push('/list')">
                   <img src="@/assets/icon/19.svg" alt="" class="w-4" />
                   <span> 아이템거래</span>
                 </div>
@@ -270,6 +276,12 @@ function moveLink(link: string) {
   } else if (link == "/account/signUp/confirm") {
     if (userNickname == `로그인하기`) router.push(link);
   } else router.push(link);
+}
+
+//최상단 배너
+const showTopbanner = ref(true);
+function InactiveTopBanner() {
+  showTopbanner.value = false;
 }
 </script>
 <style scoped></style>

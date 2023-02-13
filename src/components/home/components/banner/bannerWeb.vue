@@ -3,7 +3,6 @@
     <Carousel :autoplay="5000" :wrap-around="true" class="w-full">
       <Slide v-for="slide in 4" :key="slide">
         <div class="flex w-full cursor-pointer" @click="moveLink(slide)">
-          <div class="flex-grow"></div>
           <div class="flex-grow-none">
             <img
               :src="`/assets/img/banners/top_${slide}_desktop.jpeg`"

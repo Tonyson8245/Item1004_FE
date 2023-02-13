@@ -11,6 +11,7 @@ import type { Router } from "vue-router";
 import * as Sentry from "@sentry/vue";
 import { VueCookieNext } from "vue-cookie-next";
 import { createMetaManager } from "vue-meta";
+import SlideUpDown from "vue3-slide-up-down";
 
 declare module "pinia" {
   export interface PiniaCustomProperties {
@@ -46,4 +47,6 @@ if (import.meta.env.MODE == "production") {
 store.use(({ store }) => {
   store.router = markRaw(router);
 });
+
+app.component("slide-up-down", SlideUpDown);
 app.use(store).use(vueDebounce).use(router).mount("#app");

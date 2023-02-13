@@ -2656,6 +2656,11 @@ vue3-pagination@^1.0.16:
   resolved "https://registry.npmjs.org/vue3-pagination/-/vue3-pagination-1.0.16.tgz"
   integrity sha512-6N2mR9NGiW0G3radmPVtUigNnU3maN7kUcF1JWLlMFWFvpnF02b7gGYa/TzC57IOsMiOb3sPCIMVhXXZFUXSGg==
 
+vue3-slide-up-down@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/vue3-slide-up-down/-/vue3-slide-up-down-1.2.5.tgz"
+  integrity sha512-ZdrJjlU5Wk9ZUMa7P61afvh4mEBse/FqEULNQ1HgAXFnMUSDuT4cf682RbesEDkiyXn2Wt0JgQvbkOz9dn8cJQ==
+
 which-boxed-primitive@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/which-boxed-primitive/-/which-boxed-primitive-1.0.2.tgz"
