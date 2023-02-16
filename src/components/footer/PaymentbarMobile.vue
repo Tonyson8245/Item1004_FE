@@ -33,6 +33,7 @@ import { payment } from "@/api/payment-module";
 import { useRouter } from "vue-router";
 import { ref, watch } from "vue";
 import type { user } from "@/domain/user/user.interface";
+
 //결제 클릭
 // 스마트로 버전
 // const emit = defineEmits([`goPay`]);

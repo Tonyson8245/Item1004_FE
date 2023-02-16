@@ -3,7 +3,7 @@ import * as contractcheckDto from "@/domain/payment/contractCheckDto.interface";
 import axios from "axios";
 import { UUID } from "uuid-generator-ts";
 import { loadScript } from "vue-plugin-load-script";
-loadScript("https://api2.dangunpay.co.kr/js/pgAsistant.js");
+// loadScript("https://api2.dangunpay.co.kr/js/pgAsistant.js");
 
 var uuid = new UUID();
 ///결제 정보
@@ -54,6 +54,8 @@ function createform() {
     var inputCharSet = document.createElement("input"); //charSet
     var inputAppMode = document.createElement("input"); //appMod
 
+    var inputChannel = document.createElement("input"); //channel
+
     //set type and name
     inputPaymethod.setAttribute("type", "text");
     inputPaymethod.setAttribute("name", "payMethod");
@@ -91,6 +93,10 @@ function createform() {
     inputCharSet.setAttribute("name", "charSet");
     inputAppMode.setAttribute("type", "hidden");
     inputAppMode.setAttribute("name", "appMode");
+
+    inputChannel.setAttribute("type", "hidden");
+    inputChannel.setAttribute("name", "channel");
+
     //append
     form.appendChild(inputPaymethod);
     form.appendChild(inputMid);
@@ -110,6 +116,8 @@ function createform() {
     form.appendChild(inputMbsReserved);
     form.appendChild(inputCharSet);
     form.appendChild(inputAppMode);
+
+    form.appendChild(inputChannel);
   } else console.log("이미있음");
 }
 //input 내용 넣기
@@ -139,6 +147,8 @@ function setform() {
   var inputMbsReserved = <any>document.getElementsByName("mbsReserved").item(0); //mbsReserved
   var inputCharSet = <any>document.getElementsByName("charSet").item(0); //charSet
   var inputAppMode = <any>document.getElementsByName("appMode").item(0); //appMod
+
+  var inputChannel = <any>document.getElementsByName("channel").item(0); //appMod
 
   //set
 
@@ -180,6 +190,8 @@ function setform() {
   inputCharSet.setAttribute("value", "UTF-8");
 
   inputAppMode.setAttribute("value", "1");
+
+  inputChannel.setAttribute("value", "0001");
 }
 
 var getContractCheckResponse = new contractcheckDto.contractCheckResultDto();

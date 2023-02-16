@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-10">
+  <div class="pb-12">
     <div class="w-full bg-everly-light_grey text-everly-dark_grey p-5">
       <div class="pb-3">(주) 지엠소프트</div>
       <div class="grid sm:grid-cols-2 grid-cols-1 text-xs gap-4">
@@ -12,6 +12,7 @@
           </div>
           <div><span>고객센터 : 1833-2585</span></div>
         </div>
+
         <div>
           <div>
             <!-- <div><span>이메일 aaaa@item1004.com</span></div> -->
@@ -31,16 +32,29 @@
       <!-- <div class="text-everly-dark_grey text-xs pt-3">
         <div>아이템1004는 통신판매중개자이며 통신판매의 당사자가 아닙니다.</div>
         <div>따라서 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.</div>
+        
       </div> -->
+      <div
+        @click="gotoPC()"
+        class="bg-everly-mid_grey py-3 text-center rounded-lg"
+        style="z-index: 999"
+      >
+        PC 화면으로 보기
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter, useRoute } from "vue-router";
-//라우터 생성
-const router = useRouter();
-const route = useRoute();
+function gotoPC() {
+  console.log(`gotoPC`);
+  document
+    .getElementsByName("viewport")[0]
+    .setAttribute(
+      "content",
+      "initial-scale=0.3,user-scalable=yes,maximum-scale=1.6,width=1024"
+    );
+}
 </script>
 
 <style scoped></style>

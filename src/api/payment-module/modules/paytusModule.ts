@@ -3,6 +3,8 @@ import type * as cardDto from "@/domain/payment/card-PointandContractDto.interfa
 import { UUID } from "uuid-generator-ts";
 import * as getFormData from "./getFormData";
 import http from "../paymentmoduletHTTPClient";
+import { loadScript } from "vue-plugin-load-script";
+
 //ip 얻기
 async function getIp() {
   var result;
@@ -14,13 +16,12 @@ async function getIp() {
   return result;
 }
 
+const host = hostUrl();
 
-
-const host = hostUrl() 
-
-function hostUrl() {  
-  if (import.meta.env.MODE == "production") return import.meta.env.VITE_BASE_URL_PAYMENT_BASE;
-   else return import.meta.env.VITE_BASE_URL_PAYMENT_TEST;
+function hostUrl() {
+  if (import.meta.env.MODE == "production")
+    return import.meta.env.VITE_BASE_URL_PAYMENT_BASE;
+  else return import.meta.env.VITE_BASE_URL_PAYMENT_TEST;
 }
 
 //form 데이터 생성하기(이미 값이 있는 경우는 만들지 않는다.)
@@ -56,6 +57,9 @@ function createform() {
     var inputMbsReserved = document.createElement("input"); //mbsReserved
     var inputCharSet = document.createElement("input"); //charSet
     var inputAppMode = document.createElement("input"); //appMod
+
+    var inputChannel = document.createElement("input"); //channel
+    var inputPlatform = document.createElement("input"); //channel
 
     //set type and name
     inputPaymethod.setAttribute("type", "text");
@@ -109,6 +113,11 @@ function createform() {
     inputCharSet.setAttribute("type", "hidden");
     inputAppMode.setAttribute("type", "hidden");
 
+    inputChannel.setAttribute("type", "hidden");
+    inputChannel.setAttribute("name", "channel");
+    inputPlatform.setAttribute("type", "hidden");
+    inputPlatform.setAttribute("name", "platform");
+
     //append
     form.appendChild(inputPaymethod);
     form.appendChild(inputMid);
@@ -128,6 +137,9 @@ function createform() {
     form.appendChild(inputMbsReserved);
     form.appendChild(inputCharSet);
     form.appendChild(inputAppMode);
+
+    form.appendChild(inputChannel);
+    form.appendChild(inputPlatform);
   } else console.log("이미있음");
 }
 //input 내용 넣기
@@ -193,6 +205,9 @@ async function setform(
   var inputCharSet = <any>document.getElementsByName("charSet").item(0); //charSet
   var inputAppMode = <any>document.getElementsByName("appMode").item(0); //appMod
 
+  var inputChannel = <any>document.getElementsByName("channel").item(0); //channel
+  var inputPlatform = <any>document.getElementsByName("platform").item(0); //channel
+
   //set
 
   inputPaymethod.setAttribute("value", "card");
@@ -203,10 +218,7 @@ async function setform(
   inputOrdNm.setAttribute("value", name);
   inputOrdTel.setAttribute("value", phonenum);
   inputOrdEmail.setAttribute("value", "");
-  inputReturnUrl.setAttribute(
-    "value",
-    host+"/mypage/mileage/charge/result"
-  );
+  inputReturnUrl.setAttribute("value", host + "/mypage/mileage/charge/result");
   inputNotiUrl.setAttribute("value", "");
   inputEdiDate.setAttribute("value", ediDate);
   inputEncDate.setAttribute("value", encData);
@@ -216,6 +228,8 @@ async function setform(
   inputMbsReserved.setAttribute("value", "MallReserved");
   inputCharSet.setAttribute("value", "UTF-8");
   inputAppMode.setAttribute("value", "1");
+  inputChannel.setAttribute("value", "0001");
+  inputPlatform.setAttribute("value", "pc");
 }
 
 //1.paytus는 진행하기 전에 값을 먼저 넣어줘야 한다.
@@ -226,8 +240,7 @@ async function setFormControl(
 ) {
   var requestUrl = host + FormControlurl;
 
-  console.log("setFormControl : ",requestUrl);
-  
+  console.log("setFormControl : ", requestUrl);
 
   await http
     .post(
@@ -274,13 +287,11 @@ async function goPayment(url: string, payPrice: string, ordNm: string) {
   var ediDate = "";
   var encData = "";
 
-
   //라우팅할때 제공받은 경로
-  var requestUrl =
-  host + url + "?goodsAmt=" + payPrice;
+  var requestUrl = host + url + "?goodsAmt=" + payPrice;
 
-  console.log("요청 url : ",requestUrl);
-  
+  console.log("요청 url : ", requestUrl);
+
   // paytus-set-parameter-****.php
   await http
     .get(requestUrl, {

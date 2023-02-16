@@ -103,6 +103,7 @@ function goPaymentPage() {
     alert("모바일 결제는 지원 예정입니다.");
     return;
   }
+
   var idx = storePostIdx.value;
   var title = storePostTitle.value;
   var unit = storeSaleUnit.value;
@@ -137,11 +138,11 @@ function goPaymentPage() {
 function goChatPage() {
   const localData = localStorage.getItem("user");
   if (localData != null) {
-    const userData = JSON.parse(localData) as user;      
-    if (userData.idx === storeUserIdx.value)  router.push('/chat');    
-    else  {
-      
-      if (typeof route.query.postId === 'string') chatStore.isRoomExist(route.query.postId);             
+    const userData = JSON.parse(localData) as user;
+    if (userData.idx === storeUserIdx.value) router.push("/chat");
+    else {
+      if (typeof route.query.postId === "string")
+        chatStore.isRoomExist(route.query.postId);
     }
   }
 }
