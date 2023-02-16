@@ -461,7 +461,7 @@ import { moveExternalLink } from "@/common";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 const router = useRouter();
 
-const cardQty = ref(3);
+const cardQty = ref([0, 1, 2]);
 
 //// 반응형 사이즈 조정
 const minSize = computed(() => {
@@ -473,14 +473,14 @@ console.log(minSize);
 watch(minSize.value, (minSize) => {
   if (!minSize) {
     //페이지가 모바일이되는 경우
-    cardQty.value = 3;
+    cardQty.value = [0, 1, 2];
   } else {
-    cardQty.value = 10;
+    cardQty.value = [0, 1, 2, 3, 4, 5, 6, 10];
   }
 });
 // 초기 설정
 onMounted(() => {
-  if (minSize.value.value) cardQty.value = 10;
+  if (minSize.value.value) cardQty.value = [0, 1, 2, 3, 4, 5, 6, 10];
 });
 
 ////로드 관련
