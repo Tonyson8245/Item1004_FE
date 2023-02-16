@@ -103,6 +103,7 @@ function goPaymentPage() {
     alert("모바일 결제는 지원 예정입니다.");
     return;
   }
+
   var idx = storePostIdx.value;
   var title = storePostTitle.value;
   var unit = storeSaleUnit.value;

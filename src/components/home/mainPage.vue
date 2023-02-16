@@ -408,9 +408,12 @@
 
       <FooterMobile class="block md:hidden" />
     </div>
-    <div class="flex-1"></div>
-    <!-- 모바일 플로팅 버튼 -->
-    <div class="block md:hidden bottom-20 w-full fixed" style="z-index: 2">
+    <div class="flex-grow"></div>
+
+    <!-- 맨위로 모바일-->
+
+    <!-- 모바일 글작성 -->
+    <div class="block md:hidden bottom-20 right-0 fixed" style="z-index: 2">
       <div class="flex justify-end">
         <div class="flex flex-col items-end justify-center gap-y-1 pr-2">
           <img

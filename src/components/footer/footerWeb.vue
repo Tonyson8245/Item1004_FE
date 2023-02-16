@@ -37,6 +37,12 @@
             >
               실시간문의
             </div>
+            <div
+              class="text-left cursor-pointer px-4 md:hidden"
+              @click="gotoMobile()"
+            >
+              모바일로보기
+            </div>
           </div>
         </div>
         <div class="flex space-x-3 mt-4 text-everly-dark_grey text-sm">
@@ -62,9 +68,18 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from "vue-router";
 import { moveExternalLink } from "@/common";
+import { ref } from "vue";
 //라우터 생성
 const router = useRouter();
 const route = useRoute();
+function gotoMobile() {
+  document
+    .getElementsByName("viewport")[0]
+    .setAttribute(
+      "content",
+      `initial-scale=1.0,user-scalable=no,maximum-scale=1.0,width=device-width`
+    );
+}
 </script>
 
 <style scoped></style>
