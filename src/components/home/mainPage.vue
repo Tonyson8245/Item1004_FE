@@ -106,12 +106,14 @@
           </div>
         </div>
         <div class="md:hidden space-y-4 md:space-y-0">
-          <div v-for="card in cardQty" :key="card"><mainCard /></div>
+          <div v-for="card in cardQty" key="card">
+            <mainCard :props-card="card" />
+          </div>
         </div>
         <div class="hidden md:block relative">
           <Carousel :settings="settings" ref="myCarousel">
-            <Slide v-for="slide in cardQty" :key="slide">
-              <mainCard />
+            <Slide v-for="slide in cardQty" key="slide">
+              <mainCard :props-card="slide" />
             </Slide>
           </Carousel>
         </div>
@@ -134,19 +136,17 @@
                 <div class="w-[6rem] text-right pr-2">금액(원)</div>
               </div>
               <div class="flex flex-col space-y-4">
-                <div class="flex" v-for="key in 5">
-                  <div class="w-[5.625rem]">게임머니</div>
+                <div class="flex" v-for="key in realtimeCard">
+                  <div class="w-[5.625rem]">{{ key.category }}</div>
                   <div class="w-[16.05rem]">
-                    디아블로2:레저렉션 > 레더하드코어
+                    {{ key.game }}
                   </div>
                   <div
                     class="w-[20.375rem] overflow-ellipsis overflow-hidden whitespace-nowrap"
                   >
-                    엄청 짱짱 싼 게임머니 팝니다.채팅 바로 답하니까 연락주세요
-                    엄청 짱짱 싼 로 답하니까 연 엄청 짱짱 싼 게임머니 팝니다.
-                    채팅 바로 답하니까 연
+                    {{ key.title }}
                   </div>
-                  <div class="w-[6rem] text-right pr-2">22,800</div>
+                  <div class="w-[6rem] text-right pr-2">{{ key.price }}</div>
                 </div>
               </div>
             </div>
@@ -265,13 +265,30 @@
             <div class="space-y-3 py-4">
               <div
                 class="text-everly-dark_grey text-sm flex w-full grid-cols-12 grid"
-                v-for="key in 3"
               >
                 <div class="col-span-2">[이벤트발표]</div>
                 <div class="col-span-8 text-left">
                   마일리지 추가 지금이벤트 당첨자 안내
                 </div>
                 <div class="col-span-2 text-right">2023-02-01</div>
+              </div>
+              <div
+                class="text-everly-dark_grey text-sm flex w-full grid-cols-12 grid"
+              >
+                <div class="col-span-2">[이벤트안내]</div>
+                <div class="col-span-8 text-left">
+                  바나나쉐어 콜라보 이벤트 안내
+                </div>
+                <div class="col-span-2 text-right">2023-01-31</div>
+              </div>
+              <div
+                class="text-everly-dark_grey text-sm flex w-full grid-cols-12 grid"
+              >
+                <div class="col-span-2">[이벤트안내]</div>
+                <div class="col-span-8 text-left">
+                  마일리지 충전 이벤트 안내
+                </div>
+                <div class="col-span-2 text-right">2023-01-20</div>
               </div>
             </div>
           </div>
@@ -319,9 +336,17 @@
         <div class="px-4 py-4">
           <div class="font-bold mb-3">공지사항</div>
           <div class="border-everly-mid_grey border space-y-3 p-3">
-            <div v-for="key in 3">
+            <div>
               <div class="text-sm">아이템천사 결제 업데이트 안내</div>
-              <div class="text-xs text-everly-mid_grey">2023.02.08</div>
+              <div class="text-xs text-everly-mid_grey">2023.02.01</div>
+            </div>
+            <div>
+              <div class="text-sm">바나나쉐어 콜라보 이벤트 안내</div>
+              <div class="text-xs text-everly-mid_grey">2023.01.31</div>
+            </div>
+            <div>
+              <div class="text-sm">마일리지 충전 이벤트 안내</div>
+              <div class="text-xs text-everly-mid_grey">2023.01.20</div>
             </div>
           </div>
         </div>
@@ -462,9 +487,12 @@ import { Carousel, Slide, Navigation } from "vue3-carousel";
 import { useCookie } from "vue-cookie-next";
 import { moveExternalLink } from "@/common";
 import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
+import { hotCards } from "@/assets/dummy/home/card/hotCard";
+import realtimeCard from "@/assets/dummy/home/card/realtimeCard";
+
 const router = useRouter();
 
-const cardQty = ref([0, 1, 2]);
+const cardQty = ref(hotCards);
 
 //// 반응형 사이즈 조정
 const minSize = computed(() => {
@@ -476,14 +504,15 @@ console.log(minSize);
 watch(minSize.value, (minSize) => {
   if (!minSize) {
     //페이지가 모바일이되는 경우
-    cardQty.value = [0, 1, 2];
+    cardQty.value = [hotCards[0], hotCards[1], hotCards[2]];
   } else {
-    cardQty.value = [0, 1, 2, 3, 4, 5, 6, 10];
+    cardQty.value = [hotCards[0], hotCards[1], hotCards[2], hotCards[3]];
   }
 });
 // 초기 설정
 onMounted(() => {
-  if (minSize.value.value) cardQty.value = [0, 1, 2, 3, 4, 5, 6, 10];
+  if (minSize.value.value)
+    cardQty.value = [hotCards[0], hotCards[1], hotCards[2], hotCards[3]];
 });
 
 ////로드 관련
@@ -491,7 +520,9 @@ const listStore = useListStore();
 const postStore = usePostStore();
 const componentStore = useComponentStore();
 const { getCookie } = useCookie();
+
 const route = useRoute();
+
 //처음 페이지 로드 될때 동작
 onMounted(() => {
   listStore.$reset();

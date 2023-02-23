@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#fafafa] relative">
+  <div class="bg-[#fafafa] relative md:hidden">
     <!-- 모바일 메인 헤더 -->
     <div
       class="w-full bg-everly-main px-4 py-3 cursor-default top-0 md:hidden z-20 fixed"
