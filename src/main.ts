@@ -27,20 +27,16 @@ app.use(metaManager);
 VueCookieNext.config({ expire: "7d" });
 
 // set global cookie
-
 if (import.meta.env.MODE == "production") {
   Sentry.init({
     app,
-    dsn: "https://083342a46fde45a992f2dea8f03653f0@o4504565091074048.ingest.sentry.io/4504565233745920",
+    dsn: import.meta.env.VITE_SENTRY_DSN,
     integrations: [
       new BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-        tracePropagationTargets: ["localhost", "item1004.co.kr", /^\//],
+        tracePropagationTargets: ["item1004.co.kr", /^\//],
       }),
     ],
-    // Set tracesSampleRate to 1.0 to capture 100%
-    // of transactions for performance monitoring.
-    // We recommend adjusting this value in production
     tracesSampleRate: 1.0,
   });
 }

@@ -54,67 +54,14 @@
       rel="shortcut icon"
       href="https://www.item1004.co.kr/assets/favicon.ico"
     />
-    <!-- PC 연동 시 script. 캐시방지를 위해 ?version=today를 추가 -->
-    <!-- 운영 전환 시 "https://pay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=현재일자" 로 변경 -->
-    <!-- <script src="https://tpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=20221219"></script> -->
 
-    <!-- 모바일 연동 시 script. 캐시방지를 위해 ?version=today를 추가 -->
-    <!-- 운영 전환 시 "https://mpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=현재일자" 로 변경 -->
-    <!-- <script src="https://tmpay.smartropay.co.kr/asset/js/SmartroPAY-1.0.min.js?version=20221219"></script> -->
-    <!-- Hotjar Tracking Code for https://www.item1004.co.kr/ -->
+    <%- injectNaverSearch %> <%- injectNaverSite %> <%- injectGATag %> <%-
+    injectGA %> <%- injectHotjar %>
 
-    <!-- Hotjar Tracking Code for https://www.item1004.co.kr/ -->
-
-    <!-- Run Conditions-->
-
-    <!-- Google tag (gtag.js) -->
-    <script type="text/javascript" src="//wcs.naver.net/wcslog.js"></script>
-    <script type="text/javascript">
-      if (!wcs_add) var wcs_add = {};
-      wcs_add["wa"] = "231a2f6d80bc78";
-      if (window.wcs) {
-        wcs_do();
-      }
-    </script>
-    <meta
-      name="naver-site-verification"
-      content="f383cd51adb5876acf4c184cbc909df43891ec7f"
-    />
-
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=UA-254088310-1"
-    ></script>
-    <script>
-      console.log("G processing");
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "UA-254088310-1");
-    </script>
-    <script>
-      console.log("H processing");
-      (function (h, o, t, j, a, r) {
-        h.hj =
-          h.hj ||
-          function () {
-            (h.hj.q = h.hj.q || []).push(arguments);
-          };
-        h._hjSettings = { hjid: 3337352, hjsv: 6 };
-        a = o.getElementsByTagName("head")[0];
-        r = o.createElement("script");
-        r.async = 1;
-        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
-        a.appendChild(r);
-      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
-    </script>
     <script src="https://api2.dangunpay.co.kr/js/pgAsistant.js"></script>
     <script src="https://asset.talkplus.io/talkplus-js-0.3.2.js"></script>
 
-    <title>아이템천사 - 쉽고 빠른 게임아이템거래 item1004</title>
+    <!-- <title>아이템천사 - 쉽고 빠른 게임아이템거래 item1004</title> -->
   </head>
   <body>
     <meta itemprop="name" content="아이템천사" />
