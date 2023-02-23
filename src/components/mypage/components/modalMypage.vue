@@ -11,7 +11,7 @@
         >
           <!-- emit 값을 다시 보냄 -->
           <div v-if="props.propsType != ''">
-              <!-- 출금 계좌 인증 -->
+            <!-- 출금 계좌 인증 -->
             <WithdrawAccount
               v-if="props.propsType == 'withdrawPutAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
@@ -47,8 +47,10 @@
                     취소
                   </div>
                   <div
-                    :class="isConfirm ? 'bg-everly-main' : ' bg-everly-mid_grey'"
-                    class="flex-1 rounded-lg  text-everly-white py-2 cursor-pointer"
+                    :class="
+                      isConfirm ? 'bg-everly-main' : ' bg-everly-mid_grey'
+                    "
+                    class="flex-1 rounded-lg text-everly-white py-2 cursor-pointer"
                     @click="withdraw()"
                   >
                     확인완료
@@ -58,20 +60,19 @@
             </div>
 
             <!-- 가상 계좌 -->
-            <ModalVirtualAccount  
+            <ModalVirtualAccount
               v-else-if="props.propsType == 'virtualAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
             />
 
-           <!-- TODO: 2023-02-12 18:53:15 동오야 이전에 쓰던거 일단 남겨놈 안 쓸거니깐 너가 확인하고 지워주라 -->
+            <!-- TODO: 2023-02-12 18:53:15 동오야 이전에 쓰던거 일단 남겨놈 안 쓸거니깐 너가 확인하고 지워주라 -->
             <!-- <putBankAccount
               v-else-if="props.propsType == 'userinfoPutAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
             /> -->
 
-             <!-- 출금 계좌 인증 -->
+            <!-- 출금 계좌 인증 -->
 
-            
             <DeleteUserAccount
               v-else-if="props.propsType == 'deleteUserAccount'"
               @update:propsShowModal="emit('update:propsShowModal', false)"
@@ -88,7 +89,7 @@
 </template>
 
 <script lang="ts" setup>
-import WithdrawAccount from '@/components/mypage/modaldetail/WithdrawAccount.vue'
+import WithdrawAccount from "@/components/mypage/modaldetail/WithdrawAccount.vue";
 // import putBankAccount from "../modaldetail/putBankAccount.vue";
 import putBankAccountWithdraw from "../modaldetail/putBankAccountInWithdraw.vue";
 import { useVModel } from "@vueuse/core";
@@ -115,48 +116,46 @@ const propsShowModal = useVModel(props, "propsShowModal", emit);
 const mypageStore = usemypageStore();
 const { storewithdrawAmt, storeUserInfo } = storeToRefs(mypageStore);
 
-console.log("storewithdrawAmt : ",storewithdrawAmt);
-
+console.log("storewithdrawAmt : ", storewithdrawAmt);
 
 function withdraw() {
   isConfirm.value = false;
   // 출금하기에 보내는 돈 원금 1만원
-  paymentApi.withDrawSubmit(storewithdrawAmt.value.toString())
-  // .then((res) => {
-  //   console.log(res);
-  //   if (res) router.push("/mypage/mileage/withdraw/result");
-  //   else {
-  //     alert("출금 신청이 실패되었습니다.");
-  //     router.push("/mypage/mileage/withdraw");
-  //   }
-  //   mypageStore.setstorewithdrawAmt(0);
-  // });
-  .then((res) => {
-    console.log(res);    
-    console.log("완료",res);     
-    alert('출금신청이 완료 됐습니다. 등록된 휴대폰의 문자를 확인해주세요.')
-    pageReload()
-  })
-  .catch((err) => {
-    console.log(err);
-    // if (err.code === 404) {
-    //   alert('계좌인증에 실패했습니다. 은행명, 계좌번호, 예금주명을 확인해주세요')
-    // } else if (err.code === 400) {
-    //   alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
-    // }
-    // else alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.')
-    isConfirm.value = true
-    alert('오류가 발생했습니다. 고객센터로 문의해주세요')
-  });
+  paymentApi
+    .withDrawSubmit(storewithdrawAmt.value.toString())
+    // .then((res) => {
+    //   console.log(res);
+    //   if (res) router.push("/mypage/mileage/withdraw/result");
+    //   else {
+    //     alert("출금 신청이 실패되었습니다.");
+    //     router.push("/mypage/mileage/withdraw");
+    //   }
+    //   mypageStore.setstorewithdrawAmt(0);
+    // });
+    .then((res) => {
+      console.log(res);
+      console.log("완료", res);
+      alert("출금신청이 완료 됐습니다. 등록된 휴대폰의 문자를 확인해주세요.");
+      pageReload();
+    })
+    .catch((err) => {
+      console.log(err);
+      // if (err.code === 404) {
+      //   alert('계좌인증에 실패했습니다. 은행명, 계좌번호, 예금주명을 확인해주세요')
+      // } else if (err.code === 400) {
+      //   alert('요청값이 존재하지 않거나 형식이 올바르지 않습니다.')
+      // }
+      // else alert('알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요.')
+      isConfirm.value = true;
+      alert("오류가 발생했습니다. 고객센터로 문의해주세요");
+    });
 }
 
 function pageReload() {
-   // 모바일 뒤로가기
-  if (useMediaQuery("(min-width: 768px)")) history.back()
+  // 모바일 뒤로가기
+  if (useMediaQuery("(min-width: 768px)")) history.back();
   // 데스트탑 새로고침
-  else  location.reload();
+  else location.reload();
 }
-
-
 </script>
 <style scoped></style>

@@ -186,7 +186,7 @@
         </div>
         <div
           class="text-xs whitespace-nowrap text-everly-dark_grey rounded-lg border py-1 px-2 bg-everly-white md:px-5 cursor-pointer"
-          @click="clickButton('userinfoPutAccount', true)"
+          @click="clickButton('withdrawPutAccount', true)"
         >
           {{ buttonContent(storeUserInfoOverview.bankAccount != "") }}
         </div>
@@ -284,7 +284,8 @@ function clickButton(type: string, status: boolean) {
   //모바일인경우 각 페이지로 이동
   else {
     if (type == "userinfoPutAccount")
-      router.push("/mypage/user/info/verifyWithDrawAccount"); // 출금계좌 인증 페이지
+      router.push("/mypage/user/info/verifyWithDrawAccount");
+    // 출금계좌 인증 페이지
     else if (type == "deleteUserAccount")
       router.push("/mypage/user/info/withdrawl"); //회원 탈퇴 페이지
   }
