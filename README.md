@@ -84,6 +84,10 @@ yarn.lock
 - `src/store` : 화면에 보이는 데이터 관리
 - `src/router` : 페이지 이동 관리
 
+
+![프론트엔드 아키텍처1](https://user-images.githubusercontent.com/72400483/220873649-8fc5200b-f7c0-4639-bc7b-b9cf862a7041.png )
+
+
 ## 환경설정 파일
 
 앱 전체에서 사용할 고정된 값을 파일에 저장해 사용
