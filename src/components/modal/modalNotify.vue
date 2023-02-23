@@ -42,8 +42,6 @@ import { moveExternalLink } from "@/common";
 
 const { setCookie } = useCookie();
 
-const router = useRouter();
-
 const props = defineProps<{
   propsShowModal: boolean;
 }>();

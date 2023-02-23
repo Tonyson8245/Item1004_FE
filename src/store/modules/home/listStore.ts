@@ -4,7 +4,7 @@ import * as userApi from "@/api/user-service/index";
 import type { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
 import type { GamePostSummaryDto } from "@/domain/home/posts/GamePostSummaryDto";
 
-export const useMainStore = defineStore("mainStore", {
+export const useListStore = defineStore("mainStore", {
   state: () => ({
     storeProductCard: [] as GamePostSummaryDto[],
     storeinfiniteStatus: false,

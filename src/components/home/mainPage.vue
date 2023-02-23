@@ -5,190 +5,398 @@
   <BannerTablet class="hidden sm:flex md:hidden" />
   <BannerMobile class="flex sm:hidden" />
 
-  <div class="flex w-full z-0">
-    <div class="flex-grow"></div>
-    <div
-      class="flex-none w-full md:w-[1180px] bg-[#f0f0f0] md:bg-white pt-6 md:min-h-none min-h-[30rem]"
-    >
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 gap-4 px-3 md:px-0"
-        v-show="!storeShowFilter_mobile"
-      >
-        <div
-          v-for="card in storeProductCard"
-          class="border rounded-xl shadow-md md:shadow-none bg-white"
-        >
-          <ProductCard :card="card" />
-        </div>
-        <VueEternalLoading
-          :load="load"
-          v-if="storeinfiniteStatus && storehasnextPage"
-        >
-          <template #loading> <div></div></template
-        ></VueEternalLoading>
+  <div class="flex">
+    <div class="flex-1"></div>
+    <div class="flex-none md:w-[73.75rem] w-full">
+      <div class="hidden md:block mt-14">
+        <img src="@/assets/img/banners/sale_giftCard_web.png" alt="" />
       </div>
-      <div
-        class="w-full justify-center items-center flex p-4 cursor-default"
-        v-if="!storeinfiniteStatus"
-      >
-        <div
-          class="rounded-lg py-1 md:py-3 px-3 md:px-10 flex text-everly-drak_grey bg-everly-white text-sm md:text-base shadow-none md:shadow-xl border border-black md:border-none"
-          @click="toggleInfiniteStatus(true)"
-        >
-          <span class="pr-2">전체보기</span
-          ><img src="@/assets/icon/plus_grey.svg" alt="" />
+      <div class="w-full flex justify-center my-8">
+        <div class="flex space-x-5 md:space-x-24">
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/gameTrade_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9 md:mt-2 md:ml-1"
+              />
+            </div>
+            아이템거래
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/giftCardTrade_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            상품권거래
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/myTrade.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            내거래
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/charge_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            충전하기
+          </div>
+          <div
+            class="flex justify-center flex-col items-center text-xs md:text-base"
+          >
+            <div
+              class="bg-everly-light_blue rounded-full w-10 h-10 md:w-14 md:h-14 flex justify-center items-center mb-1"
+            >
+              <img
+                src="@/assets/icon/withdraw_blue.svg"
+                alt=""
+                srcset=""
+                class="w-6 h-6 md:w-9 md:h-9"
+              />
+            </div>
+            출금하기
+          </div>
+        </div>
+      </div>
+      <div class="px-4 md:px-0">
+        <div class="flex justify-between py-2">
+          <span class="font-bold flex items-center">
+            <img src="@/assets/icon/flame.svg" alt="" class="pb-1.5 pr-0.5" />
+            인기거래</span
+          >
+          <div>
+            <button @click="prev" class="mr-2" :class="prevClass">
+              <img src="@/assets/icon/arrow_circle_left.svg" alt="" />
+            </button>
+            <button @click="next" :class="nextClass">
+              <img src="@/assets/icon/arrow_circle_right.svg" alt="" />
+            </button>
+          </div>
+        </div>
+        <div class="md:hidden space-y-4 md:space-y-0">
+          <div v-for="card in cardQty" key="card">
+            <mainCard :props-card="card" />
+          </div>
+        </div>
+        <div class="hidden md:block relative">
+          <Carousel :settings="settings" ref="myCarousel">
+            <Slide v-for="slide in cardQty" key="slide">
+              <mainCard :props-card="slide" />
+            </Slide>
+          </Carousel>
+        </div>
+      </div>
+      <!-- 웹내용 -->
+      <div class="hidden md:block py-8">
+        <div class="grid grid-cols-6 gap-12">
+          <!-- 실시간물품 -->
+          <div class="col-span-4">
+            <div class="flex justify-between">
+              <div class="font-bold">실시간물품</div>
+              <div class="font-bold text-everly-main">팔래요</div>
+            </div>
+            <hr class="border-everly-mid_grey border-0.5 my-4" />
+            <div class="text-sm text-everly-dark_grey">
+              <div class="flex font-bold pb-3 w-full">
+                <div class="w-[5.625rem]">종류</div>
+                <div class="w-[16.05rem]">게임명/서버명</div>
+                <div class="w-[20.375rem]">제목</div>
+                <div class="w-[6rem] text-right pr-2">금액(원)</div>
+              </div>
+              <div class="flex flex-col space-y-4">
+                <div class="flex" v-for="key in realtimeCard">
+                  <div class="w-[5.625rem]">{{ key.category }}</div>
+                  <div class="w-[16.05rem]">
+                    {{ key.game }}
+                  </div>
+                  <div
+                    class="w-[20.375rem] overflow-ellipsis overflow-hidden whitespace-nowrap"
+                  >
+                    {{ key.title }}
+                  </div>
+                  <div class="w-[6rem] text-right pr-2">{{ key.price }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 마일리지 충전 -->
+          <div class="col-span-2">
+            <div class="flex justify-between">
+              <div class="font-bold">마일리지 충전</div>
+              <div
+                class="text-xs flex bg-everly-main rounded-lg text-everly-white items-center justify-center px-2"
+              >
+                카카오채널 바로가기
+              </div>
+            </div>
+            <div class="flex items-start text-sm pt-3 pb-5">
+              <span class="pr-1"> * </span>
+              <span>
+                계좌이체와 문화상품권은 아이템천사 카카오채널을 통해 수동결제가
+                가능합니다.
+              </span>
+            </div>
+            <div class="flex w-full justify-between">
+              <div
+                class="border border-everly-mid_grey rounded-lg w-24 h-24 flex justify-center items-center"
+              >
+                <div class="text-center">
+                  <img
+                    src="@/assets/icon/creditcardwithblue_black1.svg"
+                    alt=""
+                  />
+                  신용카드
+                </div>
+              </div>
+              <div
+                class="border border-everly-mid_grey rounded-lg w-24 h-24 flex justify-center items-center"
+              >
+                <div class="text-center">
+                  <img
+                    src="@/assets/icon/virtualAccontwithblue_black.svg"
+                    alt=""
+                  />
+                  가상계좌
+                </div>
+              </div>
+              <div
+                class="border border-everly-mid_grey rounded-lg w-24 h-24 flex justify-center items-center"
+              >
+                <div class="text-center">
+                  <img src="@/assets/icon/culturewithblue_black.svg" alt="" />
+                  문화상품권
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 동영상 컨텐스 -->
+          <div class="col-span-4">
+            <div class="font-bold">동영상컨텐츠</div>
+            <div class="flex justify-between items-center space-x-4 py-4">
+              <div
+                class="rounded-lg bg-cover bg-center w-[15rem] h-[8.75rem] video_01"
+              ></div>
+              <div
+                class="rounded-lg bg-cover bg-center w-[15rem] h-[8.75rem] video_02"
+              ></div>
+              <div
+                class="rounded-lg bg-cover bg-center w-[15rem] h-[8.75rem] video_03"
+              ></div>
+            </div>
+          </div>
+          <!-- 이벤트 -->
+          <div class="col-span-2">
+            <div class="font-bold flex justify-between">
+              <div>이벤트</div>
+              <div class="h-4">
+                <button class="cursor-not-allowed">
+                  <img src="@/assets/icon/arrow_circle_left.svg" alt="" />
+                </button>
+                <button class="cursor-not-allowed">
+                  <img src="@/assets/icon/arrow_circle_right.svg" alt="" />
+                </button>
+              </div>
+            </div>
+            <div class="flex justify-between items-center py-4">
+              <div class="rounded-lg overflow-hidden">
+                <img
+                  src="@/assets/img/event/event_mileage.jpg"
+                  alt=""
+                  class="h-[8.75rem]"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- 고객센터 -->
+          <div class="col-span-3 pr-10">
+            <div class="font-bold">고객센터</div>
+            <div class="flex py-4 justify-between">
+              <div class="font-bold">
+                <div class="text-xl">1833-2585</div>
+                <div>운영시간 : 24시간 연중무휴</div>
+              </div>
+              <div class="flex space-x-3">
+                <img src="@/assets/icon/kakao_addchannel.svg" alt="" />
+                <img src="@/assets/icon/kakao_customercenter.svg" alt="" />
+              </div>
+            </div>
+            <div class="flex space-x-3 justify-end">
+              <img src="@/assets/icon/instagram_black.svg" alt="" />
+              <img src="@/assets/icon/youtube_black.svg" alt="" />
+              <img src="@/assets/icon/blog_black.svg" alt="" />
+              <img src="@/assets/icon/facebook_black.svg" alt="" />
+            </div>
+          </div>
+          <!-- 공지사항 -->
+          <div class="col-span-3">
+            <div class="font-bold">공지사항</div>
+            <div class="space-y-3 py-4">
+              <div
+                class="text-everly-dark_grey text-sm flex w-full grid-cols-12 grid"
+              >
+                <div class="col-span-2">[이벤트발표]</div>
+                <div class="col-span-8 text-left">
+                  마일리지 추가 지금이벤트 당첨자 안내
+                </div>
+                <div class="col-span-2 text-right">2023-02-01</div>
+              </div>
+              <div
+                class="text-everly-dark_grey text-sm flex w-full grid-cols-12 grid"
+              >
+                <div class="col-span-2">[이벤트안내]</div>
+                <div class="col-span-8 text-left">
+                  바나나쉐어 콜라보 이벤트 안내
+                </div>
+                <div class="col-span-2 text-right">2023-01-31</div>
+              </div>
+              <div
+                class="text-everly-dark_grey text-sm flex w-full grid-cols-12 grid"
+              >
+                <div class="col-span-2">[이벤트안내]</div>
+                <div class="col-span-8 text-left">
+                  마일리지 충전 이벤트 안내
+                </div>
+                <div class="col-span-2 text-right">2023-01-20</div>
+              </div>
+            </div>
+          </div>
+          <!-- 웹 플로팅 버튼 -->
+          <div class="hidden md:flex fixed bottom-10 z-50">
+            <div class="flex-grow"></div>
+            <div class="flex-none w-[1180px]">
+              <div
+                class="absolute right-0 bottom-0 flex-col flex items-center justify-center gap-y-2"
+              >
+                <img
+                  @click="moveExternalLink('블로그')"
+                  src="@/assets/icon/noti_blog.png"
+                  alt=""
+                  class="w-[45px] h-[45px] inline-block cursor-pointer"
+                />
+                <img
+                  @click="moveExternalLink('카카오채널')"
+                  src="@/assets/icon/goto_kakao.svg"
+                  alt=""
+                  class="w-[45px] h-[45px] inline-block cursor-pointer"
+                />
+              </div>
+            </div>
+            <div class="flex-grow"></div>
+          </div>
+        </div>
+      </div>
+      <!-- 모바일 내용 -->
+      <div class="md:hidden">
+        <div class="mt-10 flex justify-center bg-[#8CCC36]">
+          <img
+            src="@/assets/img/banners/sale_giftCard_mobile.png"
+            alt=""
+            class="h-[5rem]"
+          />
+        </div>
+        <div class="flex justify-center bg-[#FE8803]">
+          <img
+            src="@/assets/img/event/event_potion_mobile.webp"
+            alt=""
+            class="h-[7.5rem]"
+          />
+        </div>
+        <div class="px-4 py-4">
+          <div class="font-bold mb-3">공지사항</div>
+          <div class="border-everly-mid_grey border space-y-3 p-3">
+            <div>
+              <div class="text-sm">아이템천사 결제 업데이트 안내</div>
+              <div class="text-xs text-everly-mid_grey">2023.02.01</div>
+            </div>
+            <div>
+              <div class="text-sm">바나나쉐어 콜라보 이벤트 안내</div>
+              <div class="text-xs text-everly-mid_grey">2023.01.31</div>
+            </div>
+            <div>
+              <div class="text-sm">마일리지 충전 이벤트 안내</div>
+              <div class="text-xs text-everly-mid_grey">2023.01.20</div>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 flex gap-5">
+          <div
+            class="bg-[#f6f6ff] flex-1 h-36 rounded-xl p-3 text-everly-main font-bold flex flex-col justify-between relative"
+          >
+            <div>아이템천사<br />고객센터</div>
+            <div class="text-right">1833-2585</div>
+            <img
+              src="@/assets/icon/24hour_headphone.svg"
+              alt=""
+              class="absolute right-3 top-8"
+            />
+          </div>
+          <div
+            class="bg-[#fffde4] flex-1 h-36 rounded-xl p-3 font-bold flex flex-col justify-between relative"
+          >
+            <div>실시간 1:1 상담</div>
+            <div>카카오톡<br />친구추가</div>
+            <div class="text-right inline-block">
+              <div class="inline-block bg-everly-white px-2 py-1">
+                Item1004
+                <img
+                  src="@/assets/icon/kakao_plus.svg"
+                  alt=""
+                  class="float-right pt-1 mx-1"
+                />
+              </div>
+            </div>
+
+            <img
+              src="@/assets/icon/24hour_kako.svg"
+              alt=""
+              class="absolute right-3 top-8"
+            />
+          </div>
         </div>
       </div>
 
-      <div class="hidden md:flex fixed bottom-10 z-50">
-        <div class="flex-grow"></div>
-        <div class="flex-none w-[1180px]">
-          <div
-            class="absolute right-0 bottom-0 flex-col flex items-center justify-center gap-y-2"
-          >
-            <img
-              @click="moveExternalLink('블로그')"
-              src="@/assets/icon/noti_blog.png"
-              alt=""
-              class="w-[45px] h-[45px] inline-block cursor-pointer"
-            />
-            <img
-              @click="moveExternalLink('카카오채널')"
-              src="@/assets/icon/goto_kakao.svg"
-              alt=""
-              class="w-[45px] h-[45px] inline-block cursor-pointer"
-            />
-            <img
-              v-if="storeinfiniteStatus"
-              @click="scrollToTop"
-              src="@/assets/icon/button_goup.svg"
-              alt=""
-              class="w-[45px] h-[45px] inline-block cursor-pointer"
-            />
-          </div>
-        </div>
-        <div class="flex-grow"></div>
+      <div class="px-4 pt-10">
+        <hr class="border-everly-light_grey border-0.5 md:hidden" />
       </div>
 
-      <!--  하단 배너 -->
-      <!-- TODO 1차 수정 2023-01-30 11:16:42 -->
-      <!-- <div
-        class="md:mt-12 mt-2"
-        v-if="!storeinfiniteStatus && !storeShowFilter_mobile"
-      > -->
-      <div class="md:mt-12 mt-2" v-if="!storeShowFilter_mobile">
-        <!-- 웹 -->
-        <div class="grid-cols-3 gap-4 flex-grow w-full hidden md:grid">
-          <div
-            class="bg-green-100 w-[373px] flex justify-center items-center h-full"
-          >
-            <img
-              src="@/assets/img/banners/bottom_1_desktop.jpeg"
-              alt=""
-              @click="moveExternalLink('유튜브')"
-            />
-          </div>
-          <div
-            class="bg-yellow-100 w-[373px] flex justify-center items-center h-full"
-          >
-            <img
-              src="@/assets/img/banners/bottom_2_desktop.jpeg"
-              alt=""
-              @click="moveExternalLink('인스타')"
-            />
-          </div>
-          <div
-            class="bg-red-100 w-[373px] flex justify-center items-center h-full"
-          >
-            <img
-              src="@/assets/img/banners/bottom_3_desktop.jpeg"
-              alt=""
-              @click="moveExternalLink('카페')"
-            />
-          </div>
-        </div>
-        <!-- 태블릿 -->
-        <div
-          class="grid-cols-1 gap-0 flex-grow w-full hidden sm:grid md:hidden"
-        >
-          <div
-            class="bg-green-100 flex justify-center items-center h-full flex-grow"
-          >
-            <img
-              src="@/assets/img/banners/bottom_1_tablet.jpeg"
-              alt=""
-              @click="moveExternalLink('유튜브')"
-            />
-          </div>
-          <div
-            class="bg-yellow-100 flex justify-center items-center h-full flex-grow"
-          >
-            <img
-              src="@/assets/img/banners/bottom_2_tablet.jpeg"
-              alt=""
-              @click="moveExternalLink('인스타')"
-            />
-          </div>
-          <div
-            class="bg-red-100 flex justify-center items-center h-full flex-grow"
-          >
-            <img
-              src="@/assets/img/banners/bottom_3_tablet.jpeg"
-              alt=""
-              @click="moveExternalLink('카페')"
-            />
-          </div>
-        </div>
-        <!-- 모바일 -->
-        <div class="grid sm:hidden grid-cols-1 gap-0 flex-grow w-full">
-          <div
-            class="flex justify-center items-center h-full w-full"
-            @click="moveExternalLink('유튜브')"
-          >
-            <img
-              src="@/assets/img/banners/bottom_1_mobile.jpeg"
-              alt=""
-              class="w-full"
-            />
-          </div>
-          <div
-            class="flex justify-center items-center h-full w-full"
-            @click="moveExternalLink('인스타')"
-          >
-            <img
-              src="@/assets/img/banners/bottom_2_mobile.jpeg"
-              alt=""
-              class="w-full"
-            />
-          </div>
-          <div
-            class="flex justify-center items-center h-full w-full"
-            @click="moveExternalLink('카페')"
-          >
-            <img
-              src="@/assets/img/banners/bottom_3_mobile.jpeg"
-              alt=""
-              class="w-full"
-            />
-          </div>
-        </div>
-      </div>
-      <!-- 협력사 -->
-
-      <div
-        class="grid grid-cols-1 divide-y py-10 w-screen left-0 fixed md:block"
-        v-if="!storeinfiniteStatus"
-      >
-        <div></div>
-        <div></div>
-      </div>
-
-      <div
-        class="md:mt-14 bg-white md:pb-14 py-2"
-        v-if="!storeShowFilter_mobile"
-      >
+      <div class="my-1 md:mb-24">
         <div class="hidden md:block">
-          <Carousel :settings="settings" :breakpoints="breakpoints">
+          <Carousel
+            :settings="company_settings"
+            :breakpoints="company_breakpoints"
+          >
             <Slide v-for="slide in 8" :key="slide">
               <div
                 class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
@@ -205,7 +413,10 @@
           </Carousel>
         </div>
         <div class="md:hidden">
-          <Carousel :settings="settings" :breakpoints="breakpoints">
+          <Carousel
+            :settings="company_settings"
+            :breakpoints="company_breakpoints"
+          >
             <Slide v-for="slide in 8" :key="slide">
               <div
                 class="carousel__item w-[100px] h-[50px] text-sm md:text-base md:w-[132px] md:h-[60px] flex justify-center items-center text-everly-mid_grey"
@@ -220,7 +431,7 @@
         </div>
       </div>
 
-      <FooterMobile class="block md:hidden" v-if="!storeShowFilter_mobile" />
+      <FooterMobile class="block md:hidden" />
     </div>
     <div class="flex-grow"></div>
 
@@ -255,177 +466,131 @@
           </div>
         </div>
       </div>
-      <div
-        class="md:hidden flex justify-center absolute w-full bottom-0"
-        v-if="storeinfiniteStatus"
-      >
-        <div @click="scrollToTop">
-          <img src="@/assets/icon/button_gotop_mobile.svg" alt="" />
-        </div>
-      </div>
     </div>
-
-    <!-- 카카오 상담 버튼 -->
-    <!-- <div @click="moveExternalLink('카카오문의')" class="hidden md:block fixed bottom-10 right-10">
-      <button class=" rounded-full border flex flex-col items-center p-3 bg-yellow-200">
-        <p>카톡</p>
-        <p>1:1상담</p>      
-      </button>
-    </div> -->
   </div>
 </template>
 
 <script setup lang="ts">
+import FooterMobile from "../footer/footerMobile.vue";
 import BannerWeb from "@/components/home/components/banner/bannerWeb.vue";
+import BannerTablet from "@/components/home/components/banner/bannerTablet.vue";
 import BannerMobile from "@/components/home/components/banner/bannerMobile.vue";
-import ProductCard from "./components/cards/productCard.vue";
-import { useFilterStore } from "@/store/modules/home/filterStore";
-import { storeToRefs } from "pinia";
-import { useMainStore } from "@/store/modules/home/mainStore";
-import { VueEternalLoading } from "@ts-pro/vue-eternal-loading";
-import type { LoadAction } from "@ts-pro/vue-eternal-loading";
+import mainCard from "./components/cards/mainCard.vue";
+import { useRoute, useRouter } from "vue-router";
+import { ref, computed, watch, onMounted } from "vue";
+import { useMediaQuery } from "@vueuse/core";
+import { useListStore } from "@/store/modules/home/listStore";
+import { usePostStore } from "@/store/modules/home/postStore";
+import { useComponentStore } from "@/store/modules/common/componentStore";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Navigation } from "vue3-carousel";
-import FooterMobile from "../footer/footerMobile.vue";
-import { useRoute, useRouter } from "vue-router";
-import { onMounted, watch, ref } from "vue";
-import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
-import { useSearchStore } from "@/store/modules/home/searchStore";
-import BannerTablet from "./components/banner/bannerTablet.vue";
-import { moveExternalLink } from "@/common";
-import { useComponentStore } from "@/store/modules/common/componentStore";
 import { useCookie } from "vue-cookie-next";
-import { usePostStore } from "@/store/modules/home/postStore";
+import { moveExternalLink } from "@/common";
+import { getProductCardBodyDto } from "@/domain/home/getProductCardDto";
+import { hotCards } from "@/assets/dummy/home/card/hotCard";
+import realtimeCard from "@/assets/dummy/home/card/realtimeCard";
+
+const router = useRouter();
+
+const cardQty = ref(hotCards);
+
+//// 반응형 사이즈 조정
+const minSize = computed(() => {
+  return useMediaQuery("(min-width: 768px)");
+});
+console.log(minSize);
+
+//화면이 작아지면 꺼지는 로직
+watch(minSize.value, (minSize) => {
+  if (!minSize) {
+    //페이지가 모바일이되는 경우
+    cardQty.value = [hotCards[0], hotCards[1], hotCards[2]];
+  } else {
+    cardQty.value = [hotCards[0], hotCards[1], hotCards[2], hotCards[3]];
+  }
+});
+// 초기 설정
+onMounted(() => {
+  if (minSize.value.value)
+    cardQty.value = [hotCards[0], hotCards[1], hotCards[2], hotCards[3]];
+});
+
+////로드 관련
+const listStore = useListStore();
+const postStore = usePostStore();
+const componentStore = useComponentStore();
 const { getCookie } = useCookie();
 
-// router에 emit이 있어서 warning에 뜨는 데, 이를 없애기 위한 emit
-const emit = defineEmits([`goPay`]);
-function goPay() {}
 const route = useRoute();
-const router = useRouter();
-const componentStore = useComponentStore();
-const { storeshowNotify } = storeToRefs(componentStore);
-//////조회 관련
-const filterStore = useFilterStore();
-const postStore = usePostStore();
-const {
-  storeShowFilter_mobile,
-  filterStoreGameKeywordIdx,
-  filterStoreServerKeywordIdx,
-} = storeToRefs(filterStore); //  웹 필터 켜짐 여부
-const mainStore = useMainStore();
-const {
-  storeProductCard,
-  storeinfiniteStatus,
-  storeNextPage,
-  storehasnextPage,
-  storeLoad,
-} = storeToRefs(mainStore); // 거래들 정보, 무한 스크롤, 다음 가져옾 페이지 ,다음  페이지 여부
-const searchStore = useSearchStore();
-const { storeSellBuy } = storeToRefs(searchStore); //팔래요 살래요 정보
 
 //처음 페이지 로드 될때 동작
 onMounted(() => {
-  mainStore.$reset();
+  listStore.$reset();
   postStore.$reset();
-  getProductList(6);
+  // getProductList(6);
   //일단 다끔
   if (getCookie("noti") == "stop") {
     componentStore.setstoreshowNotify(false);
   } else {
-    if (route.meta.name == "home") {
+    if (route.meta.name == "list") {
       componentStore.setstoreshowNotify(false);
     }
   }
 });
 
-// Infinite scroll on off
-function toggleInfiniteStatus(status: boolean) {
-  mainStore.setstoreinfiniteStatus(status);
-}
-
-// 무한 스크롤 동작
-function load({ loaded }: LoadAction) {
-  if (storeinfiniteStatus.value) {
-    //이전 페이지가 로드 성공해서 새로운 페이지를 받을수 있는 상태일때 실행
-    //다음 페이지가 있을때
-    if (storehasnextPage.value) {
-      var page = storeNextPage.value;
-      var sellbuy = storeSellBuy.value;
-      var categorys = filterStore.getCategorys;
-      var gameIdx = filterStoreGameKeywordIdx.value;
-      var serverIdx = filterStoreServerKeywordIdx.value;
-
-      var payload = new getProductCardBodyDto(
-        page,
-        6,
-        sellbuy,
-        categorys,
-        gameIdx,
-        serverIdx
-      );
-
-      mainStore
-        .setstoreProductCard(payload)
-        .then((res) => {
-          if (res) {
-          } else console.log("loaded failed");
-          loaded();
-        })
-        .catch(() => {});
-    }
-  }
-}
-
-function getProductList(pageUnit: number) {
-  if (storehasnextPage.value) {
-    var page = storeNextPage.value;
-    var sellbuy = storeSellBuy.value;
-    var categorys = filterStore.getCategorys;
-    var gameIdx = filterStoreGameKeywordIdx.value;
-    var serverIdx = filterStoreServerKeywordIdx.value;
-
-    var payload = new getProductCardBodyDto(
-      page,
-      pageUnit,
-      sellbuy,
-      categorys,
-      gameIdx,
-      serverIdx
-    );
-
-    mainStore.setstoreProductCard(payload).then((res) => {});
-  }
-}
-
-watch(storeLoad, () => {
-  if (storeLoad.value) {
-    console.log("watch load");
-    scrollToTopinstant();
-    toggleInfiniteStatus(true);
-    mainStore.setstoreLoad(false);
-  }
-});
-watch(storehasnextPage, () => {
-  if (!storehasnextPage.value) mainStore.setstoreinfiniteStatus(false);
-  else mainStore.setstoreinfiniteStatus(true);
-});
-
 //////배너
+
 //carousel
-const settings = {
-  itemsToShow: 3,
+//carousel
+const company_settings = {
+  itemsToShow: 3.5,
   snapAlign: "start",
   autoplay: "2000",
 };
-const breakpoints = {
+const company_breakpoints = {
   // 700px and up
-  768: {
+  400: {
     itemsToShow: 5,
     snapAlign: "start",
     autoplay: "0",
   },
+  768: {
+    itemsToShow: 8,
+    snapAlign: "start",
+    autoplay: "0",
+  },
 };
+const myCarousel = ref(null);
+const settings = {
+  itemsToShow: 3.1,
+  snapAlign: "start",
+  autoplay: "0",
+};
+const prevClass = ref("cursor-not-allowed");
+const nextClass = ref("cursor-pointer");
+
+function prev() {
+  // Methods are available in this reference
+  //@ts-ignore
+  if (myCarousel.value.data.currentSlide.value == 0)
+    prevClass.value = "cursor-not-allowed";
+  else {
+    prevClass.value = "cursor-pointer";
+    //@ts-ignore
+    myCarousel.value.prev();
+  }
+}
+function next() {
+  // Methods are available in this reference
+  //@ts-ignore
+  if (myCarousel.value.data.currentSlide.value > cardQty.value - 4)
+    nextClass.value = "cursor-not-allowed";
+  else {
+    nextClass.value = "cursor-pointer";
+    //@ts-ignore
+    myCarousel.value.next();
+  }
+}
 
 //위로 올라가는 함수
 function scrollToTop() {
@@ -439,18 +604,39 @@ function moveLink(link: string) {
   router.push(link);
 }
 
-// 페이지 벗어날때 초기화 할경우
-// onBeforeUnmount(() => {
-//   mainStore.resetsetstoreProductCard();
-//   mainStore.setstoreinfiniteStatus(false);
-// });
+// 처음 페이지 로드 될때 동작
+onMounted(() => {
+  listStore.$reset();
+  postStore.$reset();
+  getProductList(10);
+  //일단 다끔
+  if (getCookie("noti") == "stop") {
+    componentStore.setstoreshowNotify(false);
+  } else {
+    if (route.meta.name == "list") {
+      componentStore.setstoreshowNotify(false);
+    }
+  }
+});
 
-//배너 색
-const bannerColorClass = ref("bg-[#7900ac]");
-function getColor(color: string) {
-  bannerColorClass.value = color;
+function getProductList(pageUnit: number) {
+  var payload = new getProductCardBodyDto(1, pageUnit, "sell");
+
+  listStore.setstoreProductCard(payload).then((res) => {});
 }
 </script>
+
+<style scoped lang="scss">
+.video_01 {
+  background-image: url(@/assets/img/video_01.png);
+}
+.video_02 {
+  background-image: url(@/assets/img/video_02.png);
+}
+.video_03 {
+  background-image: url(@/assets/img/video_03.png);
+}
+</style>
 
 <style>
 .carousel__icon {

@@ -8,7 +8,7 @@
       v-if="props.showModal"
       class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 justify-center items-center flex"
     >
-      <div class="w-6/12 md:w-[20rem] bg-white rounded-xl overflow-hidden">
+      <div class="w-8/12 md:w-[20rem] bg-white rounded-xl overflow-hidden">
         <div class="text-everly-dark_grey lg:text-base">
           <div class="p-5 space-y-7 md:space-y-[4.5rem]">
             <div class="flex flex-col items-center">

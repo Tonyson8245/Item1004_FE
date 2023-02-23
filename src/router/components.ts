@@ -16,7 +16,7 @@ import signUpComfirm from "@/components/user/signUp/ConfirmComponent.vue";
 // @ts-ignore
 import searchModal from "@/components/header/search/searchComponmet_mobile.vue";
 // @ts-ignore
-import mainPage from "@/components/home/mainPage.vue";
+import listPage from "@/components/home/listPage.vue";
 // @ts-ignore
 import writePage from "@/components/home/writePage.vue";
 // @ts-ignore
@@ -78,8 +78,10 @@ import editPage from "@/components/home/editPage.vue";
 import VirtualAccount from "@/components/mypage/modaldetail/VirtualAccount.vue"
 import VirtualAccountResult from "@/components/mypage/VirtualAccountResult.vue"
 import VerifyWithDrawAccount from "@/components/mypage/modaldetail/WithdrawAccount.vue"
+import mainPage from "@/components/home/mainPage.vue";
 
 export default {
+  mainPage,
   editPage,
   mypageMobilepage,
   userWithdrawl,
@@ -112,7 +114,7 @@ export default {
   PaymentResultPage,
   postPage,
   writePage,
-  mainPage,
+  listPage,
   searchModal,
   loginComponent,
   LoginView,

@@ -1,22 +1,48 @@
 <template>
   <div>
+    <slide-up-down v-model="showTopbanner" :duration="500">
+      <div class="relative h-[85px] bg-everly-white">
+        <div class="flex w-full">
+          <div class="flex-grow bg-[#F98700]"></div>
+          <div class="min-w-[1180px]">
+            <img src="@/assets/img/banners/main_top_banner.jpeg" alt="" />
+          </div>
+          <div class="flex-grow bg-[#F98700]"></div>
+        </div>
+        <img
+          src="@/assets/icon/circle_close.svg"
+          alt=""
+          class="absolute top-0 right-0 p-1.5 w-6"
+          @click="InactiveTopBanner()"
+        />
+      </div>
+    </slide-up-down>
+
     <!-- 웹 메인 헤더  -->
     <div class="flex cursor-default bg-[#fafafa] top-0 z-50 md:flex">
       <div class="flex-1 hidden md:block border-b"></div>
       <div class="flex-none hidden md:block border-b">
         <div
-          class="flex-none flex justify-between items-center bg-[#fafafa] w-[1180px] px-4 py-4 md:px-4"
+          class="flex-none flex justify-between items-start bg-[#fafafa] w-[1180px] px-4 pt-4 md:px-4"
         >
           <div class="hidden md:flex space-x-6">
             <img
-              v-if="route.meta.name !== `home`"
               src="@/assets/icon/logo.gif"
               alt=""
               @click="moveLink('/home')"
               class="w-[11rem] h-[3.3rem] cursor-pointer"
             />
+            <div class="flex justify-between items-center pt-3">
+              <search
+                v-if="route.meta.name == 'home' || route.meta.name == 'list'"
+                :props-class="`w-[35.375rem]`"
+                @click.stop=""
+                style="z-index: 5"
+              />
+              <div v-else class="h-[4rem]"></div>
+            </div>
           </div>
-          <div class="hidden md:block text-sm">
+          <div class="hidden md:block text-sm md:pt-6">
             <div
               class="flex space-x-4 items-center"
               v-if="userNickname != '로그인하기'"
@@ -36,7 +62,21 @@
                 </div>
                 <button class="text-everly-dark_grey">공지사항</button>
               </div>
-
+              <div
+                class="cursor-pointer flex"
+                @click="moveExternalLink('문의하기')"
+              >
+                <div
+                  class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
+                >
+                  <img
+                    class="cursor-pointer w-3"
+                    src="@/assets/icon/customercenter_black.svg"
+                    alt=""
+                  />
+                </div>
+                <button class="text-everly-dark_grey">고객센터</button>
+              </div>
               <div class="cursor-pointer flex" @click="moveLink('/chat')">
                 <div
                   class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
@@ -49,16 +89,6 @@
                 </div>
                 <button class="text-everly-dark_grey">채팅</button>
               </div>
-
-              <!-- <div class="cursor-pointer flex"  @click="alertMSG()">
-                  <img
-                    class="cursor-pointer mr-2 w-5"
-                    src="@/assets/icon/notify_mid-grey.svg"
-                    alt=""
-                  />
-                  <button class=" text-everly-dark_grey">알림</button> 
-              </div> -->
-
               <div class="cursor-pointer flex" @click="moveLink('/mypage')">
                 <div
                   class="bg-everly-light_blue rounded-full mr-2 w-5 flex justify-center items-center"
@@ -110,75 +140,98 @@
       </div>
       <div class="flex-1 hidden md:block border-b"></div>
     </div>
-    <!-- 모바일 메인 헤더 -->
-    <div
-      class="w-full bg-everly-main px-4 py-3 cursor-default top-0 md:hidden z-20 fixed"
-      v-if="route.meta.name == `home`"
-    >
-      <div class="flex justify-between items-center">
-        <div
-          class=" flex items-center text-white font-bold truncate"
-          @click="
-            if (userNickname != '로그인하기') moveLink('/mypage');
-            else moveLink('/account/login');
-          "
-        >
-        <img class=" w-5 h-5 mr-1" v-if="userNickname === '로그인하기'" src="@/assets/icon/19.svg" alt="">
-          <p>{{ userNickname }}</p>
-        </div>
-        <div class="md:hidden">
-          <div class="flex space-x-4">
-            <img
-              class="cursor-pointer"
-              src="@/assets/icon/filter_white.svg"
-              alt=""
-              @click="toggleFilter_mobile()"
-            />
-            <!--  TODO 1차 출시 주석 2023-01-25 20:23:22 -->
-            <!-- <img
-              src="@/assets/icon/search_white.svg"
-              alt=""
-              @click="moveLink('/search')"
-            /> -->
-            <img
-              class="cursor-pointer"
-              src="@/assets/icon/search_white.svg"
-              alt=""
-              @click="alertMSG()"
-            />
-
-            <img
-              class="cursor-pointer"
-              src="@/assets/icon/notify_white.svg"
-              alt=""
-              @click="alertMSG()"
-            />
+    <div v-if="route.meta.name == 'home' || route.meta.name == 'list'">
+      <div class="flex cursor-default bg-[#fafafa]">
+        <div class="flex-1 hidden md:block bg-[#fafafa]"></div>
+        <div class="flex-none hidden md:block bg-[#fafafa]">
+          <div class="flex-none w-[1180px] px-4">
+            <div class="flex justify-between items-end py-3">
+              <div class="flex space-x-6">
+                <div class="flex space-x-1" @click="router.push('/list')">
+                  <img src="@/assets/icon/19.svg" alt="" class="w-4" />
+                  <span> 아이템거래</span>
+                </div>
+                <div>OTT</div>
+                <div>이벤트</div>
+                <div>이용안내</div>
+              </div>
+              <div class="flex gap-x-4">
+                <div
+                  class="flex items-center cursor-pointer"
+                  @click="router.push('/write')"
+                >
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-5"
+                      src="@/assets/icon/button_write_mobile.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a class="text-everly-main text-lg font-bold">거래등록</a>
+                </div>
+                <div
+                  class="flex items-center cursor-pointer"
+                  @click="router.push('/mypage/mileage/charge')"
+                >
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center"
+                  >
+                    <img
+                      class="cursor-pointer w-3"
+                      src="@/assets/icon/charge_white.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a class="text-everly-main text-lg font-bold"
+                    >마일리지 충전</a
+                  >
+                </div>
+                <div
+                  class="flex items-center cursor-pointer"
+                  @click="router.push('/mypage/mileage/withdraw')"
+                >
+                  <div
+                    class="bg-everly-main rounded-full mr-2 w-5 h-5 flex justify-center items-center"
+                  >
+                    <img
+                      class="cursor-pointer w-3"
+                      src="@/assets/icon/withdraw_white.svg"
+                      alt=""
+                    />
+                  </div>
+                  <a class="text-everly-main text-lg font-bold"
+                    >마일리지 출금</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="flex-1 hidden md:block bg-[#fafafa]"></div>
       </div>
     </div>
+
     <!-- 헤더끝 -->
     <div class="z-10">
-      <div v-if="route.meta.name == `home`">
-        <HomeHeader />
+      <div v-if="route.meta.name != `home` && route.meta.name != `list`">
+        <CommonHeader />
       </div>
-      <div v-else><CommonHeader /></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import HomeHeader from "./homeHeader.vue";
 import CommonHeader from "./commonHeader.vue";
 import { useSearchStore } from "../../store/modules/home/searchStore";
 import { useRouter, useRoute } from "vue-router";
 import { computed, watch, ref } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import { useFilterStore } from "@/store/modules/home/filterStore";
-import { useCommonStore } from "@/store/modules/common/commonStore";
-import { storeToRefs } from "pinia";
 import type { user } from "@/domain/user/user.interface";
 import { alertMSG, moveExternalLink } from "@/common";
+import search from "./search/searchComponent.vue";
 
 //localstorage 가져오기
 const localData = localStorage.getItem("user");
@@ -190,14 +243,11 @@ const userNickname =
     : (JSON.parse(localData) as user).nickname;
 
 //store 가져오기
-const searchStore = useSearchStore();
 const filterStore = useFilterStore();
-const commonStore = useCommonStore();
+const searchStore = useSearchStore();
 //라우터 만들기
 const router = useRouter();
 const route = useRoute();
-
-//닉네임 끄기
 
 //화면 커질 때, 모바일 검색 화면 끄는 것
 let isLargeScreen = computed(() => useMediaQuery("(min-width: 800px)"));
@@ -208,17 +258,6 @@ watch(isLargeScreen.value, () => {
     filterStore.setstoreShowFilter_mobile(false);
   }
 });
-
-//모바일 필터 키키
-const { storeShowFilter_mobile } = storeToRefs(filterStore);
-function toggleFilter_mobile() {
-  if (!storeShowFilter_mobile.value) {
-    filterStore.setstoreTempfilter();
-    // commonStore.setstoreTempfilter();
-  } else filterStore.cancelstoreFilter();
-
-  filterStore.setstoreShowFilter_mobile(!storeShowFilter_mobile.value);
-}
 
 // 페이지 이동
 function moveLink(link: string) {
@@ -237,6 +276,12 @@ function moveLink(link: string) {
   } else if (link == "/account/signUp/confirm") {
     if (userNickname == `로그인하기`) router.push(link);
   } else router.push(link);
+}
+
+//최상단 배너
+const showTopbanner = ref(true);
+function InactiveTopBanner() {
+  showTopbanner.value = false;
 }
 </script>
 <style scoped></style>

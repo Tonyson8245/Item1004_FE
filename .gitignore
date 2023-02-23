@@ -4,6 +4,7 @@
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
+.env
 node_modules/
 dist/
 npm-debug.log
