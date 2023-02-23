@@ -1,9 +1,25 @@
-## NPM 명령어
+# 아이템 천사 프론트엔드
+
+> ### 목차
+>
+> 1. 초기 설정
+> 2. 실행 명령어
+> 3. 디렉토리 구조
+> 4. 환경설정 파일
+
+## 초기 설정
+
+1. `npm instll`로 필요한 패키지 설치
+2. README.md ➡️ 레포지토리 설명 작성
+3. IDE setting ➡️ eslint 및 prettier 사용 활성화
+4. .env ➡️ 파일 추가 및 API KEY 확인
+
+## 실행 명령어
 
 ### 환경 구분
 
-테스트 환경 : 테스트 API, 로그 기록 OFF
-실서버 환경 : 실제 API , 로그 기록 OFF
+- 테스트 환경 : 테스트 API, 로그 기록 OFF
+- 실서버 환경 : 실제 API , 로그 기록 OFF
 
 ### 로컬 서버 실행
 
@@ -24,4 +40,98 @@ npm run prod-build // 실 서버 환경
 ```jsx
 npm run dev-preview // 테스트 환경
 npm run prod-preview // 실 서버 환경
+```
+
+## 디렉토리 구조
+
+```text
+README.md
+dev
+env.d.ts
+favicon.ico
+index.html
+package-lock.json
+package.json
+postcss.config.js
+public
+src
+├── App.vue
+├── api
+├── assets
+├── common.ts
+├── components
+├── domain
+├── favicon.ico
+├── index.css
+├── main.ts
+├── robots.txt
+├── router
+├── store
+├── types
+└── views
+tailwind.config.js
+tsconfig.config.json
+tsconfig.json
+vite.config.ts
+yarn.lock
+```
+
+- `src/api` : 외부 서버와 통신하는 로직 위치
+- `src/common.ts` : 공통함수
+- `src/views` : UI 폴더
+- `src/component` : 상호작용 컴포넌트 폴더
+- `src/domain` : DTO 및 도메인 관리
+- `src/store` : 화면에 보이는 데이터 관리
+- `src/router` : 페이지 이동 관리
+
+## 환경설정 파일
+
+앱 전체에서 사용할 고정된 값을 파일에 저장해 사용
+
+### 파일 추가
+
+> /.env
+
+```text
+/* 실 API 경로 */
+ VITE_BASE_URL_USER_BASE = 'http://example.url'
+ VITE_BASE_URL_AUTH_BASE = 'http://example.url'
+ VITE_BASE_URL_HOME_BASE = 'http://example.url'
+ VITE_BASE_URL_PAYMENT_BASE = 'http://example.url'
+ VITE_BASE_URL_CHAT_BASE  = 'http://example.url'
+
+/* 테스트 API 경로 */
+ VITE_BASE_URL_USER_TEST = 'http://example.url'
+ VITE_BASE_URL_AUTH_TEST = 'http://example.url'
+ VITE_BASE_URL_HOME_TEST = 'http://example.url'
+ VITE_BASE_URL_PAYMENT_TEST = 'http://example.url'
+ VITE_BASE_URL_CHAT_TEST = 'http://example.url'
+
+/* 톡 플러스 API 키 */
+ VITE_TALK_PLUS_PUBLIC_API_KEY = 'API_KEY'
+
+/* 톡 플러스 테스트 API 키 */
+ VITE_TALK_PLUS_TEST_API_KEY = 'API_KEY'
+
+
+/* Sentry/GA/Hotjar/Naver */
+ VITE_SENTRY_DSN = 'http://example.url'
+ VITE_GA_KEY = 'API_KEY'
+ VITE_HOTJAR_ID = 'API_ID'
+ VITE_NAVER_SEARCH_KEY = 'API_KEY'
+ VITE_NAVER_SITE_KEY = 'API_KEY'
+```
+
+### 환경설정 파일 사용
+
+#### vite.config.ts
+
+```typescript
+import { createHtmlPlugin } from "vite-plugin-html";
+
+require("dotenv").config();
+const VITE_GA_KEY = process.env.VITE_GA_KEY;
+const VITE_HOTJAR_ID = process.env.VITE_HOTJAR_ID;
+const VITE_NAVER_SEARCH_KEY = process.env.VITE_NAVER_SEARCH_KEY;
+const VITE_NAVER_SITE_KEY = process.env.VITE_NAVER_SITE_KEY;
 ```
