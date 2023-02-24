@@ -1,20 +1,30 @@
 # 아이템 천사 프론트엔드
 
-> ### 목차
->
-> 1. 초기 설정
-> 2. 실행 명령어
-> 3. 디렉토리 구조
-> 4. 환경설정 파일
+프론트엔드 구조를 4-Layer로 구분지어서 화면에 보여지는 단과 비즈니스 로직을 분리했습니다.  
+응집도를 높이기 위해 각 계층 별로 역할을 나눠, 비슷한 역할은 하나의 모듈 내에서 작동하도록 했습니다.  
+유지보수 편의성을 위해 각 계층의 결합도를 낮추고, 모듈의 재사용성을 높이는 것을 지향했습니다.
+
+## 목차
+
+---
+
+1.  초기 설정
+2.  실행 명령어
+3.  디렉토리 구조
+4.  환경설정 파일
 
 ## 초기 설정
+
+---
 
 1. `npm instll`로 필요한 패키지 설치
 2. README.md ➡️ 레포지토리 설명 작성
 3. IDE setting ➡️ eslint 및 prettier 사용 활성화
-4. .env ➡️ 파일 추가 및 API KEY 확인
+4. /.env ➡️ 파일 추가 및 API KEY 확인
 
 ## 실행 명령어
+
+---
 
 ### 환경 구분
 
@@ -43,6 +53,8 @@ npm run prod-preview // 실 서버 환경
 ```
 
 ## 디렉토리 구조
+
+---
 
 ```text
 README.md
@@ -76,6 +88,10 @@ vite.config.ts
 yarn.lock
 ```
 
+<div align="center" >
+<img src="https://user-images.githubusercontent.com/72400483/220873649-8fc5200b-f7c0-4639-bc7b-b9cf862a7041.png" alt="외부 이미지" height="auto" width="90%" />
+<p style="color:gray"> * 프론트엔드 구조 *</p> </div>
+
 - `src/api` : 외부 서버와 통신하는 로직 위치
 - `src/common.ts` : 공통함수
 - `src/views` : UI 폴더
@@ -85,6 +101,8 @@ yarn.lock
 - `src/router` : 페이지 이동 관리
 
 ## 환경설정 파일
+
+---
 
 앱 전체에서 사용할 고정된 값을 파일에 저장해 사용
 
@@ -124,7 +142,7 @@ yarn.lock
 
 ### 환경설정 파일 사용
 
-#### vite.config.ts
+vite.config.ts
 
 ```typescript
 import { createHtmlPlugin } from "vite-plugin-html";
