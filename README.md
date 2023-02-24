@@ -6,8 +6,6 @@
 
 ## 목차
 
----
-
 1.  초기 설정
 2.  실행 명령어
 3.  디렉토리 구조
@@ -15,16 +13,12 @@
 
 ## 초기 설정
 
----
-
 1. `npm instll`로 필요한 패키지 설치
 2. README.md ➡️ 레포지토리 설명 작성
 3. IDE setting ➡️ eslint 및 prettier 사용 활성화
 4. /.env ➡️ 파일 추가 및 API KEY 확인
 
 ## 실행 명령어
-
----
 
 ### 환경 구분
 
@@ -54,38 +48,35 @@ npm run prod-preview // 실 서버 환경
 
 ## 디렉토리 구조
 
----
-
 ```text
-README.md
-dev
-env.d.ts
-favicon.ico
-index.html
-package-lock.json
-package.json
-postcss.config.js
-public
-src
-├── App.vue
-├── api
-├── assets
-├── common.ts
-├── components
-├── domain
+├── README.md
+├── env.d.ts
 ├── favicon.ico
-├── index.css
-├── main.ts
-├── robots.txt
-├── router
-├── store
-├── types
-└── views
-tailwind.config.js
-tsconfig.config.json
-tsconfig.json
-vite.config.ts
-yarn.lock
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── public
+├── src
+│   ├── App.vue
+│   ├── api
+│   ├── assets
+│   ├── common.ts
+│   ├── components
+│   ├── domain
+│   ├── favicon.ico
+│   ├── index.css
+│   ├── main.ts
+│   ├── robots.txt
+│   ├── router
+│   ├── store
+│   ├── types
+│   └── views
+├── tailwind.config.js
+├── tsconfig.config.json
+├── tsconfig.json
+├── vite.config.ts
+└── yarn.lock
 ```
 
 <div align="center" >
@@ -101,8 +92,6 @@ yarn.lock
 - `src/router` : 페이지 이동 관리
 
 ## 환경설정 파일
-
----
 
 앱 전체에서 사용할 고정된 값을 파일에 저장해 사용
 
