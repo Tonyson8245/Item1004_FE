@@ -6,8 +6,6 @@
 
 ## 목차
 
----
-
 1.  초기 설정
 2.  실행 명령어
 3.  디렉토리 구조
@@ -15,16 +13,12 @@
 
 ## 초기 설정
 
----
-
 1. `npm instll`로 필요한 패키지 설치
 2. README.md ➡️ 레포지토리 설명 작성
 3. IDE setting ➡️ eslint 및 prettier 사용 활성화
 4. /.env ➡️ 파일 추가 및 API KEY 확인
 
 ## 실행 명령어
-
----
 
 ### 환경 구분
 
@@ -53,8 +47,6 @@ npm run prod-preview // 실 서버 환경
 ```
 
 ## 디렉토리 구조
-
----
 
 ```text
 ├── README.md
@@ -99,13 +91,7 @@ npm run prod-preview // 실 서버 환경
 - `src/store` : 화면에 보이는 데이터 관리
 - `src/router` : 페이지 이동 관리
 
-
-![프론트엔드 아키텍처1](https://user-images.githubusercontent.com/72400483/220873649-8fc5200b-f7c0-4639-bc7b-b9cf862a7041.png )
-
-
 ## 환경설정 파일
-
----
 
 앱 전체에서 사용할 고정된 값을 파일에 저장해 사용
 
