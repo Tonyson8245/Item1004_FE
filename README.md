@@ -57,35 +57,34 @@ npm run prod-preview // 실 서버 환경
 ---
 
 ```text
-README.md
-dev
-env.d.ts
-favicon.ico
-index.html
-package-lock.json
-package.json
-postcss.config.js
-public
-src
-├── App.vue
-├── api
-├── assets
-├── common.ts
-├── components
-├── domain
+├── README.md
+├── env.d.ts
 ├── favicon.ico
-├── index.css
-├── main.ts
-├── robots.txt
-├── router
-├── store
-├── types
-└── views
-tailwind.config.js
-tsconfig.config.json
-tsconfig.json
-vite.config.ts
-yarn.lock
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── public
+├── src
+│   ├── App.vue
+│   ├── api
+│   ├── assets
+│   ├── common.ts
+│   ├── components
+│   ├── domain
+│   ├── favicon.ico
+│   ├── index.css
+│   ├── main.ts
+│   ├── robots.txt
+│   ├── router
+│   ├── store
+│   ├── types
+│   └── views
+├── tailwind.config.js
+├── tsconfig.config.json
+├── tsconfig.json
+├── vite.config.ts
+└── yarn.lock
 ```
 
 <div align="center" >
